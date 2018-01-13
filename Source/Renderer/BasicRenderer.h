@@ -16,6 +16,8 @@ Created by AirGuanZ
 class BasicRenderer : public Uncopiable
 {
 public:
+    using ShaderType = OWE::Shader<SS_VS, SS_PS>;
+
     struct Vertex
     {
         DirectX::SimpleMath::Vector3 pos;        // POSITION
@@ -36,7 +38,7 @@ public:
 
 private:
     ID3D11InputLayout *inputLayout_;
-    OWE::Shader<SS_VS, SS_PS> shader_;
+    ShaderType shader_;
 };
 
 #endif //VW_BASIC_RENDERER_H

@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\Source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h" />
+    <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
