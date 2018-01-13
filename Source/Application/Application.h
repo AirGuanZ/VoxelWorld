@@ -11,10 +11,7 @@ Created by AirGuanZ
 class Application
 {
 public:
-    void Run(void)
-    {
-        throw std::exception("Hello, world\n");
-    }
+    void Run(void);
 };
 
 #endif //VW_APPLICATION_H

@@ -45,13 +45,13 @@ protected:
     }
 
 public:
-    SingletonClassName *GetInstancePtr(void)
+    static SingletonClassName *GetInstancePtr(void)
     {
         assert(singletonInstancePtr_ != nullptr);
         return singletonInstancePtr_;
     }
 
-    SingletonClassName &GetInstance(void)
+    static SingletonClassName &GetInstance(void)
     {
         return *GetInstancePtr();
     }

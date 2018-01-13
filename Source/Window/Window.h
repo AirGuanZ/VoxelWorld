@@ -8,6 +8,9 @@ Created by AirGuanZ
 
 #include <string>
 
+#include <Keyboard.h>
+#include <Mouse.h>
+
 #include "../Utility/Singleton.h"
 
 class Window : public Singleton<Window>
@@ -23,6 +26,13 @@ public:
 
     int GetClientWidth(void);
     int GetClientHeight(void);
+    float GetClientAspectRatio(void);
+
+    void SetVsync(bool vsync);
+
+    void SetBackgroundColor(float r, float g, float b, float a);
+    void ClearRenderTarget(void);
+    void ClearDepthStencil(void);
 
     void DoEvents(void);
     void Present(void);

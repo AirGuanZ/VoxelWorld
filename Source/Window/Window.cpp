@@ -4,6 +4,7 @@ Date: 2018.1.12
 Created by AirGuanZ
 ================================================================*/
 #include <algorithm>
+#include <cassert>
 #include <memory>
 #include <string>
 
@@ -21,13 +22,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace
 {
-    //键鼠输入
-    namespace Input
-    {
-        //Keyboard和Mouse都是单例
-        std::unique_ptr<DirectX::Keyboard> keyboard = std::make_unique<DirectX::Keyboard>();
-        std::unique_ptr<DirectX::Mouse>    mouse = std::make_unique<DirectX::Mouse>();
-    }
+    constexpr DXGI_FORMAT SWAPCHAIN_BUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
+    constexpr DXGI_FORMAT DEPTHSTENCIL_BUFFER_FORMAT = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
     //Win32窗口
     namespace Win
@@ -38,21 +34,29 @@ namespace
         const std::string windowClassName = "VoxelWorldWindow";
         std::string windowTitle = "Voxel World";
 
-        int clientLeft;
-        int clientTop;
-        int clientWidth;
-        int clientHeight;
+        int clientLeft   = 0;
+        int clientTop    = 0;
+        int clientWidth  = 0;
+        int clientHeight = 0;
     }
 
     //D3D上下文
     namespace D3D
     {
-        IDXGISwapChain *swapChain;
+        IDXGISwapChain *swapChain = nullptr;
 
-        ID3D11Device *device;
-        ID3D11DeviceContext *deviceContext;
+        ID3D11Device *device = nullptr;
+        ID3D11DeviceContext *deviceContext = nullptr;
 
-        bool isFullscreen;
+        ID3D11RenderTargetView *renderTargetView = nullptr;
+
+        ID3D11Texture2D *depthStencilBuffer = nullptr;
+        ID3D11DepthStencilView *depthStencilView = nullptr;
+
+        bool isFullscreen = false;
+        bool vsync = true;
+
+        float background[4];
     }
 }
 
@@ -87,8 +91,9 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     DWORD dwStyle = 0;
     dwStyle |= WS_OVERLAPPED;
     dwStyle |= WS_POPUP;
-    dwStyle |= WS_SIZEBOX;
     dwStyle |= WS_VISIBLE;
+    dwStyle |= WS_CAPTION;
+    dwStyle &= ~WS_SIZEBOX;
 
     RECT winRect = { 0, 0, clientWidth, clientHeight };
     if(!AdjustWindowRect(&winRect, dwStyle, FALSE))
@@ -133,28 +138,14 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     return true;
 }
 
-static void DestroyD3D(void)
+static bool CreateD3DDevice(void)
 {
-    using Helper::ReleaseCOMObjects;
-    using namespace D3D;
-
-    ReleaseCOMObjects(swapChain, device, deviceContext);
-}
-
-bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
-{
-    assert(IsWindowAvailable() && !IsD3DAvailable());
-    HRESULT hr;
-    errMsg = "";
-
-    // device & device context
-
     D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0;
     UINT createDeviceFlag = 0;
 #ifdef _DEBUG
     createDeviceFlag |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
-    hr = D3D11CreateDevice(
+    HRESULT hr = D3D11CreateDevice(
         nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
         createDeviceFlag,
         &featureLevel, 1,
@@ -163,36 +154,18 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
         nullptr,
         &D3D::deviceContext);
     if(FAILED(hr))
-    {
-        errMsg = "Failed to create D3D device";
         return false;
-    }
+    return true;
+}
 
-    // MSAA
-
-    UINT maxMSAAQuality;
-    hr = D3D::device->CheckMultisampleQualityLevels(
-        DXGI_FORMAT_R8G8B8A8_UNORM, sampleCount, &maxMSAAQuality);
-    if(static_cast<UINT>(sampleQuality) >= maxMSAAQuality)
-    {
-        errMsg = "MSAA quality unsupported. SampleCount = " +
-                 std::to_string(sampleCount) +
-                 ", SampleQuality = " +
-                 std::to_string(sampleQuality) +
-                 ", SampleQuality Suppported is less than " +
-                 std::to_string(maxMSAAQuality - 1);
-        DestroyD3D();
-        return false;
-    }
-
-    // swap chain
-
+static bool CreateSwapChain(int sampleCount, int sampleQuality)
+{
     DXGI_MODE_DESC scBuf;
     scBuf.Width = Win::clientWidth;
     scBuf.Height = Win::clientHeight;
     scBuf.RefreshRate.Numerator = 60;
     scBuf.RefreshRate.Denominator = 1;
-    scBuf.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    scBuf.Format = SWAPCHAIN_BUFFER_FORMAT;
     scBuf.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     scBuf.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
@@ -208,37 +181,165 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
     sc.SampleDesc.Quality = sampleQuality;
 
     IDXGIDevice *dxgiDevice = nullptr;
-    hr = D3D::device->QueryInterface<IDXGIDevice>(&dxgiDevice);
+    HRESULT hr = D3D::device->QueryInterface<IDXGIDevice>(&dxgiDevice);
     if(FAILED(hr))
-    {
-        errMsg = "Failed to query interface: IDXGIDevice";
-        DestroyD3D();
         return false;
-    }
 
     IDXGIAdapter *dxgiAdapter = nullptr;
     hr = dxgiDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&dxgiAdapter);
     Helper::ReleaseCOMObjects(dxgiDevice);
     if(FAILED(hr))
-    {
-        errMsg = "Failed to query interface: IDXGIAdapter";
-        DestroyD3D();
         return false;
-    }
 
     IDXGIFactory *dxgiFactory = nullptr;
     hr = dxgiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&dxgiFactory);
     Helper::ReleaseCOMObjects(dxgiAdapter);
     if(FAILED(hr))
-    {
-        errMsg = "Failed to query interface: IDXGIFactory";
-        DestroyD3D();
         return false;
-    }
 
     hr = dxgiFactory->CreateSwapChain(D3D::device, &sc, &D3D::swapChain);
     Helper::ReleaseCOMObjects(dxgiFactory);
     if(FAILED(hr))
+        return false;
+
+    return true;
+}
+
+static bool CreateRenderTargetView(void)
+{
+    assert(D3D::swapChain != nullptr);
+
+    ID3D11Texture2D *backbuffer;
+    HRESULT hr = D3D::swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backbuffer));
+    if(FAILED(hr))
+        return false;
+
+    hr = D3D::device->CreateRenderTargetView(backbuffer, nullptr, &D3D::renderTargetView);
+    backbuffer->Release();
+    if(FAILED(hr))
+        return false;
+
+    return true;
+}
+
+static bool CreateDepthStencilBuffer(int sampleCount, int sampleQuality)
+{
+    assert(D3D::swapChain != nullptr);
+
+    D3D11_TEXTURE2D_DESC depthStencilBufDesc;
+    depthStencilBufDesc.ArraySize = 1;
+    depthStencilBufDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    depthStencilBufDesc.CPUAccessFlags = 0;
+    depthStencilBufDesc.Format = DEPTHSTENCIL_BUFFER_FORMAT;
+    depthStencilBufDesc.Width = Win::clientWidth;
+    depthStencilBufDesc.Height = Win::clientHeight;
+    depthStencilBufDesc.MipLevels = 0;
+    depthStencilBufDesc.MiscFlags = 0;
+    depthStencilBufDesc.SampleDesc.Count = sampleCount;
+    depthStencilBufDesc.SampleDesc.Quality = sampleQuality;
+    depthStencilBufDesc.Usage = D3D11_USAGE_DEFAULT;
+
+    HRESULT hr = D3D::device->CreateTexture2D(
+        &depthStencilBufDesc, nullptr,
+        &D3D::depthStencilBuffer);
+    if(FAILED(hr))
+        return false;
+
+    D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+    depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    depthStencilViewDesc.Flags = 0;
+    depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+    hr = D3D::device->CreateDepthStencilView(
+        D3D::depthStencilBuffer,
+        &depthStencilViewDesc,
+        &D3D::depthStencilView);
+    if(FAILED(hr))
+        return false;
+
+    return true;
+}
+
+static void SetDefaultViewport(void)
+{
+    assert(D3D::deviceContext != nullptr);
+
+    D3D11_VIEWPORT vp;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+    vp.Width = static_cast<FLOAT>(Win::clientWidth);
+    vp.Height = static_cast<FLOAT>(Win::clientHeight);
+    vp.MaxDepth = 1.0f;
+    vp.MinDepth = 0.0f;
+    D3D::deviceContext->RSSetViewports(1, &vp);
+}
+
+static void DestroyD3D(void)
+{
+    using Helper::ReleaseCOMObjects;
+    using namespace D3D;
+
+    ReleaseCOMObjects(swapChain, device, deviceContext);
+    ReleaseCOMObjects(renderTargetView);
+    ReleaseCOMObjects(depthStencilBuffer, depthStencilView);
+
+    isFullscreen = false;
+    vsync = true;
+
+    background[0] = background[1] =
+    background[2] = background[3] = 0.0f;
+}
+
+static void DestroyWin(void)
+{
+    using namespace Win;
+
+    clientLeft = clientTop = 0;
+    clientWidth = clientHeight = 0;
+    if(hWnd)
+    {
+        DestroyWindow(hWnd);
+        hWnd = NULL;
+    }
+
+    UnregisterClassA(windowClassName.c_str(), hInstance);
+}
+
+bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
+{
+    assert(IsWindowAvailable() && !IsD3DAvailable());
+    HRESULT hr;
+    errMsg = "";
+
+    // device & device context
+
+    if(!CreateD3DDevice())
+    {
+        errMsg = "Failed to create D3D device";
+        return false;
+    }
+
+    // MSAA
+
+    UINT maxMSAAQuality = 0;
+    hr = D3D::device->CheckMultisampleQualityLevels(
+        SWAPCHAIN_BUFFER_FORMAT, sampleCount, &maxMSAAQuality);
+    if(FAILED(hr) || static_cast<UINT>(sampleQuality) >= maxMSAAQuality)
+    {
+        errMsg = "MSAA quality unsupported. SampleCount = " +
+                 std::to_string(sampleCount) +
+                 ", SampleQuality = " +
+                 std::to_string(sampleQuality) +
+                 ", SampleQuality Suppported is less than " +
+                 std::to_string(maxMSAAQuality - 1);
+        DestroyD3D();
+        return false;
+    }
+
+    // swap chain
+
+    if(!CreateSwapChain(sampleCount, sampleQuality))
     {
         errMsg = "Failed to create swap chain";
         DestroyD3D();
@@ -247,7 +348,26 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     // render target view
 
+    if(!CreateRenderTargetView())
+    {
+        errMsg = "Failed to create render target view";
+        DestroyD3D();
+        return false;
+    }
 
+    // depth stencil buffer & view
+
+    if(!CreateDepthStencilBuffer(sampleCount, sampleQuality))
+    {
+        errMsg = "Failed to create depth stencil buffer";
+        DestroyD3D();
+        return false;
+    }
+    D3D::deviceContext->OMSetRenderTargets(1, &D3D::renderTargetView, D3D::depthStencilView);
+
+    // viewport
+
+    SetDefaultViewport();
 
     return true;
 }
@@ -260,6 +380,71 @@ bool Window::IsWindowAvailable(void)
 bool Window::IsD3DAvailable(void)
 {
     return D3D::device != nullptr;
+}
+
+void Window::Destroy(void)
+{
+    DestroyD3D();
+    DestroyWin();
+}
+
+int Window::GetClientWidth(void)
+{
+    return Win::clientWidth;
+}
+
+int Window::GetClientHeight(void)
+{
+    return Win::clientHeight;
+}
+
+float Window::GetClientAspectRatio(void)
+{
+    assert(Win::clientWidth > 0 && Win::clientHeight > 0);
+    return static_cast<float>(Win::clientWidth) / Win::clientHeight;
+}
+
+void Window::SetVsync(bool vsync)
+{
+    D3D::vsync = vsync;
+}
+
+void Window::SetBackgroundColor(float r, float g, float b, float a)
+{
+    using D3D::background;
+    background[0] = r; background[1] = g;
+    background[2] = b; background[3] = a;
+}
+
+void Window::ClearRenderTarget(void)
+{
+    using namespace D3D;
+    assert(deviceContext != nullptr && renderTargetView != nullptr);
+    deviceContext->ClearRenderTargetView(renderTargetView, background);
+}
+
+void Window::ClearDepthStencil(void)
+{
+    using namespace D3D;
+    assert(deviceContext != nullptr && depthStencilView != nullptr);
+    deviceContext->ClearDepthStencilView(
+        depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+}
+
+void Window::DoEvents(void)
+{
+    MSG msg;
+    while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+}
+
+void Window::Present(void)
+{
+    assert(D3D::swapChain != nullptr);
+    D3D::swapChain->Present(D3D::vsync ? 1 : 0, 0);
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -295,13 +480,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_XBUTTONUP:
     case WM_MOUSEHOVER:
         Mouse::ProcessMessage(msg, wParam, lParam);
-        break;
-    case WM_SIZE:
-        Win::clientWidth = LOWORD(wParam);
-        Win::clientHeight = HIWORD(wParam);
-        if(D3D::swapChain)
-            D3D::swapChain->ResizeBuffers(0, Win::clientWidth, Win::clientHeight,
-                                          DXGI_FORMAT_R8G8B8A8_UNORM, 0);
         break;
     }
 
