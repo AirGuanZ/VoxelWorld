@@ -9,4 +9,6 @@ Created by AirGuanZ
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
+#include <SimpleMath.h>
+
 #endif //VW_D3D11_HEADER_H

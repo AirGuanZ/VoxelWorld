@@ -8,9 +8,7 @@ Created by AirGuanZ
 
 #include <string>
 
-#include <Keyboard.h>
-#include <Mouse.h>
-
+#include "../Utility/D3D11Header.h"
 #include "../Utility/Singleton.h"
 
 class Window : public Singleton<Window>
@@ -36,6 +34,9 @@ public:
 
     void DoEvents(void);
     void Present(void);
+
+    ID3D11Device *GetD3DDevice(void);
+    ID3D11DeviceContext *GetD3DDeviceContext(void);
 };
 
 #endif //VW_WINDOW_H

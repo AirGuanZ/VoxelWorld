@@ -21,14 +21,18 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
+    <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\Source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
+    <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
     <ClInclude Include="..\Source\Utility\Singleton.h" />
+    <ClInclude Include="..\Source\Utility\Uncopiable.h" />
     <ClInclude Include="..\Source\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

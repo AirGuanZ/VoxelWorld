@@ -447,6 +447,16 @@ void Window::Present(void)
     D3D::swapChain->Present(D3D::vsync ? 1 : 0, 0);
 }
 
+ID3D11Device *Window::GetD3DDevice(void)
+{
+    return D3D::device;
+}
+
+ID3D11DeviceContext *Window::GetD3DDeviceContext(void)
+{
+    return D3D::deviceContext;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;

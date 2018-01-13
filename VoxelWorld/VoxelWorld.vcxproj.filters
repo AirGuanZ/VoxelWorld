@@ -16,6 +16,9 @@
     <Filter Include="Source\Window">
       <UniqueIdentifier>{e1a6a520-2a0b-468b-8ccd-84b11998ce5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Resource">
+      <UniqueIdentifier>{9f77aba6-6a7d-4ca2-8baa-ddb96317ed1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -26,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Application\Application.cpp">
       <Filter>Source\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\HelperFunctions.cpp">
+      <Filter>Source\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +54,12 @@
       <Filter>Source\Utility</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\HelperFunctions.h">
+      <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Resource\ResourceName.h">
+      <Filter>Source\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Uncopiable.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
   </ItemGroup>

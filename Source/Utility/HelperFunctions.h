@@ -6,6 +6,10 @@ Created by AirGuanZ
 #ifndef VW_HELPER_FUNCTIONS_H
 #define VW_HELPER_FUNCTIONS_H
 
+#include <string>
+
+#include "D3D11Header.h"
+
 namespace Helper
 {
     template<typename T, size_t N>
@@ -53,6 +57,11 @@ namespace Helper
     {
         return reinterpret_cast<size_t>(&(reinterpret_cast<ClassType*>(0)->*pMem));
     }
+
+    ID3D11InputLayout *CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
+                                         int num, const void *byteCode, int length);
+
+    bool ReadFile(const std::string &filename, std::string &output);
 }
 
 #endif //VW_HELPER_FUNCTIONS_H
