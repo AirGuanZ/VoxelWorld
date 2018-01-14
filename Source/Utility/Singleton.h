@@ -16,22 +16,13 @@ Created by AirGuanZ
 
 #include <cassert>
 
+#include "Uncopiable.h"
+
 template<typename SingletonClassName>
-class Singleton
+class Singleton : public Uncopiable
 {
 private:
-    static SingletonClassName *singletonInstancePtr_;
-
-    friend class SingletonInstanceDeleter;
-    static class SingletonInstanceDeleter
-    {
-    public:
-        ~SingletonInstanceDeleter(void)
-        {
-            if(singletonInstancePtr_)
-                delete singletonInstancePtr_;
-        }
-    } singletonInstanceDeleter_;
+    static SingletonClassName singletonInstance_;
 
 protected:
     Singleton(void)
@@ -45,21 +36,13 @@ protected:
     }
 
 public:
-    static SingletonClassName *GetInstancePtr(void)
-    {
-        assert(singletonInstancePtr_ != nullptr);
-        return singletonInstancePtr_;
-    }
-
     static SingletonClassName &GetInstance(void)
     {
-        return *GetInstancePtr();
+        return singletonInstance_;
     }
 };
 
 #define SINGLETON_CLASS_DEFINITION(SingletonClassName) \
-    SingletonClassName *Singleton<SingletonClassName>::singletonInstancePtr_ = new SingletonClassName; \
-    typename Singleton<SingletonClassName>::SingletonInstanceDeleter \
-    Singleton<SingletonClassName>::singletonInstanceDeleter_
+    SingletonClassName Singleton<SingletonClassName>::singletonInstance_
 
 #endif //VW_SINGLETON_H

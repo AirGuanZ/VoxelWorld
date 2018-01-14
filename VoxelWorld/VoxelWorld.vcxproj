@@ -24,6 +24,8 @@
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
+    <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
+    <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
     <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\Source\Window\Window.cpp" />
   </ItemGroup>
@@ -33,6 +35,8 @@
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
+    <ClInclude Include="..\Source\Texture\Texture2D.h" />
+    <ClInclude Include="..\Source\Texture\TextureFile.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
     <ClInclude Include="..\Source\Utility\Singleton.h" />
@@ -54,14 +58,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

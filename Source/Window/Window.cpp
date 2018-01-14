@@ -31,8 +31,8 @@ namespace
         HWND hWnd = NULL;
         HINSTANCE hInstance = NULL;
 
-        const std::string windowClassName = "VoxelWorldWindow";
-        std::string windowTitle = "Voxel World";
+        const std::wstring windowClassName = L"VoxelWorldWindow";
+        std::wstring windowTitle = L"Voxel World";
 
         int clientLeft   = 0;
         int clientTop    = 0;
@@ -60,7 +60,7 @@ namespace
     }
 }
 
-bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTitle, std::string &errMsg)
+bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *windowTitle, std::string &errMsg)
 {
     assert(!IsWindowAvailable());
     assert(clientWidth > 0 && clientHeight > 0 && windowTitle);
@@ -69,7 +69,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     if(!Win::hInstance)
         Win::hInstance = GetModuleHandle(NULL);
 
-    WNDCLASSEXA wc;
+    WNDCLASSEX wc;
     wc.cbSize        = sizeof(WNDCLASSEXA);
     wc.style         = CS_HREDRAW | CS_VREDRAW | CS_NOCLOSE;
     wc.lpfnWndProc   = WndProc;
@@ -82,7 +82,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     wc.lpszMenuName  = NULL;
     wc.lpszClassName = Win::windowClassName.c_str();
     wc.hIconSm       = NULL;
-    if(!RegisterClassExA(&wc))
+    if(!RegisterClassEx(&wc))
     {
         errMsg = "Failed to register window class";
         return false;
@@ -99,7 +99,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     if(!AdjustWindowRect(&winRect, dwStyle, FALSE))
     {
         errMsg = "Failed to adjust window size";
-        UnregisterClassA(Win::windowClassName.c_str(), Win::hInstance);
+        UnregisterClass(Win::windowClassName.c_str(), Win::hInstance);
         return false;
     }
 
@@ -111,7 +111,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     int realWinTop    = (scrHeight - realWinHeight) / 2;
 
     Win::windowTitle = windowTitle;
-    Win::hWnd = CreateWindowA(
+    Win::hWnd = CreateWindow(
         Win::windowClassName.c_str(), Win::windowTitle.c_str(),
         dwStyle, realWinLeft, realWinTop,
         realWinWidth, realWinHeight,
@@ -119,7 +119,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const char *windowTit
     if(!Win::hWnd)
     {
         errMsg = "Failed to create WIN32 window";
-        UnregisterClassA(Win::windowClassName.c_str(), Win::hInstance);
+        UnregisterClass(Win::windowClassName.c_str(), Win::hInstance);
         return false;
     }
 
@@ -303,7 +303,7 @@ static void DestroyWin(void)
         hWnd = NULL;
     }
 
-    UnregisterClassA(windowClassName.c_str(), hInstance);
+    UnregisterClass(windowClassName.c_str(), hInstance);
 }
 
 bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)

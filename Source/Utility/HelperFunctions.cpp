@@ -24,7 +24,7 @@ ID3D11InputLayout *Helper::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *des
     return FAILED(hr) ? nullptr : rt;
 }
 
-bool Helper::ReadFile(const std::string &filename, std::string &output)
+bool Helper::ReadFile(const std::wstring &filename, std::string &output)
 {
     output = "";
     std::ifstream fin(filename, std::ifstream::in);
@@ -32,4 +32,5 @@ bool Helper::ReadFile(const std::string &filename, std::string &output)
         return false;
     output = std::string(std::istreambuf_iterator<char>(fin),
                          std::istreambuf_iterator<char>());
+    return true;
 }

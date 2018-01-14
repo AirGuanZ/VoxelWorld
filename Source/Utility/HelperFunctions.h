@@ -52,6 +52,19 @@ namespace Helper
         ReleaseCOMObjects(others...);
     }
 
+    template<typename T>
+    inline void AddRefForCOMObject(T ptr)
+    {
+        ptr->AddRef();
+    }
+
+    template<typename T, typename... Others>
+    inline void AddRefForCOMObject(T ptr, Others... others)
+    {
+        AddRefForCOMObject(ptr);
+        AddRefForCOMObject(others...);
+    }
+
     template<typename ClassType, typename MemType>
     inline size_t MemOffset(MemType ClassType::* pMem)
     {
@@ -61,7 +74,7 @@ namespace Helper
     ID3D11InputLayout *CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
                                          int num, const void *byteCode, int length);
 
-    bool ReadFile(const std::string &filename, std::string &output);
+    bool ReadFile(const std::wstring &filename, std::string &output);
 }
 
 #endif //VW_HELPER_FUNCTIONS_H

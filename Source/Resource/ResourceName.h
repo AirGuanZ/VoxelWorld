@@ -7,7 +7,7 @@ Created by AirGuanZ
 #define VW_RESOURCE_NAME_H
 
 #define VW_FILENAME(X) VW_FILENAME_AUX(X)
-#define VW_FILENAME_AUX(X) #X
+#define VW_FILENAME_AUX(X) L#X
 
 #define BASIC_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Basic/vertex.hlsl)
 #define BASIC_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Basic/pixel.hlsl)

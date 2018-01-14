@@ -25,6 +25,9 @@
     <Filter Include="Source\Camera">
       <UniqueIdentifier>{e7d53162-e83f-4bf1-943d-d911479a460a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Texture">
+      <UniqueIdentifier>{35820c58-4e92-41f3-9fa8-ce3c54fb8c60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -47,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Camera\Camera.cpp">
       <Filter>Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Texture\Texture2D.cpp">
+      <Filter>Source\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Texture\TextureFile.cpp">
+      <Filter>Source\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +88,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\Camera\Camera.h">
       <Filter>Source\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Texture\Texture2D.h">
+      <Filter>Source\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Texture\TextureFile.h">
+      <Filter>Source\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

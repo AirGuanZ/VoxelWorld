@@ -14,7 +14,7 @@ Created by AirGuanZ
 class Window : public Singleton<Window>
 {
 public:
-    bool InitWindow(int clientWidth, int clientHeight, const char *windowTitle, std::string &errMsg);
+    bool InitWindow(int clientWidth, int clientHeight, const wchar_t *windowTitle, std::string &errMsg);
     bool InitD3D(int sampleCount, int sampleQuality, std::string &errMsg);
 
     bool IsWindowAvailable(void);
