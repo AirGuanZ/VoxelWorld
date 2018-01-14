@@ -21,10 +21,10 @@ public:
         std::vector<UINT> offsets;
     };
 
+    bool IsAvailable(void) const;
+
     void Bind(void) const;
     void Unbind(void) const;
-
-    bool IsAvailable(void) const;
 
 private:
     static const std::vector<ID3D11Buffer*> emptyVtxBufs_;

@@ -17,7 +17,7 @@ void Application::Run(void)
     if(!window.InitWindow(640, 480, "Voxel World", initErrMsg) ||
        !window.InitD3D(1, 0, initErrMsg))
     {
-        throw std::exception(initErrMsg.c_str());
+        throw std::runtime_error(initErrMsg.c_str());
     }
 
     window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);

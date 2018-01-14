@@ -22,6 +22,9 @@
     <Filter Include="Source\Model">
       <UniqueIdentifier>{4e8f87b0-afd6-429b-944d-ab81f8af6631}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Camera">
+      <UniqueIdentifier>{e7d53162-e83f-4bf1-943d-d911479a460a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Model\Model.cpp">
       <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Camera\Camera.cpp">
+      <Filter>Source\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Model\Model.h">
       <Filter>Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Camera\Camera.h">
+      <Filter>Source\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

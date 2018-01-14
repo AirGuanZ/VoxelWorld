@@ -20,10 +20,10 @@ public:
 
     struct Vertex
     {
-        DirectX::SimpleMath::Vector3 pos;        // POSITION
-        DirectX::SimpleMath::Vector2 texCoord;   // TEXCOORD
-        DirectX::SimpleMath::Vector3 normal;     // NORMAL
-        DirectX::SimpleMath::Vector3 lightColor; // LIGHTCOLOR
+        Vector3 pos;        // POSITION
+        Vector2 texCoord;   // TEXCOORD
+        Vector3 normal;     // NORMAL
+        Vector3 lightColor; // LIGHTCOLOR
     };
 
     BasicRenderer(void);
