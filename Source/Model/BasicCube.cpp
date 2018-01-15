@@ -25,7 +25,7 @@ bool BasicCube::Initialize(float size, Vector3 posOffset)
         { { +halfSize, +halfSize, +halfSize }, { 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
         { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
         { { +halfSize, -halfSize, +halfSize }, { 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
-        { { +halfSize, +halfSize, -halfSize }, { 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+        { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
         { { +halfSize, -halfSize, -halfSize }, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
 
         //x-

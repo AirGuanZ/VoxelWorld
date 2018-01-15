@@ -55,3 +55,23 @@ ID3D11Buffer *Helper::CreateVertexBuffer(void *initData, size_t byteSize, bool d
 
     return SUCCEEDED(hr) ? rt : nullptr;
 }
+
+ID3D11SamplerState *Helper::CreateSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addrMode)
+{
+    D3D11_SAMPLER_DESC dc;
+    dc.Filter = filter;
+    dc.AddressU = addrMode;
+    dc.AddressV = addrMode;
+    dc.AddressW = addrMode;
+    dc.MinLOD = -FLT_MAX;
+    dc.MaxLOD = +FLT_MAX;
+    dc.MipLODBias = 0.0f;
+    dc.MaxAnisotropy = 1;
+    dc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+    dc.BorderColor[0] = dc.BorderColor[1] = dc.BorderColor[2] = dc.BorderColor[3] = 1.0f;
+    
+    ID3D11SamplerState *rt = nullptr;
+    HRESULT hr = Window::GetInstance().GetD3DDevice()->CreateSamplerState(&dc, &rt);
+
+    return SUCCEEDED(hr) ? rt : nullptr;
+}

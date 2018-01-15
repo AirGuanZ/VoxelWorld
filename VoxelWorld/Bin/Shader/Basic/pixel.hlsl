@@ -1,7 +1,7 @@
 Texture2D<float4> tex;
 SamplerState sam;
 
-struct PSIutput
+struct PSInput
 {
     float4 pos        : SV_POSITION;
     float2 texCoord   : TEXCOORD;

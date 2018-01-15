@@ -46,7 +46,6 @@ bool BasicRenderer::Initialize(std::string &errMsg)
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, Helper::MemOffset(&Vertex::pos), D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, Helper::MemOffset(&Vertex::texCoord), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, Helper::MemOffset(&Vertex::normal), D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "LIGHTCOLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, Helper::MemOffset(&Vertex::lightColor), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     inputLayout_ = Helper::CreateInputLayout(
@@ -87,4 +86,9 @@ void BasicRenderer::End(void)
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
     DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
+}
+
+BasicRenderer::ShaderType &BasicRenderer::GetShader(void)
+{
+    return shader_;
 }

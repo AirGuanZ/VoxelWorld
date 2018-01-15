@@ -25,6 +25,8 @@ public:
     void SetRoll(float radian);
     float GetRoll(void) const;
 
+    Vector3 GetDirection(void) const;
+
     void SetFOVy(float radian);
     float GetFOVy(void) const;
 

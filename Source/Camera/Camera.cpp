@@ -11,7 +11,7 @@ Camera::Camera(void)
 {
     yaw_ = pitch_ = roll_ = 0.0f;
 
-    FOVy_ = DirectX::XMConvertToRadians(60.0f);
+    FOVy_ = DirectX::XMConvertToRadians(45.0f);
     near_ = 0.1f;
     far_ = 1000.0f;
 }
@@ -54,6 +54,19 @@ void Camera::SetRoll(float radian)
 float Camera::GetRoll(void) const
 {
     return roll_;
+}
+
+Vector3 Camera::GetDirection(void) const
+{
+    float cosPitch = cos(pitch_);
+    Vector3 rt =
+    {
+        -cosPitch * sin(yaw_),
+        sin(pitch_),
+        -cosPitch * cos(yaw_)
+    };
+    rt.Normalize();
+    return rt;
 }
 
 void Camera::SetFOVy(float radian)
@@ -105,8 +118,8 @@ void Camera::UpdateViewProjMatrix(void)
 {
     view_ = Matrix::CreateTranslation(-pos_) *
             Matrix::CreateRotationZ(-roll_) *
-            Matrix::CreateRotationX(-pitch_) *
-            Matrix::CreateRotationY(-yaw_);
+            Matrix::CreateRotationY(-yaw_) *
+            Matrix::CreateRotationX(-pitch_);
     proj_ = Matrix::CreatePerspectiveFieldOfView(
         FOVy_, Window::GetInstance().GetClientAspectRatio(), near_, far_);
     viewProj_ = view_ * proj_;

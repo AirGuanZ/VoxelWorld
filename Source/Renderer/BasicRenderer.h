@@ -36,6 +36,8 @@ public:
     void Begin(void);
     void End(void);
 
+    ShaderType &GetShader(void);
+
 private:
     ID3D11InputLayout *inputLayout_;
     ShaderType shader_;
