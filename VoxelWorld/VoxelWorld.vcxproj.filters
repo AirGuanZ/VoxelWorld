@@ -37,6 +37,9 @@
     <Filter Include="Bin\Shader\Basic">
       <UniqueIdentifier>{ecf856ab-4b11-4e90-97b9-1ca7f791547b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Chunk">
+      <UniqueIdentifier>{816ce04c-b047-4455-8a3a-5607d3604505}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -67,6 +70,9 @@
       <Filter>Source\Texture</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Model\BasicCube.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Model\BasicModel.cpp">
       <Filter>Source\Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,6 +114,15 @@
       <Filter>Source\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Model\BasicCube.h">
+      <Filter>Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkSection.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\Block.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Model\BasicModel.h">
       <Filter>Source\Model</Filter>
     </ClInclude>
   </ItemGroup>

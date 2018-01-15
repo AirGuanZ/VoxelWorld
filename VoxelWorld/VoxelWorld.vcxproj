@@ -23,6 +23,7 @@
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\BasicCube.cpp" />
+    <ClCompile Include="..\Source\Model\BasicModel.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
@@ -33,7 +34,10 @@
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Camera\Camera.h" />
+    <ClInclude Include="..\Source\Chunk\Block.h" />
+    <ClInclude Include="..\Source\Chunk\ChunkSection.h" />
     <ClInclude Include="..\Source\Model\BasicCube.h" />
+    <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />

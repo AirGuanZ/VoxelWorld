@@ -12,8 +12,6 @@ public:
     Uncopiable(void) = default;
     Uncopiable(const Uncopiable&) = delete;
     Uncopiable(const Uncopiable&&) = delete;
-    Uncopiable &operator=(const Uncopiable&) = delete;
-    Uncopiable &operator=(const Uncopiable&&) = delete;
 };
 
 #endif //VW_UNCOPIABLE_H

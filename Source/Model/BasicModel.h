@@ -1,27 +1,33 @@
 /*================================================================
-Filename: BasicCube.h
+Filename: BasicModel.h
 Date: 2018.1.15
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BASIC_CUBE_H
-#define VW_BASIC_CUBE_H
+#ifndef VW_BASIC_MODEL_H
+#define VW_BASIC_MODEL_H
+
+#include <vector>
 
 #include "../Renderer/BasicRenderer.h"
 #include "../Utility/Uncopiable.h"
 #include "Model.h"
 
-class BasicCube : public Model, public Uncopiable
+class BasicModel : public Model, public Uncopiable
 {
 public:
     using Renderer = BasicRenderer;
     using Vertex = typename Renderer::Vertex;
     using Uniforms = typename Renderer::Uniforms;
 
-    BasicCube(void) = default;
-    ~BasicCube(void);
+    BasicModel(void) = default;
+    ~BasicModel(void);
 
-    bool Initialize(float size = 1.0f, Vector3 posOffset = Vector3(0.0f, 0.0f, 0.0f));
+    void AddTriangle(const Vertex *triangle);
+    bool MakeVertexBuffer(void);
     void Destroy(void);
+
+private:
+    std::vector<Vertex> triangles_;
 };
 
-#endif //VW_BASIC_CUBE_H
+#endif //VW_BASIC_MODEL_H
