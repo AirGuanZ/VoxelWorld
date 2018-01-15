@@ -11,6 +11,17 @@ Created by AirGuanZ
 #include "D3D11Header.h"
 #include "HelperFunctions.h"
 
+bool Helper::ReadFile(const std::wstring &filename, std::string &output)
+{
+    output = "";
+    std::ifstream fin(filename, std::ifstream::in);
+    if(!fin)
+        return false;
+    output = std::string(std::istreambuf_iterator<char>(fin),
+        std::istreambuf_iterator<char>());
+    return true;
+}
+
 ID3D11InputLayout *Helper::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
                                              int num, const void *byteCode, int length)
 {
@@ -24,13 +35,23 @@ ID3D11InputLayout *Helper::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *des
     return FAILED(hr) ? nullptr : rt;
 }
 
-bool Helper::ReadFile(const std::wstring &filename, std::string &output)
+ID3D11Buffer *Helper::CreateVertexBuffer(void *initData, size_t byteSize, bool dynamic)
 {
-    output = "";
-    std::ifstream fin(filename, std::ifstream::in);
-    if(!fin)
-        return false;
-    output = std::string(std::istreambuf_iterator<char>(fin),
-                         std::istreambuf_iterator<char>());
-    return true;
+    assert(dynamic || initData);
+
+    D3D11_BUFFER_DESC dc;
+    dc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    dc.ByteWidth = byteSize;
+    dc.CPUAccessFlags = dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
+    dc.MiscFlags = 0;
+    dc.StructureByteStride = 0;
+    dc.Usage = dynamic ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_IMMUTABLE;
+
+    D3D11_SUBRESOURCE_DATA data = { initData, 0, 0 };
+
+    ID3D11Buffer *rt = nullptr;
+    HRESULT hr = Window::GetInstance().GetD3DDevice()->CreateBuffer(
+        &dc, initData ? &data : nullptr, &rt);
+
+    return SUCCEEDED(hr) ? rt : nullptr;
 }

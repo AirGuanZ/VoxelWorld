@@ -24,14 +24,6 @@ void Application::Run(void)
 
     window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
-    ID3D11Resource *tex = nullptr;
-    ID3D11ShaderResourceView *view = nullptr;
-    if(TextureFile::GetInstance().LoadTexture2D(L"haha.png", tex, view))
-    {
-        TextureFile::GetInstance().SaveTexture2DToPNG(L"output.png", tex);
-        tex->Release(); view->Release();
-    }
-
     while(!(GetKeyState(VK_ESCAPE) & 0x8000))
     {
         window.ClearRenderTarget();

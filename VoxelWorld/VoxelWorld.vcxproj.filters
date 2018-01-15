@@ -28,6 +28,15 @@
     <Filter Include="Source\Texture">
       <UniqueIdentifier>{35820c58-4e92-41f3-9fa8-ce3c54fb8c60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin">
+      <UniqueIdentifier>{87f79c15-4d77-4a14-8224-47a88e33aa94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bin\Shader">
+      <UniqueIdentifier>{6e80e0f5-0e51-4698-8c3b-3fc51fa54b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bin\Shader\Basic">
+      <UniqueIdentifier>{ecf856ab-4b11-4e90-97b9-1ca7f791547b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -56,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Texture\TextureFile.cpp">
       <Filter>Source\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Model\BasicCube.cpp">
+      <Filter>Source\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,8 +107,17 @@
     <ClInclude Include="..\Source\Texture\TextureFile.h">
       <Filter>Source\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Model\BasicCube.h">
+      <Filter>Source\Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Bin\Shader\Basic\pixel.hlsl">
+      <Filter>Bin\Shader\Basic</Filter>
+    </None>
+    <None Include="Bin\Shader\Basic\vertex.hlsl">
+      <Filter>Bin\Shader\Basic</Filter>
+    </None>
   </ItemGroup>
 </Project>

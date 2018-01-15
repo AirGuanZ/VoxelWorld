@@ -22,6 +22,7 @@
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\Model\BasicCube.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Camera\Camera.h" />
+    <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
@@ -45,6 +47,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bin\Shader\Basic\pixel.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Bin\Shader\Basic\vertex.hlsl">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

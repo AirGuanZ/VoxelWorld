@@ -21,6 +21,8 @@ public:
         std::vector<UINT> offsets;
     };
 
+    Model(void) = default;
+
     bool IsAvailable(void) const;
 
     void Bind(void) const;
@@ -29,6 +31,7 @@ public:
 private:
     static const std::vector<ID3D11Buffer*> emptyVtxBufs_;
 
+protected:
     VertexBufferBinding vtxBufBinding_;
 };
 

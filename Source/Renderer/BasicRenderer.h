@@ -17,12 +17,12 @@ class BasicRenderer : public Uncopiable
 {
 public:
     using ShaderType = OWE::Shader<SS_VS, SS_PS>;
+    using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
 
     struct Vertex
     {
         Vector3 pos;        // POSITION
         Vector2 texCoord;   // TEXCOORD
-        Vector3 normal;     // NORMAL
         Vector3 lightColor; // LIGHTCOLOR
     };
 

@@ -71,10 +71,12 @@ namespace Helper
         return reinterpret_cast<size_t>(&(reinterpret_cast<ClassType*>(0)->*pMem));
     }
 
+    bool ReadFile(const std::wstring &filename, std::string &output);
+
     ID3D11InputLayout *CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
                                          int num, const void *byteCode, int length);
 
-    bool ReadFile(const std::wstring &filename, std::string &output);
+    ID3D11Buffer *CreateVertexBuffer(void *initData, size_t byteSize, bool dynamic = false);
 }
 
 #endif //VW_HELPER_FUNCTIONS_H
