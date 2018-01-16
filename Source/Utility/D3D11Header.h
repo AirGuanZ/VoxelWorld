@@ -9,11 +9,4 @@ Created by AirGuanZ
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
-#include <SimpleMath.h>
-
-using DirectX::SimpleMath::Vector2;
-using DirectX::SimpleMath::Vector3;
-using DirectX::SimpleMath::Vector4;
-using DirectX::SimpleMath::Matrix;
-
 #endif //VW_D3D11_HEADER_H

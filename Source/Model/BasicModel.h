@@ -19,7 +19,7 @@ public:
     using Vertex = typename Renderer::Vertex;
     using Uniforms = typename Renderer::Uniforms;
 
-    BasicModel(void) = default;
+    BasicModel(void);
     ~BasicModel(void);
 
     void AddTriangle(const Vertex *triangle);

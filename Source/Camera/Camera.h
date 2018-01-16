@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_CAMERA_H
 
 #include "../Utility/D3D11Header.h"
+#include "../Utility/Math.h"
 
 class Camera
 {

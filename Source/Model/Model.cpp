@@ -28,6 +28,12 @@ void Model::Bind(void) const
         vtxBufBinding_.offsets.data());
 }
 
+void Model::Draw(void) const
+{
+    Window::GetInstance().GetD3DDeviceContext()->Draw(
+        vtxBufBinding_.vtxCount, 0);
+}
+
 void Model::Unbind(void) const
 {
     assert(Window::GetInstance().IsD3DAvailable() && IsAvailable());

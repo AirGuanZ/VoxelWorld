@@ -16,6 +16,7 @@ public:
     struct VertexBufferBinding
     {
         int startSlot = -1;
+        int vtxCount  = -1;
         std::vector<ID3D11Buffer*> bufs;
         std::vector<UINT> strides;
         std::vector<UINT> offsets;
@@ -27,6 +28,8 @@ public:
 
     void Bind(void) const;
     void Unbind(void) const;
+
+    void Draw(void) const;
 
 private:
     static const std::vector<ID3D11Buffer*> emptyVtxBufs_;

@@ -8,6 +8,11 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "BasicModel.h"
 
+BasicModel::BasicModel(void)
+{
+
+}
+
 BasicModel::~BasicModel(void)
 {
     Destroy();
@@ -39,6 +44,7 @@ bool BasicModel::MakeVertexBuffer(void)
         return false;
 
     vtxBufBinding_.startSlot = 0;
+    vtxBufBinding_.vtxCount = triangles_.size() * 3;
     vtxBufBinding_.bufs.push_back(buf);
     vtxBufBinding_.strides.push_back(sizeof(Vertex));
     vtxBufBinding_.offsets.push_back(0);
@@ -55,6 +61,7 @@ void BasicModel::Destroy(void)
         assert(vtxBufBinding_.bufs.size() == 1 && vtxBufBinding_.bufs[0]);
         vtxBufBinding_.bufs[0]->Release();
         vtxBufBinding_.startSlot = -1;
+        vtxBufBinding_.vtxCount  = -1;
         vtxBufBinding_.bufs.clear();
         vtxBufBinding_.strides.clear();
         vtxBufBinding_.offsets.clear();

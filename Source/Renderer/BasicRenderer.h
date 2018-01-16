@@ -11,6 +11,7 @@ Created by AirGuanZ
 #include <OWEShader.hpp>
 
 #include "../Utility/D3D11Header.h"
+#include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 
 class BasicRenderer : public Uncopiable

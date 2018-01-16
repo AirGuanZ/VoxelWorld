@@ -84,6 +84,12 @@
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkManager.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkModelGenerator.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -141,6 +147,15 @@
       <Filter>Source\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Chunk\ChunkManager.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Math.h">
+      <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Renderer\RenderQueue.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkModelGenerator.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
   </ItemGroup>
