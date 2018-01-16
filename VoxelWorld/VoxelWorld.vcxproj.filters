@@ -75,6 +75,9 @@
     <ClCompile Include="..\Source\Model\BasicModel.cpp">
       <Filter>Source\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkSection.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">

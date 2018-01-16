@@ -8,12 +8,6 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "BasicModel.h"
 
-BasicModel::BasicModel(void)
-    : Model()
-{
-
-}
-
 BasicModel::~BasicModel(void)
 {
     Destroy();

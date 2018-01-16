@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
+    <ClCompile Include="..\Source\Chunk\ChunkSection.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\BasicCube.cpp" />
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />

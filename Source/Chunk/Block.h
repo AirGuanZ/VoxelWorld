@@ -8,11 +8,12 @@ Created by AirGuanZ
 
 enum BlockType : int
 {
-    Unknown = -1,
-    Air     = 0,
-    Stone   = Air + 1,
-    Dirt    = Stone + 1,
-    Grass   = Dirt + 1
+    Ukn         = -1,
+    Air         = 0,
+    Bedrock     = Air + 1,
+    Stone       = Bedrock + 1,
+    Dirt        = Stone + 1,
+    Grass       = Dirt + 1
 };
 
 inline int Blk2Int(BlockType blockType)
@@ -27,7 +28,9 @@ inline BlockType Int2Blk(int intValue)
 
 struct Block
 {
-    BlockType type;
+    BlockType type = BlockType::Air;
 };
+
+static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially copiable");
 
 #endif //VW_BLOCK_H
