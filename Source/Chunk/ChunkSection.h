@@ -14,10 +14,6 @@ Created by AirGuanZ
 constexpr int CHUNKSECTION_SIZE = 16;
 
 /*
-    ChunkSection自带一个线程安全的引用计数器
-    主线程永远持有一个引用计数，除非打算销毁它
-    每个loader任务都持有一个引用计数
-
     ChunkSection中的数据分为两部分：
 
     1. Block数据
@@ -28,6 +24,8 @@ constexpr int CHUNKSECTION_SIZE = 16;
         这部分数据永远由loader线程负责创建和销毁
         如果主线程needNewModel，那么就拷贝一份block + 周围一圈block的数据，
         用拷贝的数据作为创建model的loader任务的数据源
+
+    保证：loader任务不依赖于主线程这边任何ChunkSection的数据
 */
 
 class ChunkSection : public Uncopiable
