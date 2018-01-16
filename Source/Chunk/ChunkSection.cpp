@@ -11,11 +11,11 @@ Created by AirGuanZ
 ChunkSection::ChunkSection(void)
     : basicModel_(nullptr), blockChanged_(true)
 {
-    for(int x = 0; x != CHUNKSECTION_SIZE; ++x)
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
-        for(int y = 0; y != CHUNKSECTION_SIZE; ++y)
+        for(int y = 0; y != CHUNK_SECTION_SIZE; ++y)
         {
-            for(int z = 0; z != CHUNKSECTION_SIZE; ++z)
+            for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
                 blocks_[x][y][z].type = BlockType::Air;
         }
     }
@@ -28,9 +28,9 @@ ChunkSection::~ChunkSection(void)
 
 static inline void AssertValidPositionInSection(int x, int y, int z)
 {
-    assert(0 <= x && x < CHUNKSECTION_SIZE);
-    assert(0 <= y && y < CHUNKSECTION_SIZE);
-    assert(0 <= z && z < CHUNKSECTION_SIZE);
+    assert(0 <= x && x < CHUNK_SECTION_SIZE);
+    assert(0 <= y && y < CHUNK_SECTION_SIZE);
+    assert(0 <= z && z < CHUNK_SECTION_SIZE);
 }
 
 void ChunkSection::SetBlock(int x, int y, int z, const Block &block)
@@ -57,47 +57,47 @@ bool ChunkSection::IsModelsAvailable(void) const
     return basicModel_ != nullptr;
 }
 
-void ChunkSection::GetBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
     std::memcpy(data, blocks_, sizeof(blocks_));
 }
 
-void ChunkSection::GetPosXFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetPosXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
-    std::memcpy(data, blocks_[CHUNKSECTION_SIZE - 1], sizeof(blocks_[CHUNKSECTION_SIZE - 1]));
+    std::memcpy(data, blocks_[CHUNK_SECTION_SIZE - 1], sizeof(blocks_[CHUNK_SECTION_SIZE - 1]));
 }
 
-void ChunkSection::GetNegXFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetNegXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
     std::memcpy(data, blocks_[0], sizeof(blocks_[0]));
 }
 
-void ChunkSection::GetPosYFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetPosYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
-    for(int x = 0; x != CHUNKSECTION_SIZE; ++x)
-        std::memcpy(data[x], blocks_[x][CHUNKSECTION_SIZE - 1], sizeof(blocks_[x][CHUNKSECTION_SIZE]));
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
+        std::memcpy(data[x], blocks_[x][CHUNK_SECTION_SIZE - 1], sizeof(blocks_[x][CHUNK_SECTION_SIZE]));
 }
 
-void ChunkSection::GetNegYFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetNegYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
-    for(int x = 0; x != CHUNKSECTION_SIZE; ++x)
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
         std::memcpy(data[x], blocks_[x][0], sizeof(blocks_[x][0]));
 }
 
-void ChunkSection::GetPosZFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetPosZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
-    for(int x = 0; x != CHUNKSECTION_SIZE; ++x)
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
-        for(int y = 0; y != CHUNKSECTION_SIZE; ++y)
-            data[x][y] = blocks_[x][y][CHUNKSECTION_SIZE - 1];
+        for(int y = 0; y != CHUNK_SECTION_SIZE; ++y)
+            data[x][y] = blocks_[x][y][CHUNK_SECTION_SIZE - 1];
     }
 }
 
-void ChunkSection::GetNegZFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const
+void ChunkSection::GetNegZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
 {
-    for(int x = 0; x != CHUNKSECTION_SIZE; ++x)
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
-        for(int y = 0; y != CHUNKSECTION_SIZE; ++y)
+        for(int y = 0; y != CHUNK_SECTION_SIZE; ++y)
             data[x][y] = blocks_[x][y][0];
     }
 }

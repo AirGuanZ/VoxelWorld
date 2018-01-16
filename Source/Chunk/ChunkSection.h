@@ -11,8 +11,6 @@ Created by AirGuanZ
 #include "../Utility/Uncopiable.h"
 #include "Block.h"
 
-constexpr int CHUNKSECTION_SIZE = 16;
-
 /*
     ChunkSection中的数据分为两部分：
 
@@ -28,9 +26,13 @@ constexpr int CHUNKSECTION_SIZE = 16;
     保证：loader任务不依赖于主线程这边任何ChunkSection的数据
 */
 
+constexpr int CHUNK_SECTION_SIZE = 16;
+
 class ChunkSection : public Uncopiable
 {
 public:
+    friend class Chunk;
+
     ChunkSection(void);
     ~ChunkSection(void);
 
@@ -40,19 +42,19 @@ public:
 
     bool IsModelsAvailable(void) const;
 
-    void GetBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
+    void GetBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
     
-    void GetPosXFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
-    void GetNegXFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
+    void GetPosXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetNegXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
 
-    void GetPosYFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
-    void GetNegYFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
+    void GetPosYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetNegYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
 
-    void GetPosZFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
-    void GetNegZFaceBlockData(Block (&data)[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE]) const;
+    void GetPosZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetNegZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
 
 private:
-    Block blocks_[CHUNKSECTION_SIZE][CHUNKSECTION_SIZE][CHUNKSECTION_SIZE];
+    Block blocks_[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
 
     BasicModel *basicModel_;
     bool blockChanged_;
