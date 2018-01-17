@@ -50,6 +50,11 @@ struct BlockInfo
 
     BlockShape shape;
     BlockRenderer renderer;
+
+    union
+    {
+        int basicBoxTexPos[7]; //BasicRenderer, Box的六个面的tex编号以及其上的坐标
+    };
 };
 
 #endif //VW_BLOCK_INFO_H

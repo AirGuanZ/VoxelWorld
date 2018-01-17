@@ -9,11 +9,6 @@ Created by AirGuanZ
 #include "../Model/BasicModel.h"
 #include "Chunk.h"
 
-struct ChunkSectionModels
-{
-    BasicModel basicModel;
-};
-
 class ChunkModelGenerator
 {
 public:

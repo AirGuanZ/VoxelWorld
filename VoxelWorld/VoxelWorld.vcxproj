@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Block\BlockInfoManager.cpp" />
+    <ClCompile Include="..\Source\Block\BlockModelGenerator.cpp" />
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\Chunk\Chunk.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\Source\Block\Block.h" />
     <ClInclude Include="..\Source\Block\BlockInfo.h" />
     <ClInclude Include="..\Source\Block\BlockInfoManager.h" />
+    <ClInclude Include="..\Source\Block\BlockModelGenerator.h" />
     <ClInclude Include="..\Source\Camera\Camera.h" />
     <ClInclude Include="..\Source\Chunk\Chunk.h" />
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />

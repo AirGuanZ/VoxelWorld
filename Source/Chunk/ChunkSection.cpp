@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include "ChunkSection.h"
 
 ChunkSection::ChunkSection(void)
-    : basicModel_(nullptr), blockChanged_(true)
+    : models_(nullptr), blockChanged_(true)
 {
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
@@ -23,7 +23,7 @@ ChunkSection::ChunkSection(void)
 
 ChunkSection::~ChunkSection(void)
 {
-    assert(basicModel_ == nullptr);
+    assert(models_ == nullptr);
 }
 
 static inline void AssertValidPositionInSection(int x, int y, int z)
@@ -54,7 +54,7 @@ Block &ChunkSection::GetBlock(int x, int y, int z)
 
 bool ChunkSection::IsModelsAvailable(void) const
 {
-    return basicModel_ != nullptr;
+    return models_ != nullptr;
 }
 
 void ChunkSection::GetBlockData(ChunkData &data) const

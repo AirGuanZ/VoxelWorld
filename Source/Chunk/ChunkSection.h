@@ -28,6 +28,11 @@ Created by AirGuanZ
 
 constexpr int CHUNK_SECTION_SIZE = 16;
 
+struct ChunkSectionModels
+{
+    BasicModel basicModel;
+};
+
 class ChunkSection : public Uncopiable
 {
 public:
@@ -59,7 +64,7 @@ public:
 private:
     ChunkData blocks_;
 
-    BasicModel *basicModel_;
+    ChunkSectionModels *models_;
     bool blockChanged_;
 };
 

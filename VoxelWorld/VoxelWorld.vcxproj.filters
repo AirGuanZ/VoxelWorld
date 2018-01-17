@@ -99,6 +99,9 @@
     <ClCompile Include="..\Source\Utility\ConfigFile.cpp">
       <Filter>Source\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Block\BlockModelGenerator.cpp">
+      <Filter>Source\Block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Utility\ConfigFile.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Block\BlockModelGenerator.h">
+      <Filter>Source\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
