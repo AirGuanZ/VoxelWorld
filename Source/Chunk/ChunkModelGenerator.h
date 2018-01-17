@@ -6,20 +6,25 @@ Created by AirGuanZ
 #ifndef VW_CHUNK_MODEL_GENERATOR_H
 #define VW_CHUNK_MODEL_GENERATOR_H
 
-#include "../Model/Model.h"
+#include "../Model/BasicModel.h"
 #include "Chunk.h"
+
+struct ChunkSectionModels
+{
+    BasicModel basicModel;
+};
 
 class ChunkModelGenerator
 {
 public:
-    static Model *GenerateChunkSectionModel(
-        Block (&ckData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&pXData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&nXData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&pYData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&nYData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&pZData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE],
-        Block (&nZData)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]);
+    static ChunkSectionModels *GenerateChunkSectionModel(
+        ChunkSection::ChunkData &ckData,
+        ChunkSection::ChunkFace &pXData,
+        ChunkSection::ChunkFace &nXData,
+        ChunkSection::ChunkFace &pYData,
+        ChunkSection::ChunkFace &nYData,
+        ChunkSection::ChunkFace &pZData,
+        ChunkSection::ChunkFace &nZData);
 };
 
 #endif //VW_CHUNK_MODEL_GENERATOR_H

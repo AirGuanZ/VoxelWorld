@@ -6,10 +6,10 @@ Created by AirGuanZ
 #ifndef VW_CHUNK_SECTION_H
 #define VW_CHUNK_SECTION_H
 
+#include "../Block/Block.h"
 #include "../Model/BasicModel.h"
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Uncopiable.h"
-#include "Block.h"
 
 /*
     ChunkSection中的数据分为两部分：
@@ -33,6 +33,9 @@ class ChunkSection : public Uncopiable
 public:
     friend class Chunk;
 
+    using ChunkFace = Block[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+    using ChunkData = Block[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+
     ChunkSection(void);
     ~ChunkSection(void);
 
@@ -42,19 +45,19 @@ public:
 
     bool IsModelsAvailable(void) const;
 
-    void GetBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
-    
-    void GetPosXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
-    void GetNegXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetBlockData(ChunkData &data) const;
 
-    void GetPosYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
-    void GetNegYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetPosXFaceBlockData(ChunkFace &data) const;
+    void GetNegXFaceBlockData(ChunkFace &data) const;
 
-    void GetPosZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
-    void GetNegZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const;
+    void GetPosYFaceBlockData(ChunkFace &data) const;
+    void GetNegYFaceBlockData(ChunkFace &data) const;
+
+    void GetPosZFaceBlockData(ChunkFace &data) const;
+    void GetNegZFaceBlockData(ChunkFace &data) const;
 
 private:
-    Block blocks_[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+    ChunkData blocks_;
 
     BasicModel *basicModel_;
     bool blockChanged_;

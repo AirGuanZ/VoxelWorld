@@ -57,34 +57,34 @@ bool ChunkSection::IsModelsAvailable(void) const
     return basicModel_ != nullptr;
 }
 
-void ChunkSection::GetBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetBlockData(ChunkData &data) const
 {
     std::memcpy(data, blocks_, sizeof(blocks_));
 }
 
-void ChunkSection::GetPosXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetPosXFaceBlockData(ChunkFace &data) const
 {
     std::memcpy(data, blocks_[CHUNK_SECTION_SIZE - 1], sizeof(blocks_[CHUNK_SECTION_SIZE - 1]));
 }
 
-void ChunkSection::GetNegXFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetNegXFaceBlockData(ChunkFace &data) const
 {
     std::memcpy(data, blocks_[0], sizeof(blocks_[0]));
 }
 
-void ChunkSection::GetPosYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetPosYFaceBlockData(ChunkFace &data) const
 {
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
         std::memcpy(data[x], blocks_[x][CHUNK_SECTION_SIZE - 1], sizeof(blocks_[x][CHUNK_SECTION_SIZE]));
 }
 
-void ChunkSection::GetNegYFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetNegYFaceBlockData(ChunkFace &data) const
 {
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
         std::memcpy(data[x], blocks_[x][0], sizeof(blocks_[x][0]));
 }
 
-void ChunkSection::GetPosZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetPosZFaceBlockData(ChunkFace &data) const
 {
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
@@ -93,7 +93,7 @@ void ChunkSection::GetPosZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_
     }
 }
 
-void ChunkSection::GetNegZFaceBlockData(Block (&data)[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE]) const
+void ChunkSection::GetNegZFaceBlockData(ChunkFace &data) const
 {
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {

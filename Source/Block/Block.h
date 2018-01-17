@@ -6,25 +6,9 @@ Created by AirGuanZ
 #ifndef VW_BLOCK_H
 #define VW_BLOCK_H
 
-enum BlockType : int
-{
-    Ukn         = -1,
-    Air         = 0,
-    Bedrock     = Air + 1,
-    Stone       = Bedrock + 1,
-    Dirt        = Stone + 1,
-    Grass       = Dirt + 1
-};
+#include <type_traits>
 
-inline int Blk2Int(BlockType blockType)
-{
-    return static_cast<int>(blockType);
-}
-
-inline BlockType Int2Blk(int intValue)
-{
-    return static_cast<BlockType>(intValue);
-}
+#include "BlockInfo.h"
 
 struct Block
 {

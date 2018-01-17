@@ -10,12 +10,6 @@ Created by AirGuanZ
 
 #include <Windows.h>
 
-#include "../Camera/Camera.h"
-#include "../Model/BasicCube.h"
-#include "../Renderer/BasicRenderer.h"
-#include "../Texture/Texture2D.h"
-#include "../Texture/TextureFile.h"
-#include "../Utility/HelperFunctions.h"
 #include "../Window/Window.h"
 #include "Application.h"
 
