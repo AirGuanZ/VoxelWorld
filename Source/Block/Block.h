@@ -13,6 +13,7 @@ Created by AirGuanZ
 struct Block
 {
     BlockType type = BlockType::Air;
+    struct { std::uint8_t r, g, b; } lightColor;
 };
 
 static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially copiable");

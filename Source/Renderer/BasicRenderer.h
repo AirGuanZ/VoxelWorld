@@ -14,6 +14,9 @@ Created by AirGuanZ
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 
+constexpr int BASIC_RENDERER_TEXTURE_NUM = 1;
+constexpr int BASIC_RENDERER_TEXTURE_BLOCK_SIZE = 16;
+
 class BasicRenderer : public Uncopiable
 {
 public:

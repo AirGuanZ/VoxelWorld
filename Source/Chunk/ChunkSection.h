@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include "../Block/Block.h"
 #include "../Model/BasicModel.h"
+#include "../Renderer/BasicRenderer.h"
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Uncopiable.h"
 
@@ -30,7 +31,7 @@ constexpr int CHUNK_SECTION_SIZE = 16;
 
 struct ChunkSectionModels
 {
-    BasicModel basicModel;
+    BasicModel basicModel[BASIC_RENDERER_TEXTURE_NUM];
 };
 
 class ChunkSection : public Uncopiable

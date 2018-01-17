@@ -53,7 +53,10 @@ struct BlockInfo
 
     union
     {
-        int basicBoxTexPos[7]; //BasicRenderer, Box的六个面的tex编号以及其上的坐标
+        //BasicRenderer, Box的六个面的tex编号以及其上的坐标
+        //0：tex编号
+        //1-6：+x, -x, +y, -y, +z, -z
+        int basicBoxTexPos[7];
     };
 };
 

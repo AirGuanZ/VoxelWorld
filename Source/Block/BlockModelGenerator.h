@@ -15,6 +15,7 @@ class BlockModelGenerator
 {
 public:
     virtual void AddTriangles(
+        const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
         const Block &pY, const Block &nY,
@@ -28,6 +29,7 @@ class BlockModelGenerator_Null : public BlockModelGenerator
 {
 public:
     void AddTriangles(
+        const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
         const Block &pY, const Block &nY,
@@ -39,6 +41,7 @@ class BlockModelGenerator_BasicRenderer_Box : public BlockModelGenerator
 {
 public:
     void AddTriangles(
+        const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
         const Block &pY, const Block &nY,

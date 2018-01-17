@@ -13,6 +13,7 @@ class ChunkModelGenerator
 {
 public:
     static ChunkSectionModels *GenerateChunkSectionModel(
+        const Vector3 &sectionOffset,
         ChunkSection::ChunkData &ckData,
         ChunkSection::ChunkFace &pXData,
         ChunkSection::ChunkFace &nXData,

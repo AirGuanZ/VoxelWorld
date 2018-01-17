@@ -10,7 +10,9 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "BlockInfoManager.h"
 
-//TODO：硬编码改为从配置文件中加载
+SINGLETON_CLASS_DEFINITION(BlockInfoManager);
+
+//IMPROVE：硬编码改为从配置文件中加载
 BlockInfoManager::BlockInfoManager(void)
 {
     info_ = {
