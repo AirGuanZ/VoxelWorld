@@ -21,12 +21,10 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Block\BlockInfoManager.cpp" />
-    <ClCompile Include="..\Source\Block\BlockModelGenerator.cpp" />
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\Chunk\Chunk.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkModelGenerator.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkSection.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\BasicCube.cpp" />
@@ -43,13 +41,10 @@
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Block\Block.h" />
     <ClInclude Include="..\Source\Block\BlockInfo.h" />
-    <ClInclude Include="..\Source\Block\BlockInfoManager.h" />
-    <ClInclude Include="..\Source\Block\BlockModelGenerator.h" />
     <ClInclude Include="..\Source\Camera\Camera.h" />
     <ClInclude Include="..\Source\Chunk\Chunk.h" />
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkModelGenerator.h" />
     <ClInclude Include="..\Source\Chunk\ChunkSection.h" />
     <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
