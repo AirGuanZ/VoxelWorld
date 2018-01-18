@@ -62,13 +62,13 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         UINT16 idxStart = static_cast<UINT16>(output.GetVerticesCount());
 
         output.AddVertex(
-        { posOffset + vtx0, { texBaseU, texBaseV + TEX_GRID_SIZE }, lightColor });
+        { posOffset + vtx0, { texBaseU, texBaseV + TEX_GRID_SIZE }, lightColor, blk.sunlight });
         output.AddVertex(
-        { posOffset + vtx1, { texBaseU, texBaseV }, lightColor });
+        { posOffset + vtx1, { texBaseU, texBaseV }, lightColor, blk.sunlight });
         output.AddVertex(
-        { posOffset + vtx2, { texBaseU + TEX_GRID_SIZE, texBaseV }, lightColor });
+        { posOffset + vtx2, { texBaseU + TEX_GRID_SIZE, texBaseV }, lightColor, blk.sunlight });
         output.AddVertex(
-        { posOffset + vtx3, { texBaseU + TEX_GRID_SIZE, texBaseV + TEX_GRID_SIZE }, lightColor });
+        { posOffset + vtx3, { texBaseU + TEX_GRID_SIZE, texBaseV + TEX_GRID_SIZE }, lightColor, blk.sunlight });
 
         output.AddIndex(idxStart);
         output.AddIndex(idxStart + 1);

@@ -10,10 +10,17 @@ Created by AirGuanZ
 
 #include "BlockInfo.h"
 
+struct BlockLightColor
+{
+    std::uint8_t r, g, b;
+};
+
 struct Block
 {
     BlockType type = BlockType::Air;
-    struct { std::uint8_t r, g, b; } lightColor;
+    //天光和其他光照分开存储
+    BlockLightColor lightColor = { 0, 0, 0 };
+    float sunlight = 0.0f;
 };
 
 static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially copiable");

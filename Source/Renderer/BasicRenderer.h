@@ -28,6 +28,7 @@ public:
         Vector3 pos;        // POSITION
         Vector2 texCoord;   // TEXCOORD
         Vector3 lightColor; // LIGHTCOLOR
+        float   sunlight;   // SUNLIGHT
     };
 
     BasicRenderer(void);

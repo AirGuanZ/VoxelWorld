@@ -75,9 +75,6 @@
     <ClCompile Include="..\Source\Model\BasicModel.cpp">
       <Filter>Source\Model</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
-      <Filter>Source\Chunk</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Block\BlockInfoManager.cpp">
       <Filter>Source\Block</Filter>
     </ClCompile>
@@ -86,6 +83,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp">
       <Filter>Source\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\Chunk.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkFile.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkManager.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp">
+      <Filter>Source\Chunk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +137,6 @@
     <ClInclude Include="..\Source\Model\BasicModel.h">
       <Filter>Source\Model</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Chunk\ChunkLoader.h">
-      <Filter>Source\Chunk</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\Math.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
@@ -153,6 +159,15 @@
       <Filter>Source\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Chunk\Chunk.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkManager.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkFile.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
   </ItemGroup>

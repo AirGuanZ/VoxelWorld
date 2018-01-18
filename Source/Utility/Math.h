@@ -14,19 +14,24 @@ using DirectX::SimpleMath::Vector3;
 using DirectX::SimpleMath::Vector4;
 using DirectX::SimpleMath::Matrix;
 
-struct IntVector2XZ
+struct IntVectorXZ
 {
+    IntVectorXZ(int _x = 0, int _z = 0)
+        : x(_x), z(_z)
+    {
+
+    }
     int x, z;
 };
 
-inline bool operator==(const IntVector2XZ &lhs, const IntVector2XZ &rhs) noexcept
+inline bool operator==(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
 {
     return lhs.x == rhs.x && lhs.z == rhs.z;
 }
 
-struct IntVector2XZHasher
+struct IntVectorXZHasher
 {
-    size_t operator()(const IntVector2XZ &v) const noexcept
+    size_t operator()(const IntVectorXZ &v) const noexcept
     {
         return std::hash<int>()((std::hash<int>()(v.x) ^ std::hash<int>()(v.z)) >> 2);
     }
