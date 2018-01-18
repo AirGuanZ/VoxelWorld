@@ -17,10 +17,12 @@ Created by AirGuanZ
 
     1. Block数据
         这部分数据一开始由loader线程写入，交于主线程后仅由主线程写入
+        Block改变导致的模型重建也在主线程完成
         销毁时，主线程提交销毁任务给loader线程
 
     2. Model数据
-        这部分数据永远由loader线程负责创建和销毁
+        新Chunk的Model由loader线程负责创建
+        Model的销毁永远由loader线程负责
         如果主线程needNewModel，那么就拷贝一份block + 周围一圈block的数据，
         用拷贝的数据作为创建model的loader任务的数据源
 
@@ -39,8 +41,7 @@ class ChunkSection : public Uncopiable
 public:
     friend class Chunk;
 
-    using ChunkFace = Block[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
-    using ChunkData = Block[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+    using ChunkSectionData = Block[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
 
     ChunkSection(void);
     ~ChunkSection(void);
@@ -51,19 +52,10 @@ public:
 
     bool IsModelsAvailable(void) const;
 
-    void GetBlockData(ChunkData &data) const;
-
-    void GetPosXFaceBlockData(ChunkFace &data) const;
-    void GetNegXFaceBlockData(ChunkFace &data) const;
-
-    void GetPosYFaceBlockData(ChunkFace &data) const;
-    void GetNegYFaceBlockData(ChunkFace &data) const;
-
-    void GetPosZFaceBlockData(ChunkFace &data) const;
-    void GetNegZFaceBlockData(ChunkFace &data) const;
+    const ChunkSectionData &GetBlockData(void) const;
 
 private:
-    ChunkData blocks_;
+    ChunkSectionData blocks_;
 
     ChunkSectionModels *models_;
     bool blockChanged_;

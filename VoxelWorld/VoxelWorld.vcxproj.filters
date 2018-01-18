@@ -72,14 +72,8 @@
     <ClCompile Include="..\Source\Texture\TextureFile.cpp">
       <Filter>Source\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Model\BasicCube.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Model\BasicModel.cpp">
       <Filter>Source\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Chunk\ChunkSection.cpp">
-      <Filter>Source\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Chunk\Chunk.cpp">
       <Filter>Source\Chunk</Filter>
@@ -95,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Utility\ConfigFile.cpp">
       <Filter>Source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp">
+      <Filter>Source\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkSection.cpp">
+      <Filter>Source\Chunk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +134,6 @@
     <ClInclude Include="..\Source\Texture\TextureFile.h">
       <Filter>Source\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Model\BasicCube.h">
-      <Filter>Source\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Chunk\ChunkSection.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
@@ -166,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\Utility\ConfigFile.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Block\BlockModelBuilder.h">
+      <Filter>Source\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Block\BlockInfoManager.h">
+      <Filter>Source\Block</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

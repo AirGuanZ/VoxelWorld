@@ -18,12 +18,14 @@ BasicModel::~BasicModel(void)
     Destroy();
 }
 
-void BasicModel::AddTriangle(const BasicModel::Vertex *triangle)
+void BasicModel::AddVertex(const BasicModel::Vertex &vertex)
 {
-    assert(triangle != nullptr);
-    triangles_.push_back(triangle[0]);
-    triangles_.push_back(triangle[1]);
-    triangles_.push_back(triangle[2]);
+    vertices_.push_back(vertex);
+}
+
+void BasicModel::AddIndex(UINT16 index)
+{
+    indices_.push_back(index);
 }
 
 bool BasicModel::MakeVertexBuffer(void)
@@ -31,39 +33,64 @@ bool BasicModel::MakeVertexBuffer(void)
     assert(vtxBufBinding_.startSlot == -1);
 
     //¿ÕmodelÊÇÔÊÐíµÄ
-    if(triangles_.empty())
-    {
-        vtxBufBinding_.startSlot = 0;
+    if(vertices_.empty())
         return true;
-    }
 
-    assert(triangles_.size() % 3 == 0);
+    assert(indices_.size() % 3 == 0);
     ID3D11Buffer *buf = Helper::CreateVertexBuffer(
-        triangles_.data(), triangles_.size() * sizeof(Vertex), false);
+        vertices_.data(), vertices_.size() * sizeof(Vertex), false);
     if(!buf)
         return false;
 
+    ID3D11Buffer *idxBuf = Helper::CreateIndexBuffer(
+        indices_.data(), indices_.size() * sizeof(UINT16), false);
+    if(!idxBuf)
+    {
+        Helper::ReleaseCOMObjects(buf);
+        return false;
+    }
+
     vtxBufBinding_.startSlot = 0;
-    vtxBufBinding_.vtxCount = triangles_.size() * 3;
+    vtxBufBinding_.idxCount = indices_.size();
+    vtxBufBinding_.indices = idxBuf;
+    vtxBufBinding_.indicesFormat = DXGI_FORMAT_R16_UINT;
     vtxBufBinding_.bufs.push_back(buf);
     vtxBufBinding_.strides.push_back(sizeof(Vertex));
     vtxBufBinding_.offsets.push_back(0);
-    triangles_.clear();
+
+    vertices_.clear();
+    indices_.clear();
 
     return true;
 }
 
 void BasicModel::Destroy(void)
 {
-    triangles_.clear();
+    vertices_.clear();
+    indices_.clear();
     if(IsAvailable())
     {
         assert(vtxBufBinding_.bufs.size() == 1 && vtxBufBinding_.bufs[0]);
         vtxBufBinding_.bufs[0]->Release();
+
+        assert(vtxBufBinding_.indices != nullptr);
+        vtxBufBinding_.indices->Release();
+        vtxBufBinding_.indices = nullptr;
+
         vtxBufBinding_.startSlot = -1;
-        vtxBufBinding_.vtxCount  = -1;
+        vtxBufBinding_.idxCount  = -1;
         vtxBufBinding_.bufs.clear();
         vtxBufBinding_.strides.clear();
         vtxBufBinding_.offsets.clear();
     }
+}
+
+size_t BasicModel::GetVerticesCount(void) const
+{
+    return vertices_.size();
+}
+
+size_t BasicModel::GetIndicesCount(void) const
+{
+    return indices_.size();
 }

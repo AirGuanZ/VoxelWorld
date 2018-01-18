@@ -57,47 +57,7 @@ bool ChunkSection::IsModelsAvailable(void) const
     return models_ != nullptr;
 }
 
-void ChunkSection::GetBlockData(ChunkData &data) const
+const ChunkSection::ChunkSectionData &ChunkSection::GetBlockData(void) const
 {
-    std::memcpy(data, blocks_, sizeof(blocks_));
-}
-
-void ChunkSection::GetPosXFaceBlockData(ChunkFace &data) const
-{
-    std::memcpy(data, blocks_[CHUNK_SECTION_SIZE - 1], sizeof(blocks_[CHUNK_SECTION_SIZE - 1]));
-}
-
-void ChunkSection::GetNegXFaceBlockData(ChunkFace &data) const
-{
-    std::memcpy(data, blocks_[0], sizeof(blocks_[0]));
-}
-
-void ChunkSection::GetPosYFaceBlockData(ChunkFace &data) const
-{
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-        std::memcpy(data[x], blocks_[x][CHUNK_SECTION_SIZE - 1], sizeof(blocks_[x][CHUNK_SECTION_SIZE]));
-}
-
-void ChunkSection::GetNegYFaceBlockData(ChunkFace &data) const
-{
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-        std::memcpy(data[x], blocks_[x][0], sizeof(blocks_[x][0]));
-}
-
-void ChunkSection::GetPosZFaceBlockData(ChunkFace &data) const
-{
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-    {
-        for(int y = 0; y != CHUNK_SECTION_SIZE; ++y)
-            data[x][y] = blocks_[x][y][CHUNK_SECTION_SIZE - 1];
-    }
-}
-
-void ChunkSection::GetNegZFaceBlockData(ChunkFace &data) const
-{
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-    {
-        for(int y = 0; y != CHUNK_SECTION_SIZE; ++y)
-            data[x][y] = blocks_[x][y][0];
-    }
+    return blocks_;
 }

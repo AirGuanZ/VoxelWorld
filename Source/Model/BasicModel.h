@@ -22,12 +22,17 @@ public:
     BasicModel(void);
     ~BasicModel(void);
 
-    void AddTriangle(const Vertex *triangle);
+    void AddVertex(const Vertex &vertex);
+    void AddIndex(UINT16 index);
     bool MakeVertexBuffer(void);
     void Destroy(void);
 
+    size_t GetVerticesCount(void) const;
+    size_t GetIndicesCount(void) const;
+
 private:
-    std::vector<Vertex> triangles_;
+    std::vector<Vertex> vertices_;
+    std::vector<UINT16> indices_;
 };
 
 #endif //VW_BASIC_MODEL_H

@@ -19,28 +19,38 @@ bool Model::IsAvailable(void) const
 
 void Model::Bind(void) const
 {
-    assert(Window::GetInstance().IsD3DAvailable() && IsAvailable());
+    assert(Window::GetInstance().IsD3DAvailable());
+    if(!IsAvailable())
+        return;
     Window::GetInstance().GetD3DDeviceContext()->IASetVertexBuffers(
         vtxBufBinding_.startSlot,
         vtxBufBinding_.bufs.size(),
         vtxBufBinding_.bufs.data(),
         vtxBufBinding_.strides.data(),
         vtxBufBinding_.offsets.data());
+    Window::GetInstance().GetD3DDeviceContext()->IASetIndexBuffer(
+        vtxBufBinding_.indices, vtxBufBinding_.indicesFormat, 0);
 }
 
 void Model::Draw(void) const
 {
-    Window::GetInstance().GetD3DDeviceContext()->Draw(
-        vtxBufBinding_.vtxCount, 0);
+    if(!IsAvailable())
+        return;
+    Window::GetInstance().GetD3DDeviceContext()->DrawIndexed(
+        vtxBufBinding_.idxCount, 0, 0);
 }
 
 void Model::Unbind(void) const
 {
-    assert(Window::GetInstance().IsD3DAvailable() && IsAvailable());
+    assert(Window::GetInstance().IsD3DAvailable());
+    if(!IsAvailable())
+        return;
     Window::GetInstance().GetD3DDeviceContext()->IASetVertexBuffers(
         vtxBufBinding_.startSlot,
         vtxBufBinding_.bufs.size(),
         emptyVtxBufs_.data(),
         vtxBufBinding_.strides.data(),
         vtxBufBinding_.offsets.data());
+    Window::GetInstance().GetD3DDeviceContext()->IASetIndexBuffer(
+        nullptr, vtxBufBinding_.indicesFormat, 0);
 }

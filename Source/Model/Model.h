@@ -16,7 +16,9 @@ public:
     struct VertexBufferBinding
     {
         int startSlot = -1;
-        int vtxCount  = -1;
+        int idxCount  = -1;
+        DXGI_FORMAT indicesFormat = DXGI_FORMAT_UNKNOWN;
+        ID3D11Buffer *indices = nullptr;
         std::vector<ID3D11Buffer*> bufs;
         std::vector<UINT> strides;
         std::vector<UINT> offsets;

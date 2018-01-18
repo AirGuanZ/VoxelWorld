@@ -77,6 +77,7 @@ namespace Helper
                                          int num, const void *byteCode, int length);
 
     ID3D11Buffer *CreateVertexBuffer(void *initData, size_t byteSize, bool dynamic = false);
+    ID3D11Buffer *CreateIndexBuffer(void *initData, size_t byteSize, bool dynamic = false);
 
     ID3D11SamplerState *CreateSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addrMode);
 }

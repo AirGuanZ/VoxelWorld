@@ -1,20 +1,17 @@
 /*================================================================
-Filename: BlockModelGenerator.h
-Date: 2018.1.17
+Filename: BlockModelBuilder.h
+Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLOCK_MODEL_GENERATOR_H
-#define VW_BLOCK_MODEL_GENERATOR_H
+#ifndef VW_BLOCK_MODEL_BUILDER_H
+#define VW_BLOCK_MODEL_BUILDER_H
 
-#include "../Chunk/Chunk.h"
-#include "../Model/BasicModel.h"
-#include "Block.h"
-#include "BlockInfo.h"
+#include "../Chunk/ChunkSection.h"
 
-class BlockModelGenerator
+class BlockModelBuilder
 {
 public:
-    virtual void AddTriangles(
+    virtual void Build(
         const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
@@ -23,12 +20,12 @@ public:
         ChunkSectionModels *models) const = 0;
 };
 
-const BlockModelGenerator *GetBlockModelGenerator(const Block &block);
+const BlockModelBuilder *GetBlockModelBuilder(BlockType type);
 
-class BlockModelGenerator_Null : public BlockModelGenerator
+class BlockModelBuilder_Null : public BlockModelBuilder
 {
 public:
-    void AddTriangles(
+    void Build(
         const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
@@ -37,10 +34,10 @@ public:
         ChunkSectionModels *models) const;
 };
 
-class BlockModelGenerator_BasicRenderer_Box : public BlockModelGenerator
+class BlockModelBuilder_BasicRenderer_Box : public BlockModelBuilder
 {
 public:
-    void AddTriangles(
+    void Build(
         const Vector3 &posOffset,
         const Block &blk,
         const Block &pX, const Block &nX,
@@ -49,4 +46,4 @@ public:
         ChunkSectionModels *models) const;
 };
 
-#endif //VW_BLOCK_MODEL_GENERATOR_H
+#endif //VW_BLOCK_MODEL_BUILDER_H

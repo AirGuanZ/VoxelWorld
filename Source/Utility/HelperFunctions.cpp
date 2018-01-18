@@ -56,6 +56,27 @@ ID3D11Buffer *Helper::CreateVertexBuffer(void *initData, size_t byteSize, bool d
     return SUCCEEDED(hr) ? rt : nullptr;
 }
 
+ID3D11Buffer *Helper::CreateIndexBuffer(void *initData, size_t byteSize, bool dynamic)
+{
+    assert(dynamic || initData);
+
+    D3D11_BUFFER_DESC dc;
+    dc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+    dc.ByteWidth = byteSize;
+    dc.CPUAccessFlags = dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
+    dc.MiscFlags = 0;
+    dc.StructureByteStride = 0;
+    dc.Usage = dynamic ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_IMMUTABLE;
+
+    D3D11_SUBRESOURCE_DATA data = { initData, 0, 0 };
+
+    ID3D11Buffer *rt = nullptr;
+    HRESULT hr = Window::GetInstance().GetD3DDevice()->CreateBuffer(
+        &dc, initData ? &data : nullptr, &rt);
+
+    return SUCCEEDED(hr) ? rt : nullptr;
+}
+
 ID3D11SamplerState *Helper::CreateSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addrMode)
 {
     D3D11_SAMPLER_DESC dc;

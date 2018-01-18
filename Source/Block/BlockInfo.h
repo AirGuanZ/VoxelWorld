@@ -20,16 +20,16 @@ enum class BlockType : std::uint8_t
     BlockTypeNum    = Grass + 1
 };
 
+enum class BlockRenderer : std::uint8_t
+{
+    Null = 0,
+    BasicRenderer = Null + 1,
+};
+
 enum class BlockShape : std::uint8_t
 {
     Null            = 0,
     Box             = Null + 1,
-};
-
-enum class BlockRenderer : std::uint8_t
-{
-    Null            = 0,
-    BasicRenderer   = Null + 1,
 };
 
 template<typename Dst = int>
