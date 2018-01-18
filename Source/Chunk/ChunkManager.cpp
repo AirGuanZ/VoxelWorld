@@ -18,6 +18,16 @@ ChunkManager::~ChunkManager(void)
     assert(chunks_.empty());
 }
 
+Chunk *ChunkManager::GetChunk(int ckX, int ckZ)
+{
+    auto it = chunks_.find({ ckX, ckZ });
+    if(it != chunks_.end())
+        return it->second;
+
+    LoadChunk(ckX, ckZ);
+    return chunks_[{ ckX, ckZ }];
+}
+
 Block &ChunkManager::GetBlock(int x, int y, int z)
 {
     if(y < 0 || y >= CHUNK_MAX_HEIGHT)
@@ -41,4 +51,9 @@ void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
                    y,
                    BlockXZ_To_BlockXZInChunk(z),
                    blk);
+}
+
+void ChunkManager::LoadChunk(int ckX, int ckZ)
+{
+    //TODO
 }

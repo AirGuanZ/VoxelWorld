@@ -31,7 +31,10 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
                             &pY = ck_->GetBlock(x, y + 1, z),
                             &nY = ck_->GetBlock(x, y - 1, z);
                 GetBlockModelBuilder(ck_->GetBlock(x, y, z).type)->Build(
-                    Vector3(x, y - yBase, z), ck_->GetBlock(x, y, z),
+                    Vector3(static_cast<float>(x),
+                            static_cast<float>(y - yBase),
+                            static_cast<float>(z)),
+                    ck_->GetBlock(x, y, z),
                     pX, nX, pY, nY, pZ, nZ, models);
             }
         }
