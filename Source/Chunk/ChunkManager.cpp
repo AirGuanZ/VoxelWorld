@@ -27,8 +27,8 @@ void ChunkManager::EndChunkLoading(void)
 
 Chunk *ChunkManager::GetChunkByBlockPos(int x, int z)
 {
-    auto &rt = cks_.find(BlockPosToChunkPos({ x, z }));
-    return rt == cks_.end() ? nullptr : rt->second;
+    IntVector2XZ xz = BlockPosToChunkPos({ x, z });
+    return GetChunkByChunkPos(xz.x, xz.z);
 }
 
 Chunk *ChunkManager::GetChunkByChunkPos(int x, int z)

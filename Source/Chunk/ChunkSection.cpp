@@ -26,6 +26,11 @@ ChunkSection::~ChunkSection(void)
     assert(models_ == nullptr);
 }
 
+void ChunkSection::SetPosition(const IntVector3 &pos)
+{
+    pos_ = pos;
+}
+
 static inline void AssertValidPositionInSection(int x, int y, int z)
 {
     assert(0 <= x && x < CHUNK_SECTION_SIZE);

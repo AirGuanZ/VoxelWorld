@@ -96,6 +96,9 @@
     <ClCompile Include="..\Source\Chunk\ChunkSection.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Block\BlockInfoManager.h">
       <Filter>Source\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h">
+      <Filter>Source\Chunk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

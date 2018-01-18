@@ -26,6 +26,7 @@
     <ClCompile Include="..\Source\Chunk\Chunk.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
+    <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkSection.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\Source\Chunk\Chunk.h" />
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
+    <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
     <ClInclude Include="..\Source\Chunk\ChunkSection.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />

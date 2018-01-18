@@ -46,6 +46,8 @@ public:
     ChunkSection(void);
     ~ChunkSection(void);
 
+    void SetPosition(const IntVector3 &pos);
+
     void SetBlock(int xInSection, int yInSection, int zInSection, const Block &block);
     const Block &GetBlock(int xInSection, int yInSection, int zInSection) const;
     Block &GetBlock(int xInSection, int yInSection, int zInSection);
@@ -55,6 +57,8 @@ public:
     const ChunkSectionData &GetBlockData(void) const;
 
 private:
+    IntVector3 pos_;
+
     ChunkSectionData blocks_;
 
     ChunkSectionModels *models_;
