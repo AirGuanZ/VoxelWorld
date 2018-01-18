@@ -13,9 +13,8 @@ Created by AirGuanZ
 #include <vector>
 
 #include "../Utility/Uncopiable.h"
-#include "Chunk.h"
 
-class Task : public Uncopiable
+class ChunkLoaderTask : public Uncopiable
 {
 public:
     virtual bool Run(void) = 0;
@@ -30,13 +29,13 @@ public:
     void Initialize(int threadsNum = -1);
     void Destroy(void);
 
-    void AddTask(Task *task);
+    void AddTask(ChunkLoaderTask *task);
 
 private:
     void LoadingThreadEntry(void);
 
     std::mutex taskQueueMutex_;
-    std::queue<Task*> tasks_;
+    std::queue<ChunkLoaderTask*> tasks_;
 
     std::atomic<bool> running_;
     std::vector<std::thread> threads_;

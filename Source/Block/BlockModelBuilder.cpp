@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <cassert>
 
+#include "../Renderer/BasicRenderer.h"
 #include "BlockInfoManager.h"
 #include "BlockModelBuilder.h"
 
@@ -47,7 +48,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
 
     constexpr float TEX_GRID_SIZE = 1.0f / BASIC_RENDERER_TEXTURE_BLOCK_SIZE;
     Vector3 lightColor(blk.lightColor.r, blk.lightColor.g, blk.lightColor.b);
-    BasicModel &model = models->basicModel[info.basicBoxTexPos[0]];
+    BasicModel &model = models->basic[info.basicBoxTexPos[0]];
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,

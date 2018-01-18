@@ -40,7 +40,7 @@ void ChunkLoader::Destroy(void)
     }
 }
 
-void ChunkLoader::AddTask(Task *task)
+void ChunkLoader::AddTask(ChunkLoaderTask *task)
 {
     assert(task != nullptr);
 
@@ -52,7 +52,7 @@ void ChunkLoader::LoadingThreadEntry(void)
 {
     while(running_)
     {
-        Task *task = nullptr;
+        ChunkLoaderTask *task = nullptr;
 
         {
             std::lock_guard<std::mutex> lg(taskQueueMutex_);

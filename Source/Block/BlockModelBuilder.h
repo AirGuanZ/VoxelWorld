@@ -6,7 +6,7 @@ Created by AirGuanZ
 #ifndef VW_BLOCK_MODEL_BUILDER_H
 #define VW_BLOCK_MODEL_BUILDER_H
 
-#include "../Chunk/ChunkSection.h"
+#include "../Chunk/Chunk.h"
 
 class BlockModelBuilder
 {
