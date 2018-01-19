@@ -117,9 +117,9 @@ const Matrix &Camera::GetViewProjMatrix(void) const
 void Camera::UpdateViewProjMatrix(void)
 {
     view_ = Matrix::CreateTranslation(-pos_) *
-            Matrix::CreateRotationZ(-roll_) *
-            Matrix::CreateRotationY(-yaw_) *
-            Matrix::CreateRotationX(-pitch_);
+        Matrix::CreateRotationY(-yaw_) *
+        Matrix::CreateRotationX(-pitch_) *
+        Matrix::CreateRotationZ(-roll_);
     proj_ = Matrix::CreatePerspectiveFieldOfView(
         FOVy_, Window::GetInstance().GetClientAspectRatio(), near_, far_);
     viewProj_ = view_ * proj_;

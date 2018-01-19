@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Actor\Actor.cpp" />
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Block\BlockInfoManager.cpp" />
     <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp" />
@@ -27,7 +28,9 @@
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
+    <ClCompile Include="..\Source\Input\InputManager.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\Model\BasicCube.cpp" />
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
@@ -38,6 +41,7 @@
     <ClCompile Include="..\Source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\Actor\Actor.h" />
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Block\Block.h" />
     <ClInclude Include="..\Source\Block\BlockInfo.h" />
@@ -48,6 +52,8 @@
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
+    <ClInclude Include="..\Source\Input\InputManager.h" />
+    <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />

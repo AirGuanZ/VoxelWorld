@@ -43,6 +43,12 @@
     <Filter Include="Source\Block">
       <UniqueIdentifier>{6c741582-2646-4fe8-8509-7f3233d075a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Actor">
+      <UniqueIdentifier>{c1678b62-0bf0-4588-aa4c-078da4852dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{5a47863f-978e-4753-835e-ec69858122c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -95,6 +101,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
       <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Actor\Actor.cpp">
+      <Filter>Source\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Model\BasicCube.cpp">
+      <Filter>Source\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\InputManager.cpp">
+      <Filter>Source\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h">
       <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Actor\Actor.h">
+      <Filter>Source\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Model\BasicCube.h">
+      <Filter>Source\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\InputManager.h">
+      <Filter>Source\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

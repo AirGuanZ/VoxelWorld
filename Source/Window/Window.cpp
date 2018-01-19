@@ -233,7 +233,7 @@ static bool CreateDepthStencilBuffer(int sampleCount, int sampleQuality)
     depthStencilBufDesc.Format = DEPTHSTENCIL_BUFFER_FORMAT;
     depthStencilBufDesc.Width = Win::clientWidth;
     depthStencilBufDesc.Height = Win::clientHeight;
-    depthStencilBufDesc.MipLevels = 0;
+    depthStencilBufDesc.MipLevels = 1;
     depthStencilBufDesc.MiscFlags = 0;
     depthStencilBufDesc.SampleDesc.Count = sampleCount;
     depthStencilBufDesc.SampleDesc.Quality = sampleQuality;
@@ -247,7 +247,8 @@ static bool CreateDepthStencilBuffer(int sampleCount, int sampleQuality)
 
     D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
     depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-    depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+    depthStencilViewDesc.ViewDimension = sampleCount > 1 ? D3D11_DSV_DIMENSION_TEXTURE2DMS :
+                                                           D3D11_DSV_DIMENSION_TEXTURE2D;
     depthStencilViewDesc.Flags = 0;
     depthStencilViewDesc.Texture2D.MipSlice = 0;
 
@@ -332,7 +333,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
                  ", SampleQuality = " +
                  std::to_string(sampleQuality) +
                  ", SampleQuality Suppported is less than " +
-                 std::to_string(maxMSAAQuality - 1);
+                 std::to_string(maxMSAAQuality);
         DestroyD3D();
         return false;
     }

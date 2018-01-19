@@ -11,8 +11,11 @@ Created by AirGuanZ
 #include "ChunkManager.h"
 #include "ChunkModelBuilder.h"
 
-ChunkManager::ChunkManager(int loadDistance, int renderDistance,
-    int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates)
+ChunkManager::ChunkManager(int loadDistance,
+                           int renderDistance,
+                           int maxImpModelUpdates,
+                           int maxUniModelUpdates,
+                           int maxModelUpdates)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
