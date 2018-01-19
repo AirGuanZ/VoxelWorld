@@ -19,7 +19,7 @@ void ChunkLoader::Initialize(int threadNum)
 {
     assert(threads_.empty());
     if(threadNum <= 0)
-        threadNum = (std::max)(1u, std::thread::hardware_concurrency());
+        threadNum = (std::max)(2u, std::thread::hardware_concurrency()) - 1;
 
     running_ = true;
     while(threadNum-- > 0)
@@ -52,16 +52,56 @@ void ChunkLoader::AddMsg(ChunkLoaderMessage *msg)
     loaderMsgs_.push(msg);
 }
 
-std::shared_ptr<ChunkLoaderMessage> ChunkLoader::FetchMsg(void)
+ChunkLoaderMessage *ChunkLoader::FetchMsg(void)
 {
     std::lock_guard<std::mutex> lk(msgQueueMutex_);
 
     if(loaderMsgs_.empty())
-        return std::shared_ptr<ChunkLoaderMessage>();
+        return nullptr;
 
-    std::shared_ptr<ChunkLoaderMessage> rt(loaderMsgs_.front());
+    ChunkLoaderMessage *rt = loaderMsgs_.front();
     loaderMsgs_.pop();
     return rt;
+}
+
+std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
+{
+    std::lock_guard<std::mutex> lk(msgQueueMutex_);
+
+    std::queue<ChunkLoaderMessage*> rt;
+    rt.swap(loaderMsgs_);
+    return rt;
+}
+
+void ChunkLoader::LoadChunkData(Chunk *ck)
+{
+    //TODO
+
+    //把Chunk数据下半部分设为Stone，上半部分设为Air
+    Chunk::BlockData &data = ck->GetBlockData();
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
+    {
+        for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
+        {
+            for(int y = 0; y != CHUNK_MAX_HEIGHT / 2; ++y)
+            {
+                Block blk;
+                blk.type = BlockType::Stone;
+                blk.sunlight = 1.0f;
+                blk.lightColor = { 255, 255, 255 };
+                data[x][y][z] = blk;
+            }
+
+            for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT; ++y)
+            {
+                Block blk;
+                blk.type = BlockType::Air;
+                blk.sunlight = 1.0f;
+                blk.lightColor = { 0, 0, 0 };
+                data[x][y][z] = blk;
+            }
+        }
+    }
 }
 
 void ChunkLoader::TaskThreadEntry(void)
@@ -99,33 +139,7 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
 {
     assert(loader != nullptr);
 
-    //TODO
-
-    //把Chunk数据下半部分设为Stone，上半部分设为Air
-    Chunk::BlockData &data = ck_->GetBlockData();
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-    {
-        for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
-        {
-            for(int y = 0; y != CHUNK_MAX_HEIGHT / 2; ++y)
-            {
-                Block blk;
-                blk.type = BlockType::Stone;
-                blk.sunlight = 1.0f;
-                blk.lightColor = { 255, 255, 255 };
-                data[x][y][z] = blk;
-            }
-
-            for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT; ++y)
-            {
-                Block blk;
-                blk.type = BlockType::Air;
-                blk.sunlight = 1.0f;
-                blk.lightColor = { 0, 0, 0 };
-                data[x][y][z] = blk;
-            }
-        }
-    }
+    loader->LoadChunkData(ck_);
 
     ChunkLoaderMessage *msg = new ChunkLoaderMessage;
     msg->type = ChunkLoaderMessage::ChunkLoaded;

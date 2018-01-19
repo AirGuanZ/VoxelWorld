@@ -23,9 +23,8 @@ public:
     virtual ~ChunkLoaderTask(void) { }
 };
 
-class ChunkLoaderMessage
+struct ChunkLoaderMessage
 {
-public:
     enum { ChunkLoaded } type;
     union
     {
@@ -44,7 +43,12 @@ public:
     void AddTask(ChunkLoaderTask *task);
     void AddMsg(ChunkLoaderMessage *msg);
 
-    std::shared_ptr<ChunkLoaderMessage> FetchMsg(void);
+    ChunkLoaderMessage *FetchMsg(void);
+    std::queue<ChunkLoaderMessage*> FetchAllMsgs(void);
+
+    //真正的区块数据加载函数
+    //和线程没啥关系
+    void LoadChunkData(Chunk *ck);
 
 private:
     void TaskThreadEntry(void);
@@ -64,6 +68,7 @@ class ChunkLoaderTask_LoadChunkData : public ChunkLoaderTask
 {
 public:
     ChunkLoaderTask_LoadChunkData(Chunk *ck);
+    ~ChunkLoaderTask_LoadChunkData(void) = default;
 
     void Run(ChunkLoader *loader);
 
@@ -75,6 +80,7 @@ class ChunkLoaderTask_DestroyChunk : public ChunkLoaderTask
 {
 public:
     ChunkLoaderTask_DestroyChunk(Chunk *ck);
+    ~ChunkLoaderTask_DestroyChunk(void) = default;
 
     void Run(ChunkLoader *loader);
 

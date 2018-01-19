@@ -22,7 +22,7 @@ struct ChunkSectionModels
     BasicModel basic[BASIC_RENDERER_TEXTURE_NUM];
 };
 
-class Chunk
+class Chunk : public Uncopiable
 {
 public:
     Chunk(ChunkManager *ckMgr, const IntVectorXZ &ckPos);
