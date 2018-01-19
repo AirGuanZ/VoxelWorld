@@ -111,6 +111,9 @@
     <ClCompile Include="..\Source\Input\InputManager.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Utility\Clock.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Input\InputManager.h">
       <Filter>Source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Clock.h">
+      <Filter>Source\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

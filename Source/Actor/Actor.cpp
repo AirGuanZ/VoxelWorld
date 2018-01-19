@@ -43,7 +43,7 @@ void Actor::UpdateCamera(float deltaT)
     Vector3 horMove = static_cast<float>(horFBMove) * horDir
                     + static_cast<float>(horLRMove) * horLeftDir;
     horMove.Normalize();
-    pos += horMoveSpeed_ * horMove;
+    pos += horMoveSpeed_ * horMove * deltaT;
     camera_.SetPosition(pos);
 
     //ÊÓ½Ç×ª¶¯
@@ -53,8 +53,8 @@ void Actor::UpdateCamera(float deltaT)
         return (std::min)(maxV, (std::max)(minV, x));
     };
 
-    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * input.GetCursorMovX());
-    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * input.GetCursorMovY(),
+    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * input.GetCursorMovX() * deltaT);
+    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * input.GetCursorMovY() * deltaT,
                            -DirectX::XM_PIDIV2 + 0.02f, DirectX::XM_PIDIV2 - 0.02f));
 
     camera_.UpdateViewProjMatrix();

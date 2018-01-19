@@ -15,6 +15,7 @@ Created by AirGuanZ
 #include "../Model/BasicCube.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Texture/Texture2D.h"
+#include "../Utility/Clock.h"
 #include "../Utility/HelperFunctions.h"
 #include "../Window/Window.h"
 #include "Application.h"
@@ -58,12 +59,15 @@ void Application::Run(void)
     uniforms->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler);
     Helper::ReleaseCOMObjects(sampler);
 
+    Clock clock;
+
+    clock.Restart();
     while(!InputManager::GetInstance().IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
         window.ClearDepthStencil();
 
-        actor.UpdateCamera(1.0f);
+        actor.UpdateCamera(clock.ElapsedTime());
 
         basicRenderer.Begin();
         cubeModel.Bind();
@@ -88,6 +92,7 @@ void Application::Run(void)
 
         window.Present();
         window.DoEvents();
+        clock.Tick();
     }
 
     window.Destroy();

@@ -36,6 +36,7 @@
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
+    <ClCompile Include="..\Source\Utility\Clock.cpp" />
     <ClCompile Include="..\Source\Utility\ConfigFile.cpp" />
     <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\Source\Window\Window.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\Texture\TextureFile.h" />
+    <ClInclude Include="..\Source\Utility\Clock.h" />
     <ClInclude Include="..\Source\Utility\ConfigFile.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
