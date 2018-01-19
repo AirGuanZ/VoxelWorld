@@ -24,7 +24,7 @@
     <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp" />
     <ClCompile Include="..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\Chunk\Chunk.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkFile.cpp" />
+    <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
@@ -45,7 +45,7 @@
     <ClInclude Include="..\Source\Block\BlockModelBuilder.h" />
     <ClInclude Include="..\Source\Camera\Camera.h" />
     <ClInclude Include="..\Source\Chunk\Chunk.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkFile.h" />
+    <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />

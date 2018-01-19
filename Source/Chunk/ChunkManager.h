@@ -14,6 +14,7 @@ Created by AirGuanZ
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 #include "Chunk.h"
+#include "ChunkLoader.h"
 
 /*
     Chunk数据加载及模型创建
@@ -60,6 +61,8 @@ private:
     
     std::set<IntVector3> importantModelUpdates_;
     std::set<IntVector3> unimportantModelUpdates_;
+
+    ChunkLoader ckLoader_;
 };
 
 inline int BlockXZ_To_ChunkXZ(int blk)

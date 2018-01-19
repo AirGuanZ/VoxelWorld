@@ -35,12 +35,17 @@ public:
     void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
     void SetModel(int section, ChunkSectionModels *model);
 
+    using BlockData = Block[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
+    BlockData &GetBlockData(void);
+
+    ChunkSectionModels *GetModels(int section);
+
 private:
     ChunkManager *ckMgr_;
     IntVectorXZ ckPos_;
 
     //下标的使用：[x][y][z]
-    Block blocks_[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
+    BlockData blocks_;
     ChunkSectionModels *models_[CHUNK_SECTION_NUM];
 };
 

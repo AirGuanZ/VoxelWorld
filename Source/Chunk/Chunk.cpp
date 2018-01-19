@@ -62,3 +62,14 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
     Helper::SafeDeleteObjects(models_[section]);
     models_[section] = model;
 }
+
+Chunk::BlockData &Chunk::GetBlockData(void)
+{
+    return blocks_;
+}
+
+ChunkSectionModels *Chunk::GetModels(int section)
+{
+    assert(0 <= section && section < CHUNK_SECTION_NUM);
+    return models_[section];
+}

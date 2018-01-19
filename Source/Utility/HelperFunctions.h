@@ -19,7 +19,7 @@ namespace Helper
     }
 
     template<typename T>
-    inline void SafeDeleteObjects(T &ptr)
+    inline void SafeDeleteObjects(T &&ptr)
     {
         if(ptr)
         {
@@ -29,7 +29,7 @@ namespace Helper
     }
 
     template<typename T, typename... Others>
-    inline void SafeDeleteObjects(T &ptr, Others&... others)
+    inline void SafeDeleteObjects(T &&ptr, Others&&... others)
     {
         SafeDeleteObjects(ptr);
         SafeDeleteObjects(others...);
