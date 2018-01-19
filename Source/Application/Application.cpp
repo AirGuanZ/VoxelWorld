@@ -11,6 +11,7 @@ Created by AirGuanZ
 #include <Windows.h>
 
 #include "../Actor/Actor.h"
+#include "../Input/InputManager.h"
 #include "../Model/BasicCube.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Texture/Texture2D.h"
@@ -31,6 +32,8 @@ void Application::Run(void)
     window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
     Actor actor;
+
+    InputManager::GetInstance().LockCursor(true, window.ClientCentreX(), window.ClientCentreY());
 
     BasicCube cubeModel;
     cubeModel.Initialize(1.0f, actor.GetCamera().GetDirection() * 5.0f);
@@ -55,7 +58,7 @@ void Application::Run(void)
     uniforms->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler);
     Helper::ReleaseCOMObjects(sampler);
 
-    while(!(GetKeyState(VK_ESCAPE) & 0x8000))
+    while(!InputManager::GetInstance().IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
         window.ClearDepthStencil();

@@ -136,7 +136,7 @@ void ChunkManager::AddChunkData(Chunk *ck)
 
     //不在加载范围内/已经有了，所以直接丢掉
     if(!InLoadingRange(pos.x, pos.z) ||
-       (it = chunks_.find(pos)) != chunks_.end())
+       chunks_.find(pos) != chunks_.end())
     {
         ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(ck));
         return;

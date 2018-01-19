@@ -3,7 +3,6 @@ Filename: Actor.cpp
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
-#include <iostream>
 #include <algorithm>
 
 #include <Windows.h>
@@ -15,19 +14,16 @@ Created by AirGuanZ
 
 void Actor::UpdateCamera(float deltaT)
 {
-    auto &kb = InputManager::GetInstance().GetKeyboard();
-    auto &ms = InputManager::GetInstance().GetMouse();
-    auto kbState = kb.GetState();
-    auto msState = ms.GetState();
+    InputManager &input = InputManager::GetInstance();
 
     Vector3 pos = camera_.GetPosition();
     Vector3 dir = camera_.GetDirection();
 
     //垂直移动
 
-    if(kbState.Space)
+    if(input.IsKeyDown(VK_SPACE))
         pos.y += deltaT * flyUpSpeed_;
-    if(kbState.LeftShift)
+    if(input.IsKeyDown(VK_LSHIFT))
         pos.y -= deltaT * flyDownSpeed_;
 
     //水平移动
@@ -35,13 +31,13 @@ void Actor::UpdateCamera(float deltaT)
     Vector3 horDir = { dir.x, 0.0f, dir.z };
     Vector3 horLeftDir = { horDir.z, 0.0f, -horDir.x };
     int horFBMove = 0, horLRMove = 0;
-    if(kbState.W)
+    if(input.IsKeyDown('W'))
         ++horFBMove;
-    if(kbState.S)
+    if(input.IsKeyDown('S'))
         --horFBMove;
-    if(kbState.A)
+    if(input.IsKeyDown('A'))
         ++horLRMove;
-    if(kbState.D)
+    if(input.IsKeyDown('D'))
         --horLRMove;
 
     Vector3 horMove = static_cast<float>(horFBMove) * horDir
@@ -57,13 +53,8 @@ void Actor::UpdateCamera(float deltaT)
         return (std::min)(maxV, (std::max)(minV, x));
     };
 
-    std::cout << camera_.GetPitch() << std::endl;
-
-    int mouseDeltaX = msState.x - lastMouseX_;
-    int mouseDeltaY = msState.y - lastMouseY_;
-    lastMouseX_ = msState.x, lastMouseY_ = msState.y;
-    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * mouseDeltaX);
-    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * mouseDeltaY,
+    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * input.GetCursorMovX());
+    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * input.GetCursorMovY(),
                            -DirectX::XM_PIDIV2 + 0.02f, DirectX::XM_PIDIV2 - 0.02f));
 
     camera_.UpdateViewProjMatrix();

@@ -10,15 +10,15 @@ Created by AirGuanZ
 
 #include <Windows.h>
 #include <Keyboard.h>
-#include <Mouse.h>
 
+#include "../Input/InputManager.h"
 #include "../Utility/D3D11Header.h"
 #include "../Utility/HelperFunctions.h"
 #include "Window.h"
 
 SINGLETON_CLASS_DEFINITION(Window);
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 namespace
 {
@@ -38,6 +38,8 @@ namespace
         int clientTop    = 0;
         int clientWidth  = 0;
         int clientHeight = 0;
+        int clientCenX   = 0;
+        int clientCenY   = 0;
     }
 
     //D3Dиообнд
@@ -58,6 +60,20 @@ namespace
 
         float background[4];
     }
+}
+
+void UpdateClientPos(void)
+{
+    RECT rect;
+    GetClientRect(Win::hWnd, &rect);
+    POINT LT = { rect.left, rect.top }, RB = { rect.right, rect.bottom };
+    ClientToScreen(Win::hWnd, &LT); ClientToScreen(Win::hWnd, &RB);
+
+    Win::clientLeft = LT.x; Win::clientTop = LT.y;
+    Win::clientWidth = RB.x - LT.x;
+    Win::clientHeight = RB.y - LT.y;
+    Win::clientCenX = Win::clientLeft + Win::clientWidth / 2;
+    Win::clientCenY = Win::clientTop + Win::clientHeight / 2;
 }
 
 bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *windowTitle, std::string &errMsg)
@@ -128,12 +144,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
     SetForegroundWindow(Win::hWnd);
     SetFocus(Win::hWnd);
 
-    RECT clientRect;
-    GetClientRect(Win::hWnd, &clientRect);
-    Win::clientLeft   = static_cast<int>(clientRect.left);
-    Win::clientTop    = static_cast<int>(clientRect.top);
-    Win::clientWidth  = static_cast<int>(clientRect.right - clientRect.left);
-    Win::clientHeight = static_cast<int>(clientRect.bottom - clientRect.top);
+    UpdateClientPos();
 
     return true;
 }
@@ -432,14 +443,26 @@ void Window::ClearDepthStencil(void)
         depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
+int Window::ClientCentreX(void)
+{
+    return Win::clientCenX;
+}
+
+int Window::ClientCentreY(void)
+{
+    return Win::clientCenY;
+}
+
 void Window::DoEvents(void)
 {
+    InputManager::GetInstance().wheelMov_ = 0;
     MSG msg;
     while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+    InputManager::GetInstance().Update();
 }
 
 void Window::Present(void)
@@ -461,7 +484,7 @@ ID3D11DeviceContext *Window::GetD3DDeviceContext(void)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;
-    using DirectX::Mouse;
+    InputManager &input = InputManager::GetInstance();
 
     switch(msg)
     {
@@ -470,7 +493,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_ACTIVATEAPP:
         Keyboard::ProcessMessage(msg, wParam, lParam);
-        Mouse::ProcessMessage(msg, wParam, lParam);
         break;
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
@@ -478,19 +500,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_SYSKEYUP:
         Keyboard::ProcessMessage(msg, wParam, lParam);
         break;
-    case WM_INPUT:
-    case WM_MOUSEMOVE:
     case WM_LBUTTONDOWN:
+        input.mbDown_[0] = true;
+        break;
     case WM_LBUTTONUP:
-    case WM_RBUTTONDOWN:
-    case WM_RBUTTONUP:
+        input.mbDown_[0] = false;
+        break;
     case WM_MBUTTONDOWN:
+        input.mbDown_[1] = true;
+        break;
     case WM_MBUTTONUP:
+        input.mbDown_[1] = false;
+        break;
+    case WM_RBUTTONDOWN:
+        input.mbDown_[2] = true;
+        break;
+    case WM_RBUTTONUP:
+        input.mbDown_[2] = false;
+        break;
     case WM_MOUSEWHEEL:
-    case WM_XBUTTONDOWN:
-    case WM_XBUTTONUP:
-    case WM_MOUSEHOVER:
-        Mouse::ProcessMessage(msg, wParam, lParam);
+        input.wheelMov_ = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
         break;
     }
 

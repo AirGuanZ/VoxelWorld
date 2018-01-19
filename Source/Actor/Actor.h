@@ -23,11 +23,8 @@ private:
     float flyDownSpeed_ = 0.04f;
     float horMoveSpeed_ = 0.04f;
 
-    float mouseXSpeed_ = 0.02f;
-    float mouseYSpeed_ = 0.02f;
-
-    int lastMouseX_ = 0;
-    int lastMouseY_ = 0;
+    float mouseXSpeed_ = 0.002f;
+    float mouseYSpeed_ = 0.002f;
 
     Camera camera_;
 };

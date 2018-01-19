@@ -32,6 +32,9 @@ public:
     void ClearRenderTarget(void);
     void ClearDepthStencil(void);
 
+    int ClientCentreX(void);
+    int ClientCentreY(void);
+
     void DoEvents(void);
     void Present(void);
 
