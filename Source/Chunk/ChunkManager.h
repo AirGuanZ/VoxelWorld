@@ -32,6 +32,7 @@ Created by AirGuanZ
         implemented in AddChunkData & ProcessChunkLoaderMessages
 
         当创建一个模型任务时，如果有旧模型，留着。当模型任务完成时，替换掉旧模型
+        implemented in AddSectionModel
 
         模型任务分为两类，一类是“重要任务”，一类是“不重要任务”
         重要任务在每一帧尽量多地处理，其阈值较高，且优先级更高
@@ -42,7 +43,8 @@ Created by AirGuanZ
 class ChunkManager
 {
 public:
-    ChunkManager(int loadDistance, int renderDistance);
+    ChunkManager(int loadDistance, int renderDistance,
+        int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates);
     ~ChunkManager(void);
 
     //返回的Chunk在本帧内绝不会失效
@@ -56,13 +58,19 @@ public:
 
     void SetCentrePosition(int cenCkX, int cenCkZ);
 
+    void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
+
 private:
     //交付一个加载好的Chunk
     void AddChunkData(Chunk *ck);
+    //交付一个创建好的Model
+    void AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models);
     //立即在主线程加载区块数据
     void LoadChunk(int ckX, int ckZ);
 
     void ProcessChunkLoaderMessages(void);
+
+    void ProcessModelUpdates(void);
 
 private:
     int loadDistance_;
@@ -73,6 +81,10 @@ private:
     
     std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
     std::unordered_set<IntVector3, IntVector3Hasher> unimportantModelUpdates_;
+
+    int maxImpModelUpdates_;
+    int maxUniModelUpdates_;
+    int maxModelUpdates_;
 
     ChunkLoader ckLoader_;
 };

@@ -9,9 +9,15 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
+#include "ChunkModelBuilder.h"
 
-ChunkManager::ChunkManager(int loadDistance, int renderDistance)
-    : loadDistance_(loadDistance), renderDistance_(renderDistance)
+ChunkManager::ChunkManager(int loadDistance, int renderDistance,
+    int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates)
+    : loadDistance_(loadDistance),
+      renderDistance_(renderDistance),
+      maxImpModelUpdates_(maxImpModelUpdates),
+      maxUniModelUpdates_(maxUniModelUpdates),
+      maxModelUpdates_(maxModelUpdates)
 {
 
 }
@@ -110,6 +116,15 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     }
 }
 
+void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
+{
+    auto it = chunks_.find({ x, z });
+    if(it == chunks_.end())
+        return;
+
+    importantModelUpdates_.insert({ x, y, z });
+}
+
 void ChunkManager::AddChunkData(Chunk *ck)
 {
     assert(ck != nullptr);
@@ -130,6 +145,18 @@ void ChunkManager::AddChunkData(Chunk *ck)
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
             unimportantModelUpdates_.insert({ pos.x, section, pos.z });
     }
+}
+
+void ChunkManager::AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models)
+{
+    assert(models != nullptr);
+    auto it = chunks_.find({ pos.x, pos.z });
+    if(it == chunks_.end())
+    {
+        Helper::SafeDeleteObjects(models);
+        return;
+    }
+    it->second->SetModel(pos.y, models);
 }
 
 void ChunkManager::LoadChunk(int ckX, int ckZ)
@@ -159,5 +186,41 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         }
 
         Helper::SafeDeleteObjects(msg);
+    }
+}
+
+void ChunkManager::ProcessModelUpdates(void)
+{
+    //优先处理重要更新
+    int updatesCount = 0;
+    while(!importantModelUpdates_.empty() && updatesCount < maxImpModelUpdates_)
+    {
+        IntVector3 pos = *importantModelUpdates_.begin();
+        importantModelUpdates_.erase(pos);
+
+        auto it = chunks_.find({ pos.x, pos.z });
+        if(it == chunks_.end())
+            continue;
+        ChunkModelBuilder builder(this, it->second, pos.y);
+        AddSectionModel(pos, builder.Build());
+        ++updatesCount;
+    }
+
+    //然后才处理不重要更新
+    int uniUpdatesCount = 0;
+    while(!unimportantModelUpdates_.empty() &&
+          uniUpdatesCount < maxUniModelUpdates_ &&
+          updatesCount < maxModelUpdates_)
+    {
+        IntVector3 pos = *unimportantModelUpdates_.begin();
+        unimportantModelUpdates_.erase(pos);
+
+        auto it = chunks_.find({ pos.x, pos.z });
+        if(it == chunks_.end())
+            continue;
+        ChunkModelBuilder builder(this, it->second, pos.y);
+        AddSectionModel(pos, builder.Build());
+        ++updatesCount;
+        ++uniUpdatesCount;
     }
 }

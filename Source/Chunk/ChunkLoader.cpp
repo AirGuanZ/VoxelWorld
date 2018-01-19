@@ -21,6 +21,10 @@ void ChunkLoader::Initialize(int threadNum)
     if(threadNum <= 0)
         threadNum = (std::max)(2u, std::thread::hardware_concurrency()) - 1;
 
+    //IMPROVE：为了防止文件IO冲突，暂时只设为1
+    //解决这个问题
+    threadNum = 1;
+
     running_ = true;
     while(threadNum-- > 0)
         threads_.emplace_back(&ChunkLoader::TaskThreadEntry, this);
