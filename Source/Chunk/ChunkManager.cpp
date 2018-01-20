@@ -4,6 +4,7 @@ Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
 #include <cstdlib>
+#include <limits>
 #include <mutex>
 
 #include "../Utility/HelperFunctions.h"
@@ -22,12 +23,48 @@ ChunkManager::ChunkManager(int loadDistance,
       maxUniModelUpdates_(maxUniModelUpdates),
       maxModelUpdates_(maxModelUpdates)
 {
-
+    centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
+    centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();
 }
 
 ChunkManager::~ChunkManager(void)
 {
-    assert(chunks_.empty());
+    Destroy();
+}
+
+void ChunkManager::StartLoading(void)
+{
+    ckLoader_.Initialize();
+}
+
+void ChunkManager::Destroy(void)
+{
+    ckLoader_.Destroy();
+
+    std::queue<ChunkLoaderMessage*> msgs = ckLoader_.FetchAllMsgs();
+    while(!msgs.empty())
+    {
+        ChunkLoaderMessage *msg = msgs.front();
+        msgs.pop();
+
+        switch(msg->type)
+        {
+        case ChunkLoaderMessage::ChunkLoaded:
+            delete msg->ckLoaded;
+            break;
+        default:
+            std::abort();
+        }
+
+        delete msg;
+    }
+
+    for(auto it : chunks_)
+        Helper::SafeDeleteObjects(it.second);
+
+    chunks_.clear();
+    importantModelUpdates_.clear();
+    unimportantModelUpdates_.clear();
 }
 
 Chunk *ChunkManager::GetChunk(int ckX, int ckZ)
@@ -225,5 +262,23 @@ void ChunkManager::ProcessModelUpdates(void)
         AddSectionModel(pos, builder.Build());
         ++updatesCount;
         ++uniUpdatesCount;
+    }
+}
+
+void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
+{
+    assert(renderQueue != nullptr);
+
+    for(auto it : chunks_)
+    {
+        ChunkSectionModels *models;
+        for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
+        {
+            if(models = it.second->GetModels(section))
+            {
+                for(int i = 0; i != BASIC_RENDERER_TEXTURE_NUM; ++i)
+                    renderQueue->basic[i].AddModel(&models->basic[i]);
+            }
+        }
     }
 }

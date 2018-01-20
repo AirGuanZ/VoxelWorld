@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include "../Block/Block.h"
 #include "../Model/BasicModel.h"
+#include "../Renderer/RenderQueue.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 
@@ -20,6 +21,11 @@ class ChunkManager;
 struct ChunkSectionModels
 {
     BasicModel basic[BASIC_RENDERER_TEXTURE_NUM];
+};
+
+struct ChunkSectionRenderQueue
+{
+    RenderQueue basic[BASIC_RENDERER_TEXTURE_NUM];
 };
 
 class Chunk : public Uncopiable
@@ -39,6 +45,8 @@ public:
     BlockData &GetBlockData(void);
 
     ChunkSectionModels *GetModels(int section);
+
+    void Render(ChunkSectionRenderQueue *renderQueue);
 
 private:
     ChunkManager *ckMgr_;

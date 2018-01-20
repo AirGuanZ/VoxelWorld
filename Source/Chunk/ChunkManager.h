@@ -38,6 +38,7 @@ Created by AirGuanZ
         重要任务在每一帧尽量多地处理，其阈值较高，且优先级更高
         不重要任务阈值较低，且优先级更低
         每帧处理的重要任务和不重要任务数量之和不超过一个阈值
+        implemented in ProcessModelUpdates
 */
 
 class ChunkManager
@@ -46,6 +47,9 @@ public:
     ChunkManager(int loadDistance, int renderDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates);
     ~ChunkManager(void);
+
+    void StartLoading(void);
+    void Destroy(void);
 
     //返回的Chunk在本帧内绝不会失效
     Chunk *GetChunk(int ckX, int ckZ);
@@ -60,6 +64,12 @@ public:
 
     void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
 
+    void ProcessChunkLoaderMessages(void);
+
+    void ProcessModelUpdates(void);
+
+    void Render(ChunkSectionRenderQueue *renderQueue);
+
 private:
     //交付一个加载好的Chunk
     void AddChunkData(Chunk *ck);
@@ -67,10 +77,6 @@ private:
     void AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models);
     //立即在主线程加载区块数据
     void LoadChunk(int ckX, int ckZ);
-
-    void ProcessChunkLoaderMessages(void);
-
-    void ProcessModelUpdates(void);
 
 private:
     int loadDistance_;
@@ -120,6 +126,12 @@ inline int ChunkXZ_To_BlockXZ(int ck)
 inline int ChunkSectionIndex_To_BlockY(int cks)
 {
     return cks * CHUNK_SECTION_SIZE;
+}
+
+inline int Camera_To_Block(float cam)
+{
+    //IMPROVE
+    return static_cast<int>(std::floor(cam));
 }
 
 #endif //VW_CHUNK_MANAGER_H

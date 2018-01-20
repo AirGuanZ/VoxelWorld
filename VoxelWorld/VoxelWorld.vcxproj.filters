@@ -49,6 +49,15 @@
     <Filter Include="Source\Input">
       <UniqueIdentifier>{5a47863f-978e-4753-835e-ec69858122c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Texture">
+      <UniqueIdentifier>{c2ce8c1f-53fe-45eb-8ef3-53c2421c3cd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bin\Texture\Basic">
+      <UniqueIdentifier>{82f41e81-346b-4a4d-a0cd-891e874c5a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World">
+      <UniqueIdentifier>{23108002-6a47-412f-9a97-307aca44d60c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -113,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Clock.cpp">
       <Filter>Source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\World\World.cpp">
+      <Filter>Source\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +212,9 @@
     <ClInclude Include="..\Source\Utility\Clock.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\World\World.h">
+      <Filter>Source\World</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -209,5 +224,10 @@
     <None Include="Bin\Shader\Basic\vertex.hlsl">
       <Filter>Bin\Shader\Basic</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Bin\Texture\Basic\0.png">
+      <Filter>Bin\Texture\Basic</Filter>
+    </Image>
   </ItemGroup>
 </Project>

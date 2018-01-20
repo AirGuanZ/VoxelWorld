@@ -12,4 +12,6 @@ Created by AirGuanZ
 #define BASIC_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Basic/vertex.hlsl)
 #define BASIC_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Basic/pixel.hlsl)
 
+#define BASIC_RENDERER_TEXTURE_0 VW_FILENAME(Bin/Texture/Basic/0.png)
+
 #endif //VW_RESOURCE_NAME_H

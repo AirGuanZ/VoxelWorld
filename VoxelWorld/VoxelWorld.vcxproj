@@ -40,6 +40,7 @@
     <ClCompile Include="..\Source\Utility\ConfigFile.cpp" />
     <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\Source\Window\Window.cpp" />
+    <ClCompile Include="..\Source\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Actor\Actor.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="..\Source\Utility\Singleton.h" />
     <ClInclude Include="..\Source\Utility\Uncopiable.h" />
     <ClInclude Include="..\Source\Window\Window.h" />
+    <ClInclude Include="..\Source\World\World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -81,6 +83,9 @@
     <None Include="Bin\Shader\Basic\vertex.hlsl">
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Bin\Texture\Basic\0.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
