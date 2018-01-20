@@ -381,6 +381,10 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     SetDefaultViewport();
 
+    //primitive topology
+
+    D3D::deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
     return true;
 }
 

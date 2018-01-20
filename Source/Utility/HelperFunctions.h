@@ -53,16 +53,17 @@ namespace Helper
     }
 
     template<typename T>
-    inline void AddRefForCOMObject(T ptr)
+    inline void AddRefForCOMObjects(T ptr)
     {
-        ptr->AddRef();
+        if(ptr)
+            ptr->AddRef();
     }
 
     template<typename T, typename... Others>
-    inline void AddRefForCOMObject(T ptr, Others... others)
+    inline void AddRefForCOMObjects(T ptr, Others... others)
     {
-        AddRefForCOMObject(ptr);
-        AddRefForCOMObject(others...);
+        AddRefForCOMObjects(ptr);
+        AddRefForCOMObjects(others...);
     }
 
     template<typename ClassType, typename MemType>

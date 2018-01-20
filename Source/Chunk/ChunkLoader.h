@@ -76,16 +76,4 @@ private:
     Chunk *ck_;
 };
 
-class ChunkLoaderTask_DestroyChunk : public ChunkLoaderTask
-{
-public:
-    ChunkLoaderTask_DestroyChunk(Chunk *ck);
-    ~ChunkLoaderTask_DestroyChunk(void) = default;
-
-    void Run(ChunkLoader *loader);
-
-private:
-    Chunk *ck_;
-};
-
 #endif //VW_CHUNK_LOADER_H

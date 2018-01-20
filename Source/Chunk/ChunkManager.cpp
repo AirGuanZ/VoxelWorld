@@ -125,25 +125,29 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     for(auto it : chunks_)
     {
         if(!InLoadingRange(it.first.x, it.first.z))
-            ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(it.second));
+            delete it.second;
         else
             newChunks_[it.first] = it.second;
     }
-    chunks_ = std::move(newChunks_);
+    chunks_.swap(newChunks_);
 
     //遍历新范围内的Chunk
     //缺数据的建立加载任务
     //不缺数据的看看需不需要建立模型任务
+
     int loadRangeXEnd = centrePos_.x + loadDistance_;
     int loadRangeZEnd = centrePos_.z + loadDistance_;
     for(int newCkX = centrePos_.x - loadDistance_; newCkX <= loadRangeXEnd; ++newCkX)
     {
         for(int newCkZ = centrePos_.z - loadDistance_; newCkZ <= loadRangeZEnd; ++newCkZ)
         {
+            assert(InLoadingRange(newCkX, newCkZ));
             auto it = chunks_.find({ newCkZ, newCkZ });
             if(it == chunks_.end()) //还没有这个区块的数据
+            {
                 ckLoader_.AddTask(
                     new ChunkLoaderTask_LoadChunkData(new Chunk(this, { newCkX, newCkZ })));
+            }
             else if(InRenderRange(newCkX, newCkZ)) //有数据了，看看在不在渲染范围内
             {
                 for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
@@ -161,7 +165,6 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
     auto it = chunks_.find({ x, z });
     if(it == chunks_.end())
         return;
-
     importantModelUpdates_.insert({ x, y, z });
 }
 
@@ -175,7 +178,7 @@ void ChunkManager::AddChunkData(Chunk *ck)
     if(!InLoadingRange(pos.x, pos.z) ||
        chunks_.find(pos) != chunks_.end())
     {
-        ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(ck));
+        delete ck;
         return;
     }
 
@@ -211,6 +214,7 @@ void ChunkManager::LoadChunk(int ckX, int ckZ)
 void ChunkManager::ProcessChunkLoaderMessages(void)
 {
     std::queue<ChunkLoaderMessage*> msgs = ckLoader_.FetchAllMsgs();
+
     while(!msgs.empty())
     {
         ChunkLoaderMessage *msg = msgs.front();

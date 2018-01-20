@@ -13,6 +13,7 @@ Created by AirGuanZ
 class World
 {
 public:
+    World(void);
     ~World(void);
 
     void Initialize(void);
@@ -20,6 +21,8 @@ public:
 
     void Update(float deltaT);
     void Render(ChunkSectionRenderQueue *renderQueue);
+
+    Actor &GetActor(void);
 
 private:
     Actor actor_;

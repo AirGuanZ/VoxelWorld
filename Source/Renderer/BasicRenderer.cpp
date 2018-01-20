@@ -59,14 +59,12 @@ bool BasicRenderer::Initialize(std::string &errMsg)
         return false;
     }
 
-    uniforms_.reset(shader_.CreateUniformManager());
     return true;
 }
 
 void BasicRenderer::Destroy(void)
 {
     Helper::ReleaseCOMObjects(inputLayout_);
-    uniforms_.reset();
     shader_.Destroy();
 }
 
@@ -81,7 +79,6 @@ void BasicRenderer::Begin(void)
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
     DC->IASetInputLayout(inputLayout_);
     shader_.Bind(DC);
-    uniforms_->Bind(DC);
 }
 
 void BasicRenderer::End(void)
@@ -89,39 +86,10 @@ void BasicRenderer::End(void)
     assert(Window::GetInstance().IsD3DAvailable());
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
     DC->IASetInputLayout(nullptr);
-    uniforms_->Unbind(DC);
     shader_.Unbind(DC);
 }
 
 BasicRenderer::ShaderType &BasicRenderer::GetShader(void)
 {
     return shader_;
-}
-
-void BasicRenderer::SetViewProjMatrix(const Matrix &mat)
-{
-    uniforms_->GetConstantBuffer<SS_VS, VSCBTrans>(
-        Window::GetInstance().GetD3DDevice(),
-        "Trans")->SetBufferData(
-            Window::GetInstance().GetD3DDeviceContext(),
-            { mat.Transpose() });
-}
-
-void BasicRenderer::SetSunlightFactor(float sunlight)
-{
-    uniforms_->GetConstantBuffer<SS_PS, PSCBLight>(
-        Window::GetInstance().GetD3DDevice(),
-        "Sunlight")->SetBufferData(
-            Window::GetInstance().GetD3DDeviceContext(),
-            { sunlight, 0.0f, 0.0f, 0.0f });
-}
-
-void BasicRenderer::SetTexture(Texture2D tex)
-{
-    uniforms_->GetShaderResource<SS_PS>("tex")->SetShaderResource(tex.GetSRV());
-}
-
-void BasicRenderer::SetSampler(ID3D11SamplerState *sampler)
-{
-    uniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler);
 }

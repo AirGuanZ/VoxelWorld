@@ -45,26 +45,7 @@ public:
 
     ShaderType &GetShader(void);
 
-    void SetViewProjMatrix(const Matrix &mat);
-    void SetSunlightFactor(float sunlight);
-
-    void SetTexture(Texture2D tex);
-    void SetSampler(ID3D11SamplerState *sampler);
-
 private:
-    struct VSCBTrans
-    {
-        Matrix WVP;
-    };
-
-    struct PSCBLight
-    {
-        float sunlight;
-        float pad0, pad1, pad2;
-    };
-
-    std::unique_ptr<Uniforms> uniforms_;
-
     ID3D11InputLayout *inputLayout_;
     ShaderType shader_;
 };

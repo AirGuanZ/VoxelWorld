@@ -21,7 +21,7 @@ Texture2D::Texture2D(const Texture2D &other)
     : tex_(other.tex_), SRV_(other.SRV_)
 {
     if(other.IsAvailable())
-        Helper::AddRefForCOMObject(tex_, SRV_);
+        Helper::AddRefForCOMObjects(tex_, SRV_);
 }
 
 Texture2D::Texture2D(Texture2D &&other)
@@ -37,7 +37,7 @@ Texture2D &Texture2D::operator=(const Texture2D &other)
     tex_ = other.tex_;
     SRV_ = other.SRV_;
     if(other.IsAvailable())
-        Helper::AddRefForCOMObject(tex_, SRV_);
+        Helper::AddRefForCOMObjects(tex_, SRV_);
     return *this;
 }
 
@@ -77,6 +77,11 @@ ID3D11ShaderResourceView *Texture2D::GetSRV(void)
 }
 
 const ID3D11ShaderResourceView *Texture2D::GetSRV(void) const
+{
+    return SRV_;
+}
+
+Texture2D::operator ID3D11ShaderResourceView* (void)
 {
     return SRV_;
 }

@@ -41,5 +41,7 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
         }
     }
 
+    for(int i = 0; i != BASIC_RENDERER_TEXTURE_NUM; ++i)
+        models->basic[i].MakeVertexBuffer();
     return models;
 }

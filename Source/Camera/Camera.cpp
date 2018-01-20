@@ -7,7 +7,7 @@ Created by AirGuanZ
 #include "Camera.h"
 
 Camera::Camera(void)
-    : pos_(0.0f, 0.0f, 0.0f)
+    : pos_(0.0f, 150.0f, 0.0f)
 {
     yaw_ = pitch_ = roll_ = 0.0f;
 

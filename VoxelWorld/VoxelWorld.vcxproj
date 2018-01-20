@@ -34,6 +34,7 @@
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
+    <ClCompile Include="..\Source\Texture\Sampler.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
     <ClCompile Include="..\Source\Utility\Clock.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
+    <ClInclude Include="..\Source\Texture\Sampler.h" />
     <ClInclude Include="..\Source\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\Texture\TextureFile.h" />
     <ClInclude Include="..\Source\Utility\Clock.h" />

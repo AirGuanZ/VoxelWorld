@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_CHUNK_MANAGER_H
 #define VW_CHUNK_MANAGER_H
 
+#include <map>
 #include <mutex>
 #include <string>
 #include <unordered_map>
@@ -100,7 +101,7 @@ constexpr int BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET = 0x40000000;
 inline int BlockXZ_To_ChunkXZ(int blk)
 {
     return (blk + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) / CHUNK_SECTION_SIZE
-        + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET / CHUNK_SECTION_SIZE;
+        - BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET / CHUNK_SECTION_SIZE;
 }
 
 inline int BlockXZ_To_BlockXZInChunk(int blk)

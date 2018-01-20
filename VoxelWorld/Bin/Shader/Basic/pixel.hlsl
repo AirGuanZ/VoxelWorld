@@ -1,6 +1,6 @@
 cbuffer Sunlight
 {
-    float sunlightColor;
+    float3 sunlightColor;
 };
 
 Texture2D<float4> tex;

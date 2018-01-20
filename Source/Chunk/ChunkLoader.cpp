@@ -90,9 +90,9 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
             for(int y = 0; y != CHUNK_MAX_HEIGHT / 2; ++y)
             {
                 Block blk;
-                blk.type = BlockType::Stone;
+                blk.type = BlockType::Grass;
                 blk.sunlight = 1.0f;
-                blk.lightColor = { 255, 255, 255 };
+                blk.lightColor = { 0, 0, 0 };
                 data[x][y][z] = blk;
             }
 
@@ -149,19 +149,4 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
     msg->type = ChunkLoaderMessage::ChunkLoaded;
     msg->ckLoaded = ck_;
     loader->AddMsg(msg);
-}
-
-ChunkLoaderTask_DestroyChunk::ChunkLoaderTask_DestroyChunk(Chunk *ck)
-    : ck_(ck)
-{
-    assert(ck != nullptr);
-}
-
-void ChunkLoaderTask_DestroyChunk::Run(ChunkLoader *loader)
-{
-    assert(loader != nullptr);
-
-    for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
-        Helper::SafeDeleteObjects(ck_->GetModels(section));
-    delete ck_;
 }

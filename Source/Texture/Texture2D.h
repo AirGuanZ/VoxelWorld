@@ -28,6 +28,8 @@ public:
 
     ID3D11ShaderResourceView *GetSRV(void);
     const ID3D11ShaderResourceView *GetSRV(void) const;
+    
+    operator ID3D11ShaderResourceView* (void);
 
 private:
     ID3D11Resource *tex_;

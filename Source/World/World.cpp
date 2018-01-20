@@ -6,6 +6,12 @@ Created by AirGuanZ
 #include "../Resource/ResourceName.h"
 #include "World.h"
 
+World::World(void)
+    : ckMgr_(4, 2, 20, 20, 30)
+{
+
+}
+
 World::~World(void)
 {
     Destroy();
@@ -38,4 +44,9 @@ void World::Render(ChunkSectionRenderQueue *renderQueue)
     assert(renderQueue != nullptr);
 
     ckMgr_.Render(renderQueue);
+}
+
+Actor &World::GetActor(void)
+{
+    return actor_;
 }

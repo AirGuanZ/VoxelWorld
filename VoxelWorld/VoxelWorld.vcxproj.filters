@@ -126,6 +126,9 @@
     <ClCompile Include="..\Source\World\World.cpp">
       <Filter>Source\World</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Texture\Sampler.cpp">
+      <Filter>Source\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\World\World.h">
       <Filter>Source\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Texture\Sampler.h">
+      <Filter>Source\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

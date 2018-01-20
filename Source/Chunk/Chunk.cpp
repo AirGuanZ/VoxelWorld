@@ -29,9 +29,9 @@ IntVectorXZ Chunk::GetPosition(void) const
 
 Block &Chunk::GetBlock(int x, int y, int z)
 {
-    if(0 <= x && x < CHUNK_SECTION_SIZE &&
-       0 <= z && z < CHUNK_SECTION_SIZE &&
-       0 <= y && y < CHUNK_MAX_HEIGHT)
+    if(x < 0 || x >= CHUNK_SECTION_SIZE ||
+       z < 0 || z >= CHUNK_SECTION_SIZE ||
+       y < 0 || y >= CHUNK_MAX_HEIGHT)
     {
         return ckMgr_->GetBlock(
             ChunkXZ_To_BlockXZ(ckPos_.x) + x,
@@ -43,9 +43,9 @@ Block &Chunk::GetBlock(int x, int y, int z)
 
 void Chunk::SetBlock(int x, int y, int z, const Block &blk)
 {
-    if(0 <= x && x < CHUNK_SECTION_SIZE &&
-       0 <= z && z < CHUNK_SECTION_SIZE &&
-       0 <= y && y < CHUNK_MAX_HEIGHT)
+    if(x < 0 || x >= CHUNK_SECTION_SIZE ||
+       z < 0 || z >= CHUNK_SECTION_SIZE ||
+       y < 0 || y >= CHUNK_MAX_HEIGHT)
     {
         ckMgr_->SetBlock(
             ChunkXZ_To_BlockXZ(ckPos_.x) + x,
@@ -61,6 +61,7 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
     assert(0 <= section && section < CHUNK_SECTION_NUM);
     Helper::SafeDeleteObjects(models_[section]);
     models_[section] = model;
+    //std::cerr << "model changed (" << ckPos_.x << " " << section << " " << ckPos_.z << std::endl;
 }
 
 Chunk::BlockData &Chunk::GetBlockData(void)

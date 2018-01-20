@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_RENDER_QUEUE_H
 #define VW_RENDER_QUEUE_H
 
+#include <iostream>
 #include <vector>
 
 #include "../Model/Model.h"
@@ -21,7 +22,12 @@ public:
     void Render(void)
     {
         for(const Model *model : models_)
+        {
+            model->Bind();
             model->Draw();
+            model->Unbind();
+        }
+        //std::cerr << models_.size() << std::endl;
         models_.clear();
     }
 
