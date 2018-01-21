@@ -63,22 +63,22 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
 
         output.AddVertex({ 
             posOffset + vtx0,
-            { texBaseU + 0.001f, texBaseV + TEX_GRID_SIZE - 0.001f },
+            { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
             lightColor, blk.sunlight
         });
         output.AddVertex({
             posOffset + vtx1,
-            { texBaseU + 0.001f, texBaseV + 0.001f },
+            { texBaseU + 0.0015f, texBaseV + 0.0015f },
             lightColor, blk.sunlight
         });
         output.AddVertex({
             posOffset + vtx2,
-            { texBaseU + TEX_GRID_SIZE - 0.001f, texBaseV + 0.001f },
+            { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
             lightColor, blk.sunlight
         });
         output.AddVertex({
             posOffset + vtx3,
-            { texBaseU + TEX_GRID_SIZE - 0.001f, texBaseV + TEX_GRID_SIZE - 0.001f },
+            { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
             lightColor, blk.sunlight
         });
 
