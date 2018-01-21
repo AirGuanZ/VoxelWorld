@@ -37,6 +37,8 @@
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
+    <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp" />
+    <ClCompile Include="..\Source\Renderer\RasterState.cpp" />
     <ClCompile Include="..\Source\Texture\Sampler.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
@@ -65,7 +67,9 @@
     <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />
+    <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
+    <ClInclude Include="..\Source\Renderer\RasterState.h" />
     <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Texture\Sampler.h" />
@@ -94,6 +98,14 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bin\Shader\Carve\pixel.hlsl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Bin\Shader\Carve\vertex.hlsl">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

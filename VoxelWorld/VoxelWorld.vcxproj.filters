@@ -61,6 +61,9 @@
     <Filter Include="Source\Land">
       <UniqueIdentifier>{9104dd81-3455-4f88-94b7-e109ed5987b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Shader\Carve">
+      <UniqueIdentifier>{6b0acb63-3c56-4c0f-a23d-d8355f6f0223}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -140,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Camera\CameraFrustum.cpp">
       <Filter>Source\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Renderer\RasterState.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +251,12 @@
     <ClInclude Include="..\Source\Camera\CameraFrustum.h">
       <Filter>Source\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Renderer\RasterState.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Renderer\CarveRenderer.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -256,5 +271,13 @@
     <Image Include="Bin\Texture\Basic\0.png">
       <Filter>Bin\Texture\Basic</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Bin\Shader\Carve\pixel.hlsl">
+      <Filter>Bin\Shader\Carve</Filter>
+    </FxCompile>
+    <FxCompile Include="Bin\Shader\Carve\vertex.hlsl">
+      <Filter>Bin\Shader\Carve</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -1,37 +1,33 @@
 /*================================================================
-Filename: BasicRenderer.cpp
-Date: 2018.1.13
+Filename: CarveRenderer.cpp
+Date: 2018.1.22
 Created by AirGuanZ
 ================================================================*/
-#include <vector>
-
 #include "../Resource/ResourceName.h"
 #include "../Utility/HelperFunctions.h"
-#include "../Window/Window.h"
-#include "BasicRenderer.h"
+#include "CarveRenderer.h"
 
-BasicRenderer::BasicRenderer(void)
+CarveRenderer::CarveRenderer(void)
     : inputLayout_(nullptr)
 {
 
 }
 
-BasicRenderer::~BasicRenderer(void)
+CarveRenderer::~CarveRenderer(void)
 {
     Destroy();
 }
 
-bool BasicRenderer::Initialize(std::string &errMsg)
+bool CarveRenderer::Initialize(std::string &errMsg)
 {
-    assert(Window::GetInstance().IsD3DAvailable());
     errMsg = "";
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(BASIC_RENDERER_VERTEX_SHADER, vsSrc) ||
-       !Helper::ReadFile(BASIC_RENDERER_PIXEL_SHADER, psSrc))
+    if(!Helper::ReadFile(CARVE_RENDERER_VERTEX_SHADER, vsSrc) ||
+       !Helper::ReadFile(CARVE_RENDERER_PIXEL_SHADER, psSrc))
     {
-        errMsg = "Failed to load shader source for basic renderer";
+        errMsg = "Failed to load shader source";
         return false;
     }
 
@@ -59,37 +55,40 @@ bool BasicRenderer::Initialize(std::string &errMsg)
         return false;
     }
 
+    raster_ = std::make_unique<RasterState>(D3D11_FILL_SOLID, D3D11_CULL_NONE);
+
     return true;
 }
 
-void BasicRenderer::Destroy(void)
+void CarveRenderer::Destroy(void)
 {
     Helper::ReleaseCOMObjects(inputLayout_);
     shader_.Destroy();
+    raster_.reset();
 }
 
-bool BasicRenderer::IsAvailable(void) const
+bool CarveRenderer::IsAvailable(void) const
 {
-    return inputLayout_ && shader_.IsAllStagesAvailable();
+    return inputLayout_;
 }
 
-void BasicRenderer::Begin(void)
+void CarveRenderer::Begin(void)
 {
-    assert(Window::GetInstance().IsD3DAvailable());
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
-    DC->IASetInputLayout(inputLayout_);
     shader_.Bind(DC);
+    DC->IASetInputLayout(inputLayout_);
+    DC->RSSetState(*raster_);
 }
 
-void BasicRenderer::End(void)
+void CarveRenderer::End(void)
 {
-    assert(Window::GetInstance().IsD3DAvailable());
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
-    DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
+    DC->IASetInputLayout(nullptr);
+    DC->RSSetState(nullptr);
 }
 
-BasicRenderer::ShaderType &BasicRenderer::GetShader(void)
+CarveRenderer::ShaderType &CarveRenderer::GetShader(void)
 {
     return shader_;
 }

@@ -1,10 +1,10 @@
 /*================================================================
-Filename: BasicRenderer.h
-Date: 2018.1.13
+Filename: CarveRenderer.h
+Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BASIC_RENDERER_H
-#define VW_BASIC_RENDERER_H
+#ifndef VW_CARVE_RENDERER_H
+#define VW_CARVE_RENDERER_H
 
 #include <memory>
 #include <string>
@@ -14,11 +14,9 @@ Created by AirGuanZ
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
+#include "RasterState.h"
 
-constexpr int BASIC_RENDERER_TEXTURE_NUM = 1;
-constexpr int BASIC_RENDERER_TEXTURE_BLOCK_SIZE = 16;
-
-class BasicRenderer : public Uncopiable
+class CarveRenderer : public Uncopiable
 {
 public:
     using ShaderType = OWE::Shader<SS_VS, SS_PS>;
@@ -32,8 +30,8 @@ public:
         float   sunlight;   // SUNLIGHT
     };
 
-    BasicRenderer(void);
-    ~BasicRenderer(void);
+    CarveRenderer(void);
+    ~CarveRenderer(void);
 
     bool Initialize(std::string &errMsg);
     void Destroy(void);
@@ -47,6 +45,8 @@ public:
 private:
     ID3D11InputLayout *inputLayout_;
     ShaderType shader_;
+
+    std::unique_ptr<RasterState> raster_;
 };
 
-#endif //VW_BASIC_RENDERER_H
+#endif //VW_CARVE_RENDERER_H

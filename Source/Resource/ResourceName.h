@@ -14,4 +14,7 @@ Created by AirGuanZ
 
 #define BASIC_RENDERER_TEXTURE_0 VW_FILENAME(Bin/Texture/Basic/0.png)
 
+#define CARVE_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Carve/vertex.hlsl)
+#define CARVE_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Carve/pixel.hlsl)
+
 #endif //VW_RESOURCE_NAME_H
