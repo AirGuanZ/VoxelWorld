@@ -40,6 +40,14 @@ void TestLandGenerator::GenerateLand(Chunk *ck)
                     blk.lightColor = { 0, 0, 0 };
                     data[x][y][z] = blk;
                 }
+
+                if(x == 7 && z == 7)
+                {
+                    blk.type = BlockType::Stone;
+                    blk.sunlight = 1.0f;
+                    blk.lightColor = { 0, 0, 0 };
+                    data[x][CHUNK_MAX_HEIGHT / 2 - 1 + 14][z] = blk;
+                }
             }
             else
             {
