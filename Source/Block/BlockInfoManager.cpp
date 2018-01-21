@@ -61,8 +61,9 @@ BlockInfoManager::BlockInfoManager(void)
         BlockType type, int _0, int _1, int _2, int _3, int _4, int _5, int _6)
     {
         int (&a)[7] = info_[Blk2Int(type)].basicBoxTexPos;
-        a[0] = _0, a[1] = _1, a[2] = _2;
-        a[3] = _3, a[4] = _4, a[5] = _5;
+        a[0] = _0;
+        a[1] = _1, a[2] = _2, a[3] = _3;
+        a[4] = _4, a[5] = _5, a[6] = _6;
     };
 
     SetBasicBoxTexPos(BlockType::Bedrock, 0, 0, 0, 0, 0, 0, 0);

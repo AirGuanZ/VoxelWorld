@@ -61,14 +61,26 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
             / BASIC_RENDERER_TEXTURE_BLOCK_SIZE * TEX_GRID_SIZE;
         UINT16 idxStart = static_cast<UINT16>(output.GetVerticesCount());
 
-        output.AddVertex(
-        { posOffset + vtx0, { texBaseU + 0.01f, texBaseV + TEX_GRID_SIZE - 0.01f }, lightColor, blk.sunlight });
-        output.AddVertex(
-        { posOffset + vtx1, { texBaseU + 0.01f, texBaseV + 0.01f }, lightColor, blk.sunlight });
-        output.AddVertex(
-        { posOffset + vtx2, { texBaseU + TEX_GRID_SIZE - 0.01f, texBaseV + 0.01f }, lightColor, blk.sunlight });
-        output.AddVertex(
-        { posOffset + vtx3, { texBaseU + TEX_GRID_SIZE - 0.01f, texBaseV + TEX_GRID_SIZE - 0.01f }, lightColor, blk.sunlight });
+        output.AddVertex({ 
+            posOffset + vtx0,
+            { texBaseU + 0.001f, texBaseV + TEX_GRID_SIZE - 0.001f },
+            lightColor, blk.sunlight
+        });
+        output.AddVertex({
+            posOffset + vtx1,
+            { texBaseU + 0.001f, texBaseV + 0.001f },
+            lightColor, blk.sunlight
+        });
+        output.AddVertex({
+            posOffset + vtx2,
+            { texBaseU + TEX_GRID_SIZE - 0.001f, texBaseV + 0.001f },
+            lightColor, blk.sunlight
+        });
+        output.AddVertex({
+            posOffset + vtx3,
+            { texBaseU + TEX_GRID_SIZE - 0.001f, texBaseV + TEX_GRID_SIZE - 0.001f },
+            lightColor, blk.sunlight
+        });
 
         output.AddIndex(idxStart);
         output.AddIndex(idxStart + 1);

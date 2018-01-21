@@ -15,36 +15,53 @@ void TestLandGenerator::GenerateLand(Chunk *ck)
     {
         for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
         {
-            for(int y = 0; y != CHUNK_MAX_HEIGHT / 2; ++y)
+            if(((ck->GetPosition().x + 100000) % 2 != 0) ^ ((ck->GetPosition().z + 100000) % 2 != 0))
             {
+                for(int y = 0; y != CHUNK_MAX_HEIGHT / 2 - 1; ++y)
+                {
+                    Block blk;
+                    blk.type = BlockType::Dirt;
+                    blk.sunlight = 1.0f;
+                    blk.lightColor = { 0, 0, 0 };
+                    data[x][y][z] = blk;
+                }
+
                 Block blk;
                 blk.type = BlockType::Grass;
                 blk.sunlight = 1.0f;
                 blk.lightColor = { 0, 0, 0 };
-                data[x][y][z] = blk;
-            }
+                data[x][CHUNK_MAX_HEIGHT / 2 - 1][z] = blk;
 
-            for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT; ++y)
-            {
-                Block blk;
-                blk.type = BlockType::Air;
-                blk.sunlight = 1.0f;
-                blk.lightColor = { 0, 0, 0 };
-                data[x][y][z] = blk;
-            }
-        }
-    }
-
-    if(ck->GetPosition().x == 0)
-    {
-        for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-        {
-            for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
-            {
-                for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT / 2 + 10; ++y)
+                for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT; ++y)
                 {
                     Block blk;
-                    blk.type = BlockType::Grass;
+                    blk.type = BlockType::Air;
+                    blk.sunlight = 1.0f;
+                    blk.lightColor = { 0, 0, 0 };
+                    data[x][y][z] = blk;
+                }
+            }
+            else
+            {
+                for(int y = 0; y != CHUNK_MAX_HEIGHT / 2 - 1 + 14; ++y)
+                {
+                    Block blk;
+                    blk.type = BlockType::Dirt;
+                    blk.sunlight = 1.0f;
+                    blk.lightColor = { 0, 0, 0 };
+                    data[x][y][z] = blk;
+                }
+
+                Block blk;
+                blk.type = BlockType::Grass;
+                blk.sunlight = 1.0f;
+                blk.lightColor = { 0, 0, 0 };
+                data[x][CHUNK_MAX_HEIGHT / 2 - 1 + 14][z] = blk;
+
+                for(int y = CHUNK_MAX_HEIGHT / 2 + 14; y != CHUNK_MAX_HEIGHT; ++y)
+                {
+                    Block blk;
+                    blk.type = BlockType::Air;
                     blk.sunlight = 1.0f;
                     blk.lightColor = { 0, 0, 0 };
                     data[x][y][z] = blk;
