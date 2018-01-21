@@ -12,6 +12,7 @@ Created by AirGuanZ
 #include <unordered_map>
 #include <unordered_set>
 
+#include "../Camera/CameraFrustum.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 #include "Chunk.h"

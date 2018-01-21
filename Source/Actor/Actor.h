@@ -24,7 +24,7 @@ private:
     float horMoveSpeed_ = 0.04f;
 
     float mouseXSpeed_ = 0.00016f;
-    float mouseYSpeed_ = 0.00016f;
+    float mouseYSpeed_ = 0.00012f;
 
     Camera camera_;
 };

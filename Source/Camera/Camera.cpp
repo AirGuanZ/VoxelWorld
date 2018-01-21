@@ -11,7 +11,7 @@ Camera::Camera(void)
 {
     yaw_ = pitch_ = roll_ = 0.0f;
 
-    FOVy_ = DirectX::XMConvertToRadians(45.0f);
+    FOVy_ = DirectX::XMConvertToRadians(60.0f);
     near_ = 0.1f;
     far_ = 1000.0f;
 }

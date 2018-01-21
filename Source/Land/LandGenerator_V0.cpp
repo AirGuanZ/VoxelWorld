@@ -53,7 +53,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
 int LandGenerator_V0::GetHeight(int x, int z)
 {
     constexpr int LEVEL_NUM = 5;
-    constexpr int MAX_GRID_SIZE = 64;
+    constexpr int MAX_GRID_SIZE = 128;
     constexpr float MAX_LEVEL_HEIGHT = 50.0f;
 
     int gridSize = MAX_GRID_SIZE;
@@ -87,7 +87,7 @@ int LandGenerator_V0::GetHeight(int x, int z)
 
         result += levelHeight * lerp(lerp(xzH, x1zH, tX), lerp(xz1H, x1z1H, tX), tZ);
         gridSize /= 2;
-        levelHeight *= 0.65f;
+        levelHeight *= 0.7f;
     }
 
     return static_cast<int>(result);
