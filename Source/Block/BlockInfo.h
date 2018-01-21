@@ -16,6 +16,8 @@ enum class BlockType : std::uint8_t
     Stone           = Bedrock + 1,
     Dirt            = Stone + 1,
     Grass           = Dirt + 1,
+    Wood            = Grass + 1,
+    Leaf            = Wood + 1,
 
     BlockTypeNum    = Grass + 1
 };
@@ -24,6 +26,7 @@ enum class BlockRenderer : std::uint8_t
 {
     Null = 0,
     BasicRenderer = Null + 1,
+    CarveRenderer = BasicRenderer + 1,
 };
 
 enum class BlockShape : std::uint8_t
@@ -57,6 +60,8 @@ struct BlockInfo
         //0£ºtex±àºÅ
         //1-6£º+x, -x, +y, -y, +z, -z
         int basicBoxTexPos[7];
+
+        int carveBoxTexPos[7];
     };
 };
 

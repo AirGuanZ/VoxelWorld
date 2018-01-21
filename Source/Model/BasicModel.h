@@ -35,4 +35,6 @@ private:
     std::vector<UINT16> indices_;
 };
 
+using CarveModel = BasicModel;
+
 #endif //VW_BASIC_MODEL_H

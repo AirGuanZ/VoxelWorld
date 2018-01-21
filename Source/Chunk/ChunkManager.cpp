@@ -287,6 +287,8 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
             {
                 for(int i = 0; i != BASIC_RENDERER_TEXTURE_NUM; ++i)
                     renderQueue->basic[i].AddModel(&models->basic[i]);
+                for(int i = 0; i != CARVE_RENDERER_TEXTURE_NUM; ++i)
+                    renderQueue->carve[i].AddModel(&models->carve[i]);
             }
         }
     }

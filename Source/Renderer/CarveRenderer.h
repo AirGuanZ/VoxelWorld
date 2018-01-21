@@ -14,7 +14,11 @@ Created by AirGuanZ
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
+#include "BasicRenderer.h"
 #include "RasterState.h"
+
+constexpr int CARVE_RENDERER_TEXTURE_NUM = 1;
+constexpr int CARVE_RENDERER_TEXTURE_BLOCK_SIZE = 16;
 
 class CarveRenderer : public Uncopiable
 {
@@ -22,13 +26,7 @@ public:
     using ShaderType = OWE::Shader<SS_VS, SS_PS>;
     using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
 
-    struct Vertex
-    {
-        Vector3 pos;        // POSITION
-        Vector2 texCoord;   // TEXCOORD
-        Vector3 lightColor; // LIGHTCOLOR
-        float   sunlight;   // SUNLIGHT
-    };
+    using Vertex = typename BasicRenderer::Vertex;
 
     CarveRenderer(void);
     ~CarveRenderer(void);

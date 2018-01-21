@@ -8,6 +8,8 @@ Created by AirGuanZ
 
 #include "../Block/Block.h"
 #include "../Model/BasicModel.h"
+#include "../Renderer/BasicRenderer.h"
+#include "../Renderer/CarveRenderer.h"
 #include "../Renderer/RenderQueue.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
@@ -21,11 +23,13 @@ class ChunkManager;
 struct ChunkSectionModels
 {
     BasicModel basic[BASIC_RENDERER_TEXTURE_NUM];
+    CarveModel carve[CARVE_RENDERER_TEXTURE_NUM];
 };
 
 struct ChunkSectionRenderQueue
 {
     RenderQueue basic[BASIC_RENDERER_TEXTURE_NUM];
+    RenderQueue carve[CARVE_RENDERER_TEXTURE_NUM];
 };
 
 class Chunk : public Uncopiable
