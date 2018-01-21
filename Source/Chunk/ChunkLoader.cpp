@@ -6,7 +6,7 @@ Created by AirGuanZ
 #include <algorithm>
 #include <cassert>
 
-#include "../Land/LandGenerator.h"
+#include "../Land/LandGenerator_V0.h"
 #include "../Utility/HelperFunctions.h"
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
@@ -77,7 +77,7 @@ std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
 void ChunkLoader::LoadChunkData(Chunk *ck)
 {
     //TODO
-    TestLandGenerator::instance_.GenerateLand(ck);
+    LandGenerator_V0(145).GenerateLand(ck);
 }
 
 void ChunkLoader::TaskThreadEntry(void)
@@ -121,4 +121,15 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
     msg->type = ChunkLoaderMessage::ChunkLoaded;
     msg->ckLoaded = ck_;
     loader->AddMsg(msg);
+}
+
+ChunkLoaderTask_DestroyChunk::ChunkLoaderTask_DestroyChunk(Chunk *ck)
+    : ck_(ck)
+{
+    assert(ck != nullptr);
+}
+
+void ChunkLoaderTask_DestroyChunk::Run(ChunkLoader *loader)
+{
+    delete ck_;
 }

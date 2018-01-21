@@ -50,7 +50,7 @@ void ChunkManager::Destroy(void)
         switch(msg->type)
         {
         case ChunkLoaderMessage::ChunkLoaded:
-            delete msg->ckLoaded;
+            ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(msg->ckLoaded));
             break;
         default:
             std::abort();
@@ -126,7 +126,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     for(auto it : chunks_)
     {
         if(!InLoadingRange(it.first.x, it.first.z))
-            delete it.second;
+            ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(it.second));
         else
             newChunks_[it.first] = it.second;
     }
@@ -178,7 +178,7 @@ void ChunkManager::AddChunkData(Chunk *ck)
     //已经有了，所以直接丢掉
     if((it = chunks_.find(pos)) != chunks_.end() && it->second)
     {
-        delete ck;
+        ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(ck));
         return;
     }
 

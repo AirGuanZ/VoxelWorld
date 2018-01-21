@@ -14,7 +14,7 @@ public:
     virtual void GenerateLand(Chunk *ck) = 0;
 };
 
-class TestLandGenerator
+class TestLandGenerator : public LandGenerator
 {
 public:
     static TestLandGenerator instance_;

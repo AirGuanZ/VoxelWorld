@@ -135,6 +135,9 @@
     <ClCompile Include="..\Source\Land\LandGenerator.cpp">
       <Filter>Source\Land</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp">
+      <Filter>Source\Land</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -228,6 +231,9 @@
       <Filter>Source\Texture</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Land\LandGenerator.h">
+      <Filter>Source\Land</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\LandGenerator_V0.h">
       <Filter>Source\Land</Filter>
     </ClInclude>
   </ItemGroup>

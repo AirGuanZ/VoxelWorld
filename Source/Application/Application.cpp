@@ -105,6 +105,7 @@ void Application::Run(void)
 
         basicRendererUniforms0->GetConstantBuffer<SS_VS, VSCBTrans>(dev, "Trans")
             ->SetBufferData(DC, { world.GetActor().GetCamera().GetViewProjMatrix().Transpose() });
+
         basicRenderer.Begin();
         basicRendererUniforms0->Bind(DC);
 
