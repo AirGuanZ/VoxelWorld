@@ -28,6 +28,11 @@ InputManager::InputManager(void)
     mbReleased_[0] = mbReleased_[1] = mbReleased_[2] = false;
 }
 
+InputManager::~InputManager(void)
+{
+    this->ShowCursor(true);
+}
+
 namespace
 {
     inline DirectX::Keyboard::Keys Int2Keys(int vk)
@@ -127,4 +132,9 @@ void InputManager::Update(void)
         curPosX_ = curPos.x;
         curPosY_ = curPos.y;
     }
+}
+
+void InputManager::ShowCursor(bool show)
+{
+    ::ShowCursor(show ? TRUE : FALSE);
 }

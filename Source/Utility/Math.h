@@ -29,6 +29,11 @@ inline bool operator==(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
     return lhs.x == rhs.x && lhs.z == rhs.z;
 }
 
+inline bool operator<(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
+{
+    return lhs.x < rhs.x || (lhs.x == rhs.x && lhs.z < rhs.z);
+}
+
 struct IntVectorXZHasher
 {
     size_t operator()(const IntVectorXZ &v) const noexcept

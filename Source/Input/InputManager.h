@@ -24,6 +24,7 @@ class InputManager : public Singleton<InputManager>
 {
 public:
     InputManager(void);
+    ~InputManager(void);
 
     bool IsKeyDown    (int keyCode);
     bool IsKeyPressed (int keyCode);
@@ -42,6 +43,7 @@ public:
     bool IsMouseButtonReleased(MouseButton button);
 
     void LockCursor(bool lock, int x = 0, int y = 0);
+    void ShowCursor(bool show);
 
 private:
     friend class Window;

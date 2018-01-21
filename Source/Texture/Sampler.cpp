@@ -7,7 +7,7 @@ Created by AirGuanZ
 #include "Sampler.h"
 
 Sampler::Sampler(void)
-    : Sampler(D3D11_FILTER_MIN_MAG_MIP_LINEAR,
+    : Sampler(D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR,
               D3D11_TEXTURE_ADDRESS_CLAMP)
 {
     

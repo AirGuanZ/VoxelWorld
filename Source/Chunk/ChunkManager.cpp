@@ -110,8 +110,9 @@ bool ChunkManager::InRenderRange(int ckX, int ckZ)
 
 bool ChunkManager::InLoadingRange(int ckX, int ckZ)
 {
-    return std::abs(ckX - centrePos_.x) <= loadDistance_ &&
-           std::abs(ckZ - centrePos_.z) <= loadDistance_;
+    return centrePos_.x - loadDistance_ <= ckX && ckX <= centrePos_.x + loadDistance_ &&
+           centrePos_.z - loadDistance_ <= ckZ && ckZ <= centrePos_.z + loadDistance_;
+           
 }
 
 void ChunkManager::SetCentrePosition(int ckX, int ckZ)
@@ -142,7 +143,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
         for(int newCkZ = centrePos_.z - loadDistance_; newCkZ <= loadRangeZEnd; ++newCkZ)
         {
             assert(InLoadingRange(newCkX, newCkZ));
-            auto it = chunks_.find({ newCkZ, newCkZ });
+            auto it = chunks_.find({ newCkX, newCkZ });
             if(it == chunks_.end()) //还没有这个区块的数据
             {
                 ckLoader_.AddTask(
@@ -275,6 +276,9 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
 
     for(auto it : chunks_)
     {
+        if(!InRenderRange(it.first.x, it.first.z))
+            continue;
+
         ChunkSectionModels *models;
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
         {

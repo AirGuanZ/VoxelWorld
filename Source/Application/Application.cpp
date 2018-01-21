@@ -24,8 +24,9 @@ Created by AirGuanZ
 void Application::Run(void)
 {
     std::string initErrMsg;
-    Window &window = Window::GetInstance();
-    if(!window.InitWindow(640, 480, L"Voxel World", initErrMsg) ||
+    Window &window      = Window::GetInstance();
+    InputManager &input = InputManager::GetInstance();
+    if(!window.InitWindow(1000, 800, L"Voxel World", initErrMsg) ||
        !window.InitD3D(4, 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());
@@ -42,10 +43,9 @@ void Application::Run(void)
     ChunkSectionRenderQueue renderQueue;
     Texture2D basicRendererTexture0;
 
-    std::string errMsg;
-    if(!basicRenderer.Initialize(errMsg))
+    if(!basicRenderer.Initialize(initErrMsg))
     {
-        std::cerr << errMsg << std::endl;
+        std::cerr << initErrMsg << std::endl;
         return;
     }
 
@@ -91,9 +91,10 @@ void Application::Run(void)
     Clock clock;
     clock.Restart();
 
-    InputManager::GetInstance().LockCursor(true, window.ClientCentreX(), window.ClientCentreY());
+    input.LockCursor(true, window.ClientCentreX(), window.ClientCentreY());
+    input.ShowCursor(false);
 
-    while(!InputManager::GetInstance().IsKeyDown(VK_ESCAPE))
+    while(!input.IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
         window.ClearDepthStencil();

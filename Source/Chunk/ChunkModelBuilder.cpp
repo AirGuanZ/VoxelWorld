@@ -4,6 +4,7 @@ Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
 #include "../Block/BlockModelBuilder.h"
+#include "Chunk.h"
 #include "ChunkModelBuilder.h"
 
 ChunkModelBuilder::ChunkModelBuilder(ChunkManager *ckMgr, Chunk *ck, int section)

@@ -85,6 +85,7 @@ private:
     IntVectorXZ centrePos_;
 
     std::unordered_map<IntVectorXZ, Chunk*, IntVectorXZHasher> chunks_;
+    //std::map<IntVectorXZ, Chunk*> chunks_;
     
     std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
     std::unordered_set<IntVector3, IntVector3Hasher> unimportantModelUpdates_;
@@ -95,44 +96,5 @@ private:
 
     ChunkLoader ckLoader_;
 };
-
-constexpr int BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET = 0x40000000;
-
-inline int BlockXZ_To_ChunkXZ(int blk)
-{
-    return (blk + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) / CHUNK_SECTION_SIZE
-        - BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET / CHUNK_SECTION_SIZE;
-}
-
-inline int BlockXZ_To_BlockXZInChunk(int blk)
-{
-    return (blk + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) % CHUNK_SECTION_SIZE;
-}
-
-inline int BlockY_To_ChunkSectionIndex(int blk)
-{
-    return blk / CHUNK_SECTION_SIZE;
-}
-
-inline int BlockY_To_BlockYInChunkSection(int blk)
-{
-    return blk % CHUNK_SECTION_SIZE;
-}
-
-inline int ChunkXZ_To_BlockXZ(int ck)
-{
-    return ck * CHUNK_SECTION_SIZE;
-}
-
-inline int ChunkSectionIndex_To_BlockY(int cks)
-{
-    return cks * CHUNK_SECTION_SIZE;
-}
-
-inline int Camera_To_Block(float cam)
-{
-    //IMPROVE
-    return static_cast<int>(std::floor(cam));
-}
 
 #endif //VW_CHUNK_MANAGER_H

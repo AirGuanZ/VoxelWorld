@@ -19,9 +19,9 @@ public:
     const Camera &GetCamera(void) const;
 
 private:
-    float flyUpSpeed_ = 0.004f;
-    float flyDownSpeed_ = 0.004f;
-    float horMoveSpeed_ = 0.004f;
+    float flyUpSpeed_ = 0.007f;
+    float flyDownSpeed_ = 0.007f;
+    float horMoveSpeed_ = 0.007f;
 
     float mouseXSpeed_ = 0.00007f;
     float mouseYSpeed_ = 0.00007f;
