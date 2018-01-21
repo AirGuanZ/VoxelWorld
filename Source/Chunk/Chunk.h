@@ -12,8 +12,8 @@ Created by AirGuanZ
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 
-constexpr int CHUNK_SECTION_SIZE = 8;
-constexpr int CHUNK_SECTION_NUM  = 8;
+constexpr int CHUNK_SECTION_SIZE = 16;
+constexpr int CHUNK_SECTION_NUM  = 16;
 constexpr int CHUNK_MAX_HEIGHT   = CHUNK_SECTION_SIZE * CHUNK_SECTION_NUM;
 
 class ChunkManager;

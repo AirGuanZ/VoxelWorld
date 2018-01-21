@@ -29,6 +29,7 @@
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
     <ClCompile Include="..\Source\Input\InputManager.cpp" />
+    <ClCompile Include="..\Source\Land\LandGenerator.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\Model\BasicCube.cpp" />
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
     <ClInclude Include="..\Source\Input\InputManager.h" />
+    <ClInclude Include="..\Source\Land\LandGenerator.h" />
     <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />

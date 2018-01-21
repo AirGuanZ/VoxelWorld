@@ -58,6 +58,9 @@
     <Filter Include="Source\World">
       <UniqueIdentifier>{23108002-6a47-412f-9a97-307aca44d60c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Land">
+      <UniqueIdentifier>{9104dd81-3455-4f88-94b7-e109ed5987b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Texture\Sampler.cpp">
       <Filter>Source\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\LandGenerator.cpp">
+      <Filter>Source\Land</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Texture\Sampler.h">
       <Filter>Source\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\LandGenerator.h">
+      <Filter>Source\Land</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

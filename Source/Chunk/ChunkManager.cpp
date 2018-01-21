@@ -74,6 +74,7 @@ Chunk *ChunkManager::GetChunk(int ckX, int ckZ)
         return it->second;
 
     LoadChunk(ckX, ckZ);
+    assert((chunks_[{ ckX, ckZ }] != nullptr));
     return chunks_[{ ckX, ckZ }];
 }
 
@@ -112,7 +113,6 @@ bool ChunkManager::InLoadingRange(int ckX, int ckZ)
 {
     return centrePos_.x - loadDistance_ <= ckX && ckX <= centrePos_.x + loadDistance_ &&
            centrePos_.z - loadDistance_ <= ckZ && ckZ <= centrePos_.z + loadDistance_;
-           
 }
 
 void ChunkManager::SetCentrePosition(int ckX, int ckZ)
@@ -175,9 +175,8 @@ void ChunkManager::AddChunkData(Chunk *ck)
     decltype(chunks_)::iterator it;
     IntVectorXZ pos = ck->GetPosition();
 
-    //不在加载范围内/已经有了，所以直接丢掉
-    if(!InLoadingRange(pos.x, pos.z) ||
-       chunks_.find(pos) != chunks_.end())
+    //已经有了，所以直接丢掉
+    if((it = chunks_.find(pos)) != chunks_.end() && it->second)
     {
         delete ck;
         return;
@@ -209,6 +208,7 @@ void ChunkManager::LoadChunk(int ckX, int ckZ)
 
     Chunk *ck = new Chunk(this, { ckX, ckZ });
     ckLoader_.LoadChunkData(ck);
+    assert(ck != nullptr);
     AddChunkData(ck);
 }
 
@@ -224,7 +224,8 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         switch(msg->type)
         {
         case ChunkLoaderMessage::ChunkLoaded:
-            AddChunkData(msg->ckLoaded);
+            if(InLoadingRange(msg->ckLoaded->GetPosition().x, msg->ckLoaded->GetPosition().z))
+                AddChunkData(msg->ckLoaded);
             break;
         default:
             std::abort();

@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <algorithm>
 #include <cassert>
 
+#include "../Land/LandGenerator.h"
 #include "../Utility/HelperFunctions.h"
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
@@ -19,11 +20,7 @@ void ChunkLoader::Initialize(int threadNum)
 {
     assert(threads_.empty());
     if(threadNum <= 0)
-        threadNum = (std::max)(2u, std::thread::hardware_concurrency()) - 1;
-
-    //IMPROVE：为了防止文件IO冲突，暂时只设为1
-    //解决这个问题
-    threadNum = 1;
+        threadNum = (std::max)(4u, std::thread::hardware_concurrency()) - 3;
 
     running_ = true;
     while(threadNum-- > 0)
@@ -80,32 +77,7 @@ std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
 void ChunkLoader::LoadChunkData(Chunk *ck)
 {
     //TODO
-
-    //把Chunk数据下半部分设为Stone，上半部分设为Air
-    Chunk::BlockData &data = ck->GetBlockData();
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
-    {
-        for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
-        {
-            for(int y = 0; y != CHUNK_MAX_HEIGHT / 2; ++y)
-            {
-                Block blk;
-                blk.type = BlockType::Grass;
-                blk.sunlight = 1.0f;
-                blk.lightColor = { 0, 0, 0 };
-                data[x][y][z] = blk;
-            }
-
-            for(int y = CHUNK_MAX_HEIGHT / 2; y != CHUNK_MAX_HEIGHT; ++y)
-            {
-                Block blk;
-                blk.type = BlockType::Air;
-                blk.sunlight = 1.0f;
-                blk.lightColor = { 0, 0, 0 };
-                data[x][y][z] = blk;
-            }
-        }
-    }
+    TestLandGenerator::instance_.GenerateLand(ck);
 }
 
 void ChunkLoader::TaskThreadEntry(void)
