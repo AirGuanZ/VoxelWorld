@@ -105,10 +105,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
     }
 
     DWORD dwStyle = 0;
-    dwStyle |= WS_OVERLAPPED;
-    dwStyle |= WS_POPUP;
     dwStyle |= WS_VISIBLE;
-    dwStyle |= WS_CAPTION;
     dwStyle &= ~WS_SIZEBOX;
 
     RECT winRect = { 0, 0, clientWidth, clientHeight };
