@@ -88,6 +88,5 @@ int LandGenerator_V0::GetHeight(int x, int z)
         levelHeight *= 0.7f;
     }
 
-    return 6;
     return static_cast<int>(result);
 }
