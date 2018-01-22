@@ -26,13 +26,13 @@ void Application::Run(void)
     std::string initErrMsg;
     Window &window      = Window::GetInstance();
     InputManager &input = InputManager::GetInstance();
-    if(!window.InitWindow(1200, 900, L"Voxel World", initErrMsg) ||
+    if(!window.InitWindow(800, 600, L"Voxel World", initErrMsg) ||
        !window.InitD3D(4, 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());
     }
 
-    window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
+    window.SetBackgroundColor(0.7f, 1.0f, 0.1f, 0.0f);
 
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();
@@ -93,7 +93,7 @@ void Application::Run(void)
 
     std::unique_ptr<BasicRenderer::Uniforms> basicRendererUniforms0(basicRenderer.GetShader().CreateUniformManager());
     basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, "Sunlight")
-        ->SetBufferData(DC, { { 0.8f, 0.8f, 0.8f } });
+        ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
     basicRendererUniforms0->GetShaderSampler<SS_PS>("sam")
         ->SetSampler(sampler);
     basicRendererUniforms0->GetShaderResource<SS_PS>("tex")
@@ -113,7 +113,7 @@ void Application::Run(void)
 
     std::unique_ptr<CarveRenderer::Uniforms> carveRendererUniforms0(carveRenderer.GetShader().CreateUniformManager());
     carveRendererUniforms0->GetConstantBuffer<SS_PS, CarvePSCBSunlight>(dev, "Sunlight")
-        ->SetBufferData(DC, { { 0.8f, 0.8f, 0.8f } });
+        ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
     carveRendererUniforms0->GetShaderSampler<SS_PS>("sam")
         ->SetSampler(sampler);
     carveRendererUniforms0->GetShaderResource<SS_PS>("tex")

@@ -86,7 +86,6 @@ private:
     IntVectorXZ centrePos_;
 
     std::unordered_map<IntVectorXZ, Chunk*, IntVectorXZHasher> chunks_;
-    //std::map<IntVectorXZ, Chunk*> chunks_;
     
     std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
     std::unordered_set<IntVector3, IntVector3Hasher> unimportantModelUpdates_;
