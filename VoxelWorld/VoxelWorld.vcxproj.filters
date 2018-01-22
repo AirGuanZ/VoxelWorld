@@ -266,18 +266,16 @@
     <None Include="Bin\Shader\Basic\vertex.hlsl">
       <Filter>Bin\Shader\Basic</Filter>
     </None>
+    <None Include="Bin\Shader\Carve\pixel.hlsl">
+      <Filter>Bin\Shader\Carve</Filter>
+    </None>
+    <None Include="Bin\Shader\Carve\vertex.hlsl">
+      <Filter>Bin\Shader\Carve</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
       <Filter>Bin\Texture\Basic</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Bin\Shader\Carve\pixel.hlsl">
-      <Filter>Bin\Shader\Carve</Filter>
-    </FxCompile>
-    <FxCompile Include="Bin\Shader\Carve\vertex.hlsl">
-      <Filter>Bin\Shader\Carve</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

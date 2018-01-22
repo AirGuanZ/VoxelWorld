@@ -68,8 +68,6 @@ int LandGenerator_V0::GetHeight(int x, int z)
     auto lerp = [](float a, float b, float t)
     {
         return a + (b - a) * (3 * t * t - 2 * t * t * t);
-        //return a + (b - a) * (exp(10 * t) - 1) / (exp(10.0f) - 1);
-        //return a + (b - a) * sin(2.0f * t);
     };
 
     float result = 10.0f;
