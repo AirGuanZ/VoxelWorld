@@ -9,6 +9,11 @@ Created by AirGuanZ
 #include <d3d11.h>
 #include <SimpleMath.h>
 
+#ifdef _DEBUG
+#include <crtdbg.h>
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)  
+#endif  
+
 using DirectX::SimpleMath::Vector2;
 using DirectX::SimpleMath::Vector3;
 using DirectX::SimpleMath::Vector4;

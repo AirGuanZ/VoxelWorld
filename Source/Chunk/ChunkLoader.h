@@ -68,17 +68,8 @@ class ChunkLoaderTask_LoadChunkData : public ChunkLoaderTask
 {
 public:
     ChunkLoaderTask_LoadChunkData(Chunk *ck);
+    ~ChunkLoaderTask_LoadChunkData(void);
 
-    void Run(ChunkLoader *loader);
-
-private:
-    Chunk *ck_;
-};
-
-class ChunkLoaderTask_DestroyChunk : public ChunkLoaderTask
-{
-public:
-    ChunkLoaderTask_DestroyChunk(Chunk *ck);
     void Run(ChunkLoader *loader);
 
 private:

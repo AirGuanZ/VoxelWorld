@@ -26,13 +26,13 @@ void Application::Run(void)
     std::string initErrMsg;
     Window &window      = Window::GetInstance();
     InputManager &input = InputManager::GetInstance();
-    if(!window.InitWindow(800, 600, L"Voxel World", initErrMsg) ||
+    if(!window.InitWindow(900, 700, L"Voxel World", initErrMsg) ||
        !window.InitD3D(4, 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());
     }
 
-    window.SetBackgroundColor(0.7f, 1.0f, 0.1f, 0.0f);
+    window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();

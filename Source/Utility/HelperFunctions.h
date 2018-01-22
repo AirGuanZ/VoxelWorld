@@ -32,7 +32,7 @@ namespace Helper
     inline void SafeDeleteObjects(T &&ptr, Others&&... others)
     {
         SafeDeleteObjects(ptr);
-        SafeDeleteObjects(others...);
+        SafeDeleteObjects(forward(others)...);
     }
 
     template<typename T>

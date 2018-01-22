@@ -3,6 +3,7 @@ Filename: Main.cpp
 Date: 2018.1.12
 Created by AirGuanZ
 ================================================================*/
+#include <atomic>
 #include <iostream>
 #include <stdexcept>
 

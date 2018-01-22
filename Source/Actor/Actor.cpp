@@ -22,9 +22,9 @@ void Actor::UpdateCamera(float deltaT)
     //垂直移动
 
     if(input.IsKeyDown(VK_SPACE))
-        pos.y += deltaT * flyUpSpeed_;
+        pos.y += 16.66f * flyUpSpeed_;
     if(input.IsKeyDown(VK_LSHIFT))
-        pos.y -= deltaT * flyDownSpeed_;
+        pos.y -= 16.66f * flyDownSpeed_;
 
     //水平移动
 
@@ -43,7 +43,7 @@ void Actor::UpdateCamera(float deltaT)
     Vector3 horMove = static_cast<float>(horFBMove) * horDir
                     + static_cast<float>(horLRMove) * horLeftDir;
     horMove.Normalize();
-    pos += horMoveSpeed_ * horMove * deltaT;
+    pos += horMoveSpeed_ * horMove * 16.66f;
     camera_.SetPosition(pos);
 
     //视角转动
@@ -53,8 +53,8 @@ void Actor::UpdateCamera(float deltaT)
         return (std::min)(maxV, (std::max)(minV, x));
     };
 
-    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * input.GetCursorMovX() * deltaT);
-    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * input.GetCursorMovY() * deltaT,
+    camera_.SetYaw(camera_.GetYaw() - mouseXSpeed_ * input.GetCursorMovX() * 16.66f);
+    camera_.SetPitch(clamp(camera_.GetPitch() - mouseYSpeed_ * input.GetCursorMovY() * 16.66f,
                            -DirectX::XM_PIDIV2 + 0.02f, DirectX::XM_PIDIV2 - 0.02f));
 
     camera_.UpdateViewProjMatrix();

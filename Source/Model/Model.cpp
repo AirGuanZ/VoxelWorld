@@ -14,7 +14,7 @@ bool Model::IsAvailable(void) const
     assert(vtxBufBinding_.startSlot < 0 ||
         vtxBufBinding_.startSlot + vtxBufBinding_.bufs.size()
         <= D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT);
-    return vtxBufBinding_.startSlot >= 0;
+    return vtxBufBinding_.bufs.size() > 0;
 }
 
 void Model::Bind(void) const
@@ -34,10 +34,11 @@ void Model::Bind(void) const
 
 void Model::Draw(void) const
 {
-    if(!IsAvailable())
-        return;
-    Window::GetInstance().GetD3DDeviceContext()->DrawIndexed(
-        vtxBufBinding_.idxCount, 0, 0);
+    if(IsAvailable())
+    {
+        Window::GetInstance().GetD3DDeviceContext()->DrawIndexed(
+            vtxBufBinding_.idxCount, 0, 0);
+    }
 }
 
 void Model::Unbind(void) const

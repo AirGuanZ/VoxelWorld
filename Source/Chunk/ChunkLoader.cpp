@@ -35,6 +35,14 @@ void ChunkLoader::Destroy(void)
         if(th.joinable())
             th.join();
     }
+    threads_.clear();
+
+    while(loaderTasks_.size())
+    {
+        ChunkLoaderTask *task = loaderTasks_.front();
+        loaderTasks_.pop();
+        Helper::SafeDeleteObjects(task);
+    }
 }
 
 void ChunkLoader::AddTask(ChunkLoaderTask *task)
@@ -68,10 +76,7 @@ ChunkLoaderMessage *ChunkLoader::FetchMsg(void)
 std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
 {
     std::lock_guard<std::mutex> lk(msgQueueMutex_);
-
-    std::queue<ChunkLoaderMessage*> rt;
-    rt.swap(loaderMsgs_);
-    return rt;
+    return std::move(loaderMsgs_);
 }
 
 void ChunkLoader::LoadChunkData(Chunk *ck)
@@ -88,7 +93,7 @@ void ChunkLoader::TaskThreadEntry(void)
 
         {
             std::lock_guard<std::mutex> lk(taskQueueMutex_);
-            if(!loaderTasks_.empty())
+            if(loaderTasks_.size())
             {
                 task = loaderTasks_.front();
                 loaderTasks_.pop();
@@ -98,7 +103,7 @@ void ChunkLoader::TaskThreadEntry(void)
         if(task)
         {
             task->Run(this);
-            delete task;
+            Helper::SafeDeleteObjects(task);
         }
         else
             std::this_thread::sleep_for(std::chrono::milliseconds(2));
@@ -120,16 +125,11 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
     ChunkLoaderMessage *msg = new ChunkLoaderMessage;
     msg->type = ChunkLoaderMessage::ChunkLoaded;
     msg->ckLoaded = ck_;
+    ck_ = nullptr;
     loader->AddMsg(msg);
 }
 
-ChunkLoaderTask_DestroyChunk::ChunkLoaderTask_DestroyChunk(Chunk *ck)
-    : ck_(ck)
+ChunkLoaderTask_LoadChunkData::~ChunkLoaderTask_LoadChunkData(void)
 {
-    assert(ck != nullptr);
-}
-
-void ChunkLoaderTask_DestroyChunk::Run(ChunkLoader *loader)
-{
-    delete ck_;
+    Helper::SafeDeleteObjects(ck_);
 }

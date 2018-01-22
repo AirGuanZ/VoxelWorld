@@ -40,28 +40,10 @@ void ChunkManager::StartLoading(void)
 void ChunkManager::Destroy(void)
 {
     ckLoader_.Destroy();
-
-    std::queue<ChunkLoaderMessage*> msgs = ckLoader_.FetchAllMsgs();
-    while(!msgs.empty())
-    {
-        ChunkLoaderMessage *msg = msgs.front();
-        msgs.pop();
-
-        switch(msg->type)
-        {
-        case ChunkLoaderMessage::ChunkLoaded:
-            ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(msg->ckLoaded));
-            break;
-        default:
-            std::abort();
-        }
-
-        delete msg;
-    }
+    ProcessChunkLoaderMessages();
 
     for(auto it : chunks_)
         Helper::SafeDeleteObjects(it.second);
-
     chunks_.clear();
     importantModelUpdates_.clear();
     unimportantModelUpdates_.clear();
@@ -126,11 +108,11 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     for(auto it : chunks_)
     {
         if(!InLoadingRange(it.first.x, it.first.z))
-            ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(it.second));
+            Helper::SafeDeleteObjects(it.second);
         else
             newChunks_[it.first] = it.second;
     }
-    chunks_.swap(newChunks_);
+    chunks_ = std::move(newChunks_);
 
     //遍历新范围内的Chunk
     //缺数据的建立加载任务
@@ -147,7 +129,8 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
             if(it == chunks_.end()) //还没有这个区块的数据
             {
                 ckLoader_.AddTask(
-                    new ChunkLoaderTask_LoadChunkData(new Chunk(this, { newCkX, newCkZ })));
+                    new ChunkLoaderTask_LoadChunkData(
+                        new Chunk(this, { newCkX, newCkZ })));
             }
             else if(InRenderRange(newCkX, newCkZ)) //有数据了，看看在不在渲染范围内
             {
@@ -176,9 +159,10 @@ void ChunkManager::AddChunkData(Chunk *ck)
     IntVectorXZ pos = ck->GetPosition();
 
     //已经有了，所以直接丢掉
-    if((it = chunks_.find(pos)) != chunks_.end() && it->second)
+    if((it = chunks_.find(pos)) != chunks_.end())
     {
-        ckLoader_.AddTask(new ChunkLoaderTask_DestroyChunk(ck));
+        assert(it->second);
+        Helper::SafeDeleteObjects(ck);
         return;
     }
 
@@ -216,7 +200,7 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 {
     std::queue<ChunkLoaderMessage*> msgs = ckLoader_.FetchAllMsgs();
 
-    while(!msgs.empty())
+    while(msgs.size())
     {
         ChunkLoaderMessage *msg = msgs.front();
         msgs.pop();
@@ -226,6 +210,8 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         case ChunkLoaderMessage::ChunkLoaded:
             if(InLoadingRange(msg->ckLoaded->GetPosition().x, msg->ckLoaded->GetPosition().z))
                 AddChunkData(msg->ckLoaded);
+            else
+                Helper::SafeDeleteObjects(msg->ckLoaded);
             break;
         default:
             std::abort();
@@ -279,17 +265,6 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
     {
         if(!InRenderRange(it.first.x, it.first.z))
             continue;
-
-        ChunkSectionModels *models;
-        for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
-        {
-            if(models = it.second->GetModels(section))
-            {
-                for(int i = 0; i != BASIC_RENDERER_TEXTURE_NUM; ++i)
-                    renderQueue->basic[i].AddModel(&models->basic[i]);
-                for(int i = 0; i != CARVE_RENDERER_TEXTURE_NUM; ++i)
-                    renderQueue->carve[i].AddModel(&models->carve[i]);
-            }
-        }
+        it.second->Render(renderQueue);
     }
 }

@@ -61,7 +61,6 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
     assert(0 <= section && section < CHUNK_SECTION_NUM);
     Helper::SafeDeleteObjects(models_[section]);
     models_[section] = model;
-    //std::cerr << "model changed (" << ckPos_.x << " " << section << " " << ckPos_.z << std::endl;
 }
 
 Chunk::BlockData &Chunk::GetBlockData(void)
@@ -79,14 +78,15 @@ void Chunk::Render(ChunkSectionRenderQueue *renderQueue)
 {
     assert(renderQueue != nullptr);
 
-    ChunkSectionModels *models;
     for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
     {
+        ChunkSectionModels *models;
         if(models = GetModels(section))
         {
-            //basic renderer
             for(int b = 0; b != BASIC_RENDERER_TEXTURE_NUM; ++b)
                 renderQueue->basic[b].AddModel(&models->basic[b]);
+            for(int b = 0; b != CARVE_RENDERER_TEXTURE_NUM; ++b)
+                renderQueue->carve[b].AddModel(&models->carve[b]);
         }
     }
 }

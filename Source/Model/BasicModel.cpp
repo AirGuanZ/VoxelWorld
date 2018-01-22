@@ -34,7 +34,10 @@ bool BasicModel::MakeVertexBuffer(void)
 
     //¿ÕmodelÊÇÔÊÐíµÄ
     if(vertices_.empty())
+    {
+        vtxBufBinding_.startSlot = 0;
         return true;
+    }
 
     assert(indices_.size() % 3 == 0);
     ID3D11Buffer *buf = Helper::CreateVertexBuffer(
