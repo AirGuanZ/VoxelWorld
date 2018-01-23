@@ -142,7 +142,6 @@ void Application::Run(void)
     Clock clock;
     clock.Restart();
 
-
     while(!input.IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
@@ -181,5 +180,5 @@ void Application::Run(void)
         clock.Tick();
     }
 
-    //window.Destroy();
+    window.Destroy();
 }
