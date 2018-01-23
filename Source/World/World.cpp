@@ -41,14 +41,14 @@ void World::Update(float deltaT)
     actor_.UpdateCamera(deltaT);
 
     ckMgr_.SetCentrePosition(
-        BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCamera().GetPosition().x)),
-        BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCamera().GetPosition().z)));
+        BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().x)),
+        BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().z)));
 
     //·½¿éÆÆ»µ
     if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Left))
     {
         Block blk; BlockFace face; IntVector3 pickPos;
-        if(ckMgr_.PickBlock(actor_.GetCamera().GetPosition(), actor_.GetCamera().GetDirection(),
+        if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
             blk.type = BlockType::Air;

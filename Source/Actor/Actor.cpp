@@ -69,3 +69,8 @@ const Camera &Actor::GetCamera(void) const
 {
     return camera_;
 }
+
+const Vector3 &Actor::GetCameraPosition(void) const
+{
+    return camera_.GetPosition();
+}

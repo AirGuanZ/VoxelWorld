@@ -18,6 +18,8 @@ public:
     const Matrix &GetViewProjMatrix(void) const;
     const Camera &GetCamera(void) const;
 
+    const Vector3 &GetCameraPosition(void) const;
+
 private:
     float flyUpSpeed_ = 0.016f;
     float flyDownSpeed_ = 0.016f;
