@@ -161,9 +161,9 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     float sunlight = LightToFloat(GetSunlight(blk.rgbs));
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
-        const Vector3 &vtx2, const Vector3 &vtx3,
-        int carveBoxTexPosIdx,
-        CarveModel &output)
+                       const Vector3 &vtx2, const Vector3 &vtx3,
+                       int carveBoxTexPosIdx,
+                       CarveModel &output)
     {
         float texBaseU = info.carveBoxTexPos[carveBoxTexPosIdx]
             % CARVE_RENDERER_TEXTURE_BLOCK_SIZE * TEX_GRID_SIZE;
@@ -205,42 +205,42 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     if(infoMgr.IsFaceVisible(blk.type, pX.type))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
-        { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
-            1, model);
+                { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
+                1, model);
     }
     //x-
     if(infoMgr.IsFaceVisible(blk.type, nX.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
-        { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
-            2, model);
+                { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
+                2, model);
     }
     //y+
     if(infoMgr.IsFaceVisible(blk.type, pY.type))
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
-        { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-            3, model);
+                { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
+                3, model);
     }
     //y-
     if(infoMgr.IsFaceVisible(blk.type, nY.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
-        { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
-            4, model);
+                { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
+                4, model);
     }
     //z+
     if(infoMgr.IsFaceVisible(blk.type, pZ.type))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
-        { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
-            5, model);
+                { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
+                5, model);
     }
     //z-
     if(infoMgr.IsFaceVisible(blk.type, nZ.type))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
-        { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
-            6, model);
+                { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
+                6, model);
     }
 }
