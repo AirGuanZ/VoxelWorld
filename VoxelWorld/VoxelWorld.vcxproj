@@ -29,6 +29,9 @@
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
+    <ClCompile Include="..\Source\D3DObject\DepthStencilState.cpp" />
+    <ClCompile Include="..\Source\D3DObject\RasterState.cpp" />
+    <ClCompile Include="..\Source\D3DObject\Sampler.cpp" />
     <ClCompile Include="..\Source\Input\InputManager.cpp" />
     <ClCompile Include="..\Source\Land\LandGenerator.cpp" />
     <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp" />
@@ -38,11 +41,8 @@
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp" />
-    <ClCompile Include="..\Source\Renderer\DepthStencilState.cpp" />
-    <ClCompile Include="..\Source\Renderer\RasterState.cpp" />
     <ClCompile Include="..\Source\Screen\Crosshair.cpp" />
     <ClCompile Include="..\Source\Screen\ImmediateScreen2D.cpp" />
-    <ClCompile Include="..\Source\Texture\Sampler.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
     <ClCompile Include="..\Source\Utility\Clock.cpp" />
@@ -64,7 +64,10 @@
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
-    <ClInclude Include="..\Source\D3DBuffer\BasicBuffer.h" />
+    <ClInclude Include="..\Source\D3DObject\BasicBuffer.h" />
+    <ClInclude Include="..\Source\D3DObject\DepthStencilState.h" />
+    <ClInclude Include="..\Source\D3DObject\RasterState.h" />
+    <ClInclude Include="..\Source\D3DObject\Sampler.h" />
     <ClInclude Include="..\Source\Input\InputManager.h" />
     <ClInclude Include="..\Source\Land\LandGenerator.h" />
     <ClInclude Include="..\Source\Land\LandGenerator_V0.h" />
@@ -73,13 +76,10 @@
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
-    <ClInclude Include="..\Source\Renderer\DepthStencilState.h" />
-    <ClInclude Include="..\Source\Renderer\RasterState.h" />
     <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Screen\Crosshair.h" />
     <ClInclude Include="..\Source\Screen\ImmediateScreen2D.h" />
-    <ClInclude Include="..\Source\Texture\Sampler.h" />
     <ClInclude Include="..\Source\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\Texture\TextureFile.h" />
     <ClInclude Include="..\Source\Utility\Clock.h" />

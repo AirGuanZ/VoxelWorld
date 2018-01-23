@@ -11,11 +11,11 @@ Created by AirGuanZ
 
 #include <OWEShader.hpp>
 
+#include "../D3DObject/RasterState.h"
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 #include "BasicRenderer.h"
-#include "RasterState.h"
 
 constexpr int CARVE_RENDERER_TEXTURE_NUM = 1;
 constexpr int CARVE_RENDERER_TEXTURE_BLOCK_SIZE = 16;

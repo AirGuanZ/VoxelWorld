@@ -10,11 +10,11 @@ Created by AirGuanZ
 
 #include <Windows.h>
 
+#include "../D3DObject/Sampler.h"
 #include "../Input/InputManager.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Resource/ResourceName.h"
 #include "../Screen/Crosshair.h"
-#include "../Texture/Sampler.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Clock.h"
 #include "../Utility/HelperFunctions.h"

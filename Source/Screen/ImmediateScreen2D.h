@@ -11,9 +11,9 @@ Created by AirGuanZ
 
 #include <OWEShader.hpp>
 
-#include "../D3DBuffer/BasicBuffer.h"
-#include "../Renderer/DepthStencilState.h"
-#include "../Texture/Sampler.h"
+#include "../D3DObject/BasicBuffer.h"
+#include "../D3DObject/DepthStencilState.h"
+#include "../D3DObject/Sampler.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
