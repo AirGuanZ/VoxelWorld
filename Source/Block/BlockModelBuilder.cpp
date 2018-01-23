@@ -50,8 +50,11 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
     constexpr float TEX_GRID_SIZE = 1.0f / BASIC_RENDERER_TEXTURE_BLOCK_SIZE;
-    Vector3 lightColor(blk.lightColor.r, blk.lightColor.g, blk.lightColor.b);
+    Vector3 lightColor(LightToFloat(GetRed(blk.rgbs)),
+                       LightToFloat(GetGreen(blk.rgbs)),
+                       LightToFloat(GetBlue(blk.rgbs)));
     BasicModel &model = models->basic[info.basicBoxTexPos[0]];
+    float sunlight = LightToFloat(GetSunlight(blk.rgbs));
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,
@@ -67,22 +70,22 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         output.AddVertex({ 
             posOffset + vtx0,
             { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx1,
             { texBaseU + 0.0015f, texBaseV + 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx2,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx3,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
 
         output.AddIndex(idxStart);
@@ -151,8 +154,11 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
     constexpr float TEX_GRID_SIZE = 1.0f / CARVE_RENDERER_TEXTURE_BLOCK_SIZE;
-    Vector3 lightColor(blk.lightColor.r, blk.lightColor.g, blk.lightColor.b);
+    Vector3 lightColor(LightToFloat(GetRed(blk.rgbs)),
+                       LightToFloat(GetGreen(blk.rgbs)),
+                       LightToFloat(GetBlue(blk.rgbs)));
     CarveModel &model = models->carve[info.carveBoxTexPos[0]];
+    float sunlight = LightToFloat(GetSunlight(blk.rgbs));
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
         const Vector3 &vtx2, const Vector3 &vtx3,
@@ -168,22 +174,22 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         output.AddVertex({
             posOffset + vtx0,
             { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx1,
             { texBaseU + 0.0015f, texBaseV + 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx2,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
         output.AddVertex({
             posOffset + vtx3,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, blk.sunlight
+            lightColor, sunlight
         });
 
         output.AddIndex(idxStart);

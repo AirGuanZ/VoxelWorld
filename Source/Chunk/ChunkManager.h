@@ -59,6 +59,19 @@ public:
     Block &GetBlock(int blkX, int blkY, int blkZ);
     void SetBlock(int blkX, int blkY, int blkZ, const Block &blk);
 
+    //以给定的射线和已有的方块求交
+    //返回true当且仅当在maxLen内找到了满足PickBlockFunc的方块
+    //若返回值为true，则
+    //      blk存放第一个满足条件的方块
+    //      face指出是从哪一面进入该方块的
+    //      rtPos指出该方块在Block坐标系中的位置
+    //若原点就在满足条件的方块内部，则face值为六个值中的任一个
+    //注意：位置越界的dummyBlock也会参与这一求交过程
+    using PickBlockFunc = bool(*)(const Block&);
+    bool PickBlock(const Vector3 &origin, const Vector3 &dir,
+                   float maxLen, float step, PickBlockFunc func,
+                   Block &blk, BlockFace &face, IntVector3 &rtPos);
+
     bool InRenderRange(int ckX, int ckZ);
     bool InLoadingRange(int ckX, int cnZ);
 

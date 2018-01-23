@@ -15,7 +15,7 @@ Created by AirGuanZ
 #include "../Utility/Uncopiable.h"
 
 constexpr int CHUNK_SECTION_SIZE = 16;
-constexpr int CHUNK_SECTION_NUM  = 16;
+constexpr int CHUNK_SECTION_NUM  = 8;
 constexpr int CHUNK_MAX_HEIGHT   = CHUNK_SECTION_SIZE * CHUNK_SECTION_NUM;
 
 class ChunkManager;
@@ -41,6 +41,7 @@ public:
     IntVectorXZ GetPosition(void) const;
 
     Block &GetBlock(int xBlock, int yBlock, int zBlock);
+    const Block &GetInternalBlock(int x, int y, int z) const;
 
     void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
     void SetModel(int section, ChunkSectionModels *model);

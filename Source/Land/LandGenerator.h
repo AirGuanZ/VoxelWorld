@@ -14,11 +14,4 @@ public:
     virtual void GenerateLand(Chunk *ck) = 0;
 };
 
-class TestLandGenerator : public LandGenerator
-{
-public:
-    static TestLandGenerator instance_;
-    void GenerateLand(Chunk *ck);
-};
-
 #endif //VW_LAND_GENERATOR_H

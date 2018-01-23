@@ -27,11 +27,16 @@ IntVectorXZ Chunk::GetPosition(void) const
     return ckPos_;
 }
 
+inline bool OutOfChunk(std::int32_t x, std::int32_t y, std::int32_t z)
+{
+    return (x | (CHUNK_SECTION_SIZE - 1 - x) |
+            y | (CHUNK_MAX_HEIGHT - 1 - y) |
+            z | (CHUNK_SECTION_SIZE - 1 - z)) < 0;
+}
+
 Block &Chunk::GetBlock(int x, int y, int z)
 {
-    if(x < 0 || x >= CHUNK_SECTION_SIZE ||
-       z < 0 || z >= CHUNK_SECTION_SIZE ||
-       y < 0 || y >= CHUNK_MAX_HEIGHT)
+    if(OutOfChunk(x, y, z))
     {
         return ckMgr_->GetBlock(
             ChunkXZ_To_BlockXZ(ckPos_.x) + x,
@@ -41,11 +46,19 @@ Block &Chunk::GetBlock(int x, int y, int z)
     return blocks_[x][y][z];
 }
 
+const Block &Chunk::GetInternalBlock(int x, int y, int z) const
+{
+    if(OutOfChunk(x, y, z))
+    {
+        static Block dummyBlock;
+        return dummyBlock;
+    }
+    return blocks_[x][y][z];
+}
+
 void Chunk::SetBlock(int x, int y, int z, const Block &blk)
 {
-    if(x < 0 || x >= CHUNK_SECTION_SIZE ||
-       z < 0 || z >= CHUNK_SECTION_SIZE ||
-       y < 0 || y >= CHUNK_MAX_HEIGHT)
+    if(OutOfChunk(x, y, z))
     {
         ckMgr_->SetBlock(
             ChunkXZ_To_BlockXZ(ckPos_.x) + x,

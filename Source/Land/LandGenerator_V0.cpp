@@ -26,26 +26,22 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
             int h = GetHeight(x + xBase, z + zBase);
 
             data[x][0][z].type = BlockType::Bedrock;
-            data[x][0][z].sunlight = 1.0f;
-            data[x][0][z].lightColor = { 0, 0, 0 };
+            SetLight(data[x][0][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
 
             for(int y = 1; y != h - 2; ++y)
             {
                 data[x][y][z].type = BlockType::Stone;
-                data[x][y][z].sunlight = 1.0f;
-                data[x][y][z].lightColor = { 0, 0, 0 };
+                SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
             }
 
             for(int y = h - 2; y != h; ++y)
             {
                 data[x][y][z].type = BlockType::Dirt;
-                data[x][y][z].sunlight = 1.0f;
-                data[x][y][z].lightColor = { 0, 0, 0 };
+                SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
             }
 
             data[x][h][z].type = BlockType::Grass;
-            data[x][h][z].sunlight = 1.0f;
-            data[x][h][z].lightColor = { 0, 0, 0 };
+            SetLight(data[x][h][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
         }
     }
 }
@@ -54,7 +50,7 @@ int LandGenerator_V0::GetHeight(int x, int z)
 {
     constexpr int LEVEL_NUM = 5;
     constexpr int MAX_GRID_SIZE = 128;
-    constexpr float MAX_LEVEL_HEIGHT = 50.0f;
+    constexpr float MAX_LEVEL_HEIGHT = 30.0f;
 
     int gridSize = MAX_GRID_SIZE;
     float levelHeight = MAX_LEVEL_HEIGHT;

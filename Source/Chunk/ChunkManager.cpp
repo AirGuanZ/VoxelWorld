@@ -78,11 +78,86 @@ void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
 {
     if(y < 0 || y >= CHUNK_MAX_HEIGHT)
         return;
-    GetChunk(BlockXZ_To_ChunkXZ(x), BlockXZ_To_ChunkXZ(z))
-        ->SetBlock(BlockXZ_To_BlockXZInChunk(x),
-                   y,
-                   BlockXZ_To_BlockXZInChunk(z),
-                   blk);
+
+    int ckX = BlockXZ_To_ChunkXZ(x);
+    int ckZ = BlockXZ_To_ChunkXZ(z);
+    int secY = BlockY_To_ChunkSectionIndex(y);
+
+    int blkX = BlockXZ_To_BlockXZInChunk(x);
+    int blkZ = BlockXZ_To_BlockXZInChunk(z);
+    int blkY = BlockY_To_BlockYInChunkSection(y);
+
+    GetChunk(ckX, ckZ) ->SetBlock(blkX, y, blkZ, blk);
+
+    if(InRenderRange(ckX, ckZ))
+        importantModelUpdates_.insert({ ckX, secY, ckZ });
+    if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
+        importantModelUpdates_.insert({ ckX - 1, secY, ckZ });
+    if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
+        importantModelUpdates_.insert({ ckX + 1, secY, ckZ });
+    if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
+        importantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
+    if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
+        importantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
+    if(blkY == 0 && secY > 0)
+        importantModelUpdates_.insert({ ckX, secY - 1, ckZ });
+    if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+        importantModelUpdates_.insert({ ckX, secY + 1, ckZ });
+}
+
+inline void UpdateMinDis(float &minDis, BlockFace &face, float newDis, BlockFace newFace)
+{
+    if(minDis < newDis)
+    {
+        minDis = newDis;
+        face = newFace;
+    }
+}
+
+bool ChunkManager::PickBlock(const Vector3 &origin, const Vector3 &dir,
+                             float maxLen, float step, PickBlockFunc func,
+                             Block &blk, BlockFace &face, IntVector3 &rtPos)
+{
+    float t = 0;
+    Vector3 pos = origin, posStep = step * dir;
+    while(t < maxLen)
+    {
+        IntVector3 tBlkPos =
+        {
+            Camera_To_Block(pos.x),
+            Camera_To_Block(pos.y),
+            Camera_To_Block(pos.z)
+        };
+        const Block &tBlk = GetBlock(tBlkPos.x, tBlkPos.y, tBlkPos.z);
+
+        if(func(tBlk))
+        {
+            blk = tBlk;
+            rtPos = tBlkPos;
+
+            //tBlkPos离哪个面最近，就和哪个面相交
+            float disNegX = pos.x - static_cast<float>(tBlkPos.x);
+            float disNegY = pos.y - static_cast<float>(tBlkPos.y);
+            float disNegZ = pos.z - static_cast<float>(tBlkPos.z);
+            float disPosX = 1.0f - disNegX;
+            float disPosY = 1.0f - disNegY;
+            float disPosZ = 1.0f - disNegZ;
+
+            face = BlockFace::PosX; float minDis = disPosX;
+            UpdateMinDis(minDis, face, disNegX, BlockFace::NegX);
+            UpdateMinDis(minDis, face, disPosY, BlockFace::PosY);
+            UpdateMinDis(minDis, face, disNegY, BlockFace::NegY);
+            UpdateMinDis(minDis, face, disPosZ, BlockFace::PosZ);
+            UpdateMinDis(minDis, face, disNegZ, BlockFace::NegZ);
+
+            return true;
+        }
+
+        t += step;
+        pos += posStep;
+    }
+
+    return false;
 }
 
 bool ChunkManager::InRenderRange(int ckX, int ckZ)
@@ -147,7 +222,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
 void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
 {
     auto it = chunks_.find({ x, z });
-    if(it == chunks_.end())
+    if(it == chunks_.end() || !InRenderRange(x, z))
         return;
     importantModelUpdates_.insert({ x, y, z });
 }
