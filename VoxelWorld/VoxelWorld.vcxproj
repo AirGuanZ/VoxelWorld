@@ -40,6 +40,7 @@
     <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp" />
     <ClCompile Include="..\Source\Renderer\DepthStencilState.cpp" />
     <ClCompile Include="..\Source\Renderer\RasterState.cpp" />
+    <ClCompile Include="..\Source\Screen\Crosshair.cpp" />
     <ClCompile Include="..\Source\Screen\ImmediateScreen2D.cpp" />
     <ClCompile Include="..\Source\Texture\Sampler.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
@@ -104,6 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png" />
+    <Image Include="Bin\Texture\Carve\0.png" />
+    <Image Include="Bin\Texture\Crosshair\cross.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Carve\pixel.hlsl">

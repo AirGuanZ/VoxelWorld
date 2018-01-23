@@ -73,6 +73,12 @@
     <Filter Include="Bin\Shader\ImmediateScreen2D">
       <UniqueIdentifier>{1475c630-543d-4b9b-9490-e57b7d980265}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Texture\Crosshair">
+      <UniqueIdentifier>{add654a7-890c-4c37-b74e-ef78b54a43da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bin\Texture\Carve">
+      <UniqueIdentifier>{62a191b3-2ef8-4d49-9ddd-d49fe6fcb583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -164,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Renderer\DepthStencilState.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Screen\Crosshair.cpp">
+      <Filter>Source\Screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +312,12 @@
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
       <Filter>Bin\Texture\Basic</Filter>
+    </Image>
+    <Image Include="Bin\Texture\Carve\0.png">
+      <Filter>Bin\Texture\Carve</Filter>
+    </Image>
+    <Image Include="Bin\Texture\Crosshair\cross.png">
+      <Filter>Bin\Texture\Crosshair</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

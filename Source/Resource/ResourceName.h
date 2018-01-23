@@ -28,4 +28,8 @@ Created by AirGuanZ
 #define IMMEDIATE_SCREEN_2D_NOR_VERTEX_SHADER VW_FILENAME(Bin/Shader/ImmediateScreen2D/normalVertex.hlsl)
 #define IMMEDIATE_SCREEN_2D_NOR_PIXEL_SHADER  VW_FILENAME(Bin/Shader/ImmediateScreen2D/normalPixel.hlsl)
 
+//Crosshair
+
+#define CROSSHAIR_BASIC_TEXTURE VW_FILENAME(Bin/Texture/Crosshair/cross.png)
+
 #endif //VW_RESOURCE_NAME_H

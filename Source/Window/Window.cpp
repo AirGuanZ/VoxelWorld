@@ -289,15 +289,27 @@ static void DestroyD3D(void)
     using Helper::ReleaseCOMObjects;
     using namespace D3D;
 
-    ReleaseCOMObjects(swapChain, device, deviceContext);
-    ReleaseCOMObjects(renderTargetView);
-    ReleaseCOMObjects(depthStencilBuffer, depthStencilView);
-
     isFullscreen = false;
     vsync = true;
 
     background[0] = background[1] =
     background[2] = background[3] = 0.0f;
+
+    ReleaseCOMObjects(swapChain, deviceContext);
+    ReleaseCOMObjects(renderTargetView);
+    ReleaseCOMObjects(depthStencilBuffer, depthStencilView);
+
+#ifdef _DEBUG
+    if(device)
+    {
+        ID3D11Debug *debug = nullptr;
+        HRESULT hr = device->QueryInterface<ID3D11Debug>(&debug);
+        if(SUCCEEDED(hr))
+            debug->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+        ReleaseCOMObjects(debug);
+    }
+#endif
+    ReleaseCOMObjects(device);
 }
 
 static void DestroyWin(void)

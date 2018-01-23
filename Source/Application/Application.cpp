@@ -13,6 +13,7 @@ Created by AirGuanZ
 #include "../Input/InputManager.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Resource/ResourceName.h"
+#include "../Screen/Crosshair.h"
 #include "../Texture/Sampler.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Clock.h"
@@ -124,11 +125,23 @@ void Application::Run(void)
     World world;
     world.Initialize();
 
-    Clock clock;
-    clock.Restart();
+    //×¼ÐÇ
+
+    ImmediateScreen2D imScr2D;
+    if(!imScr2D.Initialize(initErrMsg))
+    {
+        std::cerr << initErrMsg << std::endl;
+        return;
+    }
+
+    Crosshair crosshair;
 
     input.LockCursor(true, window.ClientCentreX(), window.ClientCentreY());
     input.ShowCursor(false);
+
+    Clock clock;
+    clock.Restart();
+
 
     while(!input.IsKeyDown(VK_ESCAPE))
     {
@@ -161,10 +174,12 @@ void Application::Run(void)
         carveRendererUniforms0->Unbind(DC);
         carveRenderer.End();
 
+        crosshair.Draw(&imScr2D);
+
         window.Present();
         window.DoEvents();
         clock.Tick();
     }
 
-    window.Destroy();
+    //window.Destroy();
 }
