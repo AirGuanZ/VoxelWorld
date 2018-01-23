@@ -64,6 +64,9 @@
     <Filter Include="Bin\Shader\Carve">
       <UniqueIdentifier>{6b0acb63-3c56-4c0f-a23d-d8355f6f0223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Screen">
+      <UniqueIdentifier>{ed2923cd-10b2-49b5-8286-34dbb067ca60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">

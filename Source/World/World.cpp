@@ -49,7 +49,7 @@ void World::Update(float deltaT)
     {
         Block blk; BlockFace face; IntVector3 pickPos;
         if(ckMgr_.PickBlock(actor_.GetCamera().GetPosition(), actor_.GetCamera().GetDirection(),
-            6.0f, 0.01f, IsNotAir, blk, face, pickPos))
+            10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
             blk.type = BlockType::Air;
             SetLight(blk, 0, 0, 0, LIGHT_COMPONENT_MAX);
