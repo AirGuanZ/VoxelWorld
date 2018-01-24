@@ -26,22 +26,28 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
             int h = GetHeight(x + xBase, z + zBase);
 
             data[x][0][z].type = BlockType::Bedrock;
-            SetLight(data[x][0][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
+            SetLight(data[x][0][z], 0, 0, 0, 0);
 
             for(int y = 1; y != h - 2; ++y)
             {
                 data[x][y][z].type = BlockType::Stone;
-                SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
+                SetLight(data[x][y][z], 0, 0, 0, 0);
             }
 
             for(int y = h - 2; y != h; ++y)
             {
                 data[x][y][z].type = BlockType::Dirt;
-                SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
+                SetLight(data[x][y][z], 0, 0, 0, 0);
             }
 
             data[x][h][z].type = BlockType::Grass;
-            SetLight(data[x][h][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
+            SetLight(data[x][h][z], 0, 0, 0, 0);
+
+            for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
+            {
+                data[x][y][z].type = BlockType::Air;
+                SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
+            }
         }
     }
 }

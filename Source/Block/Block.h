@@ -28,6 +28,7 @@ enum BlockFace : std::uint8_t
 struct Block
 {
     BlockType type = BlockType::Air;
+    //注意这里的亮度不是方块本身的亮度，而是经由自身流出的亮度
     BlockLight rgbs = 0;
 };
 

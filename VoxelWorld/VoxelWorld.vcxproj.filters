@@ -308,8 +308,12 @@
     <None Include="Bin\Shader\Carve\vertex.hlsl">
       <Filter>Bin\Shader\Carve</Filter>
     </None>
-    <None Include="Bin\Shader\ImmediateScreen2D\normalPixel.hlsl" />
-    <None Include="Bin\Shader\ImmediateScreen2D\normalVertex.hlsl" />
+    <None Include="Bin\Shader\ImmediateScreen2D\normalVertex.hlsl">
+      <Filter>Bin\Shader\ImmediateScreen2D</Filter>
+    </None>
+    <None Include="Bin\Shader\ImmediateScreen2D\normalPixel.hlsl">
+      <Filter>Bin\Shader\ImmediateScreen2D</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">

@@ -50,7 +50,7 @@ const Block &Chunk::GetInternalBlock(int x, int y, int z) const
 {
     if(OutOfChunk(x, y, z))
     {
-        static Block dummyBlock;
+        static const Block dummyBlock;
         return dummyBlock;
     }
     return blocks_[x][y][z];
