@@ -35,29 +35,43 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
                 SetLight(data[x][y][z], 0, 0, 0, 0);
             }
 
-            for(int y = h - 2; y != h; ++y)
+            constexpr int SAND_LEVEL = 40;
+            if(h < SAND_LEVEL)
             {
-                data[x][y][z].type = BlockType::Dirt;
-                SetLight(data[x][y][z], 0, 0, 0, 0);
+                for(int y = h - 2; y <= SAND_LEVEL; ++y)
+                {
+                    data[x][y][z].type = BlockType::Sand;
+                    SetLight(data[x][y][z], 0, 0, 0, 0);
+                }
+                h = SAND_LEVEL;
+            }
+            else
+            {
+                for(int y = h - 2; y != h; ++y)
+                {
+                    data[x][y][z].type = BlockType::Dirt;
+                    SetLight(data[x][y][z], 0, 0, 0, 0);
+                }
+
+                data[x][h][z].type = BlockType::GrassBox;
+                SetLight(data[x][h][z], 0, 0, 0, 0);
+
+                float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
+                if(gfv < 0.07f)
+                {
+                    data[x][h + 1][z].type = BlockType::Grass;
+                    SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
+                    ++h;
+                }
+                else if(gfv < 0.1f)
+                {
+                    data[x][h + 1][z].type = BlockType::Flower;
+                    SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
+                    ++h;
+                }
+
             }
 
-            data[x][h][z].type = BlockType::GrassBox;
-            SetLight(data[x][h][z], 0, 0, 0, 0);
-
-            float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
-            if(gfv < 0.07f)
-            {
-                data[x][h + 1][z].type = BlockType::Grass;
-                SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
-                ++h;
-            }
-            else if(gfv < 0.1f)
-            {
-                data[x][h + 1][z].type = BlockType::Flower;
-                SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
-                ++h;
-            }
-            
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
             {
                 data[x][y][z].type = BlockType::Air;

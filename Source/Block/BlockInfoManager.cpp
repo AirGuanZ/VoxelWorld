@@ -69,6 +69,14 @@ BlockInfoManager::BlockInfoManager(void)
             1000, { 0, 0, 0 }
         },
         {
+            BlockType::Sand,
+            "Sand",
+            BlockShape::Box,
+            BlockRenderer::BasicRenderer,
+            true,
+            1000, { 0, 0, 0 }
+        },
+        {
             BlockType::Wood,
             "Wood",
             BlockShape::Box,
@@ -140,6 +148,7 @@ BlockInfoManager::BlockInfoManager(void)
     SetBasicBoxTexPos(BlockType::Stone,     0, 1, 1, 1, 1, 1, 1);
     SetBasicBoxTexPos(BlockType::Dirt,      0, 2, 2, 2, 2, 2, 2);
     SetBasicBoxTexPos(BlockType::GrassBox,  0, 3, 3, 4, 2, 3, 3);
+    SetBasicBoxTexPos(BlockType::Sand,      0, 8, 8, 8, 8, 8, 8);
     SetBasicBoxTexPos(BlockType::Wood,      0, 6, 6, 5, 5, 6, 6);
     SetCarveBoxTexPos(BlockType::Leaf,      0, 0, 0, 0, 0, 0, 0);
     SetBasicBoxTexPos(BlockType::GlowStone, 0, 7, 7, 7, 7, 7, 7);
