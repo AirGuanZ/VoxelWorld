@@ -52,7 +52,6 @@ void World::Update(float deltaT)
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
             blk.type = BlockType::Air;
-            SetLight(blk, 0, 0, 0, 0);
             ckMgr_.SetBlock(pickPos.x, pickPos.y, pickPos.z, blk);
         }
     }
@@ -63,7 +62,6 @@ void World::Update(float deltaT)
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
             blk.type = BlockType::Stone;
-            SetLight(blk, 0, 0, 0, 0);
             IntVector3 faceDir[] =
             {
                 { 1, 0, 0 }, { -1, 0, 0 },
