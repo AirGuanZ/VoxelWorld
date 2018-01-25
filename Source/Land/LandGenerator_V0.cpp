@@ -16,6 +16,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
     assert(ck != nullptr);
 
     Chunk::BlockData &data = ck->GetBlockData();
+    Chunk::HeightMap &heightMap = ck->GetHeightMap();
     IntVectorXZ ckPos = ck->GetPosition();
     int xBase = ChunkXZ_To_BlockXZ(ckPos.x);
     int zBase = ChunkXZ_To_BlockXZ(ckPos.z);
@@ -24,6 +25,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
         for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
         {
             int h = GetHeight(x + xBase, z + zBase);
+            heightMap[x][z] = h;
 
             data[x][0][z].type = BlockType::Bedrock;
             SetLight(data[x][0][z], 0, 0, 0, 0);

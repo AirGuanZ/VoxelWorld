@@ -58,15 +58,34 @@ const Block &Chunk::GetInternalBlock(int x, int y, int z) const
 
 void Chunk::SetBlock(int x, int y, int z, const Block &blk)
 {
+    int wX = ChunkXZ_To_BlockXZ(ckPos_.x) + x;
+    int wZ = ChunkXZ_To_BlockXZ(ckPos_.z) + z;
+
     if(OutOfChunk(x, y, z))
     {
-        ckMgr_->SetBlock(
-            ChunkXZ_To_BlockXZ(ckPos_.x) + x,
-            y,
-            ChunkXZ_To_BlockXZ(ckPos_.z) + z,
-            blk);
+        ckMgr_->SetBlock(wX, y, wZ, blk);
+        return;
     }
+
     blocks_[x][y][z] = blk;
+    if(y >= heightMap_[x][z])
+    {
+        int newH = CHUNK_MAX_HEIGHT - 1;
+        while(newH > 0 && blocks_[x][newH][z].type == BlockType::Air)
+            --newH;
+        if(newH != heightMap_[x][z])
+        {
+            int L, H; std::tie(L, H) = std::minmax(newH, heightMap_[x][z]);
+            while(H >= L)
+            {
+                ckMgr_->AddLightUpdate(wX, H, wZ);
+                --H;
+            }
+        }
+        heightMap_[x][z] = newH;
+    }
+
+    ckMgr_->AddLightUpdate(wX, y, wZ);
 }
 
 void Chunk::SetModel(int section, ChunkSectionModels *model)
@@ -79,6 +98,11 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
 Chunk::BlockData &Chunk::GetBlockData(void)
 {
     return blocks_;
+}
+
+Chunk::HeightMap &Chunk::GetHeightMap(void)
+{
+    return heightMap_;
 }
 
 ChunkSectionModels *Chunk::GetModels(int section)

@@ -31,43 +31,50 @@ BlockInfoManager::BlockInfoManager(void)
             BlockType::Air,
             "Air",
             BlockShape::Null,
-            BlockRenderer::Null
+            BlockRenderer::Null,
+            1
         },
         {
             BlockType::Bedrock,
             "Bedrock",
             BlockShape::Box,
-            BlockRenderer::BasicRenderer
+            BlockRenderer::BasicRenderer,
+            1000
         },
         {
             BlockType::Stone,
             "Stone",
             BlockShape::Box,
-            BlockRenderer::BasicRenderer
+            BlockRenderer::BasicRenderer,
+            1000
         },
         {
             BlockType::Dirt,
             "Dirt",
             BlockShape::Box,
-            BlockRenderer::BasicRenderer
+            BlockRenderer::BasicRenderer,
+            1000
         },
         {
             BlockType::Grass,
             "Grass",
             BlockShape::Box,
-            BlockRenderer::BasicRenderer
+            BlockRenderer::BasicRenderer,
+            1000
         },
         {
             BlockType::Wood,
             "Wood",
             BlockShape::Box,
-            BlockRenderer::BasicRenderer
+            BlockRenderer::BasicRenderer,
+            1000
         },
         {
             BlockType::Leaf,
             "Leaf",
             BlockShape::Box,
-            BlockRenderer::CarveRenderer
+            BlockRenderer::CarveRenderer,
+            2
         },
     };
 
@@ -105,7 +112,12 @@ const BlockInfo &BlockInfoManager::GetBlockInfo(BlockType type) const
 
 bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
 {
-    return info_[Blk2Int(dst)].renderer != BlockRenderer::Null &&
-           (info_[Blk2Int(neighbor)].renderer == BlockRenderer::Null ||
-            info_[Blk2Int(neighbor)].renderer == BlockRenderer::CarveRenderer);
+    const BlockInfo &infoDst = info_[Blk2Int(dst)], infoNei = info_[Blk2Int(neighbor)];
+    if(infoDst.renderer == BlockRenderer::Null)
+        return false;
+    if(infoNei.renderer == BlockRenderer::Null)
+        return true;
+    if(infoNei.renderer == BlockRenderer::CarveRenderer)
+        return infoDst.renderer != BlockRenderer::CarveRenderer;
+    return false;
 }

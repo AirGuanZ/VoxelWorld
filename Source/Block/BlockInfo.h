@@ -54,6 +54,8 @@ struct BlockInfo
     BlockShape shape;
     BlockRenderer renderer;
 
+    int lightDec;
+
     union
     {
         //BasicRenderer, Box的六个面的tex编号以及其上的坐标

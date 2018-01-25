@@ -49,6 +49,9 @@ public:
     using BlockData = Block[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
     BlockData &GetBlockData(void);
 
+    using HeightMap = int[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+    HeightMap &GetHeightMap(void);
+
     ChunkSectionModels *GetModels(int section);
 
     void Render(ChunkSectionRenderQueue *renderQueue);
@@ -59,6 +62,7 @@ private:
 
     //下标的使用：[x][y][z]
     BlockData blocks_;
+    HeightMap heightMap_;
     ChunkSectionModels *models_[CHUNK_SECTION_NUM];
 };
 

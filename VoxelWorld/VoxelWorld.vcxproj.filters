@@ -174,6 +174,9 @@
     <ClCompile Include="..\Source\D3DObject\Sampler.cpp">
       <Filter>Source\D3DObject</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkTraversal.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\D3DObject\Sampler.h">
       <Filter>Source\D3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkTraversal.h">
+      <Filter>Source\Chunk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

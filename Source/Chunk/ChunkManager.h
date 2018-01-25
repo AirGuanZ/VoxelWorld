@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include <map>
 #include <mutex>
+#include <queue>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -79,7 +80,11 @@ public:
 
     void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
 
+    void AddLightUpdate(int blkX, int blkY, int blkZ);
+
     void ProcessChunkLoaderMessages(void);
+
+    void ProcessLightUpdates(void);
 
     void ProcessModelUpdates(void);
 
@@ -108,6 +113,8 @@ private:
     int maxModelUpdates_;
 
     ChunkLoader ckLoader_;
+
+    std::queue<IntVector3> lightUpdates_;
 };
 
 #endif //VW_CHUNK_MANAGER_H

@@ -52,11 +52,30 @@ void World::Update(float deltaT)
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
             blk.type = BlockType::Air;
-            SetLight(blk, 0, 0, 0, LIGHT_COMPONENT_MAX);
+            SetLight(blk, 0, 0, 0, 0);
             ckMgr_.SetBlock(pickPos.x, pickPos.y, pickPos.z, blk);
         }
     }
-    
+    else if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Right)) //∑ΩøÈ∑≈÷√
+    {
+        Block blk; BlockFace face; IntVector3 pickPos;
+        if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
+            10.0f, 0.01f, IsNotAir, blk, face, pickPos))
+        {
+            blk.type = BlockType::Stone;
+            SetLight(blk, 0, 0, 0, 0);
+            IntVector3 faceDir[] =
+            {
+                { 1, 0, 0 }, { -1, 0, 0 },
+                { 0, 1, 0 }, { 0, -1, 0 },
+                { 0, 0, 1 }, { 0, 0, -1 }
+            };
+            IntVector3 &d = faceDir[static_cast<int>(face)];
+            ckMgr_.SetBlock(pickPos.x + d.x, pickPos.y + d.y, pickPos.z + d.z, blk);
+        }
+    }
+
+    ckMgr_.ProcessLightUpdates();
     ckMgr_.ProcessChunkLoaderMessages();
     ckMgr_.ProcessModelUpdates();
 }

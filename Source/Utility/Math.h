@@ -19,6 +19,8 @@ using DirectX::SimpleMath::Vector3;
 using DirectX::SimpleMath::Vector4;
 using DirectX::SimpleMath::Matrix;
 
+using DirectX::SimpleMath::Color;
+
 struct IntVectorXZ
 {
     IntVectorXZ(int _x = 0, int _z = 0)

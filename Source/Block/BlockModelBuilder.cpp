@@ -50,14 +50,11 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
     constexpr float TEX_GRID_SIZE = 1.0f / BASIC_RENDERER_TEXTURE_BLOCK_SIZE;
-    Vector3 lightColor(LightToFloat(GetRed(blk.rgbs)),
-                       LightToFloat(GetGreen(blk.rgbs)),
-                       LightToFloat(GetBlue(blk.rgbs)));
     BasicModel &model = models->basic[info.basicBoxTexPos[0]];
-    float sunlight = LightToFloat(GetSunlight(blk.rgbs));
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,
+                       const Color &rgbs,
                        int basicBoxTexPosIdx,
                        BasicModel &output)
     {
@@ -70,22 +67,22 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         output.AddVertex({ 
             posOffset + vtx0,
             { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx1,
             { texBaseU + 0.0015f, texBaseV + 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx2,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx3,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
 
         output.AddIndex(idxStart);
@@ -102,6 +99,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
+                LightToRGBA(pX.rgbs),
                 1, model);
     }
     //x-
@@ -109,6 +107,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
+                LightToRGBA(nX.rgbs),
                 2, model);
     }
     //y+
@@ -116,6 +115,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
+                LightToRGBA(pY.rgbs),
                 3, model);
     }
     //y-
@@ -123,6 +123,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
+                LightToRGBA(nY.rgbs),
                 4, model);
     }
     //z+
@@ -130,6 +131,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
+                LightToRGBA(pZ.rgbs),
                 5, model);
     }
     //z-
@@ -137,6 +139,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
+                LightToRGBA(nZ.rgbs),
                 6, model);
     }
 }
@@ -154,14 +157,11 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
     constexpr float TEX_GRID_SIZE = 1.0f / CARVE_RENDERER_TEXTURE_BLOCK_SIZE;
-    Vector3 lightColor(LightToFloat(GetRed(blk.rgbs)),
-                       LightToFloat(GetGreen(blk.rgbs)),
-                       LightToFloat(GetBlue(blk.rgbs)));
     CarveModel &model = models->carve[info.carveBoxTexPos[0]];
-    float sunlight = LightToFloat(GetSunlight(blk.rgbs));
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,
+                       const Color &rgbs,
                        int carveBoxTexPosIdx,
                        CarveModel &output)
     {
@@ -174,22 +174,22 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         output.AddVertex({
             posOffset + vtx0,
             { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx1,
             { texBaseU + 0.0015f, texBaseV + 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx2,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
         output.AddVertex({
             posOffset + vtx3,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            lightColor, sunlight
+            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
         });
 
         output.AddIndex(idxStart);
@@ -205,42 +205,48 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     if(infoMgr.IsFaceVisible(blk.type, pX.type))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
-                { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
-                1, model);
+        { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
+            LightToRGBA(pX.rgbs),
+            1, model);
     }
     //x-
     if(infoMgr.IsFaceVisible(blk.type, nX.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
-                { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
-                2, model);
+        { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
+            LightToRGBA(nX.rgbs),
+            2, model);
     }
     //y+
     if(infoMgr.IsFaceVisible(blk.type, pY.type))
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
-                { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-                3, model);
+        { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
+            LightToRGBA(pY.rgbs),
+            3, model);
     }
     //y-
     if(infoMgr.IsFaceVisible(blk.type, nY.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
-                { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
-                4, model);
+        { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
+            LightToRGBA(nY.rgbs),
+            4, model);
     }
     //z+
     if(infoMgr.IsFaceVisible(blk.type, pZ.type))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
-                { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
-                5, model);
+        { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
+            LightToRGBA(pZ.rgbs),
+            5, model);
     }
     //z-
     if(infoMgr.IsFaceVisible(blk.type, nZ.type))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
-                { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
-                6, model);
+        { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
+            LightToRGBA(nZ.rgbs),
+            6, model);
     }
 }

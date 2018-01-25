@@ -9,6 +9,7 @@ Created by AirGuanZ
 #include <cstdint>
 #include <type_traits>
 
+#include "../Utility/Math.h"
 #include "BlockInfo.h"
 
 //red, green, blue, sunlight四个分量，每个分量四位
@@ -44,7 +45,7 @@ inline BlockLight SetGreen   (BlockLight bl, std::uint8_t g) { return (g << 8) |
 inline BlockLight SetBlue    (BlockLight bl, std::uint8_t b) { return (b << 4) | (bl & 0xFF0F); }
 inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 0xFFF0); }
 
-inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component) / 0x0F; }
+inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component + 2) / (0x0F + 2); }
 
 inline void SetRed     (Block &blk, std::uint8_t r) { blk.rgbs = SetRed(blk.rgbs, r); }
 inline void SetGreen   (Block &blk, std::uint8_t g) { blk.rgbs = SetGreen(blk.rgbs, g); }
@@ -54,6 +55,14 @@ inline void SetSunlight(Block &blk, std::uint8_t s) { blk.rgbs = SetSunlight(blk
 inline void SetLight(Block &blk, std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {
     blk.rgbs = (r << 12) | (g << 8) | (b << 4) | s;
+}
+
+inline Color LightToRGBA(BlockLight rgbs)
+{
+    return { LightToFloat(GetRed(rgbs)),
+             LightToFloat(GetGreen(rgbs)),
+             LightToFloat(GetBlue(rgbs)),
+             LightToFloat(GetSunlight(rgbs)) };
 }
 
 constexpr std::uint8_t LIGHT_COMPONENT_MAX = 0x0F;
