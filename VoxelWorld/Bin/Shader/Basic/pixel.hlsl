@@ -17,5 +17,5 @@ struct PSInput
 float4 main(PSInput input) : SV_TARGET
 {
     float4 c = tex.Sample(sam, input.texCoord);
-    return float4(pow(c * saturate(input.lightColor + input.sunlight * sunlightColor), 1.8f), 1.0f);
+    return float4(pow(c * saturate(input.lightColor + input.sunlight * sunlightColor), 1.65f), 1.0f);
 }
