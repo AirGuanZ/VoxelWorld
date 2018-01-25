@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include "../Resource/ResourceName.h"
 #include "../Utility/HelperFunctions.h"
+#include "Block.h"
 #include "BlockInfoManager.h"
 
 SINGLETON_CLASS_DEFINITION(BlockInfoManager);
@@ -32,50 +33,57 @@ BlockInfoManager::BlockInfoManager(void)
             "Air",
             BlockShape::Null,
             BlockRenderer::Null,
-            1
+            1, { 0, 0, 0 }
         },
         {
             BlockType::Bedrock,
             "Bedrock",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            1000
+            1000, { 0, 0, 0 }
         },
         {
             BlockType::Stone,
             "Stone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            1000
+            1000, { 0, 0, 0 }
         },
         {
             BlockType::Dirt,
             "Dirt",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            1000
+            1000, { 0, 0, 0 }
         },
         {
             BlockType::Grass,
             "Grass",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            1000
+            1000, { 0, 0, 0 }
         },
         {
             BlockType::Wood,
             "Wood",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            1000
+            1000, { 0, 0, 0 }
         },
         {
             BlockType::Leaf,
             "Leaf",
             BlockShape::Box,
             BlockRenderer::CarveRenderer,
-            2
+            2, { 0, 0, 0 }
         },
+        {
+            BlockType::GlowStone,
+            "GlowStone",
+            BlockShape::Box,
+            BlockRenderer::BasicRenderer,
+            1, { 0, LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX }
+        }
     };
 
     auto SetBasicBoxTexPos = [&](
@@ -96,12 +104,13 @@ BlockInfoManager::BlockInfoManager(void)
         a[4] = _4, a[5] = _5, a[6] = _6;
     };
 
-    SetBasicBoxTexPos(BlockType::Bedrock, 0, 0, 0, 0, 0, 0, 0);
-    SetBasicBoxTexPos(BlockType::Stone,   0, 1, 1, 1, 1, 1, 1);
-    SetBasicBoxTexPos(BlockType::Dirt,    0, 2, 2, 2, 2, 2, 2);
-    SetBasicBoxTexPos(BlockType::Grass,   0, 3, 3, 4, 2, 3, 3);
-    SetBasicBoxTexPos(BlockType::Wood,    0, 6, 6, 5, 5, 6, 6);
-    SetCarveBoxTexPos(BlockType::Leaf,    0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::Bedrock,   0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::Stone,     0, 1, 1, 1, 1, 1, 1);
+    SetBasicBoxTexPos(BlockType::Dirt,      0, 2, 2, 2, 2, 2, 2);
+    SetBasicBoxTexPos(BlockType::Grass,     0, 3, 3, 4, 2, 3, 3);
+    SetBasicBoxTexPos(BlockType::Wood,      0, 6, 6, 5, 5, 6, 6);
+    SetCarveBoxTexPos(BlockType::Leaf,      0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::GlowStone, 0, 7, 7, 7, 7, 7, 7);
 }
 
 const BlockInfo &BlockInfoManager::GetBlockInfo(BlockType type) const

@@ -53,9 +53,13 @@ inline void SetGreen   (Block &blk, std::uint8_t g) { blk.rgbs = SetGreen(blk.rg
 inline void SetBlue    (Block &blk, std::uint8_t b) { blk.rgbs = SetBlue(blk.rgbs, b); }
 inline void SetSunlight(Block &blk, std::uint8_t s) { blk.rgbs = SetSunlight(blk.rgbs, s); }
 
+inline BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
+{
+    return (r << 12) | (g << 8) | (b << 4) | s;
+}
 inline void SetLight(Block &blk, std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {
-    blk.rgbs = (r << 12) | (g << 8) | (b << 4) | s;
+    blk.rgbs = MakeLight(r, g, b, s);
 }
 
 inline Color LightToRGBA(BlockLight rgbs)

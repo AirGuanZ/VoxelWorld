@@ -316,7 +316,8 @@ void ChunkManager::ProcessLightUpdates(void)
 
         Chunk *ck = GetChunk(ckX, ckZ);
         Block &blk = ck->GetBlock(bkX, pos.y, bkZ);
-        int lightDec = BlockInfoManager::GetInstance().GetBlockInfo(blk.type).lightDec;
+        const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
+        int lightDec = blkInfo.lightDec;
 
         const BlockLight &pX = GetBlock(pos.x + 1, pos.y, pos.z).rgbs,
                          &nX = GetBlock(pos.x - 1, pos.y, pos.z).rgbs,
@@ -325,10 +326,10 @@ void ChunkManager::ProcessLightUpdates(void)
                          &pZ = GetBlock(pos.x, pos.y, pos.z + 1).rgbs,
                          &nZ = GetBlock(pos.x, pos.y, pos.z - 1).rgbs;
 
-        BlockLight newLight = 0;
-
-        if(pos.y > ck->GetHeightMap()[bkX][bkZ])
-            newLight = SetSunlight(newLight, LIGHT_COMPONENT_MAX);
+        BlockLight newLight = MakeLight(blkInfo.lightEmission.x,
+                                        blkInfo.lightEmission.y,
+                                        blkInfo.lightEmission.z,
+                                        pos.y > ck->GetHeightMap()[bkX][bkZ] ? LIGHT_COMPONENT_MAX : 0);
 
         auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
         {

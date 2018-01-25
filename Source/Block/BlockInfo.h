@@ -9,6 +9,8 @@ Created by AirGuanZ
 #include <cstdint>
 #include <vector>
 
+#include "../Utility/Math.h"
+
 enum class BlockType : std::uint8_t
 {
     Air             = 0,
@@ -18,6 +20,7 @@ enum class BlockType : std::uint8_t
     Grass           = Dirt + 1,
     Wood            = Grass + 1,
     Leaf            = Wood + 1,
+    GlowStone       = Leaf + 1,
 
     BlockTypeNum    = Grass + 1
 };
@@ -55,6 +58,7 @@ struct BlockInfo
     BlockRenderer renderer;
 
     int lightDec;
+    IntVector3 lightEmission;
 
     union
     {

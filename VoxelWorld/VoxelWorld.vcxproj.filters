@@ -332,9 +332,4 @@
       <Filter>Bin\Texture\Crosshair</Filter>
     </Image>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Source\Design.txt">
-      <Filter>Source</Filter>
-    </Text>
-  </ItemGroup>
 </Project>
