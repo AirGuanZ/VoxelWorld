@@ -25,7 +25,6 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
         for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
         {
             int h = GetHeight(x + xBase, z + zBase);
-            heightMap[x][z] = h;
 
             data[x][0][z].type = BlockType::Bedrock;
             SetLight(data[x][0][z], 0, 0, 0, 0);
@@ -42,14 +41,30 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
                 SetLight(data[x][y][z], 0, 0, 0, 0);
             }
 
-            data[x][h][z].type = BlockType::Grass;
+            data[x][h][z].type = BlockType::GrassBox;
             SetLight(data[x][h][z], 0, 0, 0, 0);
 
+            float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
+            if(gfv < 0.07f)
+            {
+                data[x][h + 1][z].type = BlockType::Grass;
+                SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
+                ++h;
+            }
+            else if(gfv < 0.1f)
+            {
+                data[x][h + 1][z].type = BlockType::Flower;
+                SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
+                ++h;
+            }
+            
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
             {
                 data[x][y][z].type = BlockType::Air;
                 SetLight(data[x][y][z], 0, 0, 0, LIGHT_COMPONENT_MAX);
             }
+
+            heightMap[x][z] = h;
         }
     }
 }
@@ -93,4 +108,10 @@ int LandGenerator_V0::GetHeight(int x, int z)
     }
 
     return static_cast<int>(result);
+}
+
+float LandGenerator_V0::Random(Seed seedOffset, int blkX, int blkZ, float min, float max)
+{
+    return std::uniform_real_distribution<float>(min, max)(
+        RandomEngine((seed_ + seedOffset) * blkX + blkZ));
 }

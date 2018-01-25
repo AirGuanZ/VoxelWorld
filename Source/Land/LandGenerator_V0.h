@@ -22,6 +22,7 @@ public:
 
 private:
     int GetHeight(int blkX, int blkZ);
+    float Random(Seed seedOffset, int blkX, int blkZ, float min, float max);
 
 private:
     Seed seed_;

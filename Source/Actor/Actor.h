@@ -21,9 +21,9 @@ public:
     const Vector3 &GetCameraPosition(void) const;
 
 private:
-    float flyUpSpeed_ = 0.016f;
-    float flyDownSpeed_ = 0.016f;
-    float horMoveSpeed_ = 0.012f;
+    float flyUpSpeed_ = 0.012f;
+    float flyDownSpeed_ = 0.012f;
+    float horMoveSpeed_ = 0.006f;
 
     float mouseXSpeed_ = 0.00014f;
     float mouseYSpeed_ = 0.00008f;

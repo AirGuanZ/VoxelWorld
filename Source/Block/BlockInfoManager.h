@@ -18,6 +18,8 @@ public:
 
     bool IsFaceVisible(BlockType dst, BlockType neighbor) const;
 
+    bool IsSolid(BlockType type) const;
+
 private:
     std::vector<BlockInfo> info_;
 };

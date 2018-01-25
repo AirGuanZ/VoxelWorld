@@ -58,4 +58,16 @@ public:
         ChunkSectionModels *models) const;
 };
 
+class BlockModelBuilder_CarveRenderer_Cross : public BlockModelBuilder
+{
+public:
+    void Build(
+        const Vector3 &posOffset,
+        const Block &blk,
+        const Block &pX, const Block &nX,
+        const Block &pY, const Block &nY,
+        const Block &pZ, const Block &nZ,
+        ChunkSectionModels *models) const;
+};
+
 #endif //VW_BLOCK_MODEL_BUILDER_H

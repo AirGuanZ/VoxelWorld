@@ -12,14 +12,15 @@ Created by AirGuanZ
 
 const BlockModelBuilder *GetBlockModelBuilder(BlockType type)
 {
-    static const BlockModelBuilder_Null              builder_Null;
-    static const BlockModelBuilder_BasicRenderer_Box builder_BasicRenderer_Box;
-    static const BlockModelBuilder_CarveRenderer_Box builder_CarveRenderer_Box;
-    static const BlockModelBuilder * const rt[3][2] =
+    static const BlockModelBuilder_Null                builder_Null;
+    static const BlockModelBuilder_BasicRenderer_Box   builder_BasicRenderer_Box;
+    static const BlockModelBuilder_CarveRenderer_Box   builder_CarveRenderer_Box;
+    static const BlockModelBuilder_CarveRenderer_Cross builder_CarveRenderer_Cross;
+    static const BlockModelBuilder * const rt[3][3] =
     {
-        { &builder_Null, &builder_Null },
-        { &builder_Null, &builder_BasicRenderer_Box },
-        { &builder_Null, &builder_CarveRenderer_Box }
+        { &builder_Null, &builder_Null,              &builder_Null },
+        { &builder_Null, &builder_BasicRenderer_Box, &builder_Null },
+        { &builder_Null, &builder_CarveRenderer_Box, &builder_CarveRenderer_Cross }
     };
     const BlockInfo &info = BlockInfoManager::GetInstance().GetBlockInfo(type);
     return rt[static_cast<std::underlying_type_t<BlockRenderer>>(info.renderer)]
@@ -248,5 +249,76 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
             LightToRGBA(nZ.rgbs),
             6, model);
+    }
+}
+
+void BlockModelBuilder_CarveRenderer_Cross::Build(
+    const Vector3 &posOffset,
+    const Block &blk,
+    const Block &pX, const Block &nX,
+    const Block &pY, const Block &nY,
+    const Block &pZ, const Block &nZ,
+    ChunkSectionModels *models) const
+{
+    assert(models != nullptr);
+    BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
+    const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
+
+    constexpr float TEX_GRID_SIZE = 1.0f / CARVE_RENDERER_TEXTURE_BLOCK_SIZE;
+    CarveModel &model = models->carve[info.carveCrossTexPos[0]];
+
+    if(!infoMgr.IsSolid(pX.type) || !infoMgr.IsSolid(nX.type) ||
+       !infoMgr.IsSolid(pY.type) || !infoMgr.IsSolid(nY.type) ||
+       !infoMgr.IsSolid(pZ.type) || !infoMgr.IsSolid(nZ.type))
+    {
+        auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
+                           const Vector3 &vtx2, const Vector3 &vtx3,
+                           const Color &rgbs,
+                           int carveCrossTexPos,
+                           CarveModel &output)
+        {
+            float texBaseU = info.carveBoxTexPos[carveCrossTexPos]
+                % CARVE_RENDERER_TEXTURE_BLOCK_SIZE * TEX_GRID_SIZE;
+            float texBaseV = info.carveBoxTexPos[carveCrossTexPos]
+                / CARVE_RENDERER_TEXTURE_BLOCK_SIZE * TEX_GRID_SIZE;
+            UINT16 idxStart = static_cast<UINT16>(output.GetVerticesCount());
+
+            output.AddVertex({
+                posOffset + vtx0,
+                { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
+                { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            });
+            output.AddVertex({
+                posOffset + vtx1,
+                { texBaseU + 0.0015f, texBaseV + 0.0015f },
+                { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            });
+            output.AddVertex({
+                posOffset + vtx2,
+                { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
+                { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            });
+            output.AddVertex({
+                posOffset + vtx3,
+                { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
+                { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            });
+
+            output.AddIndex(idxStart);
+            output.AddIndex(idxStart + 1);
+            output.AddIndex(idxStart + 2);
+
+            output.AddIndex(idxStart);
+            output.AddIndex(idxStart + 2);
+            output.AddIndex(idxStart + 3);
+        };
+
+        AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
+                { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
+                LightToRGBA(blk.rgbs), 1, model);
+
+        AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
+                { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
+                LightToRGBA(blk.rgbs), 2, model);
     }
 }
