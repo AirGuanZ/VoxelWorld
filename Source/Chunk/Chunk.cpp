@@ -68,6 +68,8 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
     }
 
     blocks_[x][y][z] = blk;
+    SetLight(blocks_[x][y][z], LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1,
+                               LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1);
     if(y >= heightMap_[x][z])
     {
         int newH = CHUNK_MAX_HEIGHT - 1;
@@ -81,8 +83,8 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
                 ckMgr_->AddLightUpdate(wX, H, wZ);
                 --H;
             }
+            heightMap_[x][z] = newH;
         }
-        heightMap_[x][z] = newH;
     }
 
     ckMgr_->AddLightUpdate(wX, y, wZ);

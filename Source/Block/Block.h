@@ -18,6 +18,7 @@ Created by AirGuanZ
 //blue: 4-7
 //sunlight: 0-3
 using BlockLight = std::uint16_t;
+constexpr std::uint8_t LIGHT_COMPONENT_MAX = 0x0F - 1;
 
 enum BlockFace : std::uint8_t
 {
@@ -45,7 +46,7 @@ inline BlockLight SetGreen   (BlockLight bl, std::uint8_t g) { return (g << 8) |
 inline BlockLight SetBlue    (BlockLight bl, std::uint8_t b) { return (b << 4) | (bl & 0xFF0F); }
 inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 0xFFF0); }
 
-inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component + 2) / (0x0F + 2); }
+inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component + 2) / (LIGHT_COMPONENT_MAX + 2); }
 
 inline void SetRed     (Block &blk, std::uint8_t r) { blk.rgbs = SetRed(blk.rgbs, r); }
 inline void SetGreen   (Block &blk, std::uint8_t g) { blk.rgbs = SetGreen(blk.rgbs, g); }
@@ -64,7 +65,5 @@ inline Color LightToRGBA(BlockLight rgbs)
              LightToFloat(GetBlue(rgbs)),
              LightToFloat(GetSunlight(rgbs)) };
 }
-
-constexpr std::uint8_t LIGHT_COMPONENT_MAX = 0x0F;
 
 #endif //VW_BLOCK_H
