@@ -20,7 +20,8 @@ ChunkManager::ChunkManager(int loadDistance,
                            int maxModelUpdates,
                            int maxImpLightUpdates,
                            int maxUniLightUpdates,
-                           int maxLightUpdates)
+                           int maxLightUpdates,
+                           int uniLightUpdateDistance)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
@@ -28,7 +29,8 @@ ChunkManager::ChunkManager(int loadDistance,
       maxModelUpdates_(maxModelUpdates),
       maxImpLightUpdates_(maxImpLightUpdates),
       maxUniLightUpdates_(maxUniLightUpdates),
-      maxLightUpdates_(maxLightUpdates)
+      maxLightUpdates_(maxLightUpdates),
+      uniLightUpdateDistance_(uniLightUpdateDistance)
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
     centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();
@@ -271,7 +273,7 @@ void ChunkManager::AddLightUpdate(int x, int y, int z)
     importantLightUpdates_.push({ x, y, z });
 }
 
-void ChunkManager::AddChunkData(Chunk *ck)
+void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates)
 {
     assert(ck != nullptr);
     decltype(chunks_)::iterator it;
@@ -286,6 +288,9 @@ void ChunkManager::AddChunkData(Chunk *ck)
     }
 
     chunks_[pos] = ck;
+    for(const IntVector3 &pos : lightUpdates)
+        unimportantLightUpdates_.push(pos);
+
     if(InRenderRange(pos.x, pos.z)) //是否需要创建模型任务
     {
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
@@ -310,9 +315,10 @@ void ChunkManager::LoadChunk(int ckX, int ckZ)
     assert(chunks_.find({ ckX, ckZ }) == chunks_.end());
 
     Chunk *ck = new Chunk(this, { ckX, ckZ });
-    ckLoader_.LoadChunkData(ck);
+    std::vector<IntVector3> lightUpdates;
+    ckLoader_.LoadChunkData(ck, lightUpdates);
     assert(ck != nullptr);
-    AddChunkData(ck);
+    AddChunkData(ck, lightUpdates);
 }
 
 void ChunkManager::ProcessChunkLoaderMessages(void)
@@ -328,7 +334,7 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         {
         case ChunkLoaderMessage::ChunkLoaded:
             if(InLoadingRange(msg->ckLoaded->GetPosition().x, msg->ckLoaded->GetPosition().z))
-                AddChunkData(msg->ckLoaded);
+                AddChunkData(msg->ckLoaded, msg->uniLightUpdates);
             else
                 Helper::SafeDeleteObjects(msg->ckLoaded);
             break;
@@ -408,6 +414,7 @@ void ChunkManager::ProcessLightUpdates(void)
     }
 
     int uniUpdatesCount = 0;
+    size_t OORCount = 0;
     while(unimportantLightUpdates_.size() &&
           updatesCount < maxLightUpdates_ &&
           uniUpdatesCount < maxUniLightUpdates_)
@@ -420,6 +427,16 @@ void ChunkManager::ProcessLightUpdates(void)
 
         int ckX = BlockXZ_To_ChunkXZ(pos.x);
         int ckZ = BlockXZ_To_ChunkXZ(pos.z);
+
+        if(ckX < centrePos_.x - uniLightUpdateDistance_ || ckX > centrePos_.x + uniLightUpdateDistance_ ||
+           ckZ < centrePos_.z - uniLightUpdateDistance_ || ckZ > centrePos_.z + uniLightUpdateDistance_)
+        {
+            unimportantLightUpdates_.push(pos);
+            if(++OORCount >= unimportantLightUpdates_.size())
+                break;
+            continue;
+        }
+
         int bkX = BlockXZ_To_BlockXZInChunk(pos.x);
         int bkZ = BlockXZ_To_BlockXZInChunk(pos.z);
 

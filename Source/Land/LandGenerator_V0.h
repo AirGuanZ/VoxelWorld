@@ -7,10 +7,11 @@ Created by AirGuanZ
 #define VW_LAND_GENERATOR_V0_H
 
 #include <random>
+#include <vector>
 
-#include "LandGenerator.h"
+#include "../Chunk/Chunk.h"
 
-class LandGenerator_V0 : public LandGenerator
+class LandGenerator_V0
 {
 public:
     using RandomEngine = std::mt19937;
@@ -18,7 +19,7 @@ public:
     
     LandGenerator_V0(Seed seed);
 
-    void GenerateLand(Chunk *ck);
+    void GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpdates);
 
 private:
     int GetHeight(int blkX, int blkZ);

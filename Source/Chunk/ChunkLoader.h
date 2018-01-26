@@ -30,6 +30,7 @@ struct ChunkLoaderMessage
     {
         Chunk *ckLoaded;
     };
+    std::vector<IntVector3> uniLightUpdates; //world block positions
 };
 
 class ChunkLoader
@@ -48,7 +49,7 @@ public:
 
     //真正的区块数据加载函数
     //和线程没啥关系
-    void LoadChunkData(Chunk *ck);
+    void LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates);
 
 private:
     void TaskThreadEntry(void);

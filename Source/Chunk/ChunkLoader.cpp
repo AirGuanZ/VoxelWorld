@@ -79,9 +79,9 @@ std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
     return std::move(loaderMsgs_);
 }
 
-void ChunkLoader::LoadChunkData(Chunk *ck)
+void ChunkLoader::LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates)
 {
-    LandGenerator_V0(123).GenerateLand(ck);
+    LandGenerator_V0(123).GenerateLand(ck, lightUpdates);
 }
 
 void ChunkLoader::TaskThreadEntry(void)
@@ -119,11 +119,13 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
 {
     assert(loader != nullptr);
 
-    loader->LoadChunkData(ck_);
+    std::vector<IntVector3> lightUpdates;
+    loader->LoadChunkData(ck_, lightUpdates);
 
     ChunkLoaderMessage *msg = new ChunkLoaderMessage;
     msg->type = ChunkLoaderMessage::ChunkLoaded;
     msg->ckLoaded = ck_;
+    msg->uniLightUpdates = std::move(lightUpdates);
     ck_ = nullptr;
     loader->AddMsg(msg);
 }

@@ -3,7 +3,9 @@ Filename: LandGenerator_V0.cpp
 Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
+#include "../Chunk/Chunk.h"
 #include "LandGenerator_V0.h"
+#include "OakGenerator_V0.h"
 
 LandGenerator_V0::LandGenerator_V0(Seed seed)
     : seed_(seed)
@@ -11,7 +13,7 @@ LandGenerator_V0::LandGenerator_V0(Seed seed)
 
 }
 
-void LandGenerator_V0::GenerateLand(Chunk *ck)
+void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpdates)
 {
     assert(ck != nullptr);
 
@@ -81,6 +83,9 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
             heightMap[x][z] = h;
         }
     }
+
+    //Éú³ÉÊ÷
+    OakGenerator_V0(seed_).Make(ck, lightUpdates);
 }
 
 int LandGenerator_V0::GetHeight(int x, int z)

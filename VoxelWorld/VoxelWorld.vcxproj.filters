@@ -147,9 +147,6 @@
     <ClCompile Include="..\Source\World\World.cpp">
       <Filter>Source\World</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Land\LandGenerator.cpp">
-      <Filter>Source\Land</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp">
       <Filter>Source\Land</Filter>
     </ClCompile>
@@ -176,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Chunk\ChunkTraversal.cpp">
       <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp">
+      <Filter>Source\Land</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +266,6 @@
     <ClInclude Include="..\Source\World\World.h">
       <Filter>Source\World</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Land\LandGenerator.h">
-      <Filter>Source\Land</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Land\LandGenerator_V0.h">
       <Filter>Source\Land</Filter>
     </ClInclude>
@@ -299,7 +296,7 @@
     <ClInclude Include="..\Source\Chunk\ChunkTraversal.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Land\StructureGenerator.h">
+    <ClInclude Include="..\Source\Land\OakGenerator_V0.h">
       <Filter>Source\Land</Filter>
     </ClInclude>
   </ItemGroup>

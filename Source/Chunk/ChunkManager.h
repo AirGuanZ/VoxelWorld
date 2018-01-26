@@ -49,7 +49,8 @@ class ChunkManager
 public:
     ChunkManager(int loadDistance, int renderDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
-        int maxImpLightUpdates, int maxUniLightUpdates, int maxLightUpdates);
+        int maxImpLightUpdates, int maxUniLightUpdates, int maxLightUpdates,
+        int uniLightUpdateDistance);
     ~ChunkManager(void);
 
     void StartLoading(void);
@@ -93,7 +94,7 @@ public:
 
 private:
     //交付一个加载好的Chunk
-    void AddChunkData(Chunk *ck);
+    void AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates);
     //交付一个创建好的Model
     void AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models);
     //立即在主线程加载区块数据
@@ -117,9 +118,12 @@ private:
 
     std::queue<IntVector3> importantLightUpdates_;
     std::queue<IntVector3> unimportantLightUpdates_;
+
     int maxImpLightUpdates_;
     int maxUniLightUpdates_;
     int maxLightUpdates_;
+
+    int uniLightUpdateDistance_;
 };
 
 #endif //VW_CHUNK_MANAGER_H
