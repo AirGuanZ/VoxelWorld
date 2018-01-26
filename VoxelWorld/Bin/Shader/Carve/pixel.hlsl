@@ -18,5 +18,5 @@ float4 main(PSInput input) : SV_TARGET
 {
     float4 c = tex.Sample(sam, input.texCoord);
     clip(c.a - 0.5f);
-    return float4(pow(c * saturate(input.lightColor + input.sunlight * sunlightColor), 1.65f), 1.0f);
+    return float4(pow(c * saturate(max(input.lightColor, input.sunlight * sunlightColor)), 1.65f), 1.0f);
 }
