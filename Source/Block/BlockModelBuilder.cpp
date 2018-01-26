@@ -29,10 +29,7 @@ const BlockModelBuilder *GetBlockModelBuilder(BlockType type)
 
 void BlockModelBuilder_Null::Build(
     const Vector3 &posOffset,
-    const Block &blk,
-    const Block &pX, const Block &nX,
-    const Block &pY, const Block &nY,
-    const Block &pZ, const Block &nZ,
+    const Block(&blks)[3][3][3],
     ChunkSectionModels *models) const
 {
 
@@ -46,13 +43,19 @@ inline Color BlockAO(BlockLight l0, BlockLight l1, BlockLight l2, BlockLight l3)
 
 void BlockModelBuilder_BasicRenderer_Box::Build(
     const Vector3 &posOffset,
-    const Block &blk,
-    const Block &pX, const Block &nX,
-    const Block &pY, const Block &nY,
-    const Block &pZ, const Block &nZ,
+    const Block(&blks)[3][3][3],
     ChunkSectionModels *models) const
 {
     assert(models != nullptr);
+
+    const Block &blk = blks[1][1][1],
+                &pX  = blks[2][1][1],
+                &nX  = blks[0][1][1],
+                &pY  = blks[1][2][1],
+                &nY  = blks[1][0][1],
+                &pZ  = blks[1][1][2],
+                &nZ  = blks[1][1][0];
+
     BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
@@ -172,13 +175,19 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
 
 void BlockModelBuilder_CarveRenderer_Box::Build(
     const Vector3 &posOffset,
-    const Block &blk,
-    const Block &pX, const Block &nX,
-    const Block &pY, const Block &nY,
-    const Block &pZ, const Block &nZ,
+    const Block(&blks)[3][3][3],
     ChunkSectionModels *models) const
 {
     assert(models != nullptr);
+
+    const Block &blk = blks[1][1][1],
+                &pX  = blks[2][1][1],
+                &nX  = blks[0][1][1],
+                &pY  = blks[1][2][1],
+                &nY  = blks[1][0][1],
+                &pZ  = blks[1][1][2],
+                &nZ  = blks[1][1][0];
+
     BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 
@@ -279,13 +288,19 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
 
 void BlockModelBuilder_CarveRenderer_Cross::Build(
     const Vector3 &posOffset,
-    const Block &blk,
-    const Block &pX, const Block &nX,
-    const Block &pY, const Block &nY,
-    const Block &pZ, const Block &nZ,
+    const Block(&blks)[3][3][3],
     ChunkSectionModels *models) const
 {
     assert(models != nullptr);
+
+    const Block &blk = blks[1][1][1],
+                &pX  = blks[2][1][1],
+                &nX  = blks[0][1][1],
+                &pY  = blks[1][2][1],
+                &nY  = blks[1][0][1],
+                &pZ  = blks[1][1][2],
+                &nZ  = blks[1][1][0];
+
     BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
     const BlockInfo &info = infoMgr.GetBlockInfo(blk.type);
 

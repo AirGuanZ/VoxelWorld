@@ -57,13 +57,13 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
                 SetLight(data[x][h][z], 0, 0, 0, 0);
 
                 float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
-                if(gfv < 0.07f)
+                if(gfv < 0.02f)
                 {
                     data[x][h + 1][z].type = BlockType::Grass;
                     SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);
                     ++h;
                 }
-                else if(gfv < 0.1f)
+                else if(gfv < 0.04f)
                 {
                     data[x][h + 1][z].type = BlockType::Flower;
                     SetLight(data[x][h + 1][z], 0, 0, 0, LIGHT_COMPONENT_MAX - 1);

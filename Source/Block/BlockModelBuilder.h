@@ -13,10 +13,7 @@ class BlockModelBuilder
 public:
     virtual void Build(
         const Vector3 &posOffset,
-        const Block &blk,
-        const Block &pX, const Block &nX,
-        const Block &pY, const Block &nY,
-        const Block &pZ, const Block &nZ,
+        const Block (&blks)[3][3][3],
         ChunkSectionModels *models) const = 0;
 };
 
@@ -27,10 +24,7 @@ class BlockModelBuilder_Null : public BlockModelBuilder
 public:
     void Build(
         const Vector3 &posOffset,
-        const Block &blk,
-        const Block &pX, const Block &nX,
-        const Block &pY, const Block &nY,
-        const Block &pZ, const Block &nZ,
+        const Block(&blks)[3][3][3],
         ChunkSectionModels *models) const;
 };
 
@@ -39,10 +33,7 @@ class BlockModelBuilder_BasicRenderer_Box : public BlockModelBuilder
 public:
     void Build(
         const Vector3 &posOffset,
-        const Block &blk,
-        const Block &pX, const Block &nX,
-        const Block &pY, const Block &nY,
-        const Block &pZ, const Block &nZ,
+        const Block(&blks)[3][3][3],
         ChunkSectionModels *models) const;
 };
 
@@ -51,10 +42,7 @@ class BlockModelBuilder_CarveRenderer_Box : public BlockModelBuilder
 public:
     void Build(
         const Vector3 &posOffset,
-        const Block &blk,
-        const Block &pX, const Block &nX,
-        const Block &pY, const Block &nY,
-        const Block &pZ, const Block &nZ,
+        const Block(&blks)[3][3][3],
         ChunkSectionModels *models) const;
 };
 
@@ -63,10 +51,7 @@ class BlockModelBuilder_CarveRenderer_Cross : public BlockModelBuilder
 public:
     void Build(
         const Vector3 &posOffset,
-        const Block &blk,
-        const Block &pX, const Block &nX,
-        const Block &pY, const Block &nY,
-        const Block &pZ, const Block &nZ,
+        const Block(&blks)[3][3][3],
         ChunkSectionModels *models) const;
 };
 
