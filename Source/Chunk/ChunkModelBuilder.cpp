@@ -37,11 +37,29 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
                             &nZ  = ck_->GetBlock(x, y, z - 1),
                             &pY  = ck_->GetBlock(x, y + 1, z),
                             &nY  = ck_->GetBlock(x, y - 1, z);
+                const Block (&blks)[3][3][3] =
+                {
+                    {
+                        { ck_->GetBlock(x - 1, y - 1, z - 1), ck_->GetBlock(x - 1, y - 1, z), ck_->GetBlock(x - 1, y - 1, z + 1) }, //[0][0]
+                        { ck_->GetBlock(x - 1, y, z - 1), ck_->GetBlock(x - 1, y, z), ck_->GetBlock(x - 1, y, z + 1) },             //[0][1]
+                        { ck_->GetBlock(x - 1, y + 1, z - 1), ck_->GetBlock(x - 1, y + 1, z), ck_->GetBlock(x - 1, y + 1, z + 1) }, //[0][2]
+                    },
+                    {
+                        { ck_->GetBlock(x, y - 1, z - 1), ck_->GetBlock(x, y - 1, z), ck_->GetBlock(x, y - 1, z + 1) },             //[0][0]
+                        { ck_->GetBlock(x, y, z - 1),     ck_->GetBlock(x, y, z), ck_->GetBlock(x, y, z + 1) },                     //[0][1]
+                        { ck_->GetBlock(x, y + 1, z - 1), ck_->GetBlock(x, y + 1, z), ck_->GetBlock(x, y + 1, z + 1) },             //[0][2]
+                    },
+                    {
+                        { ck_->GetBlock(x + 1, y - 1, z - 1), ck_->GetBlock(x + 1, y - 1, z), ck_->GetBlock(x + 1, y - 1, z + 1) }, //[0][0]
+                        { ck_->GetBlock(x + 1, y, z - 1), ck_->GetBlock(x + 1, y, z), ck_->GetBlock(x + 1, y, z + 1) },             //[0][1]
+                        { ck_->GetBlock(x + 1, y + 1, z - 1), ck_->GetBlock(x + 1, y + 1, z), ck_->GetBlock(x + 1, y + 1, z + 1) }, //[0][2]
+                    }
+                };
                 GetBlockModelBuilder(blk.type)->Build(
                     Vector3(ChunkXZ_To_BlockXZ(ckPos.x) + static_cast<float>(x),
                             static_cast<float>(y),
                             ChunkXZ_To_BlockXZ(ckPos.z) + static_cast<float>(z)),
-                    blk, pX, nX, pY, nY, pZ, nZ, models);
+                    blks, models);
             }
         }
     }
