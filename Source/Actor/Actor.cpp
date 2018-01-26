@@ -44,8 +44,6 @@ void Actor::UpdateCamera(float deltaT)
                     + static_cast<float>(horLRMove) * horLeftDir;
     horMove.Normalize();
     pos += horMoveSpeed_ * horMove * 16.66f;
-    if(input.IsKeyDown(VK_LCONTROL))
-        pos += horMoveSpeed_ * horMove * 120.0f;
     camera_.SetPosition(pos);
 
     //ÊÓ½Ç×ª¶¯

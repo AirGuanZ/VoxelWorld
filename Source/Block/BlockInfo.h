@@ -62,7 +62,6 @@ struct BlockInfo
     BlockRenderer renderer;
 
     bool isSolid;
-    bool isRenderable;
 
     int lightDec;
     IntVector3 lightEmission;

@@ -20,7 +20,7 @@ void ChunkLoader::Initialize(int threadNum)
 {
     assert(threads_.empty());
     if(threadNum <= 0)
-        threadNum = (std::max)(4u, std::thread::hardware_concurrency()) - 2;
+        threadNum = (std::max)(4u, std::thread::hardware_concurrency()) - 3;
 
     running_ = true;
     while(threadNum-- > 0)
@@ -81,7 +81,8 @@ std::queue<ChunkLoaderMessage*> ChunkLoader::FetchAllMsgs(void)
 
 void ChunkLoader::LoadChunkData(Chunk *ck)
 {
-    LandGenerator_V0(123).GenerateLand(ck);
+    //TODO
+    LandGenerator_V0(145).GenerateLand(ck);
 }
 
 void ChunkLoader::TaskThreadEntry(void)

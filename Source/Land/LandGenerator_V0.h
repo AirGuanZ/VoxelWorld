@@ -13,7 +13,7 @@ Created by AirGuanZ
 class LandGenerator_V0 : public LandGenerator
 {
 public:
-    using RandomEngine = std::mt19937;
+    using RandomEngine = std::default_random_engine;
     using Seed = RandomEngine::result_type;
     
     LandGenerator_V0(Seed seed);
