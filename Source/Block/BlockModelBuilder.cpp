@@ -37,7 +37,7 @@ void BlockModelBuilder_Null::Build(
 
 inline Color BlockAO(BlockLight l0, BlockLight l1, BlockLight l2, BlockLight l3)
 {
-    return 0.25f * (LightToRGBA(l0) + LightToRGBA(l1) +
+    return Color(0.15f, 0.15f, 0.15f, 0.15f) + 0.85f * 0.25f * (LightToRGBA(l0) + LightToRGBA(l1) +
                                     LightToRGBA(l2) + LightToRGBA(l3));
 }
 
