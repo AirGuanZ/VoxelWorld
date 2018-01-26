@@ -1,0 +1,11 @@
+[Initialize]
+
+WindowWidth  = 1200
+WindowHeight = 800
+
+MSAA = 4
+
+[World]
+
+PreloadDistance = 11
+RenderDistance  = 8

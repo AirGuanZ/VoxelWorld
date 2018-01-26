@@ -17,6 +17,7 @@ Created by AirGuanZ
 #include "../Screen/Crosshair.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Clock.h"
+#include "../Utility/ConfigFile.h"
 #include "../Utility/HelperFunctions.h"
 #include "../Window/Window.h"
 #include "../World/World.h"
@@ -24,11 +25,17 @@ Created by AirGuanZ
 
 void Application::Run(void)
 {
+    ConfigFile conf(L"config.txt");
+    if(!conf)
+        throw std::runtime_error("Failed to load configure file");
+
     std::string initErrMsg;
     Window &window      = Window::GetInstance();
     InputManager &input = InputManager::GetInstance();
-    if(!window.InitWindow(1200, 800, L"Voxel World", initErrMsg) ||
-       !window.InitD3D(8, 0, initErrMsg))
+    if(!window.InitWindow(std::stoi(conf("Initialize", "WindowWidth")),
+                          std::stoi(conf("Initialize", "WindowHeight")),
+                          L"Voxel World", initErrMsg) ||
+       !window.InitD3D(std::stoi(conf("Initialize", "MSAA")), 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());
     }
@@ -122,7 +129,7 @@ void Application::Run(void)
 
     //区块世界
 
-    World world;
+    World world(std::stoi(conf("World", "PreloadDistance")), std::stoi(conf("World", "RenderDistance")));
     world.Initialize();
 
     //准星

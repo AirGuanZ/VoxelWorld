@@ -335,4 +335,7 @@
       <Filter>Bin\Texture\Crosshair</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.txt" />
+  </ItemGroup>
 </Project>

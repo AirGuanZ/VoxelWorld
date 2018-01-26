@@ -8,8 +8,8 @@ Created by AirGuanZ
 #include "../Resource/ResourceName.h"
 #include "World.h"
 
-World::World(void)
-    : ckMgr_(11, 8, 8, 8, 13, 1000)
+World::World(int preloadDis, int renderDis)
+    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 1000)
 {
 
 }
