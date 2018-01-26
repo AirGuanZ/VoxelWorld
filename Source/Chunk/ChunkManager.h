@@ -49,7 +49,7 @@ class ChunkManager
 public:
     ChunkManager(int loadDistance, int renderDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
-        int maxImpLightUpdates);
+        int maxImpLightUpdates, int maxUniLightUpdates, int maxLightUpdates);
     ~ChunkManager(void);
 
     void StartLoading(void);
@@ -116,7 +116,10 @@ private:
     ChunkLoader ckLoader_;
 
     std::queue<IntVector3> importantLightUpdates_;
+    std::queue<IntVector3> unimportantLightUpdates_;
     int maxImpLightUpdates_;
+    int maxUniLightUpdates_;
+    int maxLightUpdates_;
 };
 
 #endif //VW_CHUNK_MANAGER_H

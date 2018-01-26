@@ -18,13 +18,17 @@ ChunkManager::ChunkManager(int loadDistance,
                            int maxImpModelUpdates,
                            int maxUniModelUpdates,
                            int maxModelUpdates,
-                           int maxImpLightUpdates)
+                           int maxImpLightUpdates,
+                           int maxUniLightUpdates,
+                           int maxLightUpdates)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
       maxUniModelUpdates_(maxUniModelUpdates),
       maxModelUpdates_(maxModelUpdates),
-      maxImpLightUpdates_(maxImpLightUpdates)
+      maxImpLightUpdates_(maxImpLightUpdates),
+      maxUniLightUpdates_(maxUniLightUpdates),
+      maxLightUpdates_(maxLightUpdates)
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
     centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();
@@ -392,10 +396,79 @@ void ChunkManager::ProcessLightUpdates(void)
             blk.rgbs = newLight;
             importantLightUpdates_.push({ pos.x + 1, pos.y, pos.z });
             importantLightUpdates_.push({ pos.x - 1, pos.y, pos.z });
-            importantLightUpdates_.push({ pos.x, pos.y + 1, pos.z });
-            importantLightUpdates_.push({ pos.x, pos.y - 1, pos.z });
+            if(pos.y < CHUNK_MAX_HEIGHT - 1)
+                importantLightUpdates_.push({ pos.x, pos.y + 1, pos.z });
+            if(pos.y > 0)
+                importantLightUpdates_.push({ pos.x, pos.y - 1, pos.z });
             importantLightUpdates_.push({ pos.x, pos.y, pos.z + 1 });
             importantLightUpdates_.push({ pos.x, pos.y, pos.z - 1 });
+        }
+
+        MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ);
+    }
+
+    int uniUpdatesCount = 0;
+    while(unimportantLightUpdates_.size() &&
+          updatesCount < maxLightUpdates_ &&
+          uniUpdatesCount < maxUniLightUpdates_)
+    {
+        ++updatesCount;
+        ++uniUpdatesCount;
+
+        IntVector3 pos = unimportantLightUpdates_.front();
+        unimportantLightUpdates_.pop();
+
+        int ckX = BlockXZ_To_ChunkXZ(pos.x);
+        int ckZ = BlockXZ_To_ChunkXZ(pos.z);
+        int bkX = BlockXZ_To_BlockXZInChunk(pos.x);
+        int bkZ = BlockXZ_To_BlockXZInChunk(pos.z);
+
+        Chunk *ck = GetChunk(ckX, ckZ);
+        Block &blk = ck->GetBlock(bkX, pos.y, bkZ);
+        const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
+        int lightDec = blkInfo.lightDec;
+
+        const BlockLight &pX = GetBlock(pos.x + 1, pos.y, pos.z).rgbs,
+                         &nX = GetBlock(pos.x - 1, pos.y, pos.z).rgbs,
+                         &pY = GetBlock(pos.x, pos.y + 1, pos.z).rgbs,
+                         &nY = GetBlock(pos.x, pos.y - 1, pos.z).rgbs,
+                         &pZ = GetBlock(pos.x, pos.y, pos.z + 1).rgbs,
+                         &nZ = GetBlock(pos.x, pos.y, pos.z - 1).rgbs;
+
+        BlockLight newLight = MakeLight(blkInfo.lightEmission.x,
+                                        blkInfo.lightEmission.y,
+                                        blkInfo.lightEmission.z,
+                                        pos.y > ck->GetHeightMap()[bkX][bkZ] ? LIGHT_COMPONENT_MAX : 0);
+
+        auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
+        {
+            return static_cast<std::uint8_t>((std::max)(
+                (std::max)({ _0, _1, _2, _3, _4, _5 }) - lightDec, ori));
+        };
+
+        newLight = SetRed(newLight, Max6(GetRed(newLight), GetRed(pX), GetRed(nX),
+                                         GetRed(pY), GetRed(nY),
+                                         GetRed(pZ), GetRed(nZ)));
+        newLight = SetGreen(newLight, Max6(GetGreen(newLight), GetGreen(pX), GetGreen(nX),
+                                           GetGreen(pY), GetGreen(nY),
+                                           GetGreen(pZ), GetGreen(nZ)));
+        newLight = SetBlue(newLight, Max6(GetBlue(newLight), GetBlue(pX), GetBlue(nX),
+                                          GetBlue(pY), GetBlue(nY),
+                                          GetBlue(pZ), GetBlue(nZ)));
+        newLight = SetSunlight(newLight, Max6(GetSunlight(newLight), GetSunlight(pX), GetSunlight(nX),
+                                              GetSunlight(pY), GetSunlight(nY),
+                                              GetSunlight(pZ), GetSunlight(nZ)));
+        if(newLight != blk.rgbs)
+        {
+            blk.rgbs = newLight;
+            unimportantLightUpdates_.push({ pos.x + 1, pos.y, pos.z });
+            unimportantLightUpdates_.push({ pos.x - 1, pos.y, pos.z });
+            if(pos.y < CHUNK_MAX_HEIGHT - 1)
+                unimportantLightUpdates_.push({ pos.x, pos.y + 1, pos.z });
+            if(pos.y > 0)
+                unimportantLightUpdates_.push({ pos.x, pos.y - 1, pos.z });
+            unimportantLightUpdates_.push({ pos.x, pos.y, pos.z + 1 });
+            unimportantLightUpdates_.push({ pos.x, pos.y, pos.z - 1 });
         }
 
         MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ);
