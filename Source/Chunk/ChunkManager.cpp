@@ -94,16 +94,48 @@ void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
         importantModelUpdates_.insert({ ckX, secY, ckZ });
     if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
         importantModelUpdates_.insert({ ckX - 1, secY, ckZ });
-    if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
+    else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
         importantModelUpdates_.insert({ ckX + 1, secY, ckZ });
     if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
         importantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
-    if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
+    else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
         importantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
     if(blkY == 0 && secY > 0)
         importantModelUpdates_.insert({ ckX, secY - 1, ckZ });
-    if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+    else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
         importantModelUpdates_.insert({ ckX, secY + 1, ckZ });
+    if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
+    {
+        if(blkY == 0 && secY > 0)
+            importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ - 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ - 1 });
+        importantModelUpdates_.insert({ ckX - 1, secY, ckZ - 1 });
+    }
+    if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
+    {
+        if(blkY == 0 && secY > 0)
+            importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ + 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ + 1 });
+        importantModelUpdates_.insert({ ckX - 1, secY, ckZ + 1 });
+    }
+    if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
+    {
+        if(blkY == 0 && secY > 0)
+            importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ - 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ - 1 });
+        importantModelUpdates_.insert({ ckX + 1, secY, ckZ - 1 });
+    }
+    if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
+    {
+        if(blkY == 0 && secY > 0)
+            importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ + 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
+        importantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
+    }
 }
 
 inline void UpdateMinDis(float &minDis, BlockFace &face, float newDis, BlockFace newFace)

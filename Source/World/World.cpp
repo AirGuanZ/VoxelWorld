@@ -61,7 +61,7 @@ void World::Update(float deltaT)
         if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
-            blk.type = BlockType::GlowStone;
+            blk.type = BlockType::Stone;
             IntVector3 faceDir[] =
             {
                 { 1, 0, 0 }, { -1, 0, 0 },

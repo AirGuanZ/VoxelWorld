@@ -110,10 +110,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
-                0.9f * BlockAO(blks[2][0][1].rgbs, blks[2][1][1].rgbs, blks[2][1][2].rgbs, blks[2][0][2].rgbs),
-                0.9f * BlockAO(blks[2][1][1].rgbs, blks[2][2][1].rgbs, blks[2][2][2].rgbs, blks[2][1][2].rgbs),
-                0.9f * BlockAO(blks[2][1][0].rgbs, blks[2][2][0].rgbs, blks[2][2][1].rgbs, blks[2][1][1].rgbs),
-                0.9f * BlockAO(blks[2][0][0].rgbs, blks[2][1][0].rgbs, blks[2][1][1].rgbs, blks[2][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[2][0][1].rgbs, blks[2][1][1].rgbs,
+                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[2][1][1].rgbs, blks[2][2][1].rgbs,
+                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[2][1][0].rgbs, blks[2][2][0].rgbs,
+                    blks[2][2][1].rgbs, blks[2][1][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[2][0][0].rgbs, blks[2][1][0].rgbs,
+                    blks[2][1][1].rgbs, blks[2][0][1].rgbs),
                 1, model);
     }
     //x-
@@ -121,10 +129,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
-                0.9f * BlockAO(blks[0][0][0].rgbs, blks[0][1][0].rgbs, blks[0][1][1].rgbs, blks[0][0][1].rgbs),
-                0.9f * BlockAO(blks[0][1][0].rgbs, blks[0][2][0].rgbs, blks[0][2][1].rgbs, blks[0][1][1].rgbs),
-                0.9f * BlockAO(blks[0][1][1].rgbs, blks[0][2][1].rgbs, blks[0][2][2].rgbs, blks[0][1][2].rgbs),
-                0.9f * BlockAO(blks[0][0][1].rgbs, blks[0][1][1].rgbs, blks[0][1][2].rgbs, blks[0][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][0].rgbs, blks[0][1][0].rgbs,
+                    blks[0][1][1].rgbs, blks[0][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][1][0].rgbs, blks[0][2][0].rgbs,
+                    blks[0][2][1].rgbs, blks[0][1][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][1][1].rgbs, blks[0][2][1].rgbs,
+                    blks[0][2][2].rgbs, blks[0][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][1].rgbs, blks[0][1][1].rgbs,
+                    blks[0][1][2].rgbs, blks[0][0][2].rgbs),
                 2, model);
     }
     //y+
@@ -132,10 +148,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-                BlockAO(blks[0][2][2].rgbs, blks[0][2][1].rgbs, blks[1][2][1].rgbs, blks[1][2][2].rgbs),
-                BlockAO(blks[0][2][1].rgbs, blks[0][2][0].rgbs, blks[1][2][0].rgbs, blks[1][2][1].rgbs),
-                BlockAO(blks[1][2][1].rgbs, blks[1][2][0].rgbs, blks[2][2][0].rgbs, blks[2][2][1].rgbs),
-                BlockAO(blks[1][2][2].rgbs, blks[1][2][1].rgbs, blks[2][2][1].rgbs, blks[2][2][2].rgbs),
+                BlockAO(
+					blks[0][2][2].rgbs, blks[0][2][1].rgbs,
+                    blks[1][2][1].rgbs, blks[1][2][2].rgbs),
+                BlockAO(
+					blks[0][2][1].rgbs, blks[0][2][0].rgbs,
+                    blks[1][2][0].rgbs, blks[1][2][1].rgbs),
+                BlockAO(
+					blks[1][2][1].rgbs, blks[1][2][0].rgbs,
+                    blks[2][2][0].rgbs, blks[2][2][1].rgbs),
+                BlockAO(
+					blks[1][2][2].rgbs, blks[1][2][1].rgbs,
+                    blks[2][2][1].rgbs, blks[2][2][2].rgbs),
                 3, model);
     }
     //y-
@@ -143,10 +167,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
-                BlockAO(blks[0][0][1].rgbs, blks[0][0][0].rgbs, blks[1][0][0].rgbs, blks[1][0][1].rgbs),
-                BlockAO(blks[0][0][2].rgbs, blks[0][0][1].rgbs, blks[1][0][1].rgbs, blks[1][0][2].rgbs),
-                BlockAO(blks[1][0][2].rgbs, blks[1][0][1].rgbs, blks[2][0][1].rgbs, blks[2][0][2].rgbs),
-                BlockAO(blks[1][0][1].rgbs, blks[1][0][0].rgbs, blks[2][0][0].rgbs, blks[2][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][1].rgbs, blks[0][0][0].rgbs,
+                    blks[1][0][0].rgbs, blks[1][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][2].rgbs, blks[0][0][1].rgbs,
+                    blks[1][0][1].rgbs, blks[1][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][0][2].rgbs, blks[1][0][1].rgbs,
+                    blks[2][0][1].rgbs, blks[2][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][0][1].rgbs, blks[1][0][0].rgbs,
+                    blks[2][0][0].rgbs, blks[2][0][1].rgbs),
                 4, model);
     }
     //z+
@@ -154,10 +186,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
-                0.9f * BlockAO(blks[0][0][2].rgbs, blks[0][1][2].rgbs, blks[1][1][2].rgbs, blks[1][0][2].rgbs),
-                0.9f * BlockAO(blks[0][1][2].rgbs, blks[0][2][2].rgbs, blks[1][2][2].rgbs, blks[1][1][2].rgbs),
-                0.9f * BlockAO(blks[1][1][2].rgbs, blks[1][2][2].rgbs, blks[2][2][2].rgbs, blks[2][1][2].rgbs),
-                0.9f * BlockAO(blks[1][0][2].rgbs, blks[1][1][2].rgbs, blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][2].rgbs, blks[0][1][2].rgbs,
+                    blks[1][1][2].rgbs, blks[1][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][1][2].rgbs, blks[0][2][2].rgbs,
+                    blks[1][2][2].rgbs, blks[1][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][1][2].rgbs, blks[1][2][2].rgbs,
+                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][0][2].rgbs, blks[1][1][2].rgbs,
+                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
                 5, model);
     }
     //z-
@@ -165,10 +205,18 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
-                0.9f * BlockAO(blks[1][0][0].rgbs, blks[1][1][0].rgbs, blks[2][1][0].rgbs, blks[2][0][0].rgbs),
-                0.9f * BlockAO(blks[1][1][0].rgbs, blks[1][2][0].rgbs, blks[2][2][0].rgbs, blks[2][1][0].rgbs),
-                0.9f * BlockAO(blks[0][1][0].rgbs, blks[0][2][0].rgbs, blks[1][2][0].rgbs, blks[1][1][0].rgbs),
-                0.9f * BlockAO(blks[0][0][0].rgbs, blks[0][1][0].rgbs, blks[1][1][0].rgbs, blks[1][0][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][0][0].rgbs, blks[1][1][0].rgbs,
+                    blks[2][1][0].rgbs, blks[2][0][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[1][1][0].rgbs, blks[1][2][0].rgbs,
+                    blks[2][2][0].rgbs, blks[2][1][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][1][0].rgbs, blks[0][2][0].rgbs,
+                    blks[1][2][0].rgbs, blks[1][1][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+					blks[0][0][0].rgbs, blks[0][1][0].rgbs,
+                    blks[1][1][0].rgbs, blks[1][0][0].rgbs),
                 6, model);
     }
 }
@@ -196,7 +244,8 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,
-                       const Color &rgbs,
+                       const Color &c0, const Color &c1,
+                       const Color &c2, const Color &c3,
                        int carveBoxTexPosIdx,
                        CarveModel &output)
     {
@@ -209,22 +258,22 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         output.AddVertex({
             posOffset + vtx0,
             { texBaseU + 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            { c0.R(), c0.G(), c0.B() }, c0.A()
         });
         output.AddVertex({
             posOffset + vtx1,
             { texBaseU + 0.0015f, texBaseV + 0.0015f },
-            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            { c1.R(), c1.G(), c1.B() }, c1.A()
         });
         output.AddVertex({
             posOffset + vtx2,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + 0.0015f },
-            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            { c2.R(), c2.G(), c2.B() }, c2.A()
         });
         output.AddVertex({
             posOffset + vtx3,
             { texBaseU + TEX_GRID_SIZE - 0.0015f, texBaseV + TEX_GRID_SIZE - 0.0015f },
-            { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
+            { c3.R(), c3.G(), c3.B() }, c3.A()
         });
 
         output.AddIndex(idxStart);
@@ -240,49 +289,107 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     if(infoMgr.IsFaceVisible(blk.type, pX.type))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
-        { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
-            LightToRGBA(pX.rgbs),
-            1, model);
+                { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[2][0][1].rgbs, blks[2][1][1].rgbs,
+                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[2][1][1].rgbs, blks[2][2][1].rgbs,
+                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[2][1][0].rgbs, blks[2][2][0].rgbs,
+                    blks[2][2][1].rgbs, blks[2][1][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[2][0][0].rgbs, blks[2][1][0].rgbs,
+                    blks[2][1][1].rgbs, blks[2][0][1].rgbs),
+                1, model);
     }
     //x-
     if(infoMgr.IsFaceVisible(blk.type, nX.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
-        { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
-            LightToRGBA(nX.rgbs),
-            2, model);
+                { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
+                    blks[0][1][1].rgbs, blks[0][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
+                    blks[0][2][1].rgbs, blks[0][1][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][1][1].rgbs, blks[0][2][1].rgbs,
+                    blks[0][2][2].rgbs, blks[0][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][1].rgbs, blks[0][1][1].rgbs,
+                    blks[0][1][2].rgbs, blks[0][0][2].rgbs),
+                2, model);
     }
     //y+
     if(infoMgr.IsFaceVisible(blk.type, pY.type))
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
-        { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-            LightToRGBA(pY.rgbs),
-            3, model);
+                { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
+                BlockAO(blks[0][2][2].rgbs, blks[0][2][1].rgbs, blks[1][2][1].rgbs, blks[1][2][2].rgbs),
+                BlockAO(blks[0][2][1].rgbs, blks[0][2][0].rgbs, blks[1][2][0].rgbs, blks[1][2][1].rgbs),
+                BlockAO(blks[1][2][1].rgbs, blks[1][2][0].rgbs, blks[2][2][0].rgbs, blks[2][2][1].rgbs),
+                BlockAO(blks[1][2][2].rgbs, blks[1][2][1].rgbs, blks[2][2][1].rgbs, blks[2][2][2].rgbs),
+                3, model);
     }
     //y-
     if(infoMgr.IsFaceVisible(blk.type, nY.type))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
-        { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
-            LightToRGBA(nY.rgbs),
-            4, model);
+                { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][1].rgbs, blks[0][0][0].rgbs,
+                    blks[1][0][0].rgbs, blks[1][0][1].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][2].rgbs, blks[0][0][1].rgbs,
+                    blks[1][0][1].rgbs, blks[1][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][0][2].rgbs, blks[1][0][1].rgbs,
+                    blks[2][0][1].rgbs, blks[2][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][0][1].rgbs, blks[1][0][0].rgbs,
+                    blks[2][0][0].rgbs, blks[2][0][1].rgbs),
+                4, model);
     }
     //z+
     if(infoMgr.IsFaceVisible(blk.type, pZ.type))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
-        { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
-            LightToRGBA(pZ.rgbs),
-            5, model);
+                { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][2].rgbs, blks[0][1][2].rgbs,
+                    blks[1][1][2].rgbs, blks[1][0][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][1][2].rgbs, blks[0][2][2].rgbs,
+                    blks[1][2][2].rgbs, blks[1][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][1][2].rgbs, blks[1][2][2].rgbs,
+                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][0][2].rgbs, blks[1][1][2].rgbs,
+                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                5, model);
     }
     //z-
     if(infoMgr.IsFaceVisible(blk.type, nZ.type))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
-        { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
-            LightToRGBA(nZ.rgbs),
-            6, model);
+                { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][0][0].rgbs, blks[1][1][0].rgbs,
+                    blks[2][1][0].rgbs, blks[2][0][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[1][1][0].rgbs, blks[1][2][0].rgbs,
+                    blks[2][2][0].rgbs, blks[2][1][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
+                    blks[1][2][0].rgbs, blks[1][1][0].rgbs),
+                BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
+                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
+                    blks[1][1][0].rgbs, blks[1][0][0].rgbs),
+                6, model);
     }
 }
 
