@@ -170,7 +170,7 @@ bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
     if(infoNei.renderer == BlockRenderer::Null)
         return true;
     if(infoNei.renderer == BlockRenderer::CarveRenderer)
-        return infoDst.renderer != BlockRenderer::CarveRenderer;
+        return infoDst.renderer != BlockRenderer::CarveRenderer | dst != neighbor;
     return false;
 }
 

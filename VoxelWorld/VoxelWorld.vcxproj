@@ -73,6 +73,7 @@
     <ClInclude Include="..\Source\Input\InputManager.h" />
     <ClInclude Include="..\Source\Land\LandGenerator.h" />
     <ClInclude Include="..\Source\Land\LandGenerator_V0.h" />
+    <ClInclude Include="..\Source\Land\StructureGenerator.h" />
     <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />

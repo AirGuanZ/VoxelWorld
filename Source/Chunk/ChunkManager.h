@@ -114,7 +114,7 @@ private:
 
     ChunkLoader ckLoader_;
 
-    std::queue<IntVector3> lightUpdates_;
+    std::queue<IntVector3> importantLightUpdates_;
 };
 
 #endif //VW_CHUNK_MANAGER_H

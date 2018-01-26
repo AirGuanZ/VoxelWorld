@@ -299,6 +299,9 @@
     <ClInclude Include="..\Source\Chunk\ChunkTraversal.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Land\StructureGenerator.h">
+      <Filter>Source\Land</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

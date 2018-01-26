@@ -262,7 +262,7 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
 
 void ChunkManager::AddLightUpdate(int x, int y, int z)
 {
-    lightUpdates_.push({ x, y, z });
+    importantLightUpdates_.push({ x, y, z });
 }
 
 void ChunkManager::AddChunkData(Chunk *ck)
@@ -336,10 +336,10 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 
 void ChunkManager::ProcessLightUpdates(void)
 {
-    while(lightUpdates_.size())
+    while(importantLightUpdates_.size())
     {
-        IntVector3 pos = lightUpdates_.front();
-        lightUpdates_.pop();
+        IntVector3 pos = importantLightUpdates_.front();
+        importantLightUpdates_.pop();
 
         int ckX = BlockXZ_To_ChunkXZ(pos.x);
         int ckZ = BlockXZ_To_ChunkXZ(pos.z);
@@ -384,12 +384,12 @@ void ChunkManager::ProcessLightUpdates(void)
         if(newLight != blk.rgbs)
         {
             blk.rgbs = newLight;
-            lightUpdates_.push({ pos.x + 1, pos.y, pos.z });
-            lightUpdates_.push({ pos.x - 1, pos.y, pos.z });
-            lightUpdates_.push({ pos.x, pos.y + 1, pos.z });
-            lightUpdates_.push({ pos.x, pos.y - 1, pos.z });
-            lightUpdates_.push({ pos.x, pos.y, pos.z + 1 });
-            lightUpdates_.push({ pos.x, pos.y, pos.z - 1 });
+            importantLightUpdates_.push({ pos.x + 1, pos.y, pos.z });
+            importantLightUpdates_.push({ pos.x - 1, pos.y, pos.z });
+            importantLightUpdates_.push({ pos.x, pos.y + 1, pos.z });
+            importantLightUpdates_.push({ pos.x, pos.y - 1, pos.z });
+            importantLightUpdates_.push({ pos.x, pos.y, pos.z + 1 });
+            importantLightUpdates_.push({ pos.x, pos.y, pos.z - 1 });
         }
 
         MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ);
