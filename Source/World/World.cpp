@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include "World.h"
 
 World::World(void)
-    : ckMgr_(10, 8, 10, 10, 15)
+    : ckMgr_(11, 8, 10, 10, 15)
 {
 
 }

@@ -3,6 +3,7 @@ Filename: ChunkModelBuilder.cpp
 Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
+#include "../Block/BlockInfoManager.h"
 #include "../Block/BlockModelBuilder.h"
 #include "Chunk.h"
 #include "ChunkModelBuilder.h"
@@ -26,8 +27,11 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
         {
             for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
             {
-                const Block &blk = ck_->GetBlock(x, y, z),
-                            &pX  = ck_->GetBlock(x + 1, y, z),
+                const Block &blk = ck_->GetBlock(x, y, z);
+                if(!BlockInfoManager::GetInstance().IsRenderable(blk.type))
+                    continue;
+
+                const Block &pX  = ck_->GetBlock(x + 1, y, z),
                             &nX  = ck_->GetBlock(x - 1, y, z),
                             &pZ  = ck_->GetBlock(x, y, z + 1),
                             &nZ  = ck_->GetBlock(x, y, z - 1),
