@@ -33,7 +33,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Air",
             BlockShape::Null,
             BlockRenderer::Null,
-            false, false,
+            false, false, true,
             1, { 0, 0, 0 }
         },
         {
@@ -41,7 +41,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Bedrock",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -49,7 +49,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Stone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -57,7 +57,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Dirt",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -65,7 +65,7 @@ BlockInfoManager::BlockInfoManager(void)
             "GrassBox",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -73,7 +73,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Sand",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -81,7 +81,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Wood",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1000, { 0, 0, 0 }
         },
         {
@@ -89,7 +89,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Leaf",
             BlockShape::Box,
             BlockRenderer::CarveRenderer,
-            false, true,
+            false, true, false,
             2, { 0, 0, 0 }
         },
         {
@@ -97,7 +97,7 @@ BlockInfoManager::BlockInfoManager(void)
             "GlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
-            true, true,
+            true, true, false,
             1, { 0, LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX }
         },
         {
@@ -105,7 +105,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Grass",
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
-            false, true,
+            false, true, false,
             1, { 0, 0, 0 }
         },
         {
@@ -113,7 +113,7 @@ BlockInfoManager::BlockInfoManager(void)
             "Flower",
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
-            false, true,
+            false, true, false,
             1, { 0, 0, 0 }
         },
     };
@@ -170,7 +170,7 @@ bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
     if(infoNei.renderer == BlockRenderer::Null)
         return true;
     if(infoNei.renderer == BlockRenderer::CarveRenderer)
-        return infoDst.renderer != BlockRenderer::CarveRenderer | dst != neighbor;
+        return (infoDst.renderer != BlockRenderer::CarveRenderer) | (dst != neighbor);
     return false;
 }
 
@@ -182,4 +182,9 @@ bool BlockInfoManager::IsSolid(BlockType type) const
 bool BlockInfoManager::IsRenderable(BlockType type) const
 {
     return info_[Blk2Int(type)].isRenderable;
+}
+
+bool BlockInfoManager::IsCoverable(BlockType type) const
+{
+    return info_[Blk2Int(type)].isCoverable;
 }

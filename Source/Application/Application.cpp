@@ -28,7 +28,7 @@ void Application::Run(void)
     Window &window      = Window::GetInstance();
     InputManager &input = InputManager::GetInstance();
     if(!window.InitWindow(1200, 800, L"Voxel World", initErrMsg) ||
-       !window.InitD3D(4, 0, initErrMsg))
+       !window.InitD3D(8, 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());
     }

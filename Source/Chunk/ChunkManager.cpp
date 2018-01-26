@@ -17,12 +17,14 @@ ChunkManager::ChunkManager(int loadDistance,
                            int renderDistance,
                            int maxImpModelUpdates,
                            int maxUniModelUpdates,
-                           int maxModelUpdates)
+                           int maxModelUpdates,
+                           int maxImpLightUpdates)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
       maxUniModelUpdates_(maxUniModelUpdates),
-      maxModelUpdates_(maxModelUpdates)
+      maxModelUpdates_(maxModelUpdates),
+      maxImpLightUpdates_(maxImpLightUpdates)
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
     centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();
@@ -336,8 +338,12 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 
 void ChunkManager::ProcessLightUpdates(void)
 {
-    while(importantLightUpdates_.size())
+    int updatesCount = 0;
+
+    while(updatesCount < maxImpLightUpdates_ && importantLightUpdates_.size())
     {
+        ++updatesCount;
+
         IntVector3 pos = importantLightUpdates_.front();
         importantLightUpdates_.pop();
 

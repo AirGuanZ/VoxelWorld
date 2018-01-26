@@ -64,6 +64,8 @@ struct BlockInfo
     bool isSolid;
     bool isRenderable;
 
+    bool isCoverable;
+
     int lightDec;
     IntVector3 lightEmission;
 

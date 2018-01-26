@@ -3,12 +3,13 @@ Filename: World.cpp
 Date: 2018.1.20
 Created by AirGuanZ
 ================================================================*/
+#include "../Block/BlockInfoManager.h"
 #include "../Input/InputManager.h"
 #include "../Resource/ResourceName.h"
 #include "World.h"
 
 World::World(void)
-    : ckMgr_(11, 8, 8, 8, 13)
+    : ckMgr_(11, 8, 8, 8, 13, 1000)
 {
 
 }
@@ -68,8 +69,9 @@ void World::Update(float deltaT)
                 { 0, 1, 0 }, { 0, -1, 0 },
                 { 0, 0, 1 }, { 0, 0, -1 }
             };
-            IntVector3 &d = faceDir[static_cast<int>(face)];
-            ckMgr_.SetBlock(pickPos.x + d.x, pickPos.y + d.y, pickPos.z + d.z, blk);
+            IntVector3 &p = pickPos + faceDir[static_cast<int>(face)];
+            if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
+                ckMgr_.SetBlock(p.x, p.y, p.z, blk);
         }
     }
 
