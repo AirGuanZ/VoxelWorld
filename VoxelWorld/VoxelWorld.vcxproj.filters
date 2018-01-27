@@ -177,6 +177,9 @@
     <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp">
       <Filter>Source\Land</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\D3DObject\BlendState.cpp">
+      <Filter>Source\D3DObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -301,6 +304,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\Utility\FPSCounter.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Renderer\TransparentRenderer.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\D3DObject\BlendState.h">
+      <Filter>Source\D3DObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

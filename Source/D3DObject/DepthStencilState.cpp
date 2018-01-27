@@ -34,6 +34,7 @@ DepthStencilState::DepthStencilState(const DepthStencilState &other)
 
 DepthStencilState &DepthStencilState::operator=(const DepthStencilState &other)
 {
+    Helper::ReleaseCOMObjects(state_);
     state_ = other.state_;
     Helper::AddRefForCOMObjects(state_);
     return *this;

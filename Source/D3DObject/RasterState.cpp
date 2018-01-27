@@ -38,6 +38,7 @@ RasterState::RasterState(const RasterState &other)
 
 RasterState &RasterState::operator=(const RasterState &other)
 {
+    Helper::ReleaseCOMObjects(state_);
     state_ = other.state_;
     Helper::AddRefForCOMObjects(state_);
     return *this;

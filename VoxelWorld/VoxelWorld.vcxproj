@@ -30,6 +30,7 @@
     <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
     <ClCompile Include="..\Source\Chunk\ChunkTraversal.cpp" />
+    <ClCompile Include="..\Source\D3DObject\BlendState.cpp" />
     <ClCompile Include="..\Source\D3DObject\DepthStencilState.cpp" />
     <ClCompile Include="..\Source\D3DObject\RasterState.cpp" />
     <ClCompile Include="..\Source\D3DObject\Sampler.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
     <ClInclude Include="..\Source\Chunk\ChunkTraversal.h" />
     <ClInclude Include="..\Source\D3DObject\BasicBuffer.h" />
+    <ClInclude Include="..\Source\D3DObject\BlendState.h" />
     <ClInclude Include="..\Source\D3DObject\DepthStencilState.h" />
     <ClInclude Include="..\Source\D3DObject\RasterState.h" />
     <ClInclude Include="..\Source\D3DObject\Sampler.h" />
@@ -79,6 +81,7 @@
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
+    <ClInclude Include="..\Source\Renderer\TransparentRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Screen\Crosshair.h" />
     <ClInclude Include="..\Source\Screen\ImmediateScreen2D.h" />
