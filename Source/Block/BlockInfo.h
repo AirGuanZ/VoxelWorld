@@ -64,6 +64,8 @@ struct BlockInfo
     bool isSolid;
     bool isRenderable;
 
+    //放置方块的时候能否覆盖
+    //典型地，空气和水是true，石头是false
     bool isCoverable;
 
     int lightDec;

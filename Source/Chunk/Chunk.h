@@ -43,6 +43,9 @@ public:
     Block &GetBlock(int xBlock, int yBlock, int zBlock);
     const Block &GetInternalBlock(int x, int y, int z) const;
 
+    int GetXPosBase(void) const;
+    int GetZPosBase(void) const;
+
     void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
     void SetModel(int section, ChunkSectionModels *model);
 

@@ -13,7 +13,8 @@ Created by AirGuanZ
 class OakGenerator_V0
 {
 public:
-    using Seed = typename LandGenerator_V0::Seed;
+    using RandomEngine = typename LandGenerator_V0::RandomEngine;
+    using Seed         = typename LandGenerator_V0::Seed;
 
     struct Unit
     {
@@ -24,6 +25,11 @@ public:
     OakGenerator_V0(Seed seed);
 
     void Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) const;
+
+private:
+    float Random(Seed seedOffset, int blkX, int blkZ, float min, float max) const;
+
+    void Try(Chunk *ck, int blkX, int blkY, int blkZ, std::vector<IntVector3> &lightUpdates) const;
     
 private:
     Seed seed_;

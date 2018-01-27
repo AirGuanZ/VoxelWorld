@@ -299,6 +299,9 @@
     <ClInclude Include="..\Source\Land\OakGenerator_V0.h">
       <Filter>Source\Land</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Utility\FPSCounter.h">
+      <Filter>Source\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

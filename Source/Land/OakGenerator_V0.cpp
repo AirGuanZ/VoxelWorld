@@ -13,37 +13,131 @@ OakGenerator_V0::OakGenerator_V0(Seed seed)
 
 }
 
-namespace
+float OakGenerator_V0::Random(Seed seedOffset, int blkX, int blkZ, float min, float max) const
 {
+    return std::uniform_real_distribution<float>(min, max)(
+        RandomEngine((seed_ + seedOffset) * blkX + blkZ));
+}
 
+void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3> &lightUpdates) const
+{
+    assert(ck != nullptr);
+
+    Chunk::BlockData &blks = ck->GetBlockData();
+    Chunk::HeightMap &hm = ck->GetHeightMap();
+
+    //放置橡树的合法性检验
+
+    if(((x - 3) | (CHUNK_SECTION_SIZE - 1 - (x + 3)) |
+        (z - 3) | (CHUNK_SECTION_SIZE - 1 - (z + 3)) |
+         y      | (CHUNK_MAX_HEIGHT - 1 - (y + 6))) < 0)
+        return;
+
+    for(int h = y + 1; h <= y + 3; ++h)
+    {
+        if(blks[x][h][z].type != BlockType::Air)
+            return;
+    }
+
+    for(int dx = x - 3; dx <= x + 3; ++dx)
+    {
+        for(int dz = z - 3; dz <= z + 3; ++dz)
+        {
+            for(int h = y + 4; h <= y + 6; ++h)
+            {
+                if(blks[x][h][z].type != BlockType::Air)
+                    return;
+            }
+        }
+    }
+
+    //放置橡树方块
+
+    int xBase = ck->GetXPosBase();
+    int zBase = ck->GetZPosBase();
+
+    for(int h = y + 1; h <= y + 5; ++h)
+        blks[x][h][z] = TypedBlockWithInvalidLight(BlockType::Wood);
+
+    for(int dx = x - 3; dx <= x + 3; ++dx)
+    {
+        for(int dz = z - 3; dz <= z + 3; ++dz)
+        {
+            if(dx != x || dz != z)
+            {
+                blks[dx][y + 4][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                hm[dx][dz] = y + 4;
+            }
+        }
+    }
+
+    for(int dx = x - 2; dx <= x + 2; ++dx)
+    {
+        for(int dz = z - 2; dz <= z + 2; ++dz)
+        {
+            if(dx != x || dz != z)
+            {
+                blks[dx][y + 5][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                hm[dx][dz] = y + 5;
+            }
+        }
+    }
+
+    for(int dx = x - 1; dx <= x + 1; ++dx)
+    {
+        for(int dz = z - 1; dz <= z + 1; ++dz)
+        {
+            if(dx != x || dz != z)
+            {
+                blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                hm[dx][dz] = y + 6;
+            }
+        }
+    }
+
+    //设置光照更新列表
+
+    for(int dx = x - 3; dx <= x + 3; ++dx)
+    {
+        for(int dz = z - 3; dz <= z + 3; ++dz)
+        {
+            int mdis = (std::max)(std::abs(dx - x), std::abs(dz - z));
+            if(mdis <= 1)
+                lightUpdates.push_back({ xBase + dx, y + 6, zBase + dz });
+            else if(mdis <= 2)
+                lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
+            else
+            {
+                lightUpdates.push_back({ xBase + dx, y + 4, zBase + dz });
+
+                lightUpdates.push_back({ xBase + dx, y + 1, zBase + dz });
+                lightUpdates.push_back({ xBase + dx, y + 2, zBase + dz });
+                lightUpdates.push_back({ xBase + dx, y + 3, zBase + dz });
+            }
+
+            SetLight(blks[dx][y + 1][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
+            SetLight(blks[dx][y + 2][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
+            SetLight(blks[dx][y + 3][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
+        }
+    }
 }
 
 void OakGenerator_V0::Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) const
 {
     assert(ck != nullptr);
 
-    Chunk::BlockData &blks = ck->GetBlockData();
-    int h = ck->GetHeightMap()[5][5];
-    if(blks[5][h][5].type != BlockType::GrassBox)
-        --h;
+    const Chunk::HeightMap &hm = ck->GetHeightMap();
 
-    for(int y = h + 1; y != h + 6; ++y)
-    {
-        blks[5][y][5].type = BlockType::Wood;
-        SetLight(blks[5][y][5], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
-        lightUpdates.push_back({ ChunkXZ_To_BlockXZ(ck->GetPosition().x) + 5, y,
-                                 ChunkXZ_To_BlockXZ(ck->GetPosition().z) + 5 });
-    }
+    int xBase = ck->GetXPosBase();
+    int zBase = ck->GetZPosBase();
 
-    for(int x = 4; x <= 6; ++x)
+    for(int x = 3; x <= CHUNK_SECTION_SIZE - 1 - 3; ++x)
     {
-        for(int z = 4; z <= 6; ++z)
+        for(int z = 3; z <= CHUNK_SECTION_SIZE - 1 - 3; ++z)
         {
-            blks[x][h + 6][z].type = BlockType::Leaf;
-            SetLight(blks[5][h + 6][5], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
-            lightUpdates.push_back({ ChunkXZ_To_BlockXZ(ck->GetPosition().x) + x, h + 6,
-                                     ChunkXZ_To_BlockXZ(ck->GetPosition().z) + z });
-            ck->GetHeightMap()[x][z] = h + 6;
+            if(Random(0xAB, xBase + x, zBase + z, 0.0f, 1.0f) < 0.005f &&
+               ck->GetBlock(x, hm[x][z], z).type == BlockType::GrassBox)
+                Try(ck, x, hm[x][z], z, lightUpdates);
         }
     }
 }

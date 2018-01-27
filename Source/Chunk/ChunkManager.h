@@ -8,7 +8,7 @@ Created by AirGuanZ
 
 #include <map>
 #include <mutex>
-#include <queue>
+#include <deque>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -116,8 +116,8 @@ private:
 
     ChunkLoader ckLoader_;
 
-    std::queue<IntVector3> importantLightUpdates_;
-    std::queue<IntVector3> unimportantLightUpdates_;
+    std::deque<IntVector3> importantLightUpdates_;
+    std::deque<IntVector3> unimportantLightUpdates_;
 
     int maxImpLightUpdates_;
     int maxUniLightUpdates_;

@@ -86,6 +86,7 @@
     <ClInclude Include="..\Source\Texture\TextureFile.h" />
     <ClInclude Include="..\Source\Utility\Clock.h" />
     <ClInclude Include="..\Source\Utility\ConfigFile.h" />
+    <ClInclude Include="..\Source\Utility\FPSCounter.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />

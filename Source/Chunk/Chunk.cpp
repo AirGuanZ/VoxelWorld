@@ -56,6 +56,16 @@ const Block &Chunk::GetInternalBlock(int x, int y, int z) const
     return blocks_[x][y][z];
 }
 
+int Chunk::GetXPosBase(void) const
+{
+    return ChunkXZ_To_BlockXZ(ckPos_.x);
+}
+
+int Chunk::GetZPosBase(void) const
+{
+    return ChunkXZ_To_BlockXZ(ckPos_.z);
+}
+
 void Chunk::SetBlock(int x, int y, int z, const Block &blk)
 {
     int wX = ChunkXZ_To_BlockXZ(ckPos_.x) + x;
@@ -67,9 +77,7 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
         return;
     }
 
-    blocks_[x][y][z] = blk;
-    SetLight(blocks_[x][y][z], LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1,
-                               LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1);
+    blocks_[x][y][z] = TypedBlockWithInvalidLight(blk.type);
     if(y >= heightMap_[x][z])
     {
         int newH = CHUNK_MAX_HEIGHT - 1;
@@ -77,12 +85,14 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
             --newH;
         if(newH != heightMap_[x][z])
         {
-            int L, H; std::tie(L, H) = std::minmax(newH, heightMap_[x][z]);
+            /*int L, H; std::tie(L, H) = std::minmax(newH, heightMap_[x][z]);
             while(H >= L)
             {
                 ckMgr_->AddLightUpdate(wX, H, wZ);
                 --H;
-            }
+            }*/
+            ckMgr_->AddLightUpdate(wX, newH, wZ);
+            ckMgr_->AddLightUpdate(wX, heightMap_[x][z], wZ);
             heightMap_[x][z] = newH;
         }
     }

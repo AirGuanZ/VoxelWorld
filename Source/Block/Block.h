@@ -70,4 +70,18 @@ inline Color LightToRGBA(BlockLight rgbs)
              LightToFloat(GetSunlight(rgbs)) };
 }
 
+inline void SetBlockTypeWithInvalidLight(Block &blk, BlockType type)
+{
+    blk.type = type;
+    SetLight(blk, LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1,
+                  LIGHT_COMPONENT_MAX + 1, LIGHT_COMPONENT_MAX + 1);
+}
+
+inline Block TypedBlockWithInvalidLight(BlockType type)
+{
+    Block rt;
+    SetBlockTypeWithInvalidLight(rt, type);
+    return rt;
+}
+
 #endif //VW_BLOCK_H

@@ -62,16 +62,15 @@ void World::Update(float deltaT)
         if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
             10.0f, 0.01f, IsNotAir, blk, face, pickPos))
         {
-            blk.type = BlockType::Leaf;
-            IntVector3 faceDir[] =
+            static const IntVector3 faceDir[] =
             {
                 { 1, 0, 0 }, { -1, 0, 0 },
                 { 0, 1, 0 }, { 0, -1, 0 },
                 { 0, 0, 1 }, { 0, 0, -1 }
             };
-            IntVector3 &p = pickPos + faceDir[static_cast<int>(face)];
+            IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
-                ckMgr_.SetBlock(p.x, p.y, p.z, blk);
+                ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::Leaf));
         }
     }
 

@@ -18,6 +18,7 @@ Created by AirGuanZ
 #include "../Texture/Texture2D.h"
 #include "../Utility/Clock.h"
 #include "../Utility/ConfigFile.h"
+#include "../Utility/FPSCounter.h"
 #include "../Utility/HelperFunctions.h"
 #include "../Window/Window.h"
 #include "../World/World.h"
