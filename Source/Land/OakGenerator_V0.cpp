@@ -66,6 +66,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             if(dx != x || dz != z)
             {
                 blks[dx][y + 4][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                for(int H = hm[dx][dz]; H < y + 4; ++H)
+                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
                 hm[dx][dz] = y + 4;
             }
         }
@@ -78,6 +80,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             if(dx != x || dz != z)
             {
                 blks[dx][y + 5][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                for(int H = hm[dx][dz]; H < y + 4; ++H)
+                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
                 hm[dx][dz] = y + 5;
             }
         }
@@ -90,6 +94,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             if(dx != x || dz != z)
             {
                 blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                for(int H = hm[dx][dz]; H < y + 4; ++H)
+                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
                 hm[dx][dz] = y + 6;
             }
         }
@@ -107,17 +113,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             else if(mdis <= 2)
                 lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
             else
-            {
                 lightUpdates.push_back({ xBase + dx, y + 4, zBase + dz });
-
-                lightUpdates.push_back({ xBase + dx, y + 1, zBase + dz });
-                lightUpdates.push_back({ xBase + dx, y + 2, zBase + dz });
-                lightUpdates.push_back({ xBase + dx, y + 3, zBase + dz });
-            }
-
-            SetLight(blks[dx][y + 1][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
-            SetLight(blks[dx][y + 2][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
-            SetLight(blks[dx][y + 3][dz], 0, 0, 0, LIGHT_COMPONENT_MAX + 1);
         }
     }
 }
