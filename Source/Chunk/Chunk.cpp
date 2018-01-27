@@ -136,6 +136,8 @@ void Chunk::Render(ChunkSectionRenderQueue *renderQueue)
                 renderQueue->basic[b].AddModel(&models->basic[b]);
             for(int b = 0; b != CARVE_RENDERER_TEXTURE_NUM; ++b)
                 renderQueue->carve[b].AddModel(&models->carve[b]);
+            for(int b = 0; b != LIQUID_RENDERER_TEXTURE_NUM; ++b)
+                renderQueue->liquid[b].AddModel(&models->liquid[b]);
         }
     }
 }

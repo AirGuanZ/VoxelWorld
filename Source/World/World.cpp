@@ -31,9 +31,9 @@ void World::Destroy(void)
 
 namespace
 {
-    bool IsNotAir(const Block &blk)
+    bool IsNotAirOrWater(const Block &blk)
     {
-        return blk.type != BlockType::Air;
+        return blk.type != BlockType::Air && blk.type != BlockType::Water;
     }
 }
 
@@ -50,7 +50,7 @@ void World::Update(float deltaT)
     {
         Block blk; BlockFace face; IntVector3 pickPos;
         if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
-            10.0f, 0.01f, IsNotAir, blk, face, pickPos))
+            10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
         {
             blk.type = BlockType::Air;
             ckMgr_.SetBlock(pickPos.x, pickPos.y, pickPos.z, blk);
@@ -60,7 +60,7 @@ void World::Update(float deltaT)
     {
         Block blk; BlockFace face; IntVector3 pickPos;
         if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
-            10.0f, 0.01f, IsNotAir, blk, face, pickPos))
+            10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
         {
             static const IntVector3 faceDir[] =
             {

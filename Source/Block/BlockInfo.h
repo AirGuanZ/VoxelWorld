@@ -24,8 +24,9 @@ enum class BlockType : std::uint8_t
     GlowStone       = Leaf + 1,
     Grass           = GlowStone + 1,
     Flower          = Grass + 1,
+    Water           = Flower + 1,
 
-    BlockTypeNum    = Flower + 1
+    BlockTypeNum    = Water + 1
 };
 
 enum class BlockRenderer : std::uint8_t
@@ -33,6 +34,7 @@ enum class BlockRenderer : std::uint8_t
     Null = 0,
     BasicRenderer = Null + 1,
     CarveRenderer = BasicRenderer + 1,
+    TransLiquid   = CarveRenderer + 1,
 };
 
 enum class BlockShape : std::uint8_t
@@ -40,6 +42,7 @@ enum class BlockShape : std::uint8_t
     Null            = 0,
     Box             = Null + 1,
     Cross           = Box + 1,
+    Liquid          = Cross + 1,
 };
 
 template<typename Dst = int>
@@ -84,6 +87,9 @@ struct BlockInfo
         //0：tex编号
         //1-2：两个面位置坐标
         int carveCrossTexPos[3];
+
+        //LiquidRenderer，Liquid的六个面的tex编号以及其上的坐标
+        int transLiquidTexPos[7];
     };
 };
 

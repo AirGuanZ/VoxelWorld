@@ -57,4 +57,13 @@ public:
         ChunkSectionModels *models) const;
 };
 
+class BlockModelBuilder_TransLiquidRenderer_Liquid : public BlockModelBuilder
+{
+public:
+    void Build(
+        const Vector3 &posOffset,
+        const Block(&blks)[3][3][3],
+        ChunkSectionModels *models) const;
+};
+
 #endif //VW_BLOCK_MODEL_BUILDER_H

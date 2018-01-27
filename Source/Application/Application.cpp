@@ -80,6 +80,21 @@ void Application::Run(void)
         return;
     }
 
+    LiquidRenderer liquidRenderer;
+    Texture2D liquidRendererTexture0;
+
+    if(!liquidRenderer.Initialize(initErrMsg))
+    {
+        std::cerr << initErrMsg << std::endl;
+        return;
+    }
+
+    if(!liquidRendererTexture0.LoadFromFile(LIQUID_RENDERER_TEXTURE_0))
+    {
+        std::cerr << "Failed to load texture for liquid renderer 0" << std::endl;
+        return;
+    }
+
     //Sampler
     Sampler sampler;
     if(!sampler)
@@ -127,6 +142,26 @@ void Application::Run(void)
         ->SetSampler(sampler);
     carveRendererUniforms0->GetShaderResource<SS_PS>("tex")
         ->SetShaderResource(carveRendererTexture0);
+
+    //liquid renderer参数
+
+    struct LiquidVSCBTrans
+    {
+        Matrix WVP;
+    };
+
+    struct LiquidPSCBSunlight
+    {
+        alignas(16) Vector3 sunlight;
+    };
+
+    std::unique_ptr<LiquidRenderer::Uniforms> liquidRendererUniforms0(liquidRenderer.GetShader().CreateUniformManager());
+    liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, "Sunlight")
+        ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
+    liquidRendererUniforms0->GetShaderSampler<SS_PS>("sam")
+        ->SetSampler(sampler);
+    liquidRendererUniforms0->GetShaderResource<SS_PS>("tex")
+        ->SetShaderResource(liquidRendererTexture0);
 
     //区块世界
 
@@ -180,6 +215,17 @@ void Application::Run(void)
         renderQueue.carve[0].Render();
         carveRendererUniforms0->Unbind(DC);
         carveRenderer.End();
+
+        //liquid rendering
+
+        liquidRendererUniforms0->GetConstantBuffer<SS_VS, LiquidVSCBTrans>(dev, "Trans")
+            ->SetBufferData(DC, { world.GetActor().GetCamera().GetViewProjMatrix().Transpose() });
+
+        liquidRenderer.Begin();
+        liquidRendererUniforms0->Bind(DC);
+        renderQueue.liquid[0].Render();
+        liquidRendererUniforms0->Unbind(DC);
+        liquidRenderer.End();
 
         crosshair.Draw(&imScr2D);
 

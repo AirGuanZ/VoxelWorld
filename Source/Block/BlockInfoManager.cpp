@@ -116,6 +116,14 @@ BlockInfoManager::BlockInfoManager(void)
             false, true, false,
             1, { 0, 0, 0 }
         },
+        {
+            BlockType::Water,
+            "Water",
+            BlockShape::Liquid,
+            BlockRenderer::TransLiquid,
+            false, true, true,
+            2, { 0, 0, 0 }
+        },
     };
 
     auto SetBasicBoxTexPos = [&](
@@ -144,6 +152,15 @@ BlockInfoManager::BlockInfoManager(void)
         a[1] = _1, a[2] = _2;
     };
 
+    auto SetLiquidTexPos = [&](
+        BlockType type, int _0, int _1, int _2, int _3, int _4, int _5, int _6)
+    {
+        int(&a)[7] = info_[Blk2Int(type)].transLiquidTexPos;
+        a[0] = _0;
+        a[1] = _1, a[2] = _2, a[3] = _3;
+        a[4] = _4, a[5] = _5, a[6] = _6;
+    };
+
     SetBasicBoxTexPos(BlockType::Bedrock,   0, 0, 0, 0, 0, 0, 0);
     SetBasicBoxTexPos(BlockType::Stone,     0, 1, 1, 1, 1, 1, 1);
     SetBasicBoxTexPos(BlockType::Dirt,      0, 2, 2, 2, 2, 2, 2);
@@ -154,6 +171,7 @@ BlockInfoManager::BlockInfoManager(void)
     SetBasicBoxTexPos(BlockType::GlowStone, 0, 7, 7, 7, 7, 7, 7);
     SetCarveCrossTexPos(BlockType::Grass,   0, 1, 1);
     SetCarveCrossTexPos(BlockType::Flower,  0, 2, 2);
+    SetLiquidTexPos(BlockType::Water,       0, 0, 0, 0, 0, 0, 0);
 }
 
 const BlockInfo &BlockInfoManager::GetBlockInfo(BlockType type) const
@@ -171,6 +189,10 @@ bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
         return true;
     if(infoNei.renderer == BlockRenderer::CarveRenderer)
         return (infoDst.renderer != BlockRenderer::CarveRenderer) | (dst != neighbor);
+    if(infoDst.renderer == BlockRenderer::TransLiquid && infoDst.renderer != BlockRenderer::TransLiquid)
+        return true;
+    if(infoDst.renderer != BlockRenderer::TransLiquid && infoNei.renderer == BlockRenderer::TransLiquid)
+        return true;
     return false;
 }
 

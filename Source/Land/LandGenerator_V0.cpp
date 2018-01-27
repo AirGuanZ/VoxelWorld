@@ -37,24 +37,24 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
                 SetLight(data[x][y][z], 0, 0, 0, 0);
             }
 
-            constexpr int SAND_LEVEL = 40;
-            if(h < SAND_LEVEL)
+            for(int y = h - 2; y != h; ++y)
             {
-                for(int y = h - 2; y <= SAND_LEVEL; ++y)
+                data[x][y][z].type = BlockType::Dirt;
+                SetLight(data[x][y][z], 0, 0, 0, 0);
+            }
+
+            constexpr int WATER_LEVEL = 40;
+            if(h < WATER_LEVEL)
+            {
+                for(int y = h; y <= WATER_LEVEL; ++y)
                 {
-                    data[x][y][z].type = BlockType::Sand;
-                    SetLight(data[x][y][z], 0, 0, 0, 0);
+                    data[x][y][z].type = BlockType::Water;
+                    SetLight(data[x][y][z], 0, 0, 0, (std::max)(0, LIGHT_COMPONENT_MAX - 2 * (WATER_LEVEL - y + 1)));
                 }
-                h = SAND_LEVEL;
+                h = WATER_LEVEL;
             }
             else
             {
-                for(int y = h - 2; y != h; ++y)
-                {
-                    data[x][y][z].type = BlockType::Dirt;
-                    SetLight(data[x][y][z], 0, 0, 0, 0);
-                }
-
                 data[x][h][z].type = BlockType::GrassBox;
                 SetLight(data[x][h][z], 0, 0, 0, 0);
 

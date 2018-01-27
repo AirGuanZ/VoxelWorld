@@ -27,7 +27,6 @@ public:
             model->Draw();
             model->Unbind();
         }
-        //std::cerr << models_.size() << std::endl;
         models_.clear();
     }
 

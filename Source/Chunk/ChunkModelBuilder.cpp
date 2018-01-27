@@ -68,5 +68,7 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
         models->basic[i].MakeVertexBuffer();
     for(int i = 0; i != CARVE_RENDERER_TEXTURE_NUM; ++i)
         models->carve[i].MakeVertexBuffer();
+    for(int i = 0; i != LIQUID_RENDERER_TEXTURE_NUM; ++i)
+        models->liquid[i].MakeVertexBuffer();
     return models;
 }

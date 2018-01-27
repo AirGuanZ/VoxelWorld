@@ -36,5 +36,6 @@ private:
 };
 
 using CarveModel = BasicModel;
+using LiquidModel = BasicModel;
 
 #endif //VW_BASIC_MODEL_H

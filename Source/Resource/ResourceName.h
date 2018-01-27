@@ -23,6 +23,10 @@ Created by AirGuanZ
 
 #define CARVE_RENDERER_TEXTURE_0 VW_FILENAME(Bin/Texture/Carve/0.png)
 
+//LiquidRenderer相关
+
+#define LIQUID_RENDERER_TEXTURE_0 VW_FILENAME(Bin/Texture/Liquid/0.png)
+
 //ImmediateScreen2D相关
 
 #define IMMEDIATE_SCREEN_2D_NOR_VERTEX_SHADER VW_FILENAME(Bin/Shader/ImmediateScreen2D/normalVertex.hlsl)
