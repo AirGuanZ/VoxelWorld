@@ -23,16 +23,14 @@ Chunk::~Chunk(void)
         Helper::SafeDeleteObjects(model);
 }
 
-IntVectorXZ Chunk::GetPosition(void) const
+namespace
 {
-    return ckPos_;
-}
-
-inline bool OutOfChunk(std::int32_t x, std::int32_t y, std::int32_t z)
-{
-    return (x | (CHUNK_SECTION_SIZE - 1 - x) |
-            y | (CHUNK_MAX_HEIGHT - 1 - y) |
-            z | (CHUNK_SECTION_SIZE - 1 - z)) < 0;
+    inline bool OutOfChunk(std::int32_t x, std::int32_t y, std::int32_t z)
+    {
+        return (x | (CHUNK_SECTION_SIZE - 1 - x) |
+                y | (CHUNK_MAX_HEIGHT - 1 - y) |
+                z | (CHUNK_SECTION_SIZE - 1 - z)) < 0;
+    }
 }
 
 Block &Chunk::GetBlock(int x, int y, int z)
@@ -55,16 +53,6 @@ const Block &Chunk::GetInternalBlock(int x, int y, int z) const
         return dummyBlock;
     }
     return blocks_[x][y][z];
-}
-
-int Chunk::GetXPosBase(void) const
-{
-    return ChunkXZ_To_BlockXZ(ckPos_.x);
-}
-
-int Chunk::GetZPosBase(void) const
-{
-    return ChunkXZ_To_BlockXZ(ckPos_.z);
 }
 
 void Chunk::SetBlock(int x, int y, int z, const Block &blk)
@@ -105,22 +93,6 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
     assert(0 <= section && section < CHUNK_SECTION_NUM);
     Helper::SafeDeleteObjects(models_[section]);
     models_[section] = model;
-}
-
-Chunk::BlockData &Chunk::GetBlockData(void)
-{
-    return blocks_;
-}
-
-Chunk::HeightMap &Chunk::GetHeightMap(void)
-{
-    return heightMap_;
-}
-
-ChunkSectionModels *Chunk::GetModels(int section)
-{
-    assert(0 <= section && section < CHUNK_SECTION_NUM);
-    return models_[section];
 }
 
 void Chunk::Render(ChunkSectionRenderQueue *renderQueue)

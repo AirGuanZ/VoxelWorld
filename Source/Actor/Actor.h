@@ -15,10 +15,20 @@ class Actor
 public:
     void UpdateCamera(float deltaT);
 
-    const Matrix &GetViewProjMatrix(void) const;
-    const Camera &GetCamera(void) const;
+    const Matrix &GetViewProjMatrix(void) const
+    {
+        return camera_.GetViewProjMatrix();
+    }
 
-    const Vector3 &GetCameraPosition(void) const;
+    const Camera &GetCamera(void) const
+    {
+        return camera_;
+    }
+
+    const Vector3 &GetCameraPosition(void) const
+    {
+        return camera_.GetPosition();
+    }
 
 private:
     float flyUpSpeed_ = 0.012f;

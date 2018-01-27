@@ -68,6 +68,7 @@
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
     <ClInclude Include="..\Source\Chunk\ChunkTraversal.h" />
+    <ClInclude Include="..\Source\Collision\AABB.h" />
     <ClInclude Include="..\Source\D3DObject\BasicBuffer.h" />
     <ClInclude Include="..\Source\D3DObject\BlendState.h" />
     <ClInclude Include="..\Source\D3DObject\DepthStencilState.h" />

@@ -20,30 +20,82 @@ enum class MouseButton
     Right       = 2
 };
 
+inline DirectX::Keyboard::Keys Int2Keys(int vk)
+{
+    return static_cast<DirectX::Keyboard::Keys>(vk);
+}
+
 class InputManager : public Singleton<InputManager>
 {
 public:
     InputManager(void);
     ~InputManager(void);
 
-    bool IsKeyDown    (int keyCode);
-    bool IsKeyPressed (int keyCode);
-    bool IsKeyReleased(int keyCode);
+    bool IsKeyDown    (int keyCode)
+    {
+        return kbState_.IsKeyDown(Int2Keys(keyCode));
+    }
 
-    int GetCursorPosX(void);
-    int GetCursorPosY(void);
+    bool IsKeyPressed (int keyCode)
+    {
+        return kbTracker_.IsKeyPressed(Int2Keys(keyCode));
+    }
 
-    int GetCursorMovX(void);
-    int GetCursorMovY(void);
+    bool IsKeyReleased(int keyCode)
+    {
+        return kbTracker_.IsKeyReleased(Int2Keys(keyCode));
+    }
 
-    int GetMouseWheel(void);
+    int GetCursorPosX(void)
+    {
+        return curPosX_;
+    }
 
-    bool IsMouseButtonDown(MouseButton button);
-    bool IsMouseButtonPressed(MouseButton button);
-    bool IsMouseButtonReleased(MouseButton button);
+    int GetCursorPosY(void)
+    {
+        return curPosY_;
+    }
 
-    void LockCursor(bool lock, int x = 0, int y = 0);
-    void ShowCursor(bool show);
+    int GetCursorMovX(void)
+    {
+        return curMovX_;
+    }
+
+    int GetCursorMovY(void)
+    {
+        return curMovY_;
+    }
+
+    int GetMouseWheel(void)
+    {
+        return wheelMov_;
+    }
+
+    bool IsMouseButtonDown(MouseButton button)
+    {
+        return mbDown_[static_cast<int>(button)];
+    }
+
+    bool IsMouseButtonPressed(MouseButton button)
+    {
+        return mbPressed_[static_cast<int>(button)];
+    }
+
+    bool IsMouseButtonReleased(MouseButton button)
+    {
+        return mbReleased_[static_cast<int>(button)];
+    }
+
+    void LockCursor(bool lock, int x = 0, int y = 0)
+    {
+        curLocked_ = lock;
+        curLockX_ = x, curLockY_ = y;
+    }
+
+    void ShowCursor(bool show)
+    {
+        ::ShowCursor(show ? TRUE : FALSE);
+    }
 
 private:
     friend class Window;

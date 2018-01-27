@@ -70,18 +70,3 @@ bool Texture2D::IsAvailable(void) const
     assert((tex_ != nullptr) == (SRV_ != nullptr));
     return tex_ != nullptr;
 }
-
-ID3D11ShaderResourceView *Texture2D::GetSRV(void)
-{
-    return SRV_;
-}
-
-const ID3D11ShaderResourceView *Texture2D::GetSRV(void) const
-{
-    return SRV_;
-}
-
-Texture2D::operator ID3D11ShaderResourceView* (void)
-{
-    return SRV_;
-}

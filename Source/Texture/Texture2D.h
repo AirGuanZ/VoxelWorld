@@ -26,10 +26,20 @@ public:
     void Destroy(void);
     bool IsAvailable(void) const;
 
-    ID3D11ShaderResourceView *GetSRV(void);
-    const ID3D11ShaderResourceView *GetSRV(void) const;
+    ID3D11ShaderResourceView *GetSRV(void)
+    {
+        return SRV_;
+    }
+
+    const ID3D11ShaderResourceView *GetSRV(void) const
+    {
+        return SRV_;
+    }
     
-    operator ID3D11ShaderResourceView* (void);
+    operator ID3D11ShaderResourceView* (void)
+    {
+        return SRV_;
+    }
 
 private:
     ID3D11Resource *tex_;

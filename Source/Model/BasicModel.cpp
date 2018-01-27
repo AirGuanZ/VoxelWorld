@@ -18,16 +18,6 @@ BasicModel::~BasicModel(void)
     Destroy();
 }
 
-void BasicModel::AddVertex(const BasicModel::Vertex &vertex)
-{
-    vertices_.push_back(vertex);
-}
-
-void BasicModel::AddIndex(UINT16 index)
-{
-    indices_.push_back(index);
-}
-
 bool BasicModel::MakeVertexBuffer(void)
 {
     assert(vtxBufBinding_.startSlot == -1);
@@ -86,14 +76,4 @@ void BasicModel::Destroy(void)
         vtxBufBinding_.strides.clear();
         vtxBufBinding_.offsets.clear();
     }
-}
-
-size_t BasicModel::GetVerticesCount(void) const
-{
-    return vertices_.size();
-}
-
-size_t BasicModel::GetIndicesCount(void) const
-{
-    return indices_.size();
 }

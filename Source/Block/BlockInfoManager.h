@@ -18,10 +18,25 @@ public:
 
     bool IsFaceVisible(BlockType dst, BlockType neighbor) const;
 
-    bool IsSolid(BlockType type) const;
-    bool IsRenderable(BlockType type) const;
-    bool IsCoverable(BlockType type) const;
-    bool IsGlow(BlockType type) const;
+    bool IsSolid(BlockType type) const
+    {
+        return info_[Blk2Int(type)].isSolid;
+    }
+
+    bool IsRenderable(BlockType type) const
+    {
+        return info_[Blk2Int(type)].isRenderable;
+    }
+
+    bool IsCoverable(BlockType type) const
+    {
+        return info_[Blk2Int(type)].isCoverable;
+    }
+
+    bool IsGlow(BlockType type) const
+    {
+        return info_[Blk2Int(type)].isGlow;
+    }
 
 private:
     std::vector<BlockInfo> info_;

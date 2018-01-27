@@ -22,13 +22,28 @@ public:
     BasicModel(void);
     ~BasicModel(void);
 
-    void AddVertex(const Vertex &vertex);
-    void AddIndex(UINT16 index);
+    void AddVertex(const Vertex &vertex)
+    {
+        vertices_.push_back(vertex);
+    }
+
+    void AddIndex(UINT16 index)
+    {
+        indices_.push_back(index);
+    }
+
     bool MakeVertexBuffer(void);
     void Destroy(void);
 
-    size_t GetVerticesCount(void) const;
-    size_t GetIndicesCount(void) const;
+    size_t GetVerticesCount(void) const
+    {
+        return vertices_.size();
+    }
+
+    size_t GetIndicesCount(void) const
+    {
+        return indices_.size();
+    }
 
 private:
     std::vector<Vertex> vertices_;

@@ -14,32 +14,92 @@ class Camera
 public:
     Camera(void);
 
-    void SetPosition(const Vector3 &pos);
-    const Vector3 &GetPosition(void) const;
+    void SetPosition(const Vector3 &pos)
+    {
+        pos_ = pos;
+    }
 
-    void SetYaw(float radian);
-    float GetYaw(void) const;
+    const Vector3 &GetPosition(void) const
+    {
+        return pos_;
+    }
 
-    void SetPitch(float radian);
-    float GetPitch(void) const;
+    void SetYaw(float radian)
+    {
+        yaw_ = radian;
+    }
 
-    void SetRoll(float radian);
-    float GetRoll(void) const;
+    float GetYaw(void) const
+    {
+        return yaw_;
+    }
+
+    void SetPitch(float radian)
+    {
+        pitch_ = radian;
+    }
+
+    float GetPitch(void) const
+    {
+        return pitch_;
+    }
+
+    void SetRoll(float radian)
+    {
+        roll_ = radian;
+    }
+
+    float GetRoll(void) const
+    {
+        return roll_;
+    }
 
     Vector3 GetDirection(void) const;
 
-    void SetFOVy(float radian);
-    float GetFOVy(void) const;
+    void SetFOVy(float radian)
+    {
+        FOVy_ = radian;
+    }
 
-    void SetNearPlane(float distance);
-    float GetNearPlane(void) const;
+    float GetFOVy(void) const
+    {
+        return FOVy_;
+    }
 
-    void SetFarPlane(float distance);
-    float GetFarPlane(void) const;
+    void SetNearPlane(float distance)
+    {
+        near_ = distance;
+    }
 
-    const Matrix &GetViewMatrix(void) const;
-    const Matrix &GetProjMatrix(void) const;
-    const Matrix &GetViewProjMatrix(void) const;
+    float GetNearPlane(void) const
+    {
+        return near_;
+    }
+
+    void SetFarPlane(float distance)
+    {
+        far_ = distance;
+    }
+
+    float GetFarPlane(void) const
+    {
+        return far_;
+    }
+
+    const Matrix &GetViewMatrix(void) const
+    {
+        return view_;
+    }
+
+    const Matrix &GetProjMatrix(void) const
+    {
+        return proj_;
+    }
+
+    const Matrix &GetViewProjMatrix(void) const
+    {
+        return viewProj_;
+    }
 
     void UpdateViewProjMatrix(void);
 

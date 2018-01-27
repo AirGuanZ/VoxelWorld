@@ -26,31 +26,7 @@ DepthStencilState::DepthStencilState(bool depthTest, bool depthWrite)
     Window::GetInstance().GetD3DDevice()->CreateDepthStencilState(&dc, &state_);
 }
 
-DepthStencilState::DepthStencilState(const DepthStencilState &other)
-{
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-}
-
-DepthStencilState &DepthStencilState::operator=(const DepthStencilState &other)
-{
-    Helper::ReleaseCOMObjects(state_);
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-    return *this;
-}
-
 DepthStencilState::~DepthStencilState(void)
 {
     Helper::ReleaseCOMObjects(state_);
-}
-
-DepthStencilState::operator ID3D11DepthStencilState* (void)
-{
-    return state_;
-}
-
-ID3D11DepthStencilState *DepthStencilState::GetState(void)
-{
-    return state_;
 }

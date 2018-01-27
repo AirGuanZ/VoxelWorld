@@ -57,9 +57,31 @@ public:
     void Destroy(void);
 
     //返回的Chunk在本帧内绝不会失效
-    Chunk *GetChunk(int ckX, int ckZ);
+    Chunk *GetChunk(int ckX, int ckZ)
+    {
+        auto it = chunks_.find({ ckX, ckZ });
+        if(it != chunks_.end())
+            return it->second;
 
-    Block &GetBlock(int blkX, int blkY, int blkZ);
+        LoadChunk(ckX, ckZ);
+        assert((chunks_[{ ckX, ckZ }] != nullptr));
+        return chunks_[{ ckX, ckZ }];
+    }
+
+    Block &GetBlock(int blkX, int blkY, int blkZ)
+    {
+        if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
+        {
+            static Block dummyAir;
+            dummyAir = Block();
+            return dummyAir;
+        }
+        return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
+            ->GetBlock(BlockXZ_To_BlockXZInChunk(blkX),
+                blkY,
+                BlockXZ_To_BlockXZInChunk(blkZ));
+    }
+
     void SetBlock(int blkX, int blkY, int blkZ, const Block &blk);
 
     //以给定的射线和已有的方块求交
@@ -75,8 +97,17 @@ public:
                    float maxLen, float step, PickBlockFunc func,
                    Block &blk, BlockFace &face, IntVector3 &rtPos);
 
-    bool InRenderRange(int ckX, int ckZ);
-    bool InLoadingRange(int ckX, int cnZ);
+    bool InRenderRange(int ckX, int ckZ)
+    {
+        return std::abs(ckX - centrePos_.x) <= renderDistance_ &&
+            std::abs(ckZ - centrePos_.z) <= renderDistance_;
+    }
+
+    bool InLoadingRange(int ckX, int ckZ)
+    {
+        return centrePos_.x - loadDistance_ <= ckX && ckX <= centrePos_.x + loadDistance_ &&
+            centrePos_.z - loadDistance_ <= ckZ && ckZ <= centrePos_.z + loadDistance_;
+    }
 
     void SetCentrePosition(int cenCkX, int cenCkZ);
 

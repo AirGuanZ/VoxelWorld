@@ -19,59 +19,6 @@ constexpr int CHUNK_SECTION_SIZE = 16;
 constexpr int CHUNK_SECTION_NUM  = 8;
 constexpr int CHUNK_MAX_HEIGHT   = CHUNK_SECTION_SIZE * CHUNK_SECTION_NUM;
 
-class ChunkManager;
-
-struct ChunkSectionModels
-{
-    BasicModel basic[BASIC_RENDERER_TEXTURE_NUM];
-    CarveModel carve[CARVE_RENDERER_TEXTURE_NUM];
-    LiquidModel liquid[LIQUID_RENDERER_TEXTURE_NUM];
-};
-
-struct ChunkSectionRenderQueue
-{
-    RenderQueue basic[BASIC_RENDERER_TEXTURE_NUM];
-    RenderQueue carve[CARVE_RENDERER_TEXTURE_NUM];
-    RenderQueue liquid[LIQUID_RENDERER_TEXTURE_NUM];
-};
-
-class Chunk : public Uncopiable
-{
-public:
-    Chunk(ChunkManager *ckMgr, const IntVectorXZ &ckPos);
-    ~Chunk(void);
-
-    IntVectorXZ GetPosition(void) const;
-
-    Block &GetBlock(int xBlock, int yBlock, int zBlock);
-    const Block &GetInternalBlock(int x, int y, int z) const;
-
-    int GetXPosBase(void) const;
-    int GetZPosBase(void) const;
-
-    void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
-    void SetModel(int section, ChunkSectionModels *model);
-
-    using BlockData = Block[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
-    BlockData &GetBlockData(void);
-
-    using HeightMap = int[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
-    HeightMap &GetHeightMap(void);
-
-    ChunkSectionModels *GetModels(int section);
-
-    void Render(ChunkSectionRenderQueue *renderQueue);
-
-private:
-    ChunkManager *ckMgr_;
-    IntVectorXZ ckPos_;
-
-    //下标的使用：[x][y][z]
-    BlockData blocks_;
-    HeightMap heightMap_;
-    ChunkSectionModels *models_[CHUNK_SECTION_NUM];
-};
-
 constexpr int BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET = 0x40000000;
 
 inline int BlockXZ_To_ChunkXZ(int blk)
@@ -110,5 +57,78 @@ inline int Camera_To_Block(float cam)
     //IMPROVE
     return static_cast<int>(std::floor(cam));
 }
+
+class ChunkManager;
+
+struct ChunkSectionModels
+{
+    BasicModel basic[BASIC_RENDERER_TEXTURE_NUM];
+    CarveModel carve[CARVE_RENDERER_TEXTURE_NUM];
+    LiquidModel liquid[LIQUID_RENDERER_TEXTURE_NUM];
+};
+
+struct ChunkSectionRenderQueue
+{
+    RenderQueue basic[BASIC_RENDERER_TEXTURE_NUM];
+    RenderQueue carve[CARVE_RENDERER_TEXTURE_NUM];
+    RenderQueue liquid[LIQUID_RENDERER_TEXTURE_NUM];
+};
+
+class Chunk : public Uncopiable
+{
+public:
+    Chunk(ChunkManager *ckMgr, const IntVectorXZ &ckPos);
+    ~Chunk(void);
+
+    IntVectorXZ GetPosition(void) const
+    {
+        return ckPos_;
+    }
+
+    Block &GetBlock(int xBlock, int yBlock, int zBlock);
+    const Block &GetInternalBlock(int x, int y, int z) const;
+
+    int GetXPosBase(void) const
+    {
+        return ChunkXZ_To_BlockXZ(ckPos_.x);
+    }
+
+    int GetZPosBase(void) const
+    {
+        return ChunkXZ_To_BlockXZ(ckPos_.z);
+    }
+
+    void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
+    void SetModel(int section, ChunkSectionModels *model);
+
+    using BlockData = Block[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
+    BlockData &GetBlockData(void)
+    {
+        return blocks_;
+    }
+
+    using HeightMap = int[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
+    HeightMap &GetHeightMap(void)
+    {
+        return heightMap_;
+    }
+
+    ChunkSectionModels *GetModels(int section)
+    {
+        assert(0 <= section && section < CHUNK_SECTION_NUM);
+        return models_[section];
+    }
+
+    void Render(ChunkSectionRenderQueue *renderQueue);
+
+private:
+    ChunkManager *ckMgr_;
+    IntVectorXZ ckPos_;
+
+    //下标的使用：[x][y][z]
+    BlockData blocks_;
+    HeightMap heightMap_;
+    ChunkSectionModels *models_[CHUNK_SECTION_NUM];
+};
 
 #endif //VW_CHUNK_H

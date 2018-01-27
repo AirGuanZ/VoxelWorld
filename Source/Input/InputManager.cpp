@@ -33,75 +33,6 @@ InputManager::~InputManager(void)
     this->ShowCursor(true);
 }
 
-namespace
-{
-    inline DirectX::Keyboard::Keys Int2Keys(int vk)
-    {
-        return static_cast<DirectX::Keyboard::Keys>(vk);
-    }
-}
-
-bool InputManager::IsKeyDown(int keyCode)
-{
-    return kbState_.IsKeyDown(Int2Keys(keyCode));
-}
-
-bool InputManager::IsKeyPressed(int keyCode)
-{
-    return kbTracker_.IsKeyPressed(Int2Keys(keyCode));
-}
-
-bool InputManager::IsKeyReleased(int keyCode)
-{
-    return kbTracker_.IsKeyReleased(Int2Keys(keyCode));
-}
-
-int InputManager::GetCursorPosX(void)
-{
-    return curPosX_;
-}
-
-int InputManager::GetCursorPosY(void)
-{
-    return curPosY_;
-}
-
-int InputManager::GetCursorMovX(void)
-{
-    return curMovX_;
-}
-
-int InputManager::GetCursorMovY(void)
-{
-    return curMovY_;
-}
-
-int InputManager::GetMouseWheel(void)
-{
-    return wheelMov_;
-}
-
-bool InputManager::IsMouseButtonDown(MouseButton button)
-{
-    return mbDown_[static_cast<int>(button)];
-}
-
-bool InputManager::IsMouseButtonPressed(MouseButton button)
-{
-    return mbPressed_[static_cast<int>(button)];
-}
-
-bool InputManager::IsMouseButtonReleased(MouseButton button)
-{
-    return mbReleased_[static_cast<int>(button)];
-}
-
-void InputManager::LockCursor(bool lock, int x, int y)
-{
-    curLocked_ = lock;
-    curLockX_ = x, curLockY_ = y;
-}
-
 void InputManager::Update(void)
 {
     kbState_ = keyboard_->GetState();
@@ -132,9 +63,4 @@ void InputManager::Update(void)
         curPosX_ = curPos.x;
         curPosY_ = curPos.y;
     }
-}
-
-void InputManager::ShowCursor(bool show)
-{
-    ::ShowCursor(show ? TRUE : FALSE);
 }

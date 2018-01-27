@@ -227,23 +227,3 @@ bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
         return true;
     return false;
 }
-
-bool BlockInfoManager::IsSolid(BlockType type) const
-{
-    return info_[Blk2Int(type)].isSolid;
-}
-
-bool BlockInfoManager::IsRenderable(BlockType type) const
-{
-    return info_[Blk2Int(type)].isRenderable;
-}
-
-bool BlockInfoManager::IsCoverable(BlockType type) const
-{
-    return info_[Blk2Int(type)].isCoverable;
-}
-
-bool BlockInfoManager::IsGlow(BlockType type) const
-{
-    return info_[Blk2Int(type)].isGlow;
-}

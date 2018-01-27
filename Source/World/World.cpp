@@ -88,8 +88,3 @@ void World::Render(ChunkSectionRenderQueue *renderQueue)
 
     ckMgr_.Render(renderQueue);
 }
-
-Actor &World::GetActor(void)
-{
-    return actor_;
-}

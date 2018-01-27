@@ -79,6 +79,9 @@
     <Filter Include="Source\D3DObject">
       <UniqueIdentifier>{f717e368-4953-4a0c-82ff-a5f3e181d5c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Collision">
+      <UniqueIdentifier>{c7e75186-3bb8-4dfe-847a-f825734b8b70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Renderer\LiquidRenderer.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Collision\AABB.h">
+      <Filter>Source\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

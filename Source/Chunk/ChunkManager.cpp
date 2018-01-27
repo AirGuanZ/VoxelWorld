@@ -56,31 +56,6 @@ void ChunkManager::Destroy(void)
     unimportantModelUpdates_.clear();
 }
 
-Chunk *ChunkManager::GetChunk(int ckX, int ckZ)
-{
-    auto it = chunks_.find({ ckX, ckZ });
-    if(it != chunks_.end())
-        return it->second;
-
-    LoadChunk(ckX, ckZ);
-    assert((chunks_[{ ckX, ckZ }] != nullptr));
-    return chunks_[{ ckX, ckZ }];
-}
-
-Block &ChunkManager::GetBlock(int x, int y, int z)
-{
-    if(y < 0 || y >= CHUNK_MAX_HEIGHT)
-    {
-        static Block dummyAir;
-        dummyAir = Block();
-        return dummyAir;
-    }
-    return GetChunk(BlockXZ_To_ChunkXZ(x), BlockXZ_To_ChunkXZ(z))
-        ->GetBlock(BlockXZ_To_BlockXZInChunk(x),
-                   y,
-                   BlockXZ_To_BlockXZInChunk(z));
-}
-
 void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
 {
     if(y < 0 || y >= CHUNK_MAX_HEIGHT)
@@ -144,12 +119,15 @@ void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
     }
 }
 
-inline void UpdateMinDis(float &minDis, BlockFace &face, float newDis, BlockFace newFace)
+namespace
 {
-    if(minDis < newDis)
+    inline void UpdateMinDis(float &minDis, BlockFace &face, float newDis, BlockFace newFace)
     {
-        minDis = newDis;
-        face = newFace;
+        if(minDis < newDis)
+        {
+            minDis = newDis;
+            face = newFace;
+        }
     }
 }
 
@@ -197,18 +175,6 @@ bool ChunkManager::PickBlock(const Vector3 &origin, const Vector3 &dir,
     }
 
     return false;
-}
-
-bool ChunkManager::InRenderRange(int ckX, int ckZ)
-{
-    return std::abs(ckX - centrePos_.x) <= renderDistance_ &&
-           std::abs(ckZ - centrePos_.z) <= renderDistance_;
-}
-
-bool ChunkManager::InLoadingRange(int ckX, int ckZ)
-{
-    return centrePos_.x - loadDistance_ <= ckX && ckX <= centrePos_.x + loadDistance_ &&
-           centrePos_.z - loadDistance_ <= ckZ && ckZ <= centrePos_.z + loadDistance_;
 }
 
 void ChunkManager::SetCentrePosition(int ckX, int ckZ)

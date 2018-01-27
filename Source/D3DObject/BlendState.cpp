@@ -33,31 +33,7 @@ BlendState::BlendState(D3D11_BLEND src, D3D11_BLEND dst, D3D11_BLEND_OP op,
     Window::GetInstance().GetD3DDevice()->CreateBlendState(&dc, &state_);
 }
 
-BlendState::BlendState(const BlendState &other)
-{
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-}
-
-BlendState &BlendState::operator=(const BlendState &other)
-{
-    Helper::ReleaseCOMObjects(state_);
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-    return *this;
-}
-
 BlendState::~BlendState(void)
 {
     Helper::ReleaseCOMObjects(state_);
-}
-
-BlendState::operator ID3D11BlendState*(void)
-{
-    return state_;
-}
-
-ID3D11BlendState *BlendState::GetState(void)
-{
-    return state_;
 }

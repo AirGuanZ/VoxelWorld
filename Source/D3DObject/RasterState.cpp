@@ -30,31 +30,7 @@ RasterState::RasterState(D3D11_FILL_MODE fillMode, D3D11_CULL_MODE cullMode)
         &dc, &state_);
 }
 
-RasterState::RasterState(const RasterState &other)
-{
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-}
-
-RasterState &RasterState::operator=(const RasterState &other)
-{
-    Helper::ReleaseCOMObjects(state_);
-    state_ = other.state_;
-    Helper::AddRefForCOMObjects(state_);
-    return *this;
-}
-
 RasterState::~RasterState(void)
 {
     Helper::ReleaseCOMObjects(state_);
-}
-
-RasterState::operator ID3D11RasterizerState* (void)
-{
-    return state_;
-}
-
-ID3D11RasterizerState *RasterState::GetState(void)
-{
-    return state_;
 }

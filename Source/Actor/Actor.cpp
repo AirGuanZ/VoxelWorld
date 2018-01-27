@@ -61,18 +61,3 @@ void Actor::UpdateCamera(float deltaT)
 
     camera_.UpdateViewProjMatrix();
 }
-
-const Matrix &Actor::GetViewProjMatrix(void) const
-{
-    return camera_.GetViewProjMatrix();
-}
-
-const Camera &Actor::GetCamera(void) const
-{
-    return camera_;
-}
-
-const Vector3 &Actor::GetCameraPosition(void) const
-{
-    return camera_.GetPosition();
-}

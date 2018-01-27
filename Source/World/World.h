@@ -22,7 +22,10 @@ public:
     void Update(float deltaT);
     void Render(ChunkSectionRenderQueue *renderQueue);
 
-    Actor &GetActor(void);
+    Actor &GetActor(void)
+    {
+        return actor_;
+    }
 
 private:
     Actor actor_;
