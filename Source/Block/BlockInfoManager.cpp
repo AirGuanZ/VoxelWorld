@@ -119,6 +119,15 @@ BlockInfoManager::BlockInfoManager(void)
             1,{ 0, LIGHT_COMPONENT_MAX, 0 }
         },
         {
+            BlockType::BlueGlowStone,
+            "GlowStone",
+            BlockShape::Box,
+            BlockRenderer::BasicRenderer,
+            true, true, false,
+            true,
+            1,{ 0, 0, LIGHT_COMPONENT_MAX }
+        },
+        {
             BlockType::Grass,
             "Grass",
             BlockShape::Cross,
@@ -191,6 +200,7 @@ BlockInfoManager::BlockInfoManager(void)
     SetCarveBoxTexPos(BlockType::Leaf,      0, 0, 0, 0, 0, 0, 0);
     SetBasicBoxTexPos(BlockType::RedGlowStone, 0, 7, 7, 7, 7, 7, 7);
     SetBasicBoxTexPos(BlockType::GreenGlowStone, 0, 7, 7, 7, 7, 7, 7);
+    SetBasicBoxTexPos(BlockType::BlueGlowStone, 0, 7, 7, 7, 7, 7, 7);
     SetCarveCrossTexPos(BlockType::Grass,   0, 1, 1);
     SetCarveCrossTexPos(BlockType::Flower,  0, 2, 2);
     SetLiquidTexPos(BlockType::Water,       0, 0, 0, 0, 0, 0, 0);

@@ -23,7 +23,8 @@ enum class BlockType : std::uint8_t
     Leaf            = Wood + 1,
     RedGlowStone    = Leaf + 1,
     GreenGlowStone  = RedGlowStone + 1,
-    Grass           = GreenGlowStone + 1,
+    BlueGlowStone   = GreenGlowStone + 1,
+    Grass           = BlueGlowStone + 1,
     Flower          = Grass + 1,
     Water           = Flower + 1,
 

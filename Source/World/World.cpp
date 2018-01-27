@@ -73,8 +73,10 @@ void World::Update(float deltaT)
             {
                 if(InputManager::GetInstance().IsKeyDown('Z'))
                     ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::RedGlowStone));
-                else
+                else if(InputManager::GetInstance().IsKeyDown('X'))
                     ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::GreenGlowStone));
+                else
+                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::BlueGlowStone));
             }
         }
     }
