@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include "World.h"
 
 World::World(int preloadDis, int renderDis)
-    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 200, 200, 300, renderDis)
+    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 300, 400, renderDis)
 {
 
 }
@@ -70,7 +70,12 @@ void World::Update(float deltaT)
             };
             IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
-                ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::Stone));
+            {
+                if(InputManager::GetInstance().IsKeyDown('Z'))
+                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::RedGlowStone));
+                else
+                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::GreenGlowStone));
+            }
         }
     }
 

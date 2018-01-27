@@ -34,6 +34,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Null,
             BlockRenderer::Null,
             false, false, true,
+            false,
             1, { 0, 0, 0 }
         },
         {
@@ -42,6 +43,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -50,6 +52,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -58,6 +61,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -66,6 +70,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -74,6 +79,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -82,6 +88,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
+            false,
             1000, { 0, 0, 0 }
         },
         {
@@ -90,15 +97,26 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Box,
             BlockRenderer::CarveRenderer,
             false, true, false,
+            false,
             2, { 0, 0, 0 }
         },
         {
-            BlockType::GlowStone,
+            BlockType::RedGlowStone,
             "GlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
-            1, { 0, LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX }
+            true,
+            1, { LIGHT_COMPONENT_MAX, 0, 0 }
+        },
+        {
+            BlockType::GreenGlowStone,
+            "GlowStone",
+            BlockShape::Box,
+            BlockRenderer::BasicRenderer,
+            true, true, false,
+            true,
+            1,{ 0, LIGHT_COMPONENT_MAX, 0 }
         },
         {
             BlockType::Grass,
@@ -106,6 +124,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
             false, true, false,
+            false,
             1, { 0, 0, 0 }
         },
         {
@@ -114,6 +133,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
             false, true, false,
+            false,
             1, { 0, 0, 0 }
         },
         {
@@ -122,6 +142,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockShape::Liquid,
             BlockRenderer::TransLiquid,
             false, true, true,
+            false,
             2, { 0, 0, 0 }
         },
     };
@@ -168,7 +189,8 @@ BlockInfoManager::BlockInfoManager(void)
     SetBasicBoxTexPos(BlockType::Sand,      0, 8, 8, 8, 8, 8, 8);
     SetBasicBoxTexPos(BlockType::Wood,      0, 6, 6, 5, 5, 6, 6);
     SetCarveBoxTexPos(BlockType::Leaf,      0, 0, 0, 0, 0, 0, 0);
-    SetBasicBoxTexPos(BlockType::GlowStone, 0, 7, 7, 7, 7, 7, 7);
+    SetBasicBoxTexPos(BlockType::RedGlowStone, 0, 7, 7, 7, 7, 7, 7);
+    SetBasicBoxTexPos(BlockType::GreenGlowStone, 0, 7, 7, 7, 7, 7, 7);
     SetCarveCrossTexPos(BlockType::Grass,   0, 1, 1);
     SetCarveCrossTexPos(BlockType::Flower,  0, 2, 2);
     SetLiquidTexPos(BlockType::Water,       0, 0, 0, 0, 0, 0, 0);
@@ -209,4 +231,9 @@ bool BlockInfoManager::IsRenderable(BlockType type) const
 bool BlockInfoManager::IsCoverable(BlockType type) const
 {
     return info_[Blk2Int(type)].isCoverable;
+}
+
+bool BlockInfoManager::IsGlow(BlockType type) const
+{
+    return info_[Blk2Int(type)].isGlow;
 }

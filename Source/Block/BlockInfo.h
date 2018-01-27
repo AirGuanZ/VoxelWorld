@@ -21,8 +21,9 @@ enum class BlockType : std::uint8_t
     Sand            = GrassBox + 1,
     Wood            = Sand + 1,
     Leaf            = Wood + 1,
-    GlowStone       = Leaf + 1,
-    Grass           = GlowStone + 1,
+    RedGlowStone    = Leaf + 1,
+    GreenGlowStone  = RedGlowStone + 1,
+    Grass           = GreenGlowStone + 1,
     Flower          = Grass + 1,
     Water           = Flower + 1,
 
@@ -70,6 +71,8 @@ struct BlockInfo
     //放置方块的时候能否覆盖
     //典型地，空气和水是true，石头是false
     bool isCoverable;
+
+    bool isGlow;
 
     int lightDec;
     IntVector3 lightEmission;

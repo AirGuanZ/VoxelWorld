@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <cstring>
 
+#include "../Block/BlockInfoManager.h"
 #include "../Utility/HelperFunctions.h"
 #include "Chunk.h"
 #include "ChunkManager.h"
@@ -77,6 +78,7 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
         return;
     }
 
+    bool lightDec = BlockInfoManager::GetInstance().IsGlow(blocks_[x][y][z].type);
     blocks_[x][y][z] = TypedBlockWithInvalidLight(blk.type);
     if(y >= heightMap_[x][z])
     {
@@ -85,19 +87,17 @@ void Chunk::SetBlock(int x, int y, int z, const Block &blk)
             --newH;
         if(newH != heightMap_[x][z])
         {
-            /*int L, H; std::tie(L, H) = std::minmax(newH, heightMap_[x][z]);
+            int L, H; std::tie(L, H) = std::minmax(newH, heightMap_[x][z]);
             while(H >= L)
             {
-                ckMgr_->AddLightUpdate(wX, H, wZ);
+                ckMgr_->AddLightUpdate(wX, H, wZ, false);
                 --H;
-            }*/
-            ckMgr_->AddLightUpdate(wX, newH, wZ);
-            ckMgr_->AddLightUpdate(wX, heightMap_[x][z], wZ);
+            }
             heightMap_[x][z] = newH;
         }
     }
 
-    ckMgr_->AddLightUpdate(wX, y, wZ);
+    ckMgr_->AddLightUpdate(wX, y, wZ, lightDec);
 }
 
 void Chunk::SetModel(int section, ChunkSectionModels *model)

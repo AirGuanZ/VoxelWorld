@@ -49,7 +49,7 @@ class ChunkManager
 public:
     ChunkManager(int loadDistance, int renderDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
-        int maxImpLightUpdates, int maxUniLightUpdates, int maxLightUpdates,
+        int maxUniLightUpdates, int maxLightUpdates,
         int uniLightUpdateDistance);
     ~ChunkManager(void);
 
@@ -82,7 +82,7 @@ public:
 
     void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
 
-    void AddLightUpdate(int blkX, int blkY, int blkZ);
+    void AddLightUpdate(int blkX, int blkY, int blkZ, bool lightDec);
 
     void ProcessChunkLoaderMessages(void);
 
@@ -116,10 +116,14 @@ private:
 
     ChunkLoader ckLoader_;
 
-    std::deque<IntVector3> importantLightUpdates_;
+    struct ImpLightUpdate
+    {
+        IntVector3 pos;
+        bool lightDec;
+    };
+    std::deque<ImpLightUpdate> importantLightUpdates_;
     std::deque<IntVector3> unimportantLightUpdates_;
 
-    int maxImpLightUpdates_;
     int maxUniLightUpdates_;
     int maxLightUpdates_;
 

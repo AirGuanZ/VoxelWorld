@@ -21,6 +21,7 @@ public:
     bool IsSolid(BlockType type) const;
     bool IsRenderable(BlockType type) const;
     bool IsCoverable(BlockType type) const;
+    bool IsGlow(BlockType type) const;
 
 private:
     std::vector<BlockInfo> info_;
