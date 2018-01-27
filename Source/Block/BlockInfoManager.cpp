@@ -102,16 +102,16 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::RedGlowStone,
-            "GlowStone",
+            "RedGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
             true,
-            1, { LIGHT_COMPONENT_MAX, 0, 0 }
+            1, { LIGHT_COMPONENT_MAX, 0, LIGHT_COMPONENT_MAX / 2 }
         },
         {
             BlockType::GreenGlowStone,
-            "GlowStone",
+            "GreenGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -120,7 +120,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::BlueGlowStone,
-            "GlowStone",
+            "BlueGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,

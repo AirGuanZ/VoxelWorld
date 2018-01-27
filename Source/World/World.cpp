@@ -46,27 +46,24 @@ void World::Update(float deltaT)
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().z)));
 
     //方块破坏
-    if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Left))
+    Block blk; BlockFace face; IntVector3 pickPos;
+    if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
+        10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
     {
-        Block blk; BlockFace face; IntVector3 pickPos;
-        if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
-            10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
+        std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
+        std::cerr << pickPos.x << " " << pickPos.y << " " << pickPos.z;
+        if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Left))
         {
             blk.type = BlockType::Air;
             ckMgr_.SetBlock(pickPos.x, pickPos.y, pickPos.z, blk);
         }
-    }
-    else if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Right)) //方块放置
-    {
-        Block blk; BlockFace face; IntVector3 pickPos;
-        if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
-            10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
+        else if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Right)) //方块放置
         {
             static const IntVector3 faceDir[] =
             {
-                { 1, 0, 0 }, { -1, 0, 0 },
-                { 0, 1, 0 }, { 0, -1, 0 },
-                { 0, 0, 1 }, { 0, 0, -1 }
+                { 1, 0, 0 },{ -1, 0, 0 },
+                { 0, 1, 0 },{ 0, -1, 0 },
+                { 0, 0, 1 },{ 0, 0, -1 }
             };
             IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
@@ -81,9 +78,10 @@ void World::Update(float deltaT)
         }
     }
 
+
     ckMgr_.ProcessLightUpdates();
-    ckMgr_.ProcessChunkLoaderMessages();
     ckMgr_.ProcessModelUpdates();
+    ckMgr_.ProcessChunkLoaderMessages();
 }
 
 void World::Render(ChunkSectionRenderQueue *renderQueue)

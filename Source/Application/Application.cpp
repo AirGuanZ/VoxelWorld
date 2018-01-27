@@ -41,7 +41,7 @@ void Application::Run(void)
         throw std::runtime_error(initErrMsg.c_str());
     }
 
-    const Vector3 sunlight = { 0.1f, 0.1f, 0.1f };
+    const Vector3 sunlight = { 1.0f, 1.0f, 1.0f };
     window.SetBackgroundColor(sunlight.x, sunlight.y, sunlight.z, 0.0f);
 
     ID3D11Device *dev = window.GetD3DDevice();

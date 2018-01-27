@@ -397,13 +397,7 @@ void ChunkManager::ProcessLightUpdates(void)
                                                                      GetSunlight(pZ), GetSunlight(nZ)));
         if(newLight != blk.rgbs)
         {
-            /*if(ud.lightDec)
-            {
-                SetLight(blk, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
-                importantLightUpdates_.push_back({ ud.pos, false });
-            }
-            else*/
-                blk.rgbs = newLight;
+            blk.rgbs = newLight;
 
             importantLightUpdates_.push_back({ { ud.pos.x + 1, ud.pos.y, ud.pos.z }, ud.lightDec });
             importantLightUpdates_.push_back({ { ud.pos.x - 1, ud.pos.y, ud.pos.z }, ud.lightDec });
@@ -416,6 +410,56 @@ void ChunkManager::ProcessLightUpdates(void)
         }
 
         MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(ud.pos.y), ckZ);
+
+        int blkX = BlockXZ_To_BlockXZInChunk(ud.pos.x);
+        int blkY = ud.pos.y;
+        int blkZ = BlockXZ_To_BlockXZInChunk(ud.pos.z);
+        int secY = BlockY_To_ChunkSectionIndex(ud.pos.y);
+
+        if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
+            importantModelUpdates_.insert({ ckX - 1, secY, ckZ });
+        else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
+            importantModelUpdates_.insert({ ckX + 1, secY, ckZ });
+        if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
+            importantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
+        else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
+            importantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
+        if(blkY == 0 && secY > 0)
+            importantModelUpdates_.insert({ ckX, secY - 1, ckZ });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            importantModelUpdates_.insert({ ckX, secY + 1, ckZ });
+        if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
+        {
+            if(blkY == 0 && secY > 0)
+                importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ - 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ - 1 });
+            importantModelUpdates_.insert({ ckX - 1, secY, ckZ - 1 });
+        }
+        if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
+        {
+            if(blkY == 0 && secY > 0)
+                importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ + 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ + 1 });
+            importantModelUpdates_.insert({ ckX - 1, secY, ckZ + 1 });
+        }
+        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
+        {
+            if(blkY == 0 && secY > 0)
+                importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ - 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ - 1 });
+            importantModelUpdates_.insert({ ckX + 1, secY, ckZ - 1 });
+        }
+        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
+        {
+            if(blkY == 0 && secY > 0)
+                importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ + 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
+            importantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
+        }
     }
 
     int uniUpdatesCount = 0;
@@ -496,7 +540,57 @@ void ChunkManager::ProcessLightUpdates(void)
             unimportantLightUpdates_.push_front({ pos.x, pos.y, pos.z - 1 });
         }
 
-        MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ);
+        unimportantModelUpdates_.insert({ ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ });
+
+        int blkX = BlockXZ_To_BlockXZInChunk(pos.x);
+        int blkY = pos.y;
+        int blkZ = BlockXZ_To_BlockXZInChunk(pos.z);
+        int secY = BlockY_To_ChunkSectionIndex(pos.y);
+
+        if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
+            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ });
+        else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
+            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ });
+        if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
+            unimportantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
+        else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
+            unimportantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
+        if(blkY == 0 && secY > 0)
+            unimportantModelUpdates_.insert({ ckX, secY - 1, ckZ });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            unimportantModelUpdates_.insert({ ckX, secY + 1, ckZ });
+        if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
+        {
+            if(blkY == 0 && secY > 0)
+                unimportantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ - 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                unimportantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ - 1 });
+            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ - 1 });
+        }
+        if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
+        {
+            if(blkY == 0 && secY > 0)
+                unimportantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ + 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                unimportantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ + 1 });
+            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ + 1 });
+        }
+        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
+        {
+            if(blkY == 0 && secY > 0)
+                unimportantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ - 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                unimportantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ - 1 });
+            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ - 1 });
+        }
+        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
+        {
+            if(blkY == 0 && secY > 0)
+                unimportantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ + 1 });
+            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+                unimportantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
+            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
+        }
     }
 }
 
