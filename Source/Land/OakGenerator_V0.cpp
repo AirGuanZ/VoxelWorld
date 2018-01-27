@@ -91,13 +91,10 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
     {
         for(int dz = z - 1; dz <= z + 1; ++dz)
         {
-            if(dx != x || dz != z)
-            {
-                blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
-                for(int H = hm[dx][dz]; H < y + 4; ++H)
-                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
-                hm[dx][dz] = y + 6;
-            }
+            blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+            for(int H = hm[dx][dz]; H < y + 4; ++H)
+                lightUpdates.push_back({ xBase + dx, H, zBase + dz });
+            hm[dx][dz] = y + 6;
         }
     }
 
