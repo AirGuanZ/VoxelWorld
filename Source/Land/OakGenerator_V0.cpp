@@ -30,10 +30,10 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
 
     if(((x - 3) | (CHUNK_SECTION_SIZE - 1 - (x + 3)) |
         (z - 3) | (CHUNK_SECTION_SIZE - 1 - (z + 3)) |
-         y      | (CHUNK_MAX_HEIGHT - 1 - (y + 6))) < 0)
+         y      | (CHUNK_MAX_HEIGHT - 1 - (y + 7))) < 0)
         return;
 
-    for(int h = y + 1; h <= y + 3; ++h)
+    for(int h = y + 1; h <= y + 4; ++h)
     {
         if(blks[x][h][z].type != BlockType::Air)
             return;
@@ -43,7 +43,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
     {
         for(int dz = z - 3; dz <= z + 3; ++dz)
         {
-            for(int h = y + 4; h <= y + 6; ++h)
+            for(int h = y + 5; h <= y + 7; ++h)
             {
                 if(blks[x][h][z].type != BlockType::Air)
                     return;
@@ -56,7 +56,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
     int xBase = ck->GetXPosBase();
     int zBase = ck->GetZPosBase();
 
-    for(int h = y + 1; h <= y + 5; ++h)
+    for(int h = y + 1; h <= y + 6; ++h)
         blks[x][h][z] = TypedBlockWithInvalidLight(BlockType::Wood);
 
     for(int dx = x - 3; dx <= x + 3; ++dx)
@@ -65,10 +65,10 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
         {
             if(dx != x || dz != z)
             {
-                blks[dx][y + 4][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
-                for(int H = hm[dx][dz]; H < y + 4; ++H)
+                blks[dx][y + 5][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                for(int H = hm[dx][dz]; H < y + 5; ++H)
                     lightUpdates.push_back({ xBase + dx, H, zBase + dz });
-                hm[dx][dz] = y + 4;
+                hm[dx][dz] = y + 5;
             }
         }
     }
@@ -79,10 +79,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
         {
             if(dx != x || dz != z)
             {
-                blks[dx][y + 5][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
-                for(int H = hm[dx][dz]; H < y + 4; ++H)
-                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
-                hm[dx][dz] = y + 5;
+                blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+                hm[dx][dz] = y + 6;
             }
         }
     }
@@ -91,10 +89,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
     {
         for(int dz = z - 1; dz <= z + 1; ++dz)
         {
-            blks[dx][y + 6][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
-            for(int H = hm[dx][dz]; H < y + 4; ++H)
-                lightUpdates.push_back({ xBase + dx, H, zBase + dz });
-            hm[dx][dz] = y + 6;
+            blks[dx][y + 7][dz] = TypedBlockWithInvalidLight(BlockType::Leaf);
+            hm[dx][dz] = y + 7;
         }
     }
 
@@ -106,11 +102,11 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
         {
             int mdis = (std::max)(std::abs(dx - x), std::abs(dz - z));
             if(mdis <= 1)
-                lightUpdates.push_back({ xBase + dx, y + 6, zBase + dz });
+                lightUpdates.push_back({ xBase + dx, y + 7, zBase + dz });
             else if(mdis <= 2)
-                lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
+                lightUpdates.push_back({ xBase + dx, y + 6, zBase + dz });
             else
-                lightUpdates.push_back({ xBase + dx, y + 4, zBase + dz });
+                lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
         }
     }
 }

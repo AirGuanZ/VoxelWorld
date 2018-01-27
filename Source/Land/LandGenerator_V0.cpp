@@ -64,14 +64,14 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
                     LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
 
                 float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
-                if(gfv < 0.02f)
+                if(gfv < 0.1f)
                 {
                     data[x][h + 1][z].type = BlockType::Grass;
                     SetLight(data[x][h + 1][z], LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
                         LIGHT_COMPONENT_MAX - 1);
                     ++h;
                 }
-                else if(gfv < 0.04f)
+                else if(gfv < 0.11f)
                 {
                     data[x][h + 1][z].type = BlockType::Flower;
                     SetLight(data[x][h + 1][z], LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,

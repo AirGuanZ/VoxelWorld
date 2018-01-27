@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include "World.h"
 
 World::World(int preloadDis, int renderDis)
-    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 300, 400, renderDis)
+    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 400, 500, renderDis)
 {
 
 }
@@ -50,8 +50,6 @@ void World::Update(float deltaT)
     if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
         10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))
     {
-        std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-        std::cerr << pickPos.x << " " << pickPos.y << " " << pickPos.z;
         if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Left))
         {
             blk.type = BlockType::Air;
