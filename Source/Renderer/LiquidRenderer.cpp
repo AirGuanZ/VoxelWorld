@@ -62,10 +62,10 @@ void LiquidRenderer::End(void)
 {
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
 
-    basic_.End();
     DC->OMSetBlendState(nullptr, nullptr, 0xFFFFFFFF);
-    DC->RSSetState(*raster_);
+    DC->RSSetState(nullptr);
     DC->OMSetDepthStencilState(nullptr, 0);
+    basic_.End();
 }
 
 LiquidRenderer::ShaderType &LiquidRenderer::GetShader(void)

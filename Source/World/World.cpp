@@ -70,7 +70,7 @@ void World::Update(float deltaT)
             };
             IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
-                ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::Leaf));
+                ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::Stone));
         }
     }
 
