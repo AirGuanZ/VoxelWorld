@@ -494,7 +494,15 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
     constexpr float TEX_GRID_SIZE = 1.0f / LIQUID_RENDERER_TEXTURE_BLOCK_SIZE;
     LiquidModel &model = models->liquid[info.transLiquidTexPos[0]];
 
-    Vector3 vtxPosFactor = Vector3(1.0f, pY.type == blk.type ? 1.0f : 0.8f, 1.0f);
+    Vector3 vtxPosFactor(1.0f, 1.0f, 1.0f);
+    if(pY.type != blk.type &&
+       !(blks[2][1][1].type == blk.type && blks[2][2][1].type == blk.type) &&
+       !(blks[0][1][1].type == blk.type && blks[0][2][1].type == blk.type) &&
+       !(blks[1][1][2].type == blk.type && blks[1][2][2].type == blk.type) &&
+       !(blks[1][1][0].type == blk.type && blks[1][2][0].type == blk.type))
+    {
+        vtxPosFactor.y = 0.8f;
+    }
 
     auto AddFace = [&](const Vector3 &vtx0, const Vector3 &vtx1,
                        const Vector3 &vtx2, const Vector3 &vtx3,
