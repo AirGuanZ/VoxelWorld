@@ -43,6 +43,7 @@
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
     <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp" />
+    <ClCompile Include="..\Source\Renderer\LiquidRenderer.cpp" />
     <ClCompile Include="..\Source\Screen\Crosshair.cpp" />
     <ClCompile Include="..\Source\Screen\ImmediateScreen2D.cpp" />
     <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
@@ -81,7 +82,7 @@
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />
     <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
     <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
-    <ClInclude Include="..\Source\Renderer\TransparentRenderer.h" />
+    <ClInclude Include="..\Source\Renderer\LiquidRenderer.h" />
     <ClInclude Include="..\Source\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\Screen\Crosshair.h" />
     <ClInclude Include="..\Source\Screen\ImmediateScreen2D.h" />
