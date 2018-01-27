@@ -42,7 +42,7 @@ void Application::Run(void)
     }
 
     const Vector3 sunlight = { 1.0f, 1.0f, 1.0f };
-    window.SetBackgroundColor(sunlight.x, sunlight.y, sunlight.z, 0.0f);
+    window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();
