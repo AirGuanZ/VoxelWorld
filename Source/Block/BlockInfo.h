@@ -9,6 +9,7 @@ Created by AirGuanZ
 #include <cstdint>
 #include <vector>
 
+#include "../Collision/AABB.h"
 #include "../Utility/Math.h"
 
 enum class BlockType : std::uint8_t
@@ -77,6 +78,8 @@ struct BlockInfo
 
     int lightDec;
     IntVector3 lightEmission;
+
+    AABB aabb;
 
     union
     {

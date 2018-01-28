@@ -22,9 +22,6 @@
     <Filter Include="Source\Model">
       <UniqueIdentifier>{4e8f87b0-afd6-429b-944d-ab81f8af6631}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Camera">
-      <UniqueIdentifier>{e7d53162-e83f-4bf1-943d-d911479a460a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Texture">
       <UniqueIdentifier>{35820c58-4e92-41f3-9fa8-ce3c54fb8c60}</UniqueIdentifier>
     </Filter>
@@ -82,6 +79,9 @@
     <Filter Include="Source\Collision">
       <UniqueIdentifier>{c7e75186-3bb8-4dfe-847a-f825734b8b70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Actor\Camera">
+      <UniqueIdentifier>{e7d53162-e83f-4bf1-943d-d911479a460a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -103,7 +103,7 @@
       <Filter>Source\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Camera\Camera.cpp">
-      <Filter>Source\Camera</Filter>
+      <Filter>Source\Actor\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Texture\Texture2D.cpp">
       <Filter>Source\Texture</Filter>
@@ -154,7 +154,7 @@
       <Filter>Source\Land</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Camera\CameraFrustum.cpp">
-      <Filter>Source\Camera</Filter>
+      <Filter>Source\Actor\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp">
       <Filter>Source\Renderer</Filter>
@@ -216,7 +216,7 @@
       <Filter>Source\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Camera\Camera.h">
-      <Filter>Source\Camera</Filter>
+      <Filter>Source\Actor\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Texture\Texture2D.h">
       <Filter>Source\Texture</Filter>
@@ -279,7 +279,7 @@
       <Filter>Source\Land</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Camera\CameraFrustum.h">
-      <Filter>Source\Camera</Filter>
+      <Filter>Source\Actor\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h">
       <Filter>Source\Renderer</Filter>

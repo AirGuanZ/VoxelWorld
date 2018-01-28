@@ -65,6 +65,13 @@ inline int Camera_To_Block(float cam)
     return static_cast<int>(std::floor(cam));
 }
 
+inline IntVector3 Camera_To_Block(const Vector3 &p)
+{
+    return { Camera_To_Block(p.x),
+             Camera_To_Block(p.y),
+             Camera_To_Block(p.z) };
+}
+
 inline IntVectorXZ BlockXZ_To_ChunkXZ(const IntVectorXZ &in)
 {
     return { BlockXZ_To_ChunkXZ(in.x), BlockXZ_To_ChunkXZ(in.z) };

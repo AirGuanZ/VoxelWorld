@@ -187,6 +187,9 @@ public:
 
     void Render(ChunkSectionRenderQueue *renderQueue);
 
+    bool DetectCollision(const Vector3 &pnt);
+    bool DetectCollision(const AABB &aabb);
+
 private:
     //交付一个加载好的Chunk
     void AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates);

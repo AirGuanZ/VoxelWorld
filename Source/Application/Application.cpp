@@ -187,7 +187,7 @@ void Application::Run(void)
         window.ClearRenderTarget();
         window.ClearDepthStencil();
 
-        daynightT += input.IsKeyDown('T') ? 0.01f : 0.002f;
+        daynightT += input.IsKeyDown('T') ? 0.01f : 0.001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
 
         Vector3 sunlight = { absdnt, absdnt, absdnt };

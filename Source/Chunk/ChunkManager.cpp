@@ -487,7 +487,8 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
     }
 }
 
-void ChunkManager::ComputeModelUpdates(int x, int y, int z, std::unordered_set<IntVector3, IntVector3Hasher> &updates)
+void ChunkManager::ComputeModelUpdates(int x, int y, int z,
+                                       std::unordered_set<IntVector3, IntVector3Hasher> &updates)
 {
     int ckX = BlockXZ_To_ChunkXZ(x);
     int ckZ = BlockXZ_To_ChunkXZ(z);
@@ -544,4 +545,54 @@ void ChunkManager::ComputeModelUpdates(int x, int y, int z, std::unordered_set<I
             updates.insert({ ckX + 1, secY + 1, ckZ + 1 });
         updates.insert({ ckX + 1, secY, ckZ + 1 });
     }
+}
+
+bool ChunkManager::DetectCollision(const Vector3 &pnt)
+{
+    const BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
+
+    IntVector3 blkPos = Camera_To_Block(pnt);
+    for(int dx = -1; dx <= 1; ++dx)
+    {
+        for(int dy = -1; dy <= 1; ++dy)
+        {
+            for(int dz = -1; dz <= 1; ++dz)
+            {
+                IntVector3 p = { blkPos.x + dx, blkPos.y + dy, blkPos.z + dz };
+                Vector3 vp = { static_cast<float>(p.x),
+                               static_cast<float>(p.y),
+                               static_cast<float>(p.z) };
+                if((infoMgr.GetAABB(GetBlockType(p.x, p.y, p.z)) + vp).IsPointIn(pnt))
+                    return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool ChunkManager::DetectCollision(const AABB &aabb)
+{
+    if(!aabb.IsValid())
+        return false;
+    const BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
+    IntVector3 blkL = Camera_To_Block(aabb.L);
+    IntVector3 blkH = Camera_To_Block(aabb.H);
+
+    for(int x = blkL.x; x <= blkH.x; ++x)
+    {
+        for(int y = blkL.y; y <= blkH.y; ++y)
+        {
+            for(int z = blkL.z; z <= blkH.z; ++z)
+            {
+                Vector3 vp = { static_cast<float>(x),
+                               static_cast<float>(y),
+                               static_cast<float>(z) };
+                if((infoMgr.GetAABB(GetBlockType(x, y, z)) + vp).IsAABBIntersected(aabb))
+                    return true;
+            }
+        }
+    }
+
+    return false;
 }

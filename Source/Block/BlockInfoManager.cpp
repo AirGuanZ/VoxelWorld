@@ -35,7 +35,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::Null,
             false, false, true,
             false,
-            1, { 0, 0, 0 }
+            1, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f }, { -1.0f, -1.0f, -1.0f } }
         },
         {
             BlockType::Bedrock,
@@ -44,7 +45,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Stone,
@@ -53,7 +55,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Dirt,
@@ -62,7 +65,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::GrassBox,
@@ -71,7 +75,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Sand,
@@ -80,7 +85,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Wood,
@@ -89,7 +95,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             false,
-            1000, { 0, 0, 0 }
+            1000, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Leaf,
@@ -98,7 +105,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::CarveRenderer,
             false, true, false,
             false,
-            2, { 0, 0, 0 }
+            2, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::RedGlowStone,
@@ -107,7 +115,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             true,
-            1, { LIGHT_COMPONENT_MAX, 0, LIGHT_COMPONENT_MAX / 2 }
+            1, { LIGHT_COMPONENT_MAX, 0, LIGHT_COMPONENT_MAX / 2 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::GreenGlowStone,
@@ -116,7 +125,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             true,
-            1,{ 0, LIGHT_COMPONENT_MAX, 0 }
+            1,{ 0, LIGHT_COMPONENT_MAX, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::BlueGlowStone,
@@ -125,7 +135,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             true,
-            1,{ 0, 0, LIGHT_COMPONENT_MAX }
+            1,{ 0, 0, LIGHT_COMPONENT_MAX },
+            { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {
             BlockType::Grass,
@@ -134,7 +145,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::CarveRenderer,
             false, true, false,
             false,
-            1, { 0, 0, 0 }
+            1, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ -1.0f, -1.0f, -1.0f } }
         },
         {
             BlockType::Flower,
@@ -143,7 +155,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::CarveRenderer,
             false, true, false,
             false,
-            1, { 0, 0, 0 }
+            1, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ -1.0f, -1.0f, -1.0f } }
         },
         {
             BlockType::Water,
@@ -152,7 +165,8 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::TransLiquid,
             false, true, true,
             false,
-            2, { 0, 0, 0 }
+            2, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ -1.0f, -1.0f, -1.0f } }
         },
     };
 
@@ -185,25 +199,25 @@ BlockInfoManager::BlockInfoManager(void)
     auto SetLiquidTexPos = [&](
         BlockType type, int _0, int _1, int _2, int _3, int _4, int _5, int _6)
     {
-        int(&a)[7] = info_[Blk2Int(type)].transLiquidTexPos;
+        int (&a)[7] = info_[Blk2Int(type)].transLiquidTexPos;
         a[0] = _0;
         a[1] = _1, a[2] = _2, a[3] = _3;
         a[4] = _4, a[5] = _5, a[6] = _6;
     };
 
-    SetBasicBoxTexPos(BlockType::Bedrock,   0, 0, 0, 0, 0, 0, 0);
-    SetBasicBoxTexPos(BlockType::Stone,     0, 1, 1, 1, 1, 1, 1);
-    SetBasicBoxTexPos(BlockType::Dirt,      0, 2, 2, 2, 2, 2, 2);
-    SetBasicBoxTexPos(BlockType::GrassBox,  0, 3, 3, 4, 2, 3, 3);
-    SetBasicBoxTexPos(BlockType::Sand,      0, 8, 8, 8, 8, 8, 8);
-    SetBasicBoxTexPos(BlockType::Wood,      0, 6, 6, 5, 5, 6, 6);
-    SetCarveBoxTexPos(BlockType::Leaf,      0, 0, 0, 0, 0, 0, 0);
-    SetBasicBoxTexPos(BlockType::RedGlowStone, 0, 7, 7, 7, 7, 7, 7);
+    SetBasicBoxTexPos(BlockType::Bedrock,        0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::Stone,          0, 1, 1, 1, 1, 1, 1);
+    SetBasicBoxTexPos(BlockType::Dirt,           0, 2, 2, 2, 2, 2, 2);
+    SetBasicBoxTexPos(BlockType::GrassBox,       0, 3, 3, 4, 2, 3, 3);
+    SetBasicBoxTexPos(BlockType::Sand,           0, 8, 8, 8, 8, 8, 8);
+    SetBasicBoxTexPos(BlockType::Wood,           0, 6, 6, 5, 5, 6, 6);
+    SetCarveBoxTexPos(BlockType::Leaf,           0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::RedGlowStone,   0, 7, 7, 7, 7, 7, 7);
     SetBasicBoxTexPos(BlockType::GreenGlowStone, 0, 7, 7, 7, 7, 7, 7);
-    SetBasicBoxTexPos(BlockType::BlueGlowStone, 0, 7, 7, 7, 7, 7, 7);
-    SetCarveCrossTexPos(BlockType::Grass,   0, 1, 1);
-    SetCarveCrossTexPos(BlockType::Flower,  0, 2, 2);
-    SetLiquidTexPos(BlockType::Water,       0, 0, 0, 0, 0, 0, 0);
+    SetBasicBoxTexPos(BlockType::BlueGlowStone,  0, 7, 7, 7, 7, 7, 7);
+    SetCarveCrossTexPos(BlockType::Grass,        0, 1, 1);
+    SetCarveCrossTexPos(BlockType::Flower,       0, 2, 2);
+    SetLiquidTexPos(BlockType::Water,            0, 0, 0, 0, 0, 0, 0);
 }
 
 const BlockInfo &BlockInfoManager::GetBlockInfo(BlockType type) const

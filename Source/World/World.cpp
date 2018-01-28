@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include "World.h"
 
 World::World(int preloadDis, int renderDis)
-    : ckMgr_(preloadDis, renderDis, 8, 8, 13, 400, 500, renderDis)
+    : ckMgr_(preloadDis, renderDis, 5, 5, 7, 400, 500, renderDis)
 {
 
 }
@@ -39,7 +39,7 @@ namespace
 
 void World::Update(float deltaT)
 {
-    actor_.UpdateCamera(deltaT);
+    actor_.UpdateCamera(deltaT, &ckMgr_);
 
     ckMgr_.SetCentrePosition(
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().x)),

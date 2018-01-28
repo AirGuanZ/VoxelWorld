@@ -12,12 +12,17 @@ Created by AirGuanZ
 #include "../Input/InputManager.h"
 #include "Actor.h"
 
-void Actor::UpdateCamera(float deltaT)
+void Actor::UpdateCamera(float deltaT, ChunkManager *ckMgr)
 {
+    assert(ckMgr != nullptr);
+
     InputManager &input = InputManager::GetInstance();
 
     Vector3 pos = camera_.GetPosition();
     Vector3 dir = camera_.GetDirection();
+
+    //移动前备份位置坐标，方便其后的碰撞检测恢复
+    Vector3 oldPos = pos;
 
     //垂直移动
 
@@ -46,7 +51,38 @@ void Actor::UpdateCamera(float deltaT)
     pos += horMoveSpeed_ * horMove * 16.66f;
     if(input.IsKeyDown(VK_LCONTROL))
         pos += horMoveSpeed_ * horMove * 120.0f;
-    camera_.SetPosition(pos);
+
+    //碰撞检测
+
+    //摄像机位置 -> 角色是否碰撞
+    auto TryPos = [&](const Vector3 &p) -> bool
+    {
+        if(!ckMgr->DetectCollision(AABB{ p - Vector3{ 0.2f, 1.6f, 0.2f },
+                                         p + Vector3{ 0.2f, 0.2f, 0.2f } }))
+        {
+            camera_.SetPosition(p);
+            return true;
+        }
+        return false;
+    };
+
+    std::vector<Vector3> tryList =
+    {
+        pos,
+        { oldPos.x, pos.y, pos.z },
+        { pos.x, pos.y, oldPos.z },
+        { pos.x, oldPos.y, pos.z },
+        { oldPos.x, pos.y, oldPos.z },
+        { oldPos.x, oldPos.y, pos.z },
+        { pos.x, oldPos.y, oldPos.z },
+        oldPos
+    };
+
+    for(Vector3 &p : tryList)
+    {
+        if(TryPos(p))
+            break;
+    }
 
     //视角转动
 

@@ -7,13 +7,14 @@ Created by AirGuanZ
 #define VW_ACTOR_H
 
 #include "../Camera/Camera.h"
+#include "../Chunk/ChunkManager.h"
 #include "../Utility/Math.h"
 #include "../Window/Window.h"
 
 class Actor
 {
 public:
-    void UpdateCamera(float deltaT);
+    void UpdateCamera(float deltaT, ChunkManager *ckMgr);
 
     const Matrix &GetViewProjMatrix(void) const
     {
@@ -31,9 +32,9 @@ public:
     }
 
 private:
-    float flyUpSpeed_ = 0.012f;
-    float flyDownSpeed_ = 0.012f;
-    float horMoveSpeed_ = 0.006f;
+    float flyUpSpeed_ = 0.018f;
+    float flyDownSpeed_ = 0.018f;
+    float horMoveSpeed_ = 0.009f;
 
     float mouseXSpeed_ = 0.00014f;
     float mouseYSpeed_ = 0.00008f;

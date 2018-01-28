@@ -38,6 +38,11 @@ public:
         return info_[Blk2Int(type)].isGlow;
     }
 
+    const AABB &GetAABB(BlockType type) const
+    {
+        return info_[Blk2Int(type)].aabb;
+    }
+
 private:
     std::vector<BlockInfo> info_;
 };
