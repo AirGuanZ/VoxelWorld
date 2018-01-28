@@ -109,7 +109,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
     };
 
     //x+
-    if(infoMgr.IsFaceVisible(blk.type, pX.type))
+    if(infoMgr.IsFaceVisible(blk.type, pX.type, { 0, 0, 0 }, { 1, 0, 0 }))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
@@ -128,7 +128,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
                 1, model);
     }
     //x-
-    if(infoMgr.IsFaceVisible(blk.type, nX.type))
+    if(infoMgr.IsFaceVisible(blk.type, nX.type, { 0, 0, 0 }, { -1, 0, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
@@ -147,7 +147,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
                 2, model);
     }
     //y+
-    if(infoMgr.IsFaceVisible(blk.type, pY.type))
+    if(infoMgr.IsFaceVisible(blk.type, pY.type, { 0, 0, 0 }, { 0, 1, 0 }))
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
@@ -166,7 +166,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
                 3, model);
     }
     //y-
-    if(infoMgr.IsFaceVisible(blk.type, nY.type))
+    if(infoMgr.IsFaceVisible(blk.type, nY.type, { 0, 0, 0 }, { 0, -1, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
@@ -185,7 +185,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
                 4, model);
     }
     //z+
-    if(infoMgr.IsFaceVisible(blk.type, pZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, pZ.type, { 0, 0, 0 }, { 0, 0, 1 }))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
@@ -204,7 +204,7 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
                 5, model);
     }
     //z-
-    if(infoMgr.IsFaceVisible(blk.type, nZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, nZ.type, { 0, 0, 0 }, { 0, 0, -1 }))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
@@ -289,7 +289,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     };
 
     //x+
-    if(infoMgr.IsFaceVisible(blk.type, pX.type))
+    if(infoMgr.IsFaceVisible(blk.type, pX.type, { 0, 0, 0 }, { 1, 0, 0 }))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
@@ -308,7 +308,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
                 1, model);
     }
     //x-
-    if(infoMgr.IsFaceVisible(blk.type, nX.type))
+    if(infoMgr.IsFaceVisible(blk.type, nX.type, { 0, 0, 0 }, { -1, 0, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
@@ -327,7 +327,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
                 2, model);
     }
     //y+
-    if(infoMgr.IsFaceVisible(blk.type, pY.type))
+    if(infoMgr.IsFaceVisible(blk.type, pY.type, { 0, 0, 0 }, { 0, 1, 0 }))
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
@@ -338,7 +338,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
                 3, model);
     }
     //y-
-    if(infoMgr.IsFaceVisible(blk.type, nY.type))
+    if(infoMgr.IsFaceVisible(blk.type, nY.type, { 0, 0, 0 }, { 0, -1, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
@@ -357,7 +357,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
                 4, model);
     }
     //z+
-    if(infoMgr.IsFaceVisible(blk.type, pZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, pZ.type, { 0, 0, 0 }, { 0, 0, 1 }))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
@@ -376,7 +376,7 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
                 5, model);
     }
     //z-
-    if(infoMgr.IsFaceVisible(blk.type, nZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, nZ.type, { 0, 0, 0 }, { 0, 0, -1 }))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
@@ -548,7 +548,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
     };
 
     //x+
-    if(infoMgr.IsFaceVisible(blk.type, pX.type))
+    if(infoMgr.IsFaceVisible(blk.type, pX.type, { 0, 0, 0 }, { 1, 0, 0 }))
     {
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
@@ -567,7 +567,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
                 1, model);
     }
     //x-
-    if(infoMgr.IsFaceVisible(blk.type, nX.type))
+    if(infoMgr.IsFaceVisible(blk.type, nX.type, { 0, 0, 0 }, { -1, 0, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
@@ -586,7 +586,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
                 2, model);
     }
     //y+
-    if(infoMgr.IsFaceVisible(blk.type, pY.type) || pY.type != blk.type)
+    if(infoMgr.IsFaceVisible(blk.type, pY.type, { 0, 0, 0 }, { 0, 1, 0 }) || pY.type != blk.type)
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
@@ -605,7 +605,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
                 3, model);
     }
     //y-
-    if(infoMgr.IsFaceVisible(blk.type, nY.type))
+    if(infoMgr.IsFaceVisible(blk.type, nY.type, { 0, 0, 0 }, { 0, -1, 0 }))
     {
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
@@ -624,7 +624,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
                 4, model);
     }
     //z+
-    if(infoMgr.IsFaceVisible(blk.type, pZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, pZ.type, { 0, 0, 0 }, { 0, 0, 1 }))
     {
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
@@ -643,7 +643,7 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
                 5, model);
     }
     //z-
-    if(infoMgr.IsFaceVisible(blk.type, nZ.type))
+    if(infoMgr.IsFaceVisible(blk.type, nZ.type, { 0, 0, 0 }, { 0, 0, -1 }))
     {
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },

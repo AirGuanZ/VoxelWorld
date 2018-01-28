@@ -45,7 +45,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
         {
             for(int h = y + 5; h <= y + 7; ++h)
             {
-                if(ck->GetBlockType(x, h, z) != BlockType::Air)
+                if(ck->GetBlockType(dx, h, dz) != BlockType::Air)
                     return;
             }
         }

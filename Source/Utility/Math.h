@@ -59,6 +59,12 @@ inline bool operator==(const IntVector3 &lhs, const IntVector3 &rhs) noexcept
     return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
 }
 
+inline bool operator<(const IntVector3 &lhs, const IntVector3 &rhs) noexcept
+{
+    return lhs.x < rhs.x || (lhs.x == rhs.x && lhs.y < rhs.y) ||
+           (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z < rhs.z);
+}
+
 inline IntVector3 operator+(const IntVector3 &L, const IntVector3 &R) noexcept
 {
     return { L.x + R.x, L.y + R.y, L.z + R.z };

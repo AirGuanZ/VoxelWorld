@@ -226,7 +226,8 @@ const BlockInfo &BlockInfoManager::GetBlockInfo(BlockType type) const
     return info_[Blk2Int(type)];
 }
 
-bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
+bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor,
+                                     const IntVector3 &posDst, const IntVector3 &posNei) const
 {
     const BlockInfo &infoDst = info_[Blk2Int(dst)], infoNei = info_[Blk2Int(neighbor)];
     if(infoDst.renderer == BlockRenderer::Null)
@@ -234,7 +235,13 @@ bool BlockInfoManager::IsFaceVisible(BlockType dst, BlockType neighbor) const
     if(infoNei.renderer == BlockRenderer::Null)
         return true;
     if(infoNei.renderer == BlockRenderer::CarveRenderer)
-        return (infoDst.renderer != BlockRenderer::CarveRenderer) | (dst != neighbor);
+    {
+        if(infoDst.renderer != BlockRenderer::CarveRenderer)
+            return true;
+        if(dst != neighbor || posDst < posNei)
+            return true;
+        return false;
+    }
     if(infoDst.renderer == BlockRenderer::TransLiquid && infoDst.renderer != BlockRenderer::TransLiquid)
         return true;
     if(infoDst.renderer != BlockRenderer::TransLiquid && infoNei.renderer == BlockRenderer::TransLiquid)

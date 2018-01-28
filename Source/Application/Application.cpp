@@ -215,11 +215,10 @@ void Application::Run(void)
     {
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
-        float gammaCorrAbsdnt = std::pow(absdnt, 1.65f);
 
         Vector3 sunlight = { absdnt, absdnt, absdnt };
 
-        window.SetBackgroundColor(0.0f, gammaCorrAbsdnt, gammaCorrAbsdnt, 0.0f);
+        window.SetBackgroundColor(0.0f, absdnt, absdnt, 0.0f);
 
         window.ClearRenderTarget();
         window.ClearDepthStencil();

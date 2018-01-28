@@ -27,10 +27,10 @@ float4 main(PSInput input) : SV_TARGET
 {
     float4 c = tex.Sample(sam, input.texCoord);
     clip(c.a - 0.5f);
-    float3 appColor = c * max(input.lightColor, input.sunlight * sunlightColor);
+    float3 appColor = pow(c * max(input.lightColor, input.sunlight * sunlightColor), 1.65f);
 
     float fogFactor = saturate((distance(input.posW.xz, camPosW.xz) - fogStart) / fogRange);
     float dFogFactor = 1.0f - fogFactor;
 
-    return float4(pow(dFogFactor * appColor + fogFactor * fogColor, 1.65f), 1.0f);
+    return float4(dFogFactor * appColor + fogFactor * fogColor, dFogFactor * c.a + fogFactor);
 }

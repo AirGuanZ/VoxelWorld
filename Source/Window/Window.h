@@ -38,6 +38,8 @@ public:
     void DoEvents(void);
     void Present(void);
 
+    void SetFullscreen(bool fullscreen);
+
     ID3D11Device *GetD3DDevice(void);
     ID3D11DeviceContext *GetD3DDeviceContext(void);
 };

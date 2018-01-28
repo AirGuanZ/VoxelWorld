@@ -484,6 +484,11 @@ void Window::Present(void)
     D3D::swapChain->Present(D3D::vsync ? 1 : 0, 0);
 }
 
+void Window::SetFullscreen(bool f)
+{
+    D3D::swapChain->SetFullscreenState(f ? TRUE : FALSE, nullptr);
+}
+
 ID3D11Device *Window::GetD3DDevice(void)
 {
     return D3D::device;

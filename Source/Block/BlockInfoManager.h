@@ -16,7 +16,8 @@ public:
 
     const BlockInfo &GetBlockInfo(BlockType type) const;
 
-    bool IsFaceVisible(BlockType dst, BlockType neighbor) const;
+    bool IsFaceVisible(BlockType dst, BlockType neighbor,
+                       const IntVector3 &posDst, const IntVector3 &posNei) const;
 
     bool IsSolid(BlockType type) const
     {
