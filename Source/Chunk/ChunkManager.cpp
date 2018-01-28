@@ -336,6 +336,23 @@ void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightU
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
             unimportantModelUpdates_.insert({ pos.x, section, pos.z });
     }
+
+    for(int dx = -1; dx <= 1; ++dx)
+    {
+        for(int dz = -1; dz <= 1; ++dz)
+        {
+            for(int sec = 0; sec != CHUNK_SECTION_NUM; ++sec)
+            {
+                IntVector3 p = { pos.x + dx, sec, pos.z + dz };
+                auto it = uniModelWaiting_.find(p);
+                if(it != uniModelWaiting_.end())
+                {
+                    uniModelWaiting_.erase(it);
+                    unimportantModelUpdates_.insert(p);
+                }
+            }
+        }
+    }
 }
 
 void ChunkManager::AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models)
@@ -501,6 +518,19 @@ void ChunkManager::ProcessModelUpdates(void)
         auto it = chunks_.find({ pos.x, pos.z });
         if(it == chunks_.end())
             continue;
+
+        for(int dx = -1; dx <= 1; ++dx)
+        {
+            for(int dz = -1; dz <= 1; ++dz)
+            {
+                if(chunks_.find({ pos.x + dx, pos.z + dz }) == chunks_.end())
+                {
+                    uniModelWaiting_.insert(pos);
+                    continue;
+                }
+            }
+        }
+
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());
         ++updatesCount;
