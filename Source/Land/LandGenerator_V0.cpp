@@ -100,7 +100,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
     }
 
     //Éú³ÉÊ÷
-    //OakGenerator_V0(seed_).Make(ck, lightUpdates);
+    OakGenerator_V0(seed_).Make(ck, lightUpdates);
 }
 
 int LandGenerator_V0::GetHeight(int x, int z)
