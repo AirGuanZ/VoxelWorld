@@ -3,6 +3,14 @@ cbuffer Sunlight
     float3 sunlightColor;
 };
 
+cbuffer Fog
+{
+    float fogStart;
+    float3 fogColor;
+    float fogRange;
+    float3 camPosW;
+};
+
 Texture2D<float4> tex;
 SamplerState sam;
 
@@ -12,11 +20,17 @@ struct PSInput
     float2 texCoord   : TEXCOORD;
     float3 lightColor : LIGHTCOLOR;
     float  sunlight   : SUNLIGHT;
+    float3 posW       : WORLD_POS;
 };
 
 float4 main(PSInput input) : SV_TARGET
 {
     float4 c = tex.Sample(sam, input.texCoord);
     clip(c.a - 0.5f);
-    return float4(pow(c * saturate(max(input.lightColor, input.sunlight * sunlightColor)), 1.65f), 1.0f);
+    float3 appColor = c * max(input.lightColor, input.sunlight * sunlightColor);
+
+    float fogFactor = saturate((distance(input.posW.xz, camPosW.xz) - fogStart) / fogRange);
+    float dFogFactor = 1.0f - fogFactor;
+
+    return float4(pow(dFogFactor * appColor + fogFactor * fogColor, 1.65f), 1.0f);
 }

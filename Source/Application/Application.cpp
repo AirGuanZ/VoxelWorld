@@ -44,6 +44,11 @@ void Application::Run(void)
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();
 
+    //雾效参数
+
+    float fogStart = std::stof(conf("Fog", "Start"));
+    float fogRange = std::stof(conf("Fog", "Range"));
+
     //渲染器和纹理
 
     ChunkSectionRenderQueue renderQueue;
@@ -105,12 +110,20 @@ void Application::Run(void)
 
     struct BasicVSCBTrans
     {
-        Matrix WVP;
+        Matrix VP;
     };
 
     struct BasicPSCBSunlight
     {
         alignas(16) Vector3 sunlight;
+    };
+
+    struct BasicPSCBFog
+    {
+        float fogStart;
+        Vector3 fogColor;
+        float fogRange;
+        Vector3 camPosW;
     };
 
     std::unique_ptr<BasicRenderer::Uniforms> basicRendererUniforms0(basicRenderer.GetShader().CreateUniformManager());
@@ -123,12 +136,20 @@ void Application::Run(void)
 
     struct CarveVSCBTrans
     {
-        Matrix WVP;
+        Matrix VP;
     };
 
     struct CarvePSCBSunlight
     {
         alignas(16) Vector3 sunlight;
+    };
+
+    struct CarvePSCBFog
+    {
+        float fogStart;
+        Vector3 fogColor;
+        float fogRange;
+        Vector3 camPosW;
     };
 
     std::unique_ptr<CarveRenderer::Uniforms> carveRendererUniforms0(carveRenderer.GetShader().CreateUniformManager());
@@ -141,12 +162,20 @@ void Application::Run(void)
 
     struct LiquidVSCBTrans
     {
-        Matrix WVP;
+        Matrix VP;
     };
 
     struct LiquidPSCBSunlight
     {
         alignas(16) Vector3 sunlight;
+    };
+
+    struct LiquidPSCBFog
+    {
+        float fogStart;
+        Vector3 fogColor;
+        float fogRange;
+        Vector3 camPosW;
     };
 
     std::unique_ptr<LiquidRenderer::Uniforms> liquidRendererUniforms0(liquidRenderer.GetShader().CreateUniformManager());
@@ -184,15 +213,18 @@ void Application::Run(void)
 
     while(!input.IsKeyDown(VK_ESCAPE))
     {
-        window.ClearRenderTarget();
-        window.ClearDepthStencil();
-
-        daynightT += input.IsKeyDown('T') ? 0.01f : 0.0002f;
+        daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
+        float gammaCorrAbsdnt = std::pow(absdnt, 1.65f);
 
         Vector3 sunlight = { absdnt, absdnt, absdnt };
 
-        window.SetBackgroundColor(0.0f, absdnt, absdnt, 0.0f);
+        window.SetBackgroundColor(0.0f, gammaCorrAbsdnt, gammaCorrAbsdnt, 0.0f);
+
+        window.ClearRenderTarget();
+        window.ClearDepthStencil();
+
+        //天光强度设置
 
         basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, "Sunlight")
             ->SetBufferData(DC, { sunlight });
@@ -200,6 +232,15 @@ void Application::Run(void)
             ->SetBufferData(DC, { sunlight });
         liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, "Sunlight")
             ->SetBufferData(DC, { sunlight });
+
+        //雾设置
+
+        basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog")
+            ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });
+        carveRendererUniforms0->GetConstantBuffer<SS_PS, CarvePSCBFog>(dev, "Fog")
+            ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });
+        liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBFog>(dev, "Fog")
+            ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });
 
         world.Update(clock.ElapsedTime());
 

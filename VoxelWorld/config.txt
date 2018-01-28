@@ -9,3 +9,8 @@ MSAA = 4
 
 PreloadDistance = 10
 RenderDistance  = 7
+
+[Fog]
+
+Start = 80
+Range = 20
