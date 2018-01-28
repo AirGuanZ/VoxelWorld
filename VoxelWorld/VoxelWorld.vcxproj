@@ -38,7 +38,6 @@
     <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp" />
     <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
-    <ClCompile Include="..\Source\Model\BasicCube.cpp" />
     <ClCompile Include="..\Source\Model\BasicModel.cpp" />
     <ClCompile Include="..\Source\Model\Model.cpp" />
     <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
@@ -77,7 +76,6 @@
     <ClInclude Include="..\Source\Input\InputManager.h" />
     <ClInclude Include="..\Source\Land\LandGenerator_V0.h" />
     <ClInclude Include="..\Source\Land\OakGenerator_V0.h" />
-    <ClInclude Include="..\Source\Model\BasicCube.h" />
     <ClInclude Include="..\Source\Model\BasicModel.h" />
     <ClInclude Include="..\Source\Model\Model.h" />
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />

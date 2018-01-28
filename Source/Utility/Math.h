@@ -45,7 +45,7 @@ struct IntVectorXZHasher
 {
     size_t operator()(const IntVectorXZ &v) const noexcept
     {
-        return std::hash<int>()((std::hash<int>()(v.x) ^ std::hash<int>()(v.z)) >> 2);
+        return std::hash<size_t>()((std::hash<int>()(v.x) ^ std::hash<int>()(v.z)) >> 2);
     }
 };
 
@@ -74,9 +74,9 @@ struct IntVector3Hasher
 {
     size_t operator()(const IntVector3 &v) const noexcept
     {
-        return std::hash<int> {}(std::hash<int>()(v.x) ^
-                                 (std::hash<int>()(v.y) << std::hash<int>()(v.z)) ^
-                                 std::hash<int>()(v.z));
+        return std::hash<size_t> {}(std::hash<int>()(v.x) ^
+                                    (std::hash<int>()(v.y) << std::hash<int>()(v.z)) ^
+                                    std::hash<int>()(v.z));
     }
 };
 

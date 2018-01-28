@@ -44,7 +44,7 @@ bool BasicModel::MakeVertexBuffer(void)
     }
 
     vtxBufBinding_.startSlot = 0;
-    vtxBufBinding_.idxCount = indices_.size();
+    vtxBufBinding_.idxCount = static_cast<int>(indices_.size());
     vtxBufBinding_.indices = idxBuf;
     vtxBufBinding_.indicesFormat = DXGI_FORMAT_R16_UINT;
     vtxBufBinding_.bufs.push_back(buf);

@@ -138,9 +138,6 @@
     <ClCompile Include="..\Source\Actor\Actor.cpp">
       <Filter>Source\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Model\BasicCube.cpp">
-      <Filter>Source\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Input\InputManager.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
@@ -262,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Actor\Actor.h">
       <Filter>Source\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Model\BasicCube.h">
-      <Filter>Source\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\InputManager.h">
       <Filter>Source\Input</Filter>
