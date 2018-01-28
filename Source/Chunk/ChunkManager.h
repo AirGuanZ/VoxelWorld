@@ -76,9 +76,10 @@ public:
             return BlockType::Air;
         }
         return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
-            ->blocks[Chunk::XYZ(BlockXZ_To_BlockXZInChunk(blkX),
-                                blkY,
-                                BlockXZ_To_BlockXZInChunk(blkZ))];
+            ->GetBlockType(
+                BlockXZ_To_BlockXZInChunk(blkX),
+                blkY,
+                BlockXZ_To_BlockXZInChunk(blkZ));
     }
 
     BlockLight GetBlockLight(int blkX, int blkY, int blkZ)
@@ -89,9 +90,10 @@ public:
                              LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID);
         }
         return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
-            ->lights[Chunk::XYZ(BlockXZ_To_BlockXZInChunk(blkX),
-                                blkY,
-                                BlockXZ_To_BlockXZInChunk(blkZ))];
+            ->GetBlockLight(
+                BlockXZ_To_BlockXZInChunk(blkX),
+                blkY,
+                BlockXZ_To_BlockXZInChunk(blkZ));
     }
 
     Block GetBlock(int blkX, int blkY, int blkZ)
@@ -104,10 +106,7 @@ public:
 
         IntVectorXZ ck = BlockXZ_To_ChunkXZ({ blkX, blkZ });
         IntVectorXZ cb = BlockXZ_To_BlockXZInChunk({ blkX, blkZ });
-        Chunk *chk = GetChunk(ck.x, ck.z);
-
-        int idx = Chunk::XYZ(cb.x, blkY, cb.z);
-        return { chk->blocks[idx], chk->lights[idx] };
+        return GetChunk(ck.x, ck.z)->GetBlock(cb.x, blkY, cb.z);
     }
 
     void SetBlockType(int blkX, int blkY, int blkZ, BlockType type)
@@ -120,15 +119,15 @@ public:
         int cx = BlockXZ_To_BlockXZInChunk(blkX);
         int cz = BlockXZ_To_BlockXZInChunk(blkZ);
 
-        ck->blocks[Chunk::XYZ(cx, blkY, cz)] = type;
+        ck->SetBlockType(cx, blkY, cz, type);
 
         if(blkY >= ck->heightMap[Chunk::XZ(cx, cz)])
         {
             int newH = CHUNK_MAX_HEIGHT - 1;
-            while(newH > 0 && ck->blocks[Chunk::XYZ(cx, newH, cz)] == BlockType::Air)
+            while(newH > 0 && ck->GetBlockType(cx, newH, cz) == BlockType::Air)
                 --newH;
 
-            if(newH != ck->heightMap[Chunk::XZ(cx, cz)])
+            if(newH != ck->GetHeight(cx, cz))
             {
                 int L, H;
                 std::tie(L, H) = std::minmax(newH, ck->heightMap[Chunk::XZ(cx, cz)]);

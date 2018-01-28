@@ -21,8 +21,6 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
     Chunk::HeightMap &heightMap = ck->heightMap;
     Chunk::BlockLightData &lights = ck->lights;
 
-    auto XYZ = Chunk::XYZ;
-
     IntVectorXZ ckPos = ck->GetPosition();
     int xBase = ChunkXZ_To_BlockXZ(ckPos.x);
     int zBase = ChunkXZ_To_BlockXZ(ckPos.z);
@@ -32,24 +30,22 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
         {
             int h = GetHeight(x + xBase, z + zBase);
 
-            int idx = XYZ(x, 0, z);
-            data[idx] = BlockType::Bedrock;
-            lights[idx] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                             LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
+            ck->SetBlock(x, 0, z,
+            { BlockType::Bedrock, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                            LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
 
             for(int y = 1; y != h - 2; ++y)
             {
-                int idx = XYZ(x, y, z);
-                data[idx] = BlockType::Stone;
-                lights[idx] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
+                ck->SetBlock(x, y, z,
+                { BlockType::Stone, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                              LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
             }
 
             for(int y = h - 2; y != h; ++y)
             {
-                data[XYZ(x, y, z)] = BlockType::Dirt;
-                lights[XYZ(x, y, z)] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
+                ck->SetBlock(x, y, z,
+                { BlockType::Dirt, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                             LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
             }
 
             constexpr int WATER_LEVEL = 40;
@@ -57,31 +53,31 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
             {
                 for(int y = h; y <= WATER_LEVEL; ++y)
                 {
-                    data[XYZ(x, y, z)] = BlockType::Water;
-                    lights[XYZ(x, y, z)] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                        (std::max)(0, LIGHT_COMPONENT_MAX - 2 * (WATER_LEVEL - y + 1)));
+                    ck->SetBlock(x, y, z,
+                    { BlockType::Water, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                        (std::max)(0, LIGHT_COMPONENT_MAX - 2 * (WATER_LEVEL - y + 1))) });
                 }
                 h = WATER_LEVEL;
             }
             else
             {
-                data[XYZ(x, h, z)] = BlockType::GrassBox;
-                lights[XYZ(x, h, z)] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
+                ck->SetBlock(x, h, z,
+                { BlockType::GrassBox, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
 
                 float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
                 if(gfv < 0.1f)
                 {
-                    data[XYZ(x, h + 1, z)] = BlockType::Grass;
-                    lights[XYZ(x, h + 1, z)] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                         LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1);
+                    ck->SetBlock(x, h + 1, z,
+                    { BlockType::Grass, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                                  LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1) });
                     ++h;
                 }
                 else if(gfv < 0.11f)
                 {
-                    data[XYZ(x, h + 1, z)] = BlockType::Flower;
-                    lights[XYZ(x, h + 1, z)] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                         LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1);
+                    ck->SetBlock(x, h + 1, z,
+                    { BlockType::Flower, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                                   LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1) });
                     ++h;
                 }
 
@@ -89,13 +85,12 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
 
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
             {
-                int idx = XYZ(x, y, z);
-                data[idx] = BlockType::Air;
-                lights[idx] = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX);
+                ck->SetBlock(x, y, z,
+                { BlockType::Air, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                            LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX) });
             }
 
-            heightMap[Chunk::XZ(x, z)] = h;
+            ck->SetHeight(x, z, h);
         }
     }
 

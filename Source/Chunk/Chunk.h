@@ -112,6 +112,37 @@ public:
         return (x << 4) | z;
     }
 
+    BlockType GetBlockType(int x, int y, int z) const
+    {
+        return blocks[XYZ(x, y, z)];
+    }
+
+    void SetBlockType(int x, int y, int z, BlockType type)
+    {
+        blocks[XYZ(x, y, z)] = type;
+    }
+
+    BlockLight GetBlockLight(int x, int y, int z) const
+    {
+        return lights[XYZ(x, y, z)];
+    }
+
+    void SetBlockLight(int x, int y, int z, BlockLight light)
+    {
+        lights[XYZ(x, y, z)] = light;
+    }
+
+    int GetHeight(int x, int z) const
+    {
+        return heightMap[XZ(x, z)];
+    }
+
+    void SetHeight(int x, int z, int h)
+    {
+        assert(0 <= h && h < CHUNK_MAX_HEIGHT);
+        heightMap[XZ(x, z)] = h;
+    }
+
     IntVectorXZ GetPosition(void) const
     {
         return ckPos_;
@@ -136,7 +167,7 @@ public:
 
     HeightMap heightMap;
 
-    Block GetBlock(int x, int y, int z)
+    Block GetBlock(int x, int y, int z) const
     {
         assert(0 <= x && x < CHUNK_SECTION_SIZE);
         assert(0 <= z && z < CHUNK_SECTION_SIZE);
@@ -144,6 +175,13 @@ public:
 
         int idx = XYZ(x, y, z);
         return { blocks[idx], lights[idx] };
+    }
+
+    void SetBlock(int x, int y, int z, const Block &blk)
+    {
+        int idx = XYZ(x, y, z);
+        blocks[idx] = blk.type;
+        lights[idx] = blk.light;
     }
 
     void SetModels(int section, ChunkSectionModels *models)
