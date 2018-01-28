@@ -341,6 +341,7 @@
     <None Include="Bin\Shader\ImmediateScreen2D\normalPixel.hlsl">
       <Filter>Bin\Shader\ImmediateScreen2D</Filter>
     </None>
+    <None Include="..\ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">

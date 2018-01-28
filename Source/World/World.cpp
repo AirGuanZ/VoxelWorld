@@ -65,11 +65,10 @@ void World::Update(float deltaT)
             IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
             {
-                ckMgr_.SetBlockType(p.x, p.y, p.z, BlockType::Stone);
+                ckMgr_.SetBlockType(p.x, p.y, p.z, BlockType::RedGlowStone);
             }
         }
     }
-
 
     ckMgr_.ProcessLightUpdates();
     ckMgr_.ProcessModelUpdates();

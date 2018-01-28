@@ -41,9 +41,6 @@ void Application::Run(void)
         throw std::runtime_error(initErrMsg.c_str());
     }
 
-    const Vector3 sunlight = { 1.0f, 1.0f, 1.0f };
-    window.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
-
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();
 
@@ -117,8 +114,6 @@ void Application::Run(void)
     };
 
     std::unique_ptr<BasicRenderer::Uniforms> basicRendererUniforms0(basicRenderer.GetShader().CreateUniformManager());
-    basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, "Sunlight")
-        ->SetBufferData(DC, { sunlight });
     basicRendererUniforms0->GetShaderSampler<SS_PS>("sam")
         ->SetSampler(sampler);
     basicRendererUniforms0->GetShaderResource<SS_PS>("tex")
@@ -137,8 +132,6 @@ void Application::Run(void)
     };
 
     std::unique_ptr<CarveRenderer::Uniforms> carveRendererUniforms0(carveRenderer.GetShader().CreateUniformManager());
-    carveRendererUniforms0->GetConstantBuffer<SS_PS, CarvePSCBSunlight>(dev, "Sunlight")
-        ->SetBufferData(DC, { sunlight });
     carveRendererUniforms0->GetShaderSampler<SS_PS>("sam")
         ->SetSampler(sampler);
     carveRendererUniforms0->GetShaderResource<SS_PS>("tex")
@@ -157,8 +150,6 @@ void Application::Run(void)
     };
 
     std::unique_ptr<LiquidRenderer::Uniforms> liquidRendererUniforms0(liquidRenderer.GetShader().CreateUniformManager());
-    liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, "Sunlight")
-        ->SetBufferData(DC, { sunlight });
     liquidRendererUniforms0->GetShaderSampler<SS_PS>("sam")
         ->SetSampler(sampler);
     liquidRendererUniforms0->GetShaderResource<SS_PS>("tex")
@@ -189,13 +180,26 @@ void Application::Run(void)
     FPSCounter fps;
     fps.Restart();
 
+    float daynightT = 0.0f;
+
     while(!input.IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
         window.ClearDepthStencil();
 
-        fps.Tick();
-        std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b" << fps.GetFPS();
+        daynightT += input.IsKeyDown('T') ? 0.01f : 0.002f;
+        float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
+
+        Vector3 sunlight = { absdnt, absdnt, absdnt };
+
+        window.SetBackgroundColor(0.0f, absdnt, absdnt, 0.0f);
+
+        basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, "Sunlight")
+            ->SetBufferData(DC, { sunlight });
+        carveRendererUniforms0->GetConstantBuffer<SS_PS, CarvePSCBSunlight>(dev, "Sunlight")
+            ->SetBufferData(DC, { sunlight });
+        liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, "Sunlight")
+            ->SetBufferData(DC, { sunlight });
 
         world.Update(clock.ElapsedTime());
 

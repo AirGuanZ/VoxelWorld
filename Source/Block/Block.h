@@ -48,7 +48,7 @@ inline BlockLight SetGreen   (BlockLight bl, std::uint8_t g) { return (g << 8) |
 inline BlockLight SetBlue    (BlockLight bl, std::uint8_t b) { return (b << 4) | (bl & 0xFF0F); }
 inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 0xFFF0); }
 
-inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component) / LIGHT_COMPONENT_MAX; }
+inline float LightToFloat(std::uint8_t component) { return (component - 0.5f) / (LIGHT_COMPONENT_MAX - 0.5f); }
 
 inline BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {
