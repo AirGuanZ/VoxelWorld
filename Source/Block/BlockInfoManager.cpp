@@ -115,7 +115,7 @@ BlockInfoManager::BlockInfoManager(void)
             BlockRenderer::BasicRenderer,
             true, true, false,
             true,
-            1, { LIGHT_COMPONENT_MAX, 0, LIGHT_COMPONENT_MAX / 2 },
+            1, { LIGHT_COMPONENT_MAX, 0, 0 },
             { { 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f } }
         },
         {

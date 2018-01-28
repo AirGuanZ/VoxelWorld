@@ -32,9 +32,9 @@ public:
     }
 
 private:
-    float flyUpSpeed_ = 0.018f;
-    float flyDownSpeed_ = 0.018f;
-    float horMoveSpeed_ = 0.009f;
+    float flyUpSpeed_ = 0.009f;
+    float flyDownSpeed_ = 0.009f;
+    float horMoveSpeed_ = 0.0065f;
 
     float mouseXSpeed_ = 0.00014f;
     float mouseYSpeed_ = 0.00008f;
