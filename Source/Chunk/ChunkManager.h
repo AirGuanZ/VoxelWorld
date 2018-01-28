@@ -13,6 +13,7 @@ Created by AirGuanZ
 #include <unordered_map>
 #include <unordered_set>
 
+#include "../Block/BlockInfoManager.h"
 #include "../Camera/CameraFrustum.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
@@ -68,21 +69,87 @@ public:
         return chunks_[{ ckX, ckZ }];
     }
 
-    Block &GetBlock(int blkX, int blkY, int blkZ)
+    BlockType GetBlockType(int blkX, int blkY, int blkZ)
     {
         if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
         {
-            static Block dummyAir;
-            dummyAir = Block();
-            return dummyAir;
+            return BlockType::Air;
         }
         return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
-            ->GetBlock(BlockXZ_To_BlockXZInChunk(blkX),
-                blkY,
-                BlockXZ_To_BlockXZInChunk(blkZ));
+            ->blocks[Chunk::XYZ(BlockXZ_To_BlockXZInChunk(blkX),
+                                blkY,
+                                BlockXZ_To_BlockXZInChunk(blkZ))];
     }
 
-    void SetBlock(int blkX, int blkY, int blkZ, const Block &blk);
+    BlockLight GetBlockLight(int blkX, int blkY, int blkZ)
+    {
+        if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
+        {
+            return MakeLight(LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID,
+                             LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID);
+        }
+        return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
+            ->lights[Chunk::XYZ(BlockXZ_To_BlockXZInChunk(blkX),
+                                blkY,
+                                BlockXZ_To_BlockXZInChunk(blkZ))];
+    }
+
+    Block GetBlock(int blkX, int blkY, int blkZ)
+    {
+        if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
+        {
+            return { BlockType::Air, MakeLight(LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID,
+                                               LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID) };
+        }
+
+        IntVectorXZ ck = BlockXZ_To_ChunkXZ({ blkX, blkZ });
+        IntVectorXZ cb = BlockXZ_To_BlockXZInChunk({ blkX, blkZ });
+        Chunk *chk = GetChunk(ck.x, ck.z);
+
+        int idx = Chunk::XYZ(cb.x, blkY, cb.z);
+        return { chk->blocks[idx], chk->lights[idx] };
+    }
+
+    void SetBlockType(int blkX, int blkY, int blkZ, BlockType type)
+    {
+        if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
+            return;
+
+        Chunk *ck = GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ));
+
+        int cx = BlockXZ_To_BlockXZInChunk(blkX);
+        int cz = BlockXZ_To_BlockXZInChunk(blkZ);
+
+        ck->blocks[Chunk::XYZ(cx, blkY, cz)] = type;
+
+        if(blkY >= ck->heightMap[Chunk::XZ(cx, cz)])
+        {
+            int newH = CHUNK_MAX_HEIGHT - 1;
+            while(newH > 0 && ck->blocks[Chunk::XYZ(cx, newH, cz)] == BlockType::Air)
+                --newH;
+
+            if(newH != ck->heightMap[Chunk::XZ(cx, cz)])
+            {
+                int L, H;
+                std::tie(L, H) = std::minmax(newH, ck->heightMap[Chunk::XZ(cx, cz)]);
+
+                while(H >= L)
+                    UpdateLight(blkX, H--, blkZ);
+
+                ck->heightMap[Chunk::XZ(cx, cz)] = newH;
+            }
+        }
+
+        if(BlockInfoManager::GetInstance().IsGlow(type))
+            //RemoveLightSource(blkX, blkY, blkZ);
+            UpdateLight(blkX, blkY, blkZ);
+        else
+            UpdateLight(blkX, blkY, blkZ);
+    }
+
+    void RemoveLightSource(int x, int y, int z);
+
+    void UpdateLight(int x, int y, int z);
 
     //以给定的射线和已有的方块求交
     //返回true当且仅当在maxLen内找到了满足PickBlockFunc的方块
@@ -113,8 +180,6 @@ public:
 
     void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
 
-    void AddLightUpdate(int blkX, int blkY, int blkZ, bool lightDec);
-
     void ProcessChunkLoaderMessages(void);
 
     void ProcessLightUpdates(void);
@@ -130,6 +195,8 @@ private:
     void AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models);
     //立即在主线程加载区块数据
     void LoadChunk(int ckX, int ckZ);
+
+    void ComputeModelUpdates(int x, int y, int z, std::unordered_set<IntVector3, IntVector3Hasher> &updates);
 
 private:
     int loadDistance_;
@@ -147,12 +214,6 @@ private:
 
     ChunkLoader ckLoader_;
 
-    struct ImpLightUpdate
-    {
-        IntVector3 pos;
-        bool lightDec;
-    };
-    std::deque<ImpLightUpdate> importantLightUpdates_;
     std::deque<IntVector3> unimportantLightUpdates_;
 
     int maxUniLightUpdates_;

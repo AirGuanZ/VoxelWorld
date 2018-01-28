@@ -15,9 +15,16 @@ Created by AirGuanZ
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 
+//2^4，这里修改的话XYZ也要修改
 constexpr int CHUNK_SECTION_SIZE = 16;
+
+//2^3，这里修改的话XYZ也要修改
 constexpr int CHUNK_SECTION_NUM  = 8;
+
+//2^7，这里修改的话XYZ也要修改
 constexpr int CHUNK_MAX_HEIGHT   = CHUNK_SECTION_SIZE * CHUNK_SECTION_NUM;
+
+constexpr int CHUNK_BLOCK_NUM = CHUNK_SECTION_SIZE * CHUNK_SECTION_SIZE * CHUNK_MAX_HEIGHT;
 
 constexpr int BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET = 0x40000000;
 
@@ -58,6 +65,16 @@ inline int Camera_To_Block(float cam)
     return static_cast<int>(std::floor(cam));
 }
 
+inline IntVectorXZ BlockXZ_To_ChunkXZ(const IntVectorXZ &in)
+{
+    return { BlockXZ_To_ChunkXZ(in.x), BlockXZ_To_ChunkXZ(in.z) };
+}
+
+inline IntVectorXZ BlockXZ_To_BlockXZInChunk(const IntVectorXZ &in)
+{
+    return { BlockXZ_To_BlockXZInChunk(in.x), BlockXZ_To_BlockXZInChunk(in.z) };
+}
+
 class ChunkManager;
 
 struct ChunkSectionModels
@@ -80,13 +97,25 @@ public:
     Chunk(ChunkManager *ckMgr, const IntVectorXZ &ckPos);
     ~Chunk(void);
 
+    static int XYZ(int x, int y, int z)
+    {
+        assert(0 <= x && x < CHUNK_SECTION_SIZE);
+        assert(0 <= z && z < CHUNK_SECTION_SIZE);
+        assert(0 <= y && y < CHUNK_MAX_HEIGHT);
+        return (x << 11) | (z << 7) | y;
+    }
+
+    static int XZ(int x, int z)
+    {
+        assert(0 <= x && x < CHUNK_SECTION_SIZE);
+        assert(0 <= z && z < CHUNK_SECTION_SIZE);
+        return (x << 4) | z;
+    }
+
     IntVectorXZ GetPosition(void) const
     {
         return ckPos_;
     }
-
-    Block &GetBlock(int xBlock, int yBlock, int zBlock);
-    const Block &GetInternalBlock(int x, int y, int z) const;
 
     int GetXPosBase(void) const
     {
@@ -98,19 +127,30 @@ public:
         return ChunkXZ_To_BlockXZ(ckPos_.z);
     }
 
-    void SetBlock(int xBlock, int yBlock, int zBlock, const Block &blk);
-    void SetModel(int section, ChunkSectionModels *model);
+    using BlockTypeData  = BlockType[CHUNK_BLOCK_NUM];
+    using BlockLightData = BlockLight[CHUNK_BLOCK_NUM];
+    using HeightMap = int[CHUNK_SECTION_SIZE * CHUNK_SECTION_SIZE];
 
-    using BlockData = Block[CHUNK_SECTION_SIZE][CHUNK_MAX_HEIGHT][CHUNK_SECTION_SIZE];
-    BlockData &GetBlockData(void)
+    BlockTypeData blocks;
+    BlockLightData lights;
+
+    HeightMap heightMap;
+
+    Block GetBlock(int x, int y, int z)
     {
-        return blocks_;
+        assert(0 <= x && x < CHUNK_SECTION_SIZE);
+        assert(0 <= z && z < CHUNK_SECTION_SIZE);
+        assert(0 <= y && y < CHUNK_MAX_HEIGHT);
+
+        int idx = XYZ(x, y, z);
+        return { blocks[idx], lights[idx] };
     }
 
-    using HeightMap = int[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
-    HeightMap &GetHeightMap(void)
+    void SetModels(int section, ChunkSectionModels *models)
     {
-        return heightMap_;
+        assert(0 <= section && section < CHUNK_SECTION_NUM);
+        Helper::SafeDeleteObjects(models_[section]);
+        models_[section] = models;
     }
 
     ChunkSectionModels *GetModels(int section)
@@ -126,8 +166,6 @@ private:
     IntVectorXZ ckPos_;
 
     //下标的使用：[x][y][z]
-    BlockData blocks_;
-    HeightMap heightMap_;
     ChunkSectionModels *models_[CHUNK_SECTION_NUM];
 };
 

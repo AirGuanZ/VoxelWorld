@@ -32,7 +32,7 @@ const BlockModelBuilder *GetBlockModelBuilder(BlockType type)
 
 void BlockModelBuilder_Null::Build(
     const Vector3 &posOffset,
-    const Block(&blks)[3][3][3],
+    const Block (&blks)[3][3][3],
     ChunkSectionModels *models) const
 {
 
@@ -114,17 +114,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[2][0][1].rgbs, blks[2][1][1].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+					blks[2][0][1].light, blks[2][1][1].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[2][1][1].rgbs, blks[2][2][1].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+					blks[2][1][1].light, blks[2][2][1].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[2][1][0].rgbs, blks[2][2][0].rgbs,
-                    blks[2][2][1].rgbs, blks[2][1][1].rgbs),
+					blks[2][1][0].light, blks[2][2][0].light,
+                    blks[2][2][1].light, blks[2][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[2][0][0].rgbs, blks[2][1][0].rgbs,
-                    blks[2][1][1].rgbs, blks[2][0][1].rgbs),
+					blks[2][0][0].light, blks[2][1][0].light,
+                    blks[2][1][1].light, blks[2][0][1].light),
                 1, model);
     }
     //x-
@@ -133,17 +133,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[0][1][1].rgbs, blks[0][0][1].rgbs),
+					blks[0][0][0].light, blks[0][1][0].light,
+                    blks[0][1][1].light, blks[0][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[0][2][1].rgbs, blks[0][1][1].rgbs),
+					blks[0][1][0].light, blks[0][2][0].light,
+                    blks[0][2][1].light, blks[0][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][1][1].rgbs, blks[0][2][1].rgbs,
-                    blks[0][2][2].rgbs, blks[0][1][2].rgbs),
+					blks[0][1][1].light, blks[0][2][1].light,
+                    blks[0][2][2].light, blks[0][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][1].rgbs, blks[0][1][1].rgbs,
-                    blks[0][1][2].rgbs, blks[0][0][2].rgbs),
+					blks[0][0][1].light, blks[0][1][1].light,
+                    blks[0][1][2].light, blks[0][0][2].light),
                 2, model);
     }
     //y+
@@ -152,17 +152,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
                 BlockAO(
-					blks[0][2][2].rgbs, blks[0][2][1].rgbs,
-                    blks[1][2][1].rgbs, blks[1][2][2].rgbs),
+					blks[0][2][2].light, blks[0][2][1].light,
+                    blks[1][2][1].light, blks[1][2][2].light),
                 BlockAO(
-					blks[0][2][1].rgbs, blks[0][2][0].rgbs,
-                    blks[1][2][0].rgbs, blks[1][2][1].rgbs),
+					blks[0][2][1].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][2][1].light),
                 BlockAO(
-					blks[1][2][1].rgbs, blks[1][2][0].rgbs,
-                    blks[2][2][0].rgbs, blks[2][2][1].rgbs),
+					blks[1][2][1].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][2][1].light),
                 BlockAO(
-					blks[1][2][2].rgbs, blks[1][2][1].rgbs,
-                    blks[2][2][1].rgbs, blks[2][2][2].rgbs),
+					blks[1][2][2].light, blks[1][2][1].light,
+                    blks[2][2][1].light, blks[2][2][2].light),
                 3, model);
     }
     //y-
@@ -171,17 +171,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][1].rgbs, blks[0][0][0].rgbs,
-                    blks[1][0][0].rgbs, blks[1][0][1].rgbs),
+					blks[0][0][1].light, blks[0][0][0].light,
+                    blks[1][0][0].light, blks[1][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][2].rgbs, blks[0][0][1].rgbs,
-                    blks[1][0][1].rgbs, blks[1][0][2].rgbs),
+					blks[0][0][2].light, blks[0][0][1].light,
+                    blks[1][0][1].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][0][2].rgbs, blks[1][0][1].rgbs,
-                    blks[2][0][1].rgbs, blks[2][0][2].rgbs),
+					blks[1][0][2].light, blks[1][0][1].light,
+                    blks[2][0][1].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][0][1].rgbs, blks[1][0][0].rgbs,
-                    blks[2][0][0].rgbs, blks[2][0][1].rgbs),
+					blks[1][0][1].light, blks[1][0][0].light,
+                    blks[2][0][0].light, blks[2][0][1].light),
                 4, model);
     }
     //z+
@@ -190,17 +190,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][2].rgbs, blks[0][1][2].rgbs,
-                    blks[1][1][2].rgbs, blks[1][0][2].rgbs),
+					blks[0][0][2].light, blks[0][1][2].light,
+                    blks[1][1][2].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][1][2].rgbs, blks[0][2][2].rgbs,
-                    blks[1][2][2].rgbs, blks[1][1][2].rgbs),
+					blks[0][1][2].light, blks[0][2][2].light,
+                    blks[1][2][2].light, blks[1][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][1][2].rgbs, blks[1][2][2].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+					blks[1][1][2].light, blks[1][2][2].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][0][2].rgbs, blks[1][1][2].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+					blks[1][0][2].light, blks[1][1][2].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 5, model);
     }
     //z-
@@ -209,17 +209,17 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][0][0].rgbs, blks[1][1][0].rgbs,
-                    blks[2][1][0].rgbs, blks[2][0][0].rgbs),
+					blks[1][0][0].light, blks[1][1][0].light,
+                    blks[2][1][0].light, blks[2][0][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[1][1][0].rgbs, blks[1][2][0].rgbs,
-                    blks[2][2][0].rgbs, blks[2][1][0].rgbs),
+					blks[1][1][0].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[1][2][0].rgbs, blks[1][1][0].rgbs),
+					blks[0][1][0].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-					blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[1][1][0].rgbs, blks[1][0][0].rgbs),
+					blks[0][0][0].light, blks[0][1][0].light,
+                    blks[1][1][0].light, blks[1][0][0].light),
                 6, model);
     }
 }
@@ -294,17 +294,17 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][0][1].rgbs, blks[2][1][1].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                    blks[2][0][1].light, blks[2][1][1].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][1][1].rgbs, blks[2][2][1].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                    blks[2][1][1].light, blks[2][2][1].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][1][0].rgbs, blks[2][2][0].rgbs,
-                    blks[2][2][1].rgbs, blks[2][1][1].rgbs),
+                    blks[2][1][0].light, blks[2][2][0].light,
+                    blks[2][2][1].light, blks[2][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][0][0].rgbs, blks[2][1][0].rgbs,
-                    blks[2][1][1].rgbs, blks[2][0][1].rgbs),
+                    blks[2][0][0].light, blks[2][1][0].light,
+                    blks[2][1][1].light, blks[2][0][1].light),
                 1, model);
     }
     //x-
@@ -313,17 +313,17 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[0][1][1].rgbs, blks[0][0][1].rgbs),
+                    blks[0][0][0].light, blks[0][1][0].light,
+                    blks[0][1][1].light, blks[0][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[0][2][1].rgbs, blks[0][1][1].rgbs),
+                    blks[0][1][0].light, blks[0][2][0].light,
+                    blks[0][2][1].light, blks[0][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][1].rgbs, blks[0][2][1].rgbs,
-                    blks[0][2][2].rgbs, blks[0][1][2].rgbs),
+                    blks[0][1][1].light, blks[0][2][1].light,
+                    blks[0][2][2].light, blks[0][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][1].rgbs, blks[0][1][1].rgbs,
-                    blks[0][1][2].rgbs, blks[0][0][2].rgbs),
+                    blks[0][0][1].light, blks[0][1][1].light,
+                    blks[0][1][2].light, blks[0][0][2].light),
                 2, model);
     }
     //y+
@@ -331,10 +331,10 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-                BlockAO(blks[0][2][2].rgbs, blks[0][2][1].rgbs, blks[1][2][1].rgbs, blks[1][2][2].rgbs),
-                BlockAO(blks[0][2][1].rgbs, blks[0][2][0].rgbs, blks[1][2][0].rgbs, blks[1][2][1].rgbs),
-                BlockAO(blks[1][2][1].rgbs, blks[1][2][0].rgbs, blks[2][2][0].rgbs, blks[2][2][1].rgbs),
-                BlockAO(blks[1][2][2].rgbs, blks[1][2][1].rgbs, blks[2][2][1].rgbs, blks[2][2][2].rgbs),
+                BlockAO(blks[0][2][2].light, blks[0][2][1].light, blks[1][2][1].light, blks[1][2][2].light),
+                BlockAO(blks[0][2][1].light, blks[0][2][0].light, blks[1][2][0].light, blks[1][2][1].light),
+                BlockAO(blks[1][2][1].light, blks[1][2][0].light, blks[2][2][0].light, blks[2][2][1].light),
+                BlockAO(blks[1][2][2].light, blks[1][2][1].light, blks[2][2][1].light, blks[2][2][2].light),
                 3, model);
     }
     //y-
@@ -343,17 +343,17 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][1].rgbs, blks[0][0][0].rgbs,
-                    blks[1][0][0].rgbs, blks[1][0][1].rgbs),
+                    blks[0][0][1].light, blks[0][0][0].light,
+                    blks[1][0][0].light, blks[1][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][2].rgbs, blks[0][0][1].rgbs,
-                    blks[1][0][1].rgbs, blks[1][0][2].rgbs),
+                    blks[0][0][2].light, blks[0][0][1].light,
+                    blks[1][0][1].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][2].rgbs, blks[1][0][1].rgbs,
-                    blks[2][0][1].rgbs, blks[2][0][2].rgbs),
+                    blks[1][0][2].light, blks[1][0][1].light,
+                    blks[2][0][1].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][1].rgbs, blks[1][0][0].rgbs,
-                    blks[2][0][0].rgbs, blks[2][0][1].rgbs),
+                    blks[1][0][1].light, blks[1][0][0].light,
+                    blks[2][0][0].light, blks[2][0][1].light),
                 4, model);
     }
     //z+
@@ -362,17 +362,17 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][2].rgbs, blks[0][1][2].rgbs,
-                    blks[1][1][2].rgbs, blks[1][0][2].rgbs),
+                    blks[0][0][2].light, blks[0][1][2].light,
+                    blks[1][1][2].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][2].rgbs, blks[0][2][2].rgbs,
-                    blks[1][2][2].rgbs, blks[1][1][2].rgbs),
+                    blks[0][1][2].light, blks[0][2][2].light,
+                    blks[1][2][2].light, blks[1][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][1][2].rgbs, blks[1][2][2].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                    blks[1][1][2].light, blks[1][2][2].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][2].rgbs, blks[1][1][2].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                    blks[1][0][2].light, blks[1][1][2].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 5, model);
     }
     //z-
@@ -381,17 +381,17 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][0].rgbs, blks[1][1][0].rgbs,
-                    blks[2][1][0].rgbs, blks[2][0][0].rgbs),
+                    blks[1][0][0].light, blks[1][1][0].light,
+                    blks[2][1][0].light, blks[2][0][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][1][0].rgbs, blks[1][2][0].rgbs,
-                    blks[2][2][0].rgbs, blks[2][1][0].rgbs),
+                    blks[1][1][0].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[1][2][0].rgbs, blks[1][1][0].rgbs),
+                    blks[0][1][0].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[1][1][0].rgbs, blks[1][0][0].rgbs),
+                    blks[0][0][0].light, blks[0][1][0].light,
+                    blks[1][1][0].light, blks[1][0][0].light),
                 6, model);
     }
 }
@@ -465,11 +465,11 @@ void BlockModelBuilder_CarveRenderer_Cross::Build(
 
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
-                LightToRGBA(blk.rgbs), 1, model);
+                LightToRGBA(blk.light), 1, model);
 
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
-                LightToRGBA(blk.rgbs), 2, model);
+                LightToRGBA(blk.light), 2, model);
     }
 }
 
@@ -553,17 +553,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 1.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][0][1].rgbs, blks[2][1][1].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                    blks[2][0][1].light, blks[2][1][1].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][1][1].rgbs, blks[2][2][1].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                    blks[2][1][1].light, blks[2][2][1].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][1][0].rgbs, blks[2][2][0].rgbs,
-                    blks[2][2][1].rgbs, blks[2][1][1].rgbs),
+                    blks[2][1][0].light, blks[2][2][0].light,
+                    blks[2][2][1].light, blks[2][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[2][0][0].rgbs, blks[2][1][0].rgbs,
-                    blks[2][1][1].rgbs, blks[2][0][1].rgbs),
+                    blks[2][0][0].light, blks[2][1][0].light,
+                    blks[2][1][1].light, blks[2][0][1].light),
                 1, model);
     }
     //x-
@@ -572,17 +572,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[0][1][1].rgbs, blks[0][0][1].rgbs),
+                    blks[0][0][0].light, blks[0][1][0].light,
+                    blks[0][1][1].light, blks[0][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[0][2][1].rgbs, blks[0][1][1].rgbs),
+                    blks[0][1][0].light, blks[0][2][0].light,
+                    blks[0][2][1].light, blks[0][1][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][1].rgbs, blks[0][2][1].rgbs,
-                    blks[0][2][2].rgbs, blks[0][1][2].rgbs),
+                    blks[0][1][1].light, blks[0][2][1].light,
+                    blks[0][2][2].light, blks[0][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][1].rgbs, blks[0][1][1].rgbs,
-                    blks[0][1][2].rgbs, blks[0][0][2].rgbs),
+                    blks[0][0][1].light, blks[0][1][1].light,
+                    blks[0][1][2].light, blks[0][0][2].light),
                 2, model);
     }
     //y+
@@ -591,17 +591,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
                 BlockAO(
-                    blks[0][2][2].rgbs, blks[0][2][1].rgbs,
-                    blks[1][2][1].rgbs, blks[1][2][2].rgbs),
+                    blks[0][2][2].light, blks[0][2][1].light,
+                    blks[1][2][1].light, blks[1][2][2].light),
                 BlockAO(
-                    blks[0][2][1].rgbs, blks[0][2][0].rgbs,
-                    blks[1][2][0].rgbs, blks[1][2][1].rgbs),
+                    blks[0][2][1].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][2][1].light),
                 BlockAO(
-                    blks[1][2][1].rgbs, blks[1][2][0].rgbs,
-                    blks[2][2][0].rgbs, blks[2][2][1].rgbs),
+                    blks[1][2][1].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][2][1].light),
                 BlockAO(
-                    blks[1][2][2].rgbs, blks[1][2][1].rgbs,
-                    blks[2][2][1].rgbs, blks[2][2][2].rgbs),
+                    blks[1][2][2].light, blks[1][2][1].light,
+                    blks[2][2][1].light, blks[2][2][2].light),
                 3, model);
     }
     //y-
@@ -610,17 +610,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f },
                 { 1.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][1].rgbs, blks[0][0][0].rgbs,
-                    blks[1][0][0].rgbs, blks[1][0][1].rgbs),
+                    blks[0][0][1].light, blks[0][0][0].light,
+                    blks[1][0][0].light, blks[1][0][1].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][2].rgbs, blks[0][0][1].rgbs,
-                    blks[1][0][1].rgbs, blks[1][0][2].rgbs),
+                    blks[0][0][2].light, blks[0][0][1].light,
+                    blks[1][0][1].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][2].rgbs, blks[1][0][1].rgbs,
-                    blks[2][0][1].rgbs, blks[2][0][2].rgbs),
+                    blks[1][0][2].light, blks[1][0][1].light,
+                    blks[2][0][1].light, blks[2][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][1].rgbs, blks[1][0][0].rgbs,
-                    blks[2][0][0].rgbs, blks[2][0][1].rgbs),
+                    blks[1][0][1].light, blks[1][0][0].light,
+                    blks[2][0][0].light, blks[2][0][1].light),
                 4, model);
     }
     //z+
@@ -629,17 +629,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f },
                 { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 1.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][2].rgbs, blks[0][1][2].rgbs,
-                    blks[1][1][2].rgbs, blks[1][0][2].rgbs),
+                    blks[0][0][2].light, blks[0][1][2].light,
+                    blks[1][1][2].light, blks[1][0][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][2].rgbs, blks[0][2][2].rgbs,
-                    blks[1][2][2].rgbs, blks[1][1][2].rgbs),
+                    blks[0][1][2].light, blks[0][2][2].light,
+                    blks[1][2][2].light, blks[1][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][1][2].rgbs, blks[1][2][2].rgbs,
-                    blks[2][2][2].rgbs, blks[2][1][2].rgbs),
+                    blks[1][1][2].light, blks[1][2][2].light,
+                    blks[2][2][2].light, blks[2][1][2].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][2].rgbs, blks[1][1][2].rgbs,
-                    blks[2][1][2].rgbs, blks[2][0][2].rgbs),
+                    blks[1][0][2].light, blks[1][1][2].light,
+                    blks[2][1][2].light, blks[2][0][2].light),
                 5, model);
     }
     //z-
@@ -648,17 +648,17 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
         AddFace({ 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f },
                 { 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 0.0f },
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][0][0].rgbs, blks[1][1][0].rgbs,
-                    blks[2][1][0].rgbs, blks[2][0][0].rgbs),
+                    blks[1][0][0].light, blks[1][1][0].light,
+                    blks[2][1][0].light, blks[2][0][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[1][1][0].rgbs, blks[1][2][0].rgbs,
-                    blks[2][2][0].rgbs, blks[2][1][0].rgbs),
+                    blks[1][1][0].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][1][0].rgbs, blks[0][2][0].rgbs,
-                    blks[1][2][0].rgbs, blks[1][1][0].rgbs),
+                    blks[0][1][0].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][1][0].light),
                 BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO * BlockAO(
-                    blks[0][0][0].rgbs, blks[0][1][0].rgbs,
-                    blks[1][1][0].rgbs, blks[1][0][0].rgbs),
+                    blks[0][0][0].light, blks[0][1][0].light,
+                    blks[1][1][0].light, blks[1][0][0].light),
                 6, model);
     }
 }

@@ -22,7 +22,7 @@ float OakGenerator_V0::Random(Seed seedOffset, int blkX, int blkZ, float min, fl
 void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3> &lightUpdates) const
 {
     assert(ck != nullptr);
-
+    /*
     Chunk::BlockData &blks = ck->GetBlockData();
     Chunk::HeightMap &hm = ck->GetHeightMap();
 
@@ -108,13 +108,13 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             else
                 lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
         }
-    }
+    }*/
 }
 
 void OakGenerator_V0::Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) const
 {
     assert(ck != nullptr);
-
+    /*
     const Chunk::HeightMap &hm = ck->GetHeightMap();
 
     int xBase = ck->GetXPosBase();
@@ -128,5 +128,5 @@ void OakGenerator_V0::Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) con
                ck->GetBlock(x, hm[x][z], z).type == BlockType::GrassBox)
                 Try(ck, x, hm[x][z], z, lightUpdates);
         }
-    }
+    }*/
 }

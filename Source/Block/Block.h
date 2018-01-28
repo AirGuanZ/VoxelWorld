@@ -33,7 +33,7 @@ struct Block
 {
     BlockType type = BlockType::Air;
     //注意这里的亮度不是方块本身的亮度，而是经由自身流出的亮度
-    BlockLight rgbs = 0;
+    BlockLight light = 0;
 };
 
 static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially copiable");
@@ -50,18 +50,9 @@ inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 
 
 inline float LightToFloat(std::uint8_t component) { return static_cast<float>(component) / LIGHT_COMPONENT_MAX; }
 
-inline void SetRed     (Block &blk, std::uint8_t r) { blk.rgbs = SetRed(blk.rgbs, r); }
-inline void SetGreen   (Block &blk, std::uint8_t g) { blk.rgbs = SetGreen(blk.rgbs, g); }
-inline void SetBlue    (Block &blk, std::uint8_t b) { blk.rgbs = SetBlue(blk.rgbs, b); }
-inline void SetSunlight(Block &blk, std::uint8_t s) { blk.rgbs = SetSunlight(blk.rgbs, s); }
-
 inline BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {
     return (r << 12) | (g << 8) | (b << 4) | s;
-}
-inline void SetLight(Block &blk, std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
-{
-    blk.rgbs = MakeLight(r, g, b, s);
 }
 
 inline Color LightToRGBA(BlockLight rgbs)
@@ -70,20 +61,6 @@ inline Color LightToRGBA(BlockLight rgbs)
              LightToFloat(GetGreen(rgbs)),
              LightToFloat(GetBlue(rgbs)),
              LightToFloat(GetSunlight(rgbs)) };
-}
-
-inline void SetBlockTypeWithInvalidLight(Block &blk, BlockType type)
-{
-    blk.type = type;
-    SetLight(blk, LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID,
-                  LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID);
-}
-
-inline Block TypedBlockWithInvalidLight(BlockType type)
-{
-    Block rt;
-    SetBlockTypeWithInvalidLight(rt, type);
-    return rt;
 }
 
 #endif //VW_BLOCK_H

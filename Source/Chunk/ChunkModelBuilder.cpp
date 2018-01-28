@@ -6,7 +6,9 @@ Created by AirGuanZ
 #include "../Block/BlockInfoManager.h"
 #include "../Block/BlockModelBuilder.h"
 #include "Chunk.h"
+#include "ChunkManager.h"
 #include "ChunkModelBuilder.h"
+#include "ChunkTraversal.h"
 
 ChunkModelBuilder::ChunkModelBuilder(ChunkManager *ckMgr, Chunk *ck, int section)
     : ckMgr_(ckMgr), ck_(ck), section_(section)
@@ -18,47 +20,84 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
 {
     assert(ckMgr_ != nullptr && ck_ != nullptr);
 
+    int xBase = ck_->GetXPosBase();
+    int zBase = ck_->GetZPosBase();
     int yBase = ChunkSectionIndex_To_BlockY(section_);
-    IntVectorXZ ckPos = ck_->GetPosition();
+
     ChunkSectionModels *models = new ChunkSectionModels;
-    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
+    const ChunkTraversal &ckTra = ChunkTraversal::GetInstance();
+
+    for(const IntVector3 &f : ckTra.ChunkFaces())
     {
-        for(int y = yBase; y != yBase + CHUNK_SECTION_SIZE; ++y)
+        int x = f.x + xBase, y = f.y + yBase, z = f.z + zBase;
+
+        Block blk = ckMgr_->GetBlock(x, y, z);
+        if(!BlockInfoManager::GetInstance().IsRenderable(blk.type))
+            continue;
+
+        Block pX = ckMgr_->GetBlock(x + 1, y, z),
+              nX = ckMgr_->GetBlock(x - 1, y, z),
+              pZ = ckMgr_->GetBlock(x, y, z + 1),
+              nZ = ckMgr_->GetBlock(x, y, z - 1),
+              pY = ckMgr_->GetBlock(x, y + 1, z),
+              nY = ckMgr_->GetBlock(x, y - 1, z);
+        const Block blks[3][3][3] =
         {
-            for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
             {
-                const Block &blk = ck_->GetBlock(x, y, z);
+                { ckMgr_->GetBlock(x - 1, y - 1, z - 1), ckMgr_->GetBlock(x - 1, y - 1, z), ckMgr_->GetBlock(x - 1, y - 1, z + 1) }, //[0][0]
+                { ckMgr_->GetBlock(x - 1, y, z - 1), ckMgr_->GetBlock(x - 1, y, z), ckMgr_->GetBlock(x - 1, y, z + 1) },             //[0][1]
+                { ckMgr_->GetBlock(x - 1, y + 1, z - 1), ckMgr_->GetBlock(x - 1, y + 1, z), ckMgr_->GetBlock(x - 1, y + 1, z + 1) }, //[0][2]
+            },
+            {
+                { ckMgr_->GetBlock(x, y - 1, z - 1), ckMgr_->GetBlock(x, y - 1, z), ckMgr_->GetBlock(x, y - 1, z + 1) },             //[0][0]
+                { ckMgr_->GetBlock(x, y, z - 1),     ckMgr_->GetBlock(x, y, z), ckMgr_->GetBlock(x, y, z + 1) },                     //[0][1]
+                { ckMgr_->GetBlock(x, y + 1, z - 1), ckMgr_->GetBlock(x, y + 1, z), ckMgr_->GetBlock(x, y + 1, z + 1) },             //[0][2]
+            },
+            {
+                { ckMgr_->GetBlock(x + 1, y - 1, z - 1), ckMgr_->GetBlock(x + 1, y - 1, z), ckMgr_->GetBlock(x + 1, y - 1, z + 1) }, //[0][0]
+                { ckMgr_->GetBlock(x + 1, y, z - 1), ckMgr_->GetBlock(x + 1, y, z), ckMgr_->GetBlock(x + 1, y, z + 1) },             //[0][1]
+                { ckMgr_->GetBlock(x + 1, y + 1, z - 1), ckMgr_->GetBlock(x + 1, y + 1, z), ckMgr_->GetBlock(x + 1, y + 1, z + 1) }, //[0][2]
+            }
+        };
+        GetBlockModelBuilder(blk.type)->Build(
+            Vector3(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)),
+            blks, models);
+    }
+
+    for(int Lx = 1; Lx < CHUNK_SECTION_SIZE - 1; ++Lx)
+    {
+        int x = Lx + xBase;
+        for(int Lz = 1; Lz < CHUNK_SECTION_SIZE - 1; ++Lz)
+        {
+            int z = Lz + zBase;
+            for(int Ly = 1; Ly < CHUNK_SECTION_SIZE - 1; ++Ly)
+            {
+                int y = Ly + yBase;
+
+                Block blk = ck_->GetBlock(Lx, y, Lz);
                 if(!BlockInfoManager::GetInstance().IsRenderable(blk.type))
                     continue;
 
-                const Block &pX  = ck_->GetBlock(x + 1, y, z),
-                            &nX  = ck_->GetBlock(x - 1, y, z),
-                            &pZ  = ck_->GetBlock(x, y, z + 1),
-                            &nZ  = ck_->GetBlock(x, y, z - 1),
-                            &pY  = ck_->GetBlock(x, y + 1, z),
-                            &nY  = ck_->GetBlock(x, y - 1, z);
-                const Block (&blks)[3][3][3] =
+                const Block blks[3][3][3] =
                 {
                     {
-                        { ck_->GetBlock(x - 1, y - 1, z - 1), ck_->GetBlock(x - 1, y - 1, z), ck_->GetBlock(x - 1, y - 1, z + 1) }, //[0][0]
-                        { ck_->GetBlock(x - 1, y, z - 1), ck_->GetBlock(x - 1, y, z), ck_->GetBlock(x - 1, y, z + 1) },             //[0][1]
-                        { ck_->GetBlock(x - 1, y + 1, z - 1), ck_->GetBlock(x - 1, y + 1, z), ck_->GetBlock(x - 1, y + 1, z + 1) }, //[0][2]
+                        { ck_->GetBlock(Lx - 1, y - 1, Lz - 1), ck_->GetBlock(Lx - 1, y - 1, Lz), ck_->GetBlock(Lx - 1, y - 1, Lz + 1) }, //[0][0]
+                        { ck_->GetBlock(Lx - 1, y, Lz - 1), ck_->GetBlock(Lx - 1, y, Lz), ck_->GetBlock(Lx - 1, y, Lz + 1) },             //[0][1]
+                        { ck_->GetBlock(Lx - 1, y + 1, Lz - 1), ck_->GetBlock(Lx - 1, y + 1, Lz), ck_->GetBlock(Lx - 1, y + 1, Lz + 1) }, //[0][2]
                     },
                     {
-                        { ck_->GetBlock(x, y - 1, z - 1), ck_->GetBlock(x, y - 1, z), ck_->GetBlock(x, y - 1, z + 1) },             //[0][0]
-                        { ck_->GetBlock(x, y, z - 1),     ck_->GetBlock(x, y, z), ck_->GetBlock(x, y, z + 1) },                     //[0][1]
-                        { ck_->GetBlock(x, y + 1, z - 1), ck_->GetBlock(x, y + 1, z), ck_->GetBlock(x, y + 1, z + 1) },             //[0][2]
+                        { ck_->GetBlock(Lx, y - 1, Lz - 1), ck_->GetBlock(Lx, y - 1, Lz), ck_->GetBlock(Lx, y - 1, Lz + 1) },             //[0][0]
+                        { ck_->GetBlock(Lx, y, Lz - 1),     ck_->GetBlock(Lx, y, Lz), ck_->GetBlock(Lx, y, Lz + 1) },                     //[0][1]
+                        { ck_->GetBlock(Lx, y + 1, Lz - 1), ck_->GetBlock(Lx, y + 1, Lz), ck_->GetBlock(Lx, y + 1, Lz + 1) },             //[0][2]
                     },
                     {
-                        { ck_->GetBlock(x + 1, y - 1, z - 1), ck_->GetBlock(x + 1, y - 1, z), ck_->GetBlock(x + 1, y - 1, z + 1) }, //[0][0]
-                        { ck_->GetBlock(x + 1, y, z - 1), ck_->GetBlock(x + 1, y, z), ck_->GetBlock(x + 1, y, z + 1) },             //[0][1]
-                        { ck_->GetBlock(x + 1, y + 1, z - 1), ck_->GetBlock(x + 1, y + 1, z), ck_->GetBlock(x + 1, y + 1, z + 1) }, //[0][2]
+                        { ck_->GetBlock(Lx + 1, y - 1, Lz - 1), ck_->GetBlock(Lx + 1, y - 1, Lz), ck_->GetBlock(Lx + 1, y - 1, Lz + 1) }, //[0][0]
+                        { ck_->GetBlock(Lx + 1, y, Lz - 1), ck_->GetBlock(Lx + 1, y, Lz), ck_->GetBlock(Lx + 1, y, Lz + 1) },             //[0][1]
+                        { ck_->GetBlock(Lx + 1, y + 1, Lz - 1), ck_->GetBlock(Lx + 1, y + 1, Lz), ck_->GetBlock(Lx + 1, y + 1, Lz + 1) }, //[0][2]
                     }
                 };
                 GetBlockModelBuilder(blk.type)->Build(
-                    Vector3(ChunkXZ_To_BlockXZ(ckPos.x) + static_cast<float>(x),
-                            static_cast<float>(y),
-                            ChunkXZ_To_BlockXZ(ckPos.z) + static_cast<float>(z)),
+                    Vector3(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)),
                     blks, models);
             }
         }

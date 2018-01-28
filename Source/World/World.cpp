@@ -52,8 +52,7 @@ void World::Update(float deltaT)
     {
         if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Left))
         {
-            blk.type = BlockType::Air;
-            ckMgr_.SetBlock(pickPos.x, pickPos.y, pickPos.z, blk);
+            ckMgr_.SetBlockType(pickPos.x, pickPos.y, pickPos.z, BlockType::Air);
         }
         else if(InputManager::GetInstance().IsMouseButtonPressed(MouseButton::Right)) //∑ΩøÈ∑≈÷√
         {
@@ -66,12 +65,7 @@ void World::Update(float deltaT)
             IntVector3 p = pickPos + faceDir[static_cast<int>(face)];
             if(BlockInfoManager::GetInstance().IsCoverable(ckMgr_.GetBlock(p.x, p.y, p.z).type))
             {
-                if(InputManager::GetInstance().IsKeyDown('Z'))
-                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::RedGlowStone));
-                else if(InputManager::GetInstance().IsKeyDown('X'))
-                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::GreenGlowStone));
-                else
-                    ckMgr_.SetBlock(p.x, p.y, p.z, TypedBlockWithInvalidLight(BlockType::BlueGlowStone));
+                ckMgr_.SetBlockType(p.x, p.y, p.z, BlockType::Stone);
             }
         }
     }

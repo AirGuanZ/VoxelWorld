@@ -186,10 +186,16 @@ void Application::Run(void)
     Clock clock;
     clock.Restart();
 
+    FPSCounter fps;
+    fps.Restart();
+
     while(!input.IsKeyDown(VK_ESCAPE))
     {
         window.ClearRenderTarget();
         window.ClearDepthStencil();
+
+        fps.Tick();
+        std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b\b\b" << fps.GetFPS();
 
         world.Update(clock.ElapsedTime());
 

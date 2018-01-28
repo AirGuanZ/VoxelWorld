@@ -19,10 +19,12 @@ public:
 
     const std::vector<IntVectorXZ> &ChunkXZEdge(void) const;
     const std::vector<IntVectorXZ> &ChunkXZInternal(void) const;
+    const std::vector<IntVector3>  &ChunkFaces(void) const;
 
 private:
     std::vector<IntVectorXZ> XZEdge_;
     std::vector<IntVectorXZ> XZInternal_;
+    std::vector<IntVector3>  XYZFaces_;
 };
 
 #endif //VW_CHUNK_TRAVERSAL_H

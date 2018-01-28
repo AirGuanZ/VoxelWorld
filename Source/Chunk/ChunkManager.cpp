@@ -55,7 +55,7 @@ void ChunkManager::Destroy(void)
     importantModelUpdates_.clear();
     unimportantModelUpdates_.clear();
 }
-
+/*
 void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
 {
     if(y < 0 || y >= CHUNK_MAX_HEIGHT)
@@ -117,7 +117,7 @@ void ChunkManager::SetBlock(int x, int y, int z, const Block &blk)
             importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
         importantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
     }
-}
+}*/
 
 namespace
 {
@@ -128,6 +128,87 @@ namespace
             minDis = newDis;
             face = newFace;
         }
+    }
+}
+
+void ChunkManager::RemoveLightSource(int x, int y, int z)
+{
+    struct RMNode
+    {
+        IntVector3 pos;
+        BlockLight light;
+    };
+    std::deque<RMNode> rmQueue;
+    std::deque<IntVector3> pgQueue;
+
+    //TODO
+}
+
+void ChunkManager::UpdateLight(int x, int y, int z)
+{
+    std::deque<IntVector3> pgQueue = { { x, y, z } };
+    while(pgQueue.size())
+    {
+        IntVector3 pos = pgQueue.front();
+        pgQueue.pop_front();
+
+        int ckX = BlockXZ_To_ChunkXZ(pos.x);
+        int ckZ = BlockXZ_To_ChunkXZ(pos.z);
+
+        int blkX = BlockXZ_To_BlockXZInChunk(pos.x);
+        int blkZ = BlockXZ_To_BlockXZInChunk(pos.z);
+
+        Chunk *ck = GetChunk(ckX, ckZ);
+        Block blk = GetBlock(pos.x, pos.y, pos.z);
+        const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
+        int lightDec = blkInfo.lightDec;
+
+        BlockLight pX = GetBlockLight(pos.x + 1, pos.y, pos.z),
+            nX = GetBlockLight(pos.x - 1, pos.y, pos.z),
+            pY = GetBlockLight(pos.x, pos.y + 1, pos.z),
+            nY = GetBlockLight(pos.x, pos.y - 1, pos.z),
+            pZ = GetBlockLight(pos.x, pos.y, pos.z + 1),
+            nZ = GetBlockLight(pos.x, pos.y, pos.z - 1);
+
+        BlockLight newLight = MakeLight(
+            blkInfo.lightEmission.x,
+            blkInfo.lightEmission.y,
+            blkInfo.lightEmission.z,
+            pos.y > ck->heightMap[Chunk::XZ(blkX, blkZ)] ? LIGHT_COMPONENT_MAX : LIGHT_COMPONENT_MIN);
+
+        auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
+        {
+            return static_cast<std::uint8_t>((std::max)(
+            { (std::max)({ _0, _1, _2, _3, _4, _5 }) - lightDec, ori, static_cast<int>(LIGHT_COMPONENT_MIN) }));
+        };
+
+        newLight = SetRed(newLight, Max6(GetRed(newLight), GetRed(pX), GetRed(nX),
+            GetRed(pY), GetRed(nY),
+            GetRed(pZ), GetRed(nZ)));
+        newLight = SetGreen(newLight, Max6(GetGreen(newLight), GetGreen(pX), GetGreen(nX),
+            GetGreen(pY), GetGreen(nY),
+            GetGreen(pZ), GetGreen(nZ)));
+        newLight = SetBlue(newLight, Max6(GetBlue(newLight), GetBlue(pX), GetBlue(nX),
+            GetBlue(pY), GetBlue(nY),
+            GetBlue(pZ), GetBlue(nZ)));
+        newLight = SetSunlight(newLight, Max6(GetSunlight(newLight), GetSunlight(pX), GetSunlight(nX),
+            GetSunlight(pY), GetSunlight(nY),
+            GetSunlight(pZ), GetSunlight(nZ)));
+
+        if(newLight != blk.light)
+        {
+            ck->lights[Chunk::XYZ(blkX, pos.y, blkZ)] = newLight;
+            pgQueue.push_front({ pos.x + 1, pos.y, pos.z });
+            pgQueue.push_front({ pos.x - 1, pos.y, pos.z });
+            if(pos.y < CHUNK_MAX_HEIGHT - 1)
+                pgQueue.push_front({ pos.x, pos.y + 1, pos.z });
+            if(pos.y > 0)
+                pgQueue.push_front({ pos.x, pos.y - 1, pos.z });
+            pgQueue.push_front({ pos.x, pos.y, pos.z + 1 });
+            pgQueue.push_front({ pos.x, pos.y, pos.z - 1 });
+        }
+
+        ComputeModelUpdates(pos.x, pos.y, pos.z, importantModelUpdates_);
     }
 }
 
@@ -232,11 +313,6 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
     importantModelUpdates_.insert({ x, y, z });
 }
 
-void ChunkManager::AddLightUpdate(int x, int y, int z, bool lightDec)
-{
-    importantLightUpdates_.push_back({ { x, y, z }, lightDec });
-}
-
 void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates)
 {
     assert(ck != nullptr);
@@ -271,7 +347,7 @@ void ChunkManager::AddSectionModel(const IntVector3 &pos, ChunkSectionModels *mo
         Helper::SafeDeleteObjects(models);
         return;
     }
-    it->second->SetModel(pos.y, models);
+    it->second->SetModels(pos.y, models);
 }
 
 void ChunkManager::LoadChunk(int ckX, int ckZ)
@@ -312,129 +388,11 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 
 void ChunkManager::ProcessLightUpdates(void)
 {
-    int updatesCount = 0;
-
-    while(importantLightUpdates_.size())
-    {
-        ++updatesCount;
-
-        ImpLightUpdate ud = importantLightUpdates_.front();
-        importantLightUpdates_.pop_front();
-
-        int ckX = BlockXZ_To_ChunkXZ(ud.pos.x);
-        int ckZ = BlockXZ_To_ChunkXZ(ud.pos.z);
-        int bkX = BlockXZ_To_BlockXZInChunk(ud.pos.x);
-        int bkZ = BlockXZ_To_BlockXZInChunk(ud.pos.z);
-
-        Chunk *ck = GetChunk(ckX, ckZ);
-        Block &blk = ck->GetBlock(bkX, ud.pos.y, bkZ);
-        const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
-        int lightDec = blkInfo.lightDec;
-
-        const BlockLight &pX = GetBlock(ud.pos.x + 1, ud.pos.y, ud.pos.z).rgbs,
-                         &nX = GetBlock(ud.pos.x - 1, ud.pos.y, ud.pos.z).rgbs,
-                         &pY = GetBlock(ud.pos.x, ud.pos.y + 1, ud.pos.z).rgbs,
-                         &nY = GetBlock(ud.pos.x, ud.pos.y - 1, ud.pos.z).rgbs,
-                         &pZ = GetBlock(ud.pos.x, ud.pos.y, ud.pos.z + 1).rgbs,
-                         &nZ = GetBlock(ud.pos.x, ud.pos.y, ud.pos.z - 1).rgbs;
-
-        BlockLight newLight = MakeLight(blkInfo.lightEmission.x,
-                                        blkInfo.lightEmission.y,
-                                        blkInfo.lightEmission.z,
-            ud.pos.y > ck->GetHeightMap()[bkX][bkZ] ? LIGHT_COMPONENT_MAX : LIGHT_COMPONENT_MIN);
-
-        auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
-        {
-            return static_cast<std::uint8_t>((std::max)(
-            { (std::max)({ _0, _1, _2, _3, _4, _5 }) - lightDec, ori, static_cast<int>(LIGHT_COMPONENT_MIN) }));
-        };
-
-        newLight = SetRed(newLight, Max6(GetRed(newLight), GetRed(pX), GetRed(nX),
-                                                           GetRed(pY), GetRed(nY),
-                                                           GetRed(pZ), GetRed(nZ)));
-        newLight = SetGreen(newLight, Max6(GetGreen(newLight), GetGreen(pX), GetGreen(nX),
-                                                               GetGreen(pY), GetGreen(nY),
-                                                               GetGreen(pZ), GetGreen(nZ)));
-        newLight = SetBlue(newLight, Max6(GetBlue(newLight), GetBlue(pX), GetBlue(nX),
-                                                             GetBlue(pY), GetBlue(nY),
-                                                             GetBlue(pZ), GetBlue(nZ)));
-        newLight = SetSunlight(newLight, Max6(GetSunlight(newLight), GetSunlight(pX), GetSunlight(nX),
-                                                                     GetSunlight(pY), GetSunlight(nY),
-                                                                     GetSunlight(pZ), GetSunlight(nZ)));
-        if(newLight != blk.rgbs)
-        {
-            blk.rgbs = newLight;
-
-            importantLightUpdates_.push_back({ { ud.pos.x + 1, ud.pos.y, ud.pos.z }, ud.lightDec });
-            importantLightUpdates_.push_back({ { ud.pos.x - 1, ud.pos.y, ud.pos.z }, ud.lightDec });
-            if(ud.pos.y < CHUNK_MAX_HEIGHT - 1)
-                importantLightUpdates_.push_back({ { ud.pos.x, ud.pos.y + 1, ud.pos.z }, ud.lightDec });
-            if(ud.pos.y > 0)
-                importantLightUpdates_.push_back({ { ud.pos.x, ud.pos.y - 1, ud.pos.z }, ud.lightDec });
-            importantLightUpdates_.push_back({ { ud.pos.x, ud.pos.y, ud.pos.z + 1 }, ud.lightDec });
-            importantLightUpdates_.push_back({ { ud.pos.x, ud.pos.y, ud.pos.z - 1 }, ud.lightDec });
-        }
-
-        MakeSectionModelInvalid(ckX, BlockY_To_ChunkSectionIndex(ud.pos.y), ckZ);
-
-        int blkX = BlockXZ_To_BlockXZInChunk(ud.pos.x);
-        int blkY = ud.pos.y;
-        int blkZ = BlockXZ_To_BlockXZInChunk(ud.pos.z);
-        int secY = BlockY_To_ChunkSectionIndex(ud.pos.y);
-
-        if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
-            importantModelUpdates_.insert({ ckX - 1, secY, ckZ });
-        else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
-            importantModelUpdates_.insert({ ckX + 1, secY, ckZ });
-        if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
-            importantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
-        else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
-            importantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
-        if(blkY == 0 && secY > 0)
-            importantModelUpdates_.insert({ ckX, secY - 1, ckZ });
-        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-            importantModelUpdates_.insert({ ckX, secY + 1, ckZ });
-        if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
-        {
-            if(blkY == 0 && secY > 0)
-                importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ - 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ - 1 });
-            importantModelUpdates_.insert({ ckX - 1, secY, ckZ - 1 });
-        }
-        if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
-        {
-            if(blkY == 0 && secY > 0)
-                importantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ + 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                importantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ + 1 });
-            importantModelUpdates_.insert({ ckX - 1, secY, ckZ + 1 });
-        }
-        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
-        {
-            if(blkY == 0 && secY > 0)
-                importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ - 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ - 1 });
-            importantModelUpdates_.insert({ ckX + 1, secY, ckZ - 1 });
-        }
-        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
-        {
-            if(blkY == 0 && secY > 0)
-                importantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ + 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                importantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
-            importantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
-        }
-    }
-
     int uniUpdatesCount = 0;
     size_t OORCount = 0;
     while(unimportantLightUpdates_.size() &&
-          updatesCount < maxLightUpdates_ &&
           uniUpdatesCount < maxUniLightUpdates_)
     {
-        ++updatesCount;
         ++uniUpdatesCount;
 
         IntVector3 pos = unimportantLightUpdates_.front();
@@ -455,25 +413,26 @@ void ChunkManager::ProcessLightUpdates(void)
             continue;
         }
 
-        int bkX = BlockXZ_To_BlockXZInChunk(pos.x);
-        int bkZ = BlockXZ_To_BlockXZInChunk(pos.z);
+        int blkX = BlockXZ_To_BlockXZInChunk(pos.x);
+        int blkZ = BlockXZ_To_BlockXZInChunk(pos.z);
 
         Chunk *ck = GetChunk(ckX, ckZ);
-        Block &blk = ck->GetBlock(bkX, pos.y, bkZ);
+        Block blk = GetBlock(pos.x, pos.y, pos.z);
         const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
         int lightDec = blkInfo.lightDec;
 
-        const BlockLight &pX = GetBlock(pos.x + 1, pos.y, pos.z).rgbs,
-                         &nX = GetBlock(pos.x - 1, pos.y, pos.z).rgbs,
-                         &pY = GetBlock(pos.x, pos.y + 1, pos.z).rgbs,
-                         &nY = GetBlock(pos.x, pos.y - 1, pos.z).rgbs,
-                         &pZ = GetBlock(pos.x, pos.y, pos.z + 1).rgbs,
-                         &nZ = GetBlock(pos.x, pos.y, pos.z - 1).rgbs;
+        BlockLight pX = GetBlockLight(pos.x + 1, pos.y, pos.z),
+                   nX = GetBlockLight(pos.x - 1, pos.y, pos.z),
+                   pY = GetBlockLight(pos.x, pos.y + 1, pos.z),
+                   nY = GetBlockLight(pos.x, pos.y - 1, pos.z),
+                   pZ = GetBlockLight(pos.x, pos.y, pos.z + 1),
+                   nZ = GetBlockLight(pos.x, pos.y, pos.z - 1);
 
-        BlockLight newLight = MakeLight(blkInfo.lightEmission.x,
-                                        blkInfo.lightEmission.y,
-                                        blkInfo.lightEmission.z,
-                                        pos.y > ck->GetHeightMap()[bkX][bkZ] ? LIGHT_COMPONENT_MAX : LIGHT_COMPONENT_MIN);
+        BlockLight newLight = MakeLight(
+            blkInfo.lightEmission.x,
+            blkInfo.lightEmission.y,
+            blkInfo.lightEmission.z,
+            pos.y > ck->heightMap[Chunk::XZ(blkX, blkZ)] ? LIGHT_COMPONENT_MAX : LIGHT_COMPONENT_MIN);
 
         auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
         {
@@ -493,9 +452,9 @@ void ChunkManager::ProcessLightUpdates(void)
         newLight = SetSunlight(newLight, Max6(GetSunlight(newLight), GetSunlight(pX), GetSunlight(nX),
                                               GetSunlight(pY), GetSunlight(nY),
                                               GetSunlight(pZ), GetSunlight(nZ)));
-        if(newLight != blk.rgbs)
+        if(newLight != blk.light)
         {
-            blk.rgbs = newLight;
+            ck->lights[Chunk::XYZ(blkX, pos.y, blkZ)] = newLight;
             unimportantLightUpdates_.push_front({ pos.x + 1, pos.y, pos.z });
             unimportantLightUpdates_.push_front({ pos.x - 1, pos.y, pos.z });
             if(pos.y < CHUNK_MAX_HEIGHT - 1)
@@ -506,57 +465,10 @@ void ChunkManager::ProcessLightUpdates(void)
             unimportantLightUpdates_.push_front({ pos.x, pos.y, pos.z - 1 });
         }
 
-        unimportantModelUpdates_.insert({ ckX, BlockY_To_ChunkSectionIndex(pos.y), ckZ });
-
-        int blkX = BlockXZ_To_BlockXZInChunk(pos.x);
         int blkY = pos.y;
-        int blkZ = BlockXZ_To_BlockXZInChunk(pos.z);
         int secY = BlockY_To_ChunkSectionIndex(pos.y);
 
-        if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
-            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ });
-        else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
-            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ });
-        if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
-            unimportantModelUpdates_.insert({ ckX, secY, ckZ - 1 });
-        else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
-            unimportantModelUpdates_.insert({ ckX, secY, ckZ + 1 });
-        if(blkY == 0 && secY > 0)
-            unimportantModelUpdates_.insert({ ckX, secY - 1, ckZ });
-        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-            unimportantModelUpdates_.insert({ ckX, secY + 1, ckZ });
-        if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
-        {
-            if(blkY == 0 && secY > 0)
-                unimportantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ - 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                unimportantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ - 1 });
-            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ - 1 });
-        }
-        if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
-        {
-            if(blkY == 0 && secY > 0)
-                unimportantModelUpdates_.insert({ ckX - 1, secY - 1, ckZ + 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                unimportantModelUpdates_.insert({ ckX - 1, secY + 1, ckZ + 1 });
-            unimportantModelUpdates_.insert({ ckX - 1, secY, ckZ + 1 });
-        }
-        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
-        {
-            if(blkY == 0 && secY > 0)
-                unimportantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ - 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                unimportantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ - 1 });
-            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ - 1 });
-        }
-        if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
-        {
-            if(blkY == 0 && secY > 0)
-                unimportantModelUpdates_.insert({ ckX + 1, secY - 1, ckZ + 1 });
-            else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
-                unimportantModelUpdates_.insert({ ckX + 1, secY + 1, ckZ + 1 });
-            unimportantModelUpdates_.insert({ ckX + 1, secY, ckZ + 1 });
-        }
+        ComputeModelUpdates(pos.x, pos.y, pos.z, unimportantModelUpdates_);
     }
 }
 
@@ -605,5 +517,64 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
         if(!InRenderRange(it.first.x, it.first.z))
             continue;
         it.second->Render(renderQueue);
+    }
+}
+
+void ChunkManager::ComputeModelUpdates(int x, int y, int z, std::unordered_set<IntVector3, IntVector3Hasher> &updates)
+{
+    int ckX = BlockXZ_To_ChunkXZ(x);
+    int ckZ = BlockXZ_To_ChunkXZ(z);
+
+    int secY = BlockY_To_ChunkSectionIndex(y);
+
+    int blkX = BlockXZ_To_BlockXZInChunk(x);
+    int blkY = BlockY_To_BlockYInChunkSection(y);
+    int blkZ = BlockXZ_To_BlockXZInChunk(z);
+
+    updates.insert({ ckX, secY, ckZ });
+
+    if(blkX == 0 && InRenderRange(ckX - 1, ckZ))
+        updates.insert({ ckX - 1, secY, ckZ });
+    else if(blkX == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ))
+        updates.insert({ ckX + 1, secY, ckZ });
+    if(blkZ == 0 && InRenderRange(ckX, ckZ - 1))
+        updates.insert({ ckX, secY, ckZ - 1 });
+    else if(blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX, ckZ + 1))
+        updates.insert({ ckX, secY, ckZ + 1 });
+    if(blkY == 0 && secY > 0)
+        updates.insert({ ckX, secY - 1, ckZ });
+    else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+        updates.insert({ ckX, secY + 1, ckZ });
+    if(blkX == 0 && blkZ == 0 && InRenderRange(ckX - 1, ckZ - 1))
+    {
+        if(blkY == 0 && secY > 0)
+            updates.insert({ ckX - 1, secY - 1, ckZ - 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            updates.insert({ ckX - 1, secY + 1, ckZ - 1 });
+        updates.insert({ ckX - 1, secY, ckZ - 1 });
+    }
+    if(blkX == 0 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX - 1, ckZ + 1))
+    {
+        if(blkY == 0 && secY > 0)
+            updates.insert({ ckX - 1, secY - 1, ckZ + 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            updates.insert({ ckX - 1, secY + 1, ckZ + 1 });
+        updates.insert({ ckX - 1, secY, ckZ + 1 });
+    }
+    if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == 0 && InRenderRange(ckX + 1, ckZ - 1))
+    {
+        if(blkY == 0 && secY > 0)
+            updates.insert({ ckX + 1, secY - 1, ckZ - 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            updates.insert({ ckX + 1, secY + 1, ckZ - 1 });
+        updates.insert({ ckX + 1, secY, ckZ - 1 });
+    }
+    if(blkX == CHUNK_SECTION_SIZE - 1 && blkZ == CHUNK_SECTION_SIZE - 1 && InRenderRange(ckX + 1, ckZ + 1))
+    {
+        if(blkY == 0 && secY > 0)
+            updates.insert({ ckX + 1, secY - 1, ckZ + 1 });
+        else if(blkY == CHUNK_SECTION_SIZE - 1 && secY < CHUNK_SECTION_NUM - 1)
+            updates.insert({ ckX + 1, secY + 1, ckZ + 1 });
+        updates.insert({ ckX + 1, secY, ckZ + 1 });
     }
 }

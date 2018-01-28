@@ -23,7 +23,7 @@ Chunk::~Chunk(void)
         Helper::SafeDeleteObjects(model);
 }
 
-namespace
+/*namespace
 {
     inline bool OutOfChunk(std::int32_t x, std::int32_t y, std::int32_t z)
     {
@@ -93,7 +93,7 @@ void Chunk::SetModel(int section, ChunkSectionModels *model)
     assert(0 <= section && section < CHUNK_SECTION_NUM);
     Helper::SafeDeleteObjects(models_[section]);
     models_[section] = model;
-}
+}*/
 
 void Chunk::Render(ChunkSectionRenderQueue *renderQueue)
 {
