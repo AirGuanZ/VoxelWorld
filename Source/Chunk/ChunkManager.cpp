@@ -20,7 +20,6 @@ ChunkManager::ChunkManager(int loadDistance,
                            int maxUniModelUpdates,
                            int maxModelUpdates,
                            int maxUniLightUpdates,
-                           int maxLightUpdates,
                            int uniLightUpdateDistance)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
@@ -29,7 +28,6 @@ ChunkManager::ChunkManager(int loadDistance,
       maxUniModelUpdates_(maxUniModelUpdates),
       maxModelUpdates_(maxModelUpdates),
       maxUniLightUpdates_(maxUniLightUpdates),
-      maxLightUpdates_(maxLightUpdates),
       uniLightUpdateDistance_(uniLightUpdateDistance),
       ckLoader_((loadDistance + 2) * (loadDistance + 2))
 {

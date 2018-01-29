@@ -259,12 +259,14 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
+    constexpr LandGenerator_V0::Seed seed = 123;
+
     for(int i = 0; i != 8; ++i)
     {
         Chunk &dst = neis[i];
         if(!ckPool_.GetChunk(dst))
         {
-            LandGenerator_V0(123).GenerateLand(&dst);
+            LandGenerator_V0(seed).GenerateLand(&dst);
 
             Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
             CopyChunkData(*addedCk, dst);
@@ -274,7 +276,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
 
     if(!ckPool_.GetChunk(*ck))
     {
-        LandGenerator_V0(123).GenerateLand(ck);
+        LandGenerator_V0(seed).GenerateLand(ck);
 
         Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
         CopyChunkData(*addedCk, *ck);

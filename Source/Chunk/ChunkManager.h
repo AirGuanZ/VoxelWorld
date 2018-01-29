@@ -50,7 +50,7 @@ class ChunkManager
 public:
     ChunkManager(int loadDistance, int renderDistance, int unloadDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
-        int maxUniLightUpdates, int maxLightUpdates,
+        int maxUniLightUpdates,
         int uniLightUpdateDistance);
     ~ChunkManager(void);
 
@@ -229,7 +229,6 @@ private:
     std::deque<IntVector3> unimportantLightUpdates_;
 
     int maxUniLightUpdates_;
-    int maxLightUpdates_;
 
     int uniLightUpdateDistance_;
 };
