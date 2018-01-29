@@ -8,9 +8,9 @@ MSAA = 4
 [World]
 
 PreloadDistance = 10
-RenderDistance  = 7
+RenderDistance  = 8
 
 [Fog]
 
-Start = 80
+Start = 90
 Range = 20

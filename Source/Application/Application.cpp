@@ -213,6 +213,14 @@ void Application::Run(void)
 
     while(!input.IsKeyDown(VK_ESCAPE))
     {
+        /*float lastFPS = 0.0f;
+        fps.Tick();
+        if(fps.GetFPS() != lastFPS)
+        {
+            lastFPS = fps.GetFPS();
+            std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b" << lastFPS;
+        }*/
+
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
 
@@ -280,6 +288,7 @@ void Application::Run(void)
 
         crosshair.Draw(&imScr2D);
 
+        //window.SetVsync(false);
         window.Present();
         window.DoEvents();
         clock.Tick();
