@@ -15,6 +15,7 @@ Created by AirGuanZ
 
 ChunkManager::ChunkManager(int loadDistance,
                            int renderDistance,
+                           int unloadDistance,
                            int maxImpModelUpdates,
                            int maxUniModelUpdates,
                            int maxModelUpdates,
@@ -23,12 +24,14 @@ ChunkManager::ChunkManager(int loadDistance,
                            int uniLightUpdateDistance)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
+      unloadDistance_(unloadDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
       maxUniModelUpdates_(maxUniModelUpdates),
       maxModelUpdates_(maxModelUpdates),
       maxUniLightUpdates_(maxUniLightUpdates),
       maxLightUpdates_(maxLightUpdates),
-      uniLightUpdateDistance_(uniLightUpdateDistance)
+      uniLightUpdateDistance_(uniLightUpdateDistance),
+      ckLoader_((loadDistance + 2) * (loadDistance + 2))
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
     centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();
@@ -205,7 +208,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     decltype(chunks_) newChunks_;
     for(auto it : chunks_)
     {
-        if(!InLoadingRange(it.first.x, it.first.z))
+        if(!InUnloadingRange(it.first.x, it.first.z))
             Helper::SafeDeleteObjects(it.second);
         else
             newChunks_[it.first] = it.second;
@@ -250,7 +253,7 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
     importantModelUpdates_.insert({ x, y, z });
 }
 
-void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates)
+void ChunkManager::AddChunkData(Chunk *ck)
 {
     assert(ck != nullptr);
     decltype(chunks_)::iterator it;
@@ -265,8 +268,6 @@ void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightU
     }
 
     chunks_[pos] = ck;
-    for(const IntVector3 &pos : lightUpdates)
-        unimportantLightUpdates_.push_back(pos);
 
     if(InRenderRange(pos.x, pos.z)) //是否需要创建模型任务
     {
@@ -309,10 +310,9 @@ void ChunkManager::LoadChunk(int ckX, int ckZ)
     assert(chunks_.find({ ckX, ckZ }) == chunks_.end());
 
     Chunk *ck = new Chunk(this, { ckX, ckZ });
-    std::vector<IntVector3> lightUpdates;
-    ckLoader_.LoadChunkData(ck, lightUpdates);
+    ckLoader_.LoadChunkData(ck);
     assert(ck != nullptr);
-    AddChunkData(ck, lightUpdates);
+    AddChunkData(ck);
 }
 
 void ChunkManager::ProcessChunkLoaderMessages(void)
@@ -328,7 +328,7 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         {
         case ChunkLoaderMessage::ChunkLoaded:
             if(InLoadingRange(msg->ckLoaded->GetPosition().x, msg->ckLoaded->GetPosition().z))
-                AddChunkData(msg->ckLoaded, msg->uniLightUpdates);
+                AddChunkData(msg->ckLoaded);
             else
                 Helper::SafeDeleteObjects(msg->ckLoaded);
             break;
@@ -456,6 +456,7 @@ void ChunkManager::ProcessModelUpdates(void)
         if(it == chunks_.end())
             continue;
 
+        bool con = false;
         for(int dx = -1; dx <= 1; ++dx)
         {
             for(int dz = -1; dz <= 1; ++dz)
@@ -463,10 +464,14 @@ void ChunkManager::ProcessModelUpdates(void)
                 if(chunks_.find({ pos.x + dx, pos.z + dz }) == chunks_.end())
                 {
                     uniModelWaiting_.insert(pos);
-                    continue;
+                    con = true;
+                    goto DEC_CON;
                 }
             }
         }
+    DEC_CON:
+        if(con)
+            continue;
 
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());

@@ -186,7 +186,9 @@ void Application::Run(void)
 
     //区块世界
 
-    World world(std::stoi(conf("World", "PreloadDistance")), std::stoi(conf("World", "RenderDistance")));
+    World world(std::stoi(conf("World", "PreloadDistance")),
+                std::stoi(conf("World", "RenderDistance")),
+                std::stoi(conf("World", "UnloadDistance")));
     world.Initialize();
 
     //准星
@@ -213,13 +215,13 @@ void Application::Run(void)
 
     while(!input.IsKeyDown(VK_ESCAPE))
     {
-        /*float lastFPS = 0.0f;
+        static float lastFPS = 0.0f;
         fps.Tick();
         if(fps.GetFPS() != lastFPS)
         {
             lastFPS = fps.GetFPS();
             std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b" << lastFPS;
-        }*/
+        }
 
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;

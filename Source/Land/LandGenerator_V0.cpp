@@ -4,6 +4,7 @@ Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
 #include "../Chunk/Chunk.h"
+#include "../Chunk/ChunkTraversal.h"
 #include "LandGenerator_V0.h"
 #include "OakGenerator_V0.h"
 
@@ -13,7 +14,7 @@ LandGenerator_V0::LandGenerator_V0(Seed seed)
 
 }
 
-void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpdates)
+void LandGenerator_V0::GenerateLand(Chunk *ck)
 {
     assert(ck != nullptr);
 
@@ -31,21 +32,18 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
             int h = GetHeight(x + xBase, z + zBase);
 
             ck->SetBlock(x, 0, z,
-            { BlockType::Bedrock, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                            LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
+            { BlockType::Bedrock, LIGHT_ALL_MIN });
 
             for(int y = 1; y != h - 2; ++y)
             {
                 ck->SetBlock(x, y, z,
-                { BlockType::Stone, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                              LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
+                { BlockType::Stone, LIGHT_ALL_MIN });
             }
 
             for(int y = h - 2; y != h; ++y)
             {
                 ck->SetBlock(x, y, z,
-                { BlockType::Dirt, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                             LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
+                { BlockType::Dirt, LIGHT_ALL_MIN });
             }
 
             constexpr int WATER_LEVEL = 40;
@@ -54,30 +52,26 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
                 for(int y = h; y <= WATER_LEVEL; ++y)
                 {
                     ck->SetBlock(x, y, z,
-                    { BlockType::Water, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                        (std::max)(0, LIGHT_COMPONENT_MAX - 2 * (WATER_LEVEL - y + 1))) });
+                    { BlockType::Water, LIGHT_ALL_MIN });
                 }
                 h = WATER_LEVEL;
             }
             else
             {
                 ck->SetBlock(x, h, z,
-                { BlockType::GrassBox, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                 LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN) });
+                { BlockType::GrassBox, LIGHT_ALL_MIN });
 
                 float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
                 if(gfv < 0.1f)
                 {
                     ck->SetBlock(x, h + 1, z,
-                    { BlockType::Grass, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                  LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1) });
+                    { BlockType::Grass, LIGHT_ALL_MIN });
                     ++h;
                 }
                 else if(gfv < 0.11f)
                 {
                     ck->SetBlock(x, h + 1, z,
-                    { BlockType::Flower, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                   LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX - 1) });
+                    { BlockType::Flower, LIGHT_ALL_MIN });
                     ++h;
                 }
 
@@ -86,8 +80,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
             {
                 ck->SetBlock(x, y, z,
-                { BlockType::Air, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                            LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX) });
+                { BlockType::Air, LIGHT_ALL_MIN });
             }
 
             ck->SetHeight(x, z, h);
@@ -95,7 +88,19 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
     }
 
     //Éú³ÉÊ÷
-    OakGenerator_V0(seed_).Make(ck, lightUpdates);
+    OakGenerator_V0(seed_).Make(ck);
+
+    for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
+    {
+        for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
+        {
+            for(int y = ck->GetHeight(x, z) + 1; y < CHUNK_MAX_HEIGHT; ++y)
+            {
+                ck->SetBlockLight(x, y, z, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                                     LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX));
+            }
+        }
+    }
 }
 
 int LandGenerator_V0::GetHeight(int x, int z)

@@ -204,6 +204,11 @@ public:
         return models_[section];
     }
 
+    ChunkManager *GetChunkManager(void)
+    {
+        return ckMgr_;
+    }
+
     void Render(ChunkSectionRenderQueue *renderQueue);
 
 private:
@@ -213,5 +218,19 @@ private:
     //下标的使用：[x][y][z]
     ChunkSectionModels *models_[CHUNK_SECTION_NUM];
 };
+
+inline void CopyChunkData(Chunk &dst, const Chunk &src)
+{
+    static_assert(std::is_trivially_copyable_v<Chunk::BlockTypeData>,
+        "Chunk::BlockTypeData shall be trivially copiable");
+    static_assert(std::is_trivially_copyable_v<Chunk::BlockLightData>,
+        "Chunk::BlockLightData shall be trivially copiable");
+    static_assert(std::is_trivially_copyable_v<Chunk::HeightMap>,
+        "Chunk::HeightMap shall be trivially copiable");
+
+    std::memcpy(dst.blocks, src.blocks, sizeof(Chunk::BlockTypeData));
+    std::memcpy(dst.lights, src.lights, sizeof(Chunk::BlockLightData));
+    std::memcpy(dst.heightMap, src.heightMap, sizeof(Chunk::HeightMap));
+}
 
 #endif //VW_CHUNK_H
