@@ -186,6 +186,9 @@
     <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
       <Filter>Source\Chunk\Background</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
+      <Filter>Source\Chunk\Background</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">

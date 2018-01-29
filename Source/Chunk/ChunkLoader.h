@@ -13,6 +13,7 @@ Created by AirGuanZ
 #include <vector>
 
 #include "Chunk.h"
+#include "ChunkDataPool.h"
 
 /*
 一个后台加载任务分为两个阶段
@@ -22,12 +23,9 @@ Created by AirGuanZ
 据此，ChunkLoader除了有一个基本的加载区块的任务队列，还应维护一个用于
 光照预计算的区块池，池子中的区块都是加载好了数据、仅进行了天光直射计算的区块。
 
-池子基于LRU策略管理，单独封装好，提供取得区块数据的操作。这样一来，加载区块的任务实际上就
-全都交给了池子，ChunkLoader只是负责用池子提供的数据计算光照而已。
+池子基于LRU策略管理，单独封装好，提供取得区块数据的操作。
 
 Loader和池子都要支持直接在主线程加载、计算数据，这样当主线程立即要求数据的时候不至于要阻塞。
-
-至于工作线程是否要池子和loader共享，暂时不共享吧，以后再视情况优化。
 */
 
 class ChunkLoader;
@@ -52,6 +50,7 @@ struct ChunkLoaderMessage
 class ChunkLoader
 {
 public:
+    ChunkLoader(size_t ckPoolSize);
     ~ChunkLoader(void);
 
     void Initialize(int threadNum = -1);
@@ -71,6 +70,8 @@ private:
     void TaskThreadEntry(void);
 
 private:
+    ChunkDataPool ckPool_;
+
     std::vector<std::thread> threads_;
     std::atomic<bool> running_;
 

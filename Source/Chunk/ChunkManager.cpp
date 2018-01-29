@@ -30,7 +30,8 @@ ChunkManager::ChunkManager(int loadDistance,
       maxModelUpdates_(maxModelUpdates),
       maxUniLightUpdates_(maxUniLightUpdates),
       maxLightUpdates_(maxLightUpdates),
-      uniLightUpdateDistance_(uniLightUpdateDistance)
+      uniLightUpdateDistance_(uniLightUpdateDistance),
+      ckLoader_((loadDistance + 2) * (loadDistance + 2))
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
     centrePos_.z = (std::numeric_limits<decltype(centrePos_.z)>::min)();

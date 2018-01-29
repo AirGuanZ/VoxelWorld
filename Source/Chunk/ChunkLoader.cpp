@@ -11,6 +11,12 @@ Created by AirGuanZ
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
 
+ChunkLoader::ChunkLoader(size_t ckPoolSize)
+    : ckPool_(ckPoolSize)
+{
+
+}
+
 ChunkLoader::~ChunkLoader(void)
 {
     Destroy();
@@ -132,66 +138,62 @@ ChunkLoaderTask_LoadChunkData::~ChunkLoaderTask_LoadChunkData(void)
 
 namespace
 {
+    inline bool OutOfBound(int x, int y, int z)
+    {
+        return (x | y | z | (3 * CHUNK_SECTION_SIZE - 1 - x) |
+                            (3 * CHUNK_SECTION_SIZE - 1 - z) |
+                            (CHUNK_MAX_HEIGHT - 1 - y)) < 0;
+    }
+
+    inline BlockLight GetLight(Chunk *(&cks)[3][3], int x, int y, int z)
+    {
+        if(OutOfBound(x, y, z))
+        {
+            return LIGHT_ALL_MAX;
+        }
+        return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
+            ->GetBlockLight(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
+    }
+
+    inline int GetHeight(Chunk *(&cks)[3][3], int x, int z)
+    {
+        if(OutOfBound(x, 0, z))
+            return 0;
+        return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
+            ->GetHeight(x % CHUNK_SECTION_SIZE, z % CHUNK_SECTION_SIZE);
+    }
+
+    inline BlockType GetType(Chunk *(&cks)[3][3], int x, int y, int z)
+    {
+        if(OutOfBound(x, y, z))
+        {
+            return BlockType::Air;
+        }
+        return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
+            ->GetBlockType(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
+    }
+
+    inline void SetLight(Chunk *(&cks)[3][3], int x, int y, int z, BlockLight light)
+    {
+        if(OutOfBound(x, y, z))
+            return;
+        cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
+            ->SetBlockLight(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE, light);
+    }
+
     void LightProg(Chunk *(&cks)[3][3])
     {
-        //IMPROVE
-        auto OutOfBound = [&](int x, int y, int z) -> bool
-        {
-            return x < 0 || x >= (3 * CHUNK_SECTION_SIZE) ||
-                   y < 0 || y >= CHUNK_MAX_HEIGHT ||
-                   z < 0 || z >= (3 * CHUNK_SECTION_SIZE);
-        };
-
-        auto GetLight = [&](int x, int y, int z) -> BlockLight
-        {
-            if(OutOfBound(x, y, z))
-            {
-                return MakeLight(LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX,
-                                 LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX);
-            }
-            return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
-                ->GetBlockLight(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
-        };
-
-        auto GetHeight = [&](int x, int z) -> int
-        {
-            if(OutOfBound(x, 0, z))
-                return 0;
-            return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
-                ->GetHeight(x % CHUNK_SECTION_SIZE, z % CHUNK_SECTION_SIZE);
-        };
-
-        auto GetType = [&](int x, int y, int z) -> BlockType
-        {
-            if(OutOfBound(x, y, z))
-            {
-                return BlockType::Air;
-            }
-            return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
-                ->GetBlockType(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
-        };
-
-        auto SetLight = [&](int x, int y, int z, BlockLight light) -> void
-        {
-            if(OutOfBound(x ,y, z))
-            {
-                return;
-            }
-            cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
-                ->SetBlockLight(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE, light);
-        };
-
         BlockInfoManager &infoMgr = BlockInfoManager::GetInstance();
         std::deque<IntVector3> progQueue;
 
-        auto ProgAux = [&](BlockLight cenLight, int ax, int ay, int az) -> void
+        auto DirectionalUpdate = [&](BlockLight cenLight, int ax, int ay, int az) -> void
         {
-            BlockLight nX = GetLight(ax, ay, az);
+            BlockLight nX = GetLight(cks, ax, ay, az);
             BlockLight newNX = BlockLightMax(nX, BlockLightMinus(
-                cenLight, infoMgr.GetBlockInfo(GetType(ax, ay, az)).lightDec));
+                cenLight, infoMgr.GetBlockInfo(GetType(cks, ax, ay, az)).lightDec));
             if(newNX != nX)
             {
-                SetLight(ax, ay, az, newNX);
+                SetLight(cks, ax, ay, az, newNX);
                 if(!OutOfBound(ax, ay, az))
                     progQueue.push_back({ ax, ay, az });
             }
@@ -199,7 +201,7 @@ namespace
 
         auto TryAsSource = [&](int x, int y, int z)
         {
-            if(!OutOfBound(x, y, z) && GetLight(x, y, z) != LIGHT_ALL_MIN)
+            if(!OutOfBound(x, y, z) && GetLight(cks, x, y, z) != LIGHT_ALL_MIN)
             {
                 progQueue.push_back({ x, y, z });
                 while(progQueue.size())
@@ -207,14 +209,14 @@ namespace
                     auto[x, y, z] = progQueue.front();
                     progQueue.pop_front();
 
-                    BlockLight cenLight = GetLight(x, y, z);
+                    BlockLight cenLight = GetLight(cks, x, y, z);
 
-                    ProgAux(cenLight, x - 1, y, z);
-                    ProgAux(cenLight, x + 1, y, z);
-                    ProgAux(cenLight, x, y - 1, z);
-                    ProgAux(cenLight, x, y + 1, z);
-                    ProgAux(cenLight, x, y, z - 1);
-                    ProgAux(cenLight, x, y, z + 1);
+                    DirectionalUpdate(cenLight, x - 1, y, z);
+                    DirectionalUpdate(cenLight, x + 1, y, z);
+                    DirectionalUpdate(cenLight, x, y - 1, z);
+                    DirectionalUpdate(cenLight, x, y + 1, z);
+                    DirectionalUpdate(cenLight, x, y, z - 1);
+                    DirectionalUpdate(cenLight, x, y, z + 1);
                 }
             }
         };
@@ -223,10 +225,10 @@ namespace
         {
             for(int z = 0; z < 3 * CHUNK_SECTION_SIZE; ++z)
             {
-                int H = GetHeight(x, z);
+                int H = GetHeight(cks, x, z);
                 for(int y = 0; y <= H; ++y)
                 {
-                    if(infoMgr.GetBlockInfo(GetType(x, y, z)).lightDec < LIGHT_COMPONENT_MAX)
+                    if(infoMgr.GetBlockInfo(GetType(cks, x, y, z)).lightDec < LIGHT_COMPONENT_MAX)
                     {
                         TryAsSource(x - 1, y, z);
                         TryAsSource(x + 1, y, z);

@@ -41,13 +41,13 @@ public:
 
     ValueType &Back(void)
     {
-        return list_.back();
+        return list_.back().value;
     }
 
     void PopBack(void)
     {
         auto it = list_.back().hashItor;
-        list_.erase(it->listItor);
+        list_.erase(it->second.listItor);
         map_.erase(it);
     }
 
@@ -63,6 +63,24 @@ public:
         list_.push_front(lstNode);
         auto itRt = map_.insert(std::make_pair(key, HashNode{ list_.begin() }));
         list_.front().hashItor = itRt.first;
+    }
+
+    template<typename FuncType>
+    void ForEach(FuncType &&func)
+    {
+        for(ListNode &node : list_)
+            func(node.value);
+    }
+
+    void Clear(void)
+    {
+        list_.clear();
+        map_.clear();
+    }
+
+    bool Exists(const Key &key)
+    {
+        return map_.find(key) != map_.end();
     }
 
 private:

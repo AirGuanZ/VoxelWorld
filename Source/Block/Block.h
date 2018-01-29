@@ -52,7 +52,7 @@ inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 
 
 inline float LightToFloat(std::uint8_t component) { return (component - 0.5f) / (LIGHT_COMPONENT_MAX - 0.5f); }
 
-inline BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
+inline constexpr BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {
     return (r << 12) | (g << 8) | (b << 4) | s;
 }
@@ -83,7 +83,13 @@ inline BlockLight BlockLightMinus(BlockLight bl, std::uint8_t dec)
         static_cast<std::uint8_t>((std::max)(GetSunlight(bl) - dec, static_cast<int>(LIGHT_COMPONENT_MIN))));
 }
 
-constexpr BlockLight LIGHT_ALL_MIN = (LIGHT_COMPONENT_MIN << 12) | (LIGHT_COMPONENT_MIN << 8) |
-                                     (LIGHT_COMPONENT_MIN << 4) | LIGHT_COMPONENT_MIN;
+constexpr BlockLight LIGHT_ALL_MIN = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                               LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN);
+
+constexpr BlockLight LIGHT_ALL_MAX = MakeLight(LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX,
+                                               LIGHT_COMPONENT_MAX, LIGHT_COMPONENT_MAX);
+
+constexpr BlockLight LIGHT_MIN_MIN_MIN_MAX = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
+                                                       LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX);
 
 #endif //VW_BLOCK_H
