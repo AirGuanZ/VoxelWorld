@@ -14,7 +14,7 @@ LandGenerator_V0::LandGenerator_V0(Seed seed)
 
 }
 
-void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpdates)
+void LandGenerator_V0::GenerateLand(Chunk *ck)
 {
     assert(ck != nullptr);
 
@@ -88,7 +88,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpd
     }
 
     //Éú³ÉÊ÷
-    OakGenerator_V0(seed_).Make(ck, lightUpdates);
+    OakGenerator_V0(seed_).Make(ck);
 
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {

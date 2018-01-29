@@ -253,7 +253,7 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
     importantModelUpdates_.insert({ x, y, z });
 }
 
-void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightUpdates)
+void ChunkManager::AddChunkData(Chunk *ck)
 {
     assert(ck != nullptr);
     decltype(chunks_)::iterator it;
@@ -268,8 +268,6 @@ void ChunkManager::AddChunkData(Chunk *ck, const std::vector<IntVector3> &lightU
     }
 
     chunks_[pos] = ck;
-    for(const IntVector3 &pos : lightUpdates)
-        unimportantLightUpdates_.push_back(pos);
 
     if(InRenderRange(pos.x, pos.z)) //是否需要创建模型任务
     {
@@ -312,10 +310,9 @@ void ChunkManager::LoadChunk(int ckX, int ckZ)
     assert(chunks_.find({ ckX, ckZ }) == chunks_.end());
 
     Chunk *ck = new Chunk(this, { ckX, ckZ });
-    std::vector<IntVector3> lightUpdates;
-    ckLoader_.LoadChunkData(ck, lightUpdates);
+    ckLoader_.LoadChunkData(ck);
     assert(ck != nullptr);
-    AddChunkData(ck, lightUpdates);
+    AddChunkData(ck);
 }
 
 void ChunkManager::ProcessChunkLoaderMessages(void)
@@ -331,7 +328,7 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
         {
         case ChunkLoaderMessage::ChunkLoaded:
             if(InLoadingRange(msg->ckLoaded->GetPosition().x, msg->ckLoaded->GetPosition().z))
-                AddChunkData(msg->ckLoaded, msg->uniLightUpdates);
+                AddChunkData(msg->ckLoaded);
             else
                 Helper::SafeDeleteObjects(msg->ckLoaded);
             break;

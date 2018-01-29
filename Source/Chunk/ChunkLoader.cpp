@@ -123,12 +123,11 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
     assert(loader != nullptr);
 
     std::vector<IntVector3> lightUpdates;
-    loader->LoadChunkData(ck_, lightUpdates);
+    loader->LoadChunkData(ck_);
 
     ChunkLoaderMessage *msg = new ChunkLoaderMessage;
     msg->type = ChunkLoaderMessage::ChunkLoaded;
     msg->ckLoaded = ck_;
-    msg->uniLightUpdates = std::move(lightUpdates);
     ck_ = nullptr;
     loader->AddMsg(msg);
 }
@@ -245,7 +244,7 @@ namespace
     }
 }
 
-void ChunkLoader::LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates)
+void ChunkLoader::LoadChunkData(Chunk *ck)
 {
     IntVectorXZ ckPos;
     Chunk *neis = new Chunk[8]
@@ -260,13 +259,12 @@ void ChunkLoader::LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
-    std::vector<IntVector3> dummyLightUpdates;
     for(int i = 0; i != 8; ++i)
     {
         Chunk &dst = neis[i];
         if(!ckPool_.GetChunk(dst))
         {
-            LandGenerator_V0(123).GenerateLand(&dst, dummyLightUpdates);
+            LandGenerator_V0(123).GenerateLand(&dst);
 
             Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
             CopyChunkData(*addedCk, dst);
@@ -276,7 +274,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates
 
     if(!ckPool_.GetChunk(*ck))
     {
-        LandGenerator_V0(123).GenerateLand(ck, dummyLightUpdates);
+        LandGenerator_V0(123).GenerateLand(ck);
 
         Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
         CopyChunkData(*addedCk, *ck);

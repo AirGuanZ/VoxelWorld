@@ -19,7 +19,7 @@ public:
     
     LandGenerator_V0(Seed seed);
 
-    void GenerateLand(Chunk *ck, std::vector<IntVector3> &lightUpdates);
+    void GenerateLand(Chunk *ck);
 
 private:
     int GetHeight(int blkX, int blkZ);

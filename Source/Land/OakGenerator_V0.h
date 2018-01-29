@@ -24,12 +24,12 @@ public:
 
     OakGenerator_V0(Seed seed);
 
-    void Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) const;
+    void Make(Chunk *ck) const;
 
 private:
     float Random(Seed seedOffset, int blkX, int blkZ, float min, float max) const;
 
-    void Try(Chunk *ck, int blkX, int blkY, int blkZ, std::vector<IntVector3> &lightUpdates) const;
+    void Try(Chunk *ck, int blkX, int blkY, int blkZ) const;
     
 private:
     Seed seed_;
