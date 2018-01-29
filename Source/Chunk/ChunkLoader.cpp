@@ -49,6 +49,8 @@ void ChunkLoader::Destroy(void)
         loaderTasks_.pop();
         Helper::SafeDeleteObjects(task);
     }
+
+    ckPool_.Destroy();
 }
 
 void ChunkLoader::AddTask(ChunkLoaderTask *task)
@@ -258,11 +260,28 @@ void ChunkLoader::LoadChunkData(Chunk *ck, std::vector<IntVector3> &lightUpdates
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
-    LandGenerator_V0(123).GenerateLand(ck, lightUpdates);
-
     std::vector<IntVector3> dummyLightUpdates;
     for(int i = 0; i != 8; ++i)
-        LandGenerator_V0(123).GenerateLand(&neis[i], dummyLightUpdates);
+    {
+        Chunk &dst = neis[i];
+        if(!ckPool_.GetChunk(dst))
+        {
+            LandGenerator_V0(123).GenerateLand(&dst, dummyLightUpdates);
+
+            Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
+            CopyChunkData(*addedCk, dst);
+            ckPool_.AddChunk(addedCk);
+        }
+    }
+
+    if(!ckPool_.GetChunk(*ck))
+    {
+        LandGenerator_V0(123).GenerateLand(ck, dummyLightUpdates);
+
+        Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
+        CopyChunkData(*addedCk, *ck);
+        ckPool_.AddChunk(addedCk);
+    }
 
     Chunk *cks[3][3] =
     {

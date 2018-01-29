@@ -35,17 +35,9 @@ bool ChunkDataPool::GetChunk(Chunk &ck)
     Chunk *rt = nullptr;
     if(map_.FindAndErase({ pos.x, pos.z }, rt))
     {
-        static_assert(std::is_trivially_copyable_v<Chunk::BlockTypeData>,
-            "Chunk::BlockTypeData shall be trivially copiable");
-        static_assert(std::is_trivially_copyable_v<Chunk::BlockLightData>,
-            "Chunk::BlockLightData shall be trivially copiable");
-        static_assert(std::is_trivially_copyable_v<Chunk::HeightMap>,
-            "Chunk::HeightMap shall be trivially copiable");
-
         assert(rt != nullptr);
-        std::memcpy(ck.blocks, rt->blocks, sizeof(Chunk::BlockTypeData));
-        std::memcpy(ck.lights, rt->lights, sizeof(Chunk::BlockLightData));
-        std::memcpy(ck.heightMap, rt->heightMap, sizeof(Chunk::HeightMap));
+
+        CopyChunkData(ck, *rt);
 
         map_.PushFront(pos, rt);
         return true;
