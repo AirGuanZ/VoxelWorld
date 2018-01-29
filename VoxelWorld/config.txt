@@ -7,6 +7,8 @@ MSAA = 4
 
 [World]
 
+# гІТњзуЃК0 < RenderDistance < PreloadDistance <= UnloadDistance
+
 UnloadDistance  = 13
 PreloadDistance = 11
 RenderDistance  = 8
