@@ -204,6 +204,11 @@ public:
         return models_[section];
     }
 
+    ChunkManager *GetChunkManager(void)
+    {
+        return ckMgr_;
+    }
+
     void Render(ChunkSectionRenderQueue *renderQueue);
 
 private:

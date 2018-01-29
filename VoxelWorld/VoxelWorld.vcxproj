@@ -63,6 +63,7 @@
     <ClInclude Include="..\Source\Camera\Camera.h" />
     <ClInclude Include="..\Source\Camera\CameraFrustum.h" />
     <ClInclude Include="..\Source\Chunk\Chunk.h" />
+    <ClInclude Include="..\Source\Chunk\ChunkDataPool.h" />
     <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
     <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
     <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
@@ -92,6 +93,7 @@
     <ClInclude Include="..\Source\Utility\FPSCounter.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
+    <ClInclude Include="..\Source\Utility\LinkedHashMap.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />
     <ClInclude Include="..\Source\Utility\Singleton.h" />
     <ClInclude Include="..\Source\Utility\Uncopiable.h" />

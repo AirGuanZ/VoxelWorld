@@ -6,8 +6,10 @@ Created by AirGuanZ
 #ifndef VW_BLOCK_H
 #define VW_BLOCK_H
 
+#include <algorithm>
 #include <cstdint>
 #include <type_traits>
+#include <utility>
 
 #include "../Utility/Math.h"
 #include "BlockInfo.h"
@@ -62,5 +64,26 @@ inline Color LightToRGBA(BlockLight rgbs)
              LightToFloat(GetBlue(rgbs)),
              LightToFloat(GetSunlight(rgbs)) };
 }
+
+inline BlockLight BlockLightMax(BlockLight lhs, BlockLight rhs)
+{
+    return MakeLight(
+        (std::max)(GetRed(lhs),      GetRed(rhs)),
+        (std::max)(GetGreen(lhs),    GetGreen(rhs)),
+        (std::max)(GetBlue(lhs),     GetBlue(rhs)),
+        (std::max)(GetSunlight(lhs), GetSunlight(rhs)));
+}
+
+inline BlockLight BlockLightMinus(BlockLight bl, std::uint8_t dec)
+{
+    return MakeLight(
+        static_cast<std::uint8_t>((std::max)(GetRed(bl) - dec,      static_cast<int>(LIGHT_COMPONENT_MIN))),
+        static_cast<std::uint8_t>((std::max)(GetGreen(bl) - dec,    static_cast<int>(LIGHT_COMPONENT_MIN))),
+        static_cast<std::uint8_t>((std::max)(GetBlue(bl) - dec,     static_cast<int>(LIGHT_COMPONENT_MIN))),
+        static_cast<std::uint8_t>((std::max)(GetSunlight(bl) - dec, static_cast<int>(LIGHT_COMPONENT_MIN))));
+}
+
+constexpr BlockLight LIGHT_ALL_MIN = (LIGHT_COMPONENT_MIN << 12) | (LIGHT_COMPONENT_MIN << 8) |
+                                     (LIGHT_COMPONENT_MIN << 4) | LIGHT_COMPONENT_MIN;
 
 #endif //VW_BLOCK_H

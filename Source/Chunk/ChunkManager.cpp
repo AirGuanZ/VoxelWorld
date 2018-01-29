@@ -15,6 +15,7 @@ Created by AirGuanZ
 
 ChunkManager::ChunkManager(int loadDistance,
                            int renderDistance,
+                           int unloadDistance,
                            int maxImpModelUpdates,
                            int maxUniModelUpdates,
                            int maxModelUpdates,
@@ -23,6 +24,7 @@ ChunkManager::ChunkManager(int loadDistance,
                            int uniLightUpdateDistance)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
+      unloadDistance_(unloadDistance),
       maxImpModelUpdates_(maxImpModelUpdates),
       maxUniModelUpdates_(maxUniModelUpdates),
       maxModelUpdates_(maxModelUpdates),
@@ -205,7 +207,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     decltype(chunks_) newChunks_;
     for(auto it : chunks_)
     {
-        if(!InLoadingRange(it.first.x, it.first.z))
+        if(!InUnloadingRange(it.first.x, it.first.z))
             Helper::SafeDeleteObjects(it.second);
         else
             newChunks_[it.first] = it.second;
@@ -456,6 +458,7 @@ void ChunkManager::ProcessModelUpdates(void)
         if(it == chunks_.end())
             continue;
 
+        bool con = false;
         for(int dx = -1; dx <= 1; ++dx)
         {
             for(int dz = -1; dz <= 1; ++dz)
@@ -463,10 +466,14 @@ void ChunkManager::ProcessModelUpdates(void)
                 if(chunks_.find({ pos.x + dx, pos.z + dz }) == chunks_.end())
                 {
                     uniModelWaiting_.insert(pos);
-                    continue;
+                    con = true;
+                    goto DEC_CON;
                 }
             }
         }
+    DEC_CON:
+        if(con)
+            continue;
 
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());

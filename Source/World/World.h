@@ -13,7 +13,7 @@ Created by AirGuanZ
 class World
 {
 public:
-    World(int preloadDis, int renderDis);
+    World(int preloadDis, int renderDis, int unloadDis);
     ~World(void);
 
     void Initialize(void);

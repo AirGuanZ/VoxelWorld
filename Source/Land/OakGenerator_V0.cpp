@@ -66,8 +66,8 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             if(dx != x || dz != z)
             {
                 ck->SetBlockType(dx, y + 5, dz, BlockType::Leaf);
-                for(int H = ck->GetHeight(dx, dz); H < y + 5; ++H)
-                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });
+                /*for(int H = ck->GetHeight(dx, dz); H < y + 5; ++H)
+                    lightUpdates.push_back({ xBase + dx, H, zBase + dz });*/
                 ck->SetHeight(dx, dz, y + 5);
             }
         }
@@ -96,7 +96,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
 
     //设置光照更新列表
 
-    for(int dx = x - 3; dx <= x + 3; ++dx)
+    /*for(int dx = x - 3; dx <= x + 3; ++dx)
     {
         for(int dz = z - 3; dz <= z + 3; ++dz)
         {
@@ -108,7 +108,7 @@ void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z, std::vector<IntVector3
             else
                 lightUpdates.push_back({ xBase + dx, y + 5, zBase + dz });
         }
-    }
+    }*/
 }
 
 void OakGenerator_V0::Make(Chunk *ck, std::vector<IntVector3> &lightUpdates) const

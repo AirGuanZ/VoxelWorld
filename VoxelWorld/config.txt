@@ -7,8 +7,9 @@ MSAA = 4
 
 [World]
 
-PreloadDistance = 10
+PreloadDistance = 11
 RenderDistance  = 8
+UnloadDistance  = 13
 
 [Fog]
 

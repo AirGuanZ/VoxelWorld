@@ -48,7 +48,7 @@ Created by AirGuanZ
 class ChunkManager
 {
 public:
-    ChunkManager(int loadDistance, int renderDistance,
+    ChunkManager(int loadDistance, int renderDistance, int unloadDistance,
         int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
         int maxUniLightUpdates, int maxLightUpdates,
         int uniLightUpdateDistance);
@@ -65,6 +65,7 @@ public:
             return it->second;
 
         LoadChunk(ckX, ckZ);
+
         assert((chunks_[{ ckX, ckZ }] != nullptr));
         return chunks_[{ ckX, ckZ }];
     }
@@ -175,6 +176,12 @@ public:
             centrePos_.z - loadDistance_ <= ckZ && ckZ <= centrePos_.z + loadDistance_;
     }
 
+    bool InUnloadingRange(int ckX, int ckZ)
+    {
+        return centrePos_.x - unloadDistance_ <= ckX && ckX <= centrePos_.x + unloadDistance_ &&
+            centrePos_.z - unloadDistance_ <= ckZ && ckZ <= centrePos_.z + unloadDistance_;
+    }
+
     void SetCentrePosition(int cenCkX, int cenCkZ);
 
     void MakeSectionModelInvalid(int xSection, int ySection, int zSection);
@@ -203,6 +210,7 @@ private:
 private:
     int loadDistance_;
     int renderDistance_;
+    int unloadDistance_;
     IntVectorXZ centrePos_;
 
     std::unordered_map<IntVectorXZ, Chunk*, IntVectorXZHasher> chunks_;
