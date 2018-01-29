@@ -29,6 +29,7 @@ public:
 
     BasicBufferView &operator=(const BasicBufferView &other)
     {
+        Helper::ReleaseCOMObjects(buf_);
         buf_ = other.buf_;
         Helper::AddRefForCOMObjects(buf_);
         return *this;

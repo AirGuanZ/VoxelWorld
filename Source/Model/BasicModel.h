@@ -33,6 +33,7 @@ public:
     }
 
     bool MakeVertexBuffer(void);
+    
     void Destroy(void);
 
     size_t GetVerticesCount(void) const

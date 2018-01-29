@@ -86,10 +86,7 @@ public:
     BlockLight GetBlockLight(int blkX, int blkY, int blkZ)
     {
         if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
-        {
-            return MakeLight(LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID,
-                             LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID);
-        }
+            return LIGHT_ALL_MAX;
         return GetChunk(BlockXZ_To_ChunkXZ(blkX), BlockXZ_To_ChunkXZ(blkZ))
             ->GetBlockLight(
                 BlockXZ_To_BlockXZInChunk(blkX),
@@ -101,8 +98,7 @@ public:
     {
         if(blkY < 0 || blkY >= CHUNK_MAX_HEIGHT)
         {
-            return { BlockType::Air, MakeLight(LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID,
-                                               LIGHT_COMPOIENT_INVALID, LIGHT_COMPOIENT_INVALID) };
+            return { BlockType::Air, LIGHT_ALL_MAX };
         }
 
         IntVectorXZ ck = BlockXZ_To_ChunkXZ({ blkX, blkZ });

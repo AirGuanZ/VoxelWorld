@@ -35,7 +35,7 @@ void Application::Run(void)
     InputManager &input = InputManager::GetInstance();
     if(!window.InitWindow(std::stoi(conf("Initialize", "WindowWidth")),
                           std::stoi(conf("Initialize", "WindowHeight")),
-                          L"Voxel World", initErrMsg) ||
+                          L"VoxelWorld", initErrMsg) ||
        !window.InitD3D(std::stoi(conf("Initialize", "MSAA")), 0, initErrMsg))
     {
         throw std::runtime_error(initErrMsg.c_str());

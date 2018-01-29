@@ -21,8 +21,7 @@ Created by AirGuanZ
 //sunlight: 0-3
 using BlockLight = std::uint16_t;
 constexpr std::uint8_t LIGHT_COMPONENT_MAX = 0x0F;
-constexpr std::uint8_t LIGHT_COMPONENT_MIN = 1;
-constexpr std::uint8_t LIGHT_COMPOIENT_INVALID = 0;
+constexpr std::uint8_t LIGHT_COMPONENT_MIN = 0;
 
 enum BlockFace : std::uint8_t
 {
@@ -50,7 +49,7 @@ inline BlockLight SetGreen   (BlockLight bl, std::uint8_t g) { return (g << 8) |
 inline BlockLight SetBlue    (BlockLight bl, std::uint8_t b) { return (b << 4) | (bl & 0xFF0F); }
 inline BlockLight SetSunlight(BlockLight bl, std::uint8_t s) { return s | (bl & 0xFFF0); }
 
-inline float LightToFloat(std::uint8_t component) { return (component - 0.5f) / (LIGHT_COMPONENT_MAX - 0.5f); }
+inline float LightToFloat(std::uint8_t component) { return (component + 0.5f) / (LIGHT_COMPONENT_MAX + 0.5f); }
 
 inline constexpr BlockLight MakeLight(std::uint8_t r, std::uint8_t g, std::uint8_t b, std::uint8_t s)
 {

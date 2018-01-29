@@ -7,13 +7,6 @@ Created by AirGuanZ
 #include "../Window/Window.h"
 #include "BlendState.h"
 
-BlendState::BlendState(void)
-    : BlendState(D3D11_BLEND_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,
-                 D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD)
-{
-
-}
-
 BlendState::BlendState(D3D11_BLEND src, D3D11_BLEND dst, D3D11_BLEND_OP op,
                        D3D11_BLEND srcA, D3D11_BLEND dstA, D3D11_BLEND_OP opA)
     : state_(nullptr)
@@ -31,9 +24,4 @@ BlendState::BlendState(D3D11_BLEND src, D3D11_BLEND dst, D3D11_BLEND_OP op,
     dc.RenderTarget[0].SrcBlendAlpha = srcA;
 
     Window::GetInstance().GetD3DDevice()->CreateBlendState(&dc, &state_);
-}
-
-BlendState::~BlendState(void)
-{
-    Helper::ReleaseCOMObjects(state_);
 }

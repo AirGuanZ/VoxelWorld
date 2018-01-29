@@ -22,10 +22,10 @@ namespace OWEShaderAux
     template<ShaderStageSelector ShaderSelector>
     class ConstantBufferObjectBase;
 
-    template<typename _BufferType, ShaderStageSelector _StageSelector, bool _IsDynamic>
+    template<typename BufferType_, ShaderStageSelector _StageSelector, bool _IsDynamic>
     class ConstantBufferAttributes;
 
-    template<typename _BufferType, ShaderStageSelector _StageSelector, bool _IsDynamic>
+    template<typename BufferType_, ShaderStageSelector _StageSelector, bool _IsDynamic>
     class ConstantBufferObject;
 
     template<ShaderStageSelector>
@@ -66,21 +66,21 @@ namespace OWEShaderAux
         ID3D11Buffer *buf_;
     };
 
-    template<typename _BufferType, ShaderStageSelector _StageSelector, bool _IsDynamic>
+    template<typename BufferType_, ShaderStageSelector _StageSelector, bool _IsDynamic>
     class ConstantBufferAttributes
     {
     public:
-        using MyType = ConstantBufferObject<_BufferType, _StageSelector, _IsDynamic>;
-        using BufferType = _BufferType;
+        using MyType = ConstantBufferObject<BufferType_, _StageSelector, _IsDynamic>;
+        using BufferType = BufferType_;
 
         static constexpr ShaderStageSelector ShaderStage = _StageSelector;
         static constexpr bool IsDynamic = _IsDynamic;
     };
 
     //Static constant buffer object
-    template<typename _BufferType, ShaderStageSelector _StageSelector>
-    class ConstantBufferObject<_BufferType, _StageSelector, false>
-        : public ConstantBufferAttributes<_BufferType, _StageSelector, false>,
+    template<typename BufferType_, ShaderStageSelector _StageSelector>
+    class ConstantBufferObject<BufferType_, _StageSelector, false>
+        : public ConstantBufferAttributes<BufferType_, _StageSelector, false>,
           public ConstantBufferObjectBase<_StageSelector>,
           public Uncopiable
     {
@@ -93,12 +93,12 @@ namespace OWEShaderAux
 
         }
 
-        bool Initialize(ID3D11DeviceContext *devCon, UINT slot, const _BufferType *data)
+        bool Initialize(ID3D11DeviceContext *devCon, UINT slot, const BufferType_ *data)
         {
             assert(devCon && data);
             slot_ = slot;
             D3D11_SUBRESOURCE_DATA dataDesc = { &data, 0, 0 };
-            buf_ = GenConstantBuffer(dev, sizeof(_BufferType), false, &dataDesc);
+            buf_ = GenConstantBuffer(dev, sizeof(BufferType_), false, &dataDesc);
             return buf_ != nullptr;
         }
 
@@ -109,9 +109,9 @@ namespace OWEShaderAux
     };
 
     //Dynamic constant buffer object
-    template<typename _BufferType, ShaderStageSelector _StageSelector>
-    class ConstantBufferObject<_BufferType, _StageSelector, true>
-        : public ConstantBufferAttributes<_BufferType, _StageSelector, true>,
+    template<typename BufferType_, ShaderStageSelector _StageSelector>
+    class ConstantBufferObject<BufferType_, _StageSelector, true>
+        : public ConstantBufferAttributes<BufferType_, _StageSelector, true>,
           public ConstantBufferObjectBase<_StageSelector>,
           public Uncopiable
     {
@@ -121,7 +121,7 @@ namespace OWEShaderAux
             assert(devCon != nullptr && buf_ != nullptr);
             D3D11_MAPPED_SUBRESOURCE mappedRsc;
             devCon->Map(buf_, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedRsc);
-            std::memcpy(mappedRsc.pData, &data, sizeof(_BufferType));
+            std::memcpy(mappedRsc.pData, &data, sizeof(BufferType_));
             devCon->Unmap(buf_, 0);
         }
 
@@ -134,17 +134,17 @@ namespace OWEShaderAux
 
         }
 
-        bool Initialize(ID3D11Device *dev, UINT slot, const _BufferType *data = nullptr)
+        bool Initialize(ID3D11Device *dev, UINT slot, const BufferType_ *data = nullptr)
         {
             assert(dev);
             slot_ = slot;
             if(data)
             {
                 D3D11_SUBRESOURCE_DATA dataDesc = { &data, 0, 0 };
-                buf_ = GenConstantBuffer(dev, sizeof(_BufferType), true, &dataDesc);
+                buf_ = GenConstantBuffer(dev, sizeof(BufferType_), true, &dataDesc);
             }
             else
-                buf_ = GenConstantBuffer(dev, sizeof(_BufferType), true, nullptr);
+                buf_ = GenConstantBuffer(dev, sizeof(BufferType_), true, nullptr);
             return buf_ != nullptr;
         }
 

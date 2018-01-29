@@ -34,10 +34,10 @@ public:
 private:
     float flyUpSpeed_ = 0.009f;
     float flyDownSpeed_ = 0.009f;
-    float horMoveSpeed_ = 0.0065f;
+    float horMoveSpeed_ = 0.0085f;
 
     float mouseXSpeed_ = 0.00014f;
-    float mouseYSpeed_ = 0.00008f;
+    float mouseYSpeed_ = 0.00010f;
 
     Camera camera_;
 };

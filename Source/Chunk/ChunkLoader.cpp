@@ -207,7 +207,7 @@ namespace
                 progQueue.push_back({ x, y, z });
                 while(progQueue.size())
                 {
-                    auto[x, y, z] = progQueue.front();
+                    auto [x, y, z] = progQueue.front();
                     progQueue.pop_front();
 
                     BlockLight cenLight = GetLight(cks, x, y, z);
@@ -251,8 +251,8 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
     {
         { ck->GetChunkManager(), { ckPos.x - 1, ckPos.z } },        //0
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z } },        //1
-        { ck->GetChunkManager(), { ckPos.x, ckPos.z - 1 } },        //2
-        { ck->GetChunkManager(), { ckPos.x, ckPos.z + 1 } },        //3
+        { ck->GetChunkManager(), { ckPos.x,     ckPos.z - 1 } },    //2
+        { ck->GetChunkManager(), { ckPos.x,     ckPos.z + 1 } },    //3
         { ck->GetChunkManager(), { ckPos.x - 1, ckPos.z - 1 } },    //4
         { ck->GetChunkManager(), { ckPos.x - 1, ckPos.z + 1 } },    //5
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z - 1 } },    //6

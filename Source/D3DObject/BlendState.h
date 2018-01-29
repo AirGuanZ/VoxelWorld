@@ -12,7 +12,13 @@ Created by AirGuanZ
 class BlendState
 {
 public:
-    BlendState(void);
+    BlendState(void)
+        : BlendState(D3D11_BLEND_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,
+                     D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD)
+    {
+    
+    }
+    
     BlendState(D3D11_BLEND src, D3D11_BLEND dst, D3D11_BLEND_OP op,
                D3D11_BLEND srcA, D3D11_BLEND dstA, D3D11_BLEND_OP opA);
     
@@ -30,7 +36,10 @@ public:
         return *this;
     }
 
-    ~BlendState(void);
+    ~BlendState(void)
+    {
+        Helper::ReleaseCOMObjects(state_);
+    }
 
     operator ID3D11BlendState* (void)
     {

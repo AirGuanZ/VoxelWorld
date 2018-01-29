@@ -25,9 +25,8 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
     int yBase = ChunkSectionIndex_To_BlockY(section_);
 
     ChunkSectionModels *models = new ChunkSectionModels;
-    const ChunkTraversal &ckTra = ChunkTraversal::GetInstance();
 
-    for(const IntVector3 &f : ckTra.ChunkFaces())
+    for(const IntVector3 &f : ChunkTraversal::GetInstance().ChunkFaces())
     {
         int x = f.x + xBase, y = f.y + yBase, z = f.z + zBase;
 
@@ -45,17 +44,17 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
         {
             {
                 { ckMgr_->GetBlock(x - 1, y - 1, z - 1), ckMgr_->GetBlock(x - 1, y - 1, z), ckMgr_->GetBlock(x - 1, y - 1, z + 1) }, //[0][0]
-                { ckMgr_->GetBlock(x - 1, y, z - 1), ckMgr_->GetBlock(x - 1, y, z), ckMgr_->GetBlock(x - 1, y, z + 1) },             //[0][1]
+                { ckMgr_->GetBlock(x - 1, y, z - 1),     ckMgr_->GetBlock(x - 1, y, z),     ckMgr_->GetBlock(x - 1, y, z + 1) },     //[0][1]
                 { ckMgr_->GetBlock(x - 1, y + 1, z - 1), ckMgr_->GetBlock(x - 1, y + 1, z), ckMgr_->GetBlock(x - 1, y + 1, z + 1) }, //[0][2]
             },
             {
                 { ckMgr_->GetBlock(x, y - 1, z - 1), ckMgr_->GetBlock(x, y - 1, z), ckMgr_->GetBlock(x, y - 1, z + 1) },             //[0][0]
-                { ckMgr_->GetBlock(x, y, z - 1),     ckMgr_->GetBlock(x, y, z), ckMgr_->GetBlock(x, y, z + 1) },                     //[0][1]
+                { ckMgr_->GetBlock(x, y, z - 1),     ckMgr_->GetBlock(x, y, z),     ckMgr_->GetBlock(x, y, z + 1) },                 //[0][1]
                 { ckMgr_->GetBlock(x, y + 1, z - 1), ckMgr_->GetBlock(x, y + 1, z), ckMgr_->GetBlock(x, y + 1, z + 1) },             //[0][2]
             },
             {
                 { ckMgr_->GetBlock(x + 1, y - 1, z - 1), ckMgr_->GetBlock(x + 1, y - 1, z), ckMgr_->GetBlock(x + 1, y - 1, z + 1) }, //[0][0]
-                { ckMgr_->GetBlock(x + 1, y, z - 1), ckMgr_->GetBlock(x + 1, y, z), ckMgr_->GetBlock(x + 1, y, z + 1) },             //[0][1]
+                { ckMgr_->GetBlock(x + 1, y, z - 1),     ckMgr_->GetBlock(x + 1, y, z),     ckMgr_->GetBlock(x + 1, y, z + 1) },     //[0][1]
                 { ckMgr_->GetBlock(x + 1, y + 1, z - 1), ckMgr_->GetBlock(x + 1, y + 1, z), ckMgr_->GetBlock(x + 1, y + 1, z + 1) }, //[0][2]
             }
         };
@@ -82,17 +81,17 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
                 {
                     {
                         { ck_->GetBlock(Lx - 1, y - 1, Lz - 1), ck_->GetBlock(Lx - 1, y - 1, Lz), ck_->GetBlock(Lx - 1, y - 1, Lz + 1) }, //[0][0]
-                        { ck_->GetBlock(Lx - 1, y, Lz - 1), ck_->GetBlock(Lx - 1, y, Lz), ck_->GetBlock(Lx - 1, y, Lz + 1) },             //[0][1]
+                        { ck_->GetBlock(Lx - 1, y, Lz - 1),     ck_->GetBlock(Lx - 1, y, Lz),     ck_->GetBlock(Lx - 1, y, Lz + 1) },     //[0][1]
                         { ck_->GetBlock(Lx - 1, y + 1, Lz - 1), ck_->GetBlock(Lx - 1, y + 1, Lz), ck_->GetBlock(Lx - 1, y + 1, Lz + 1) }, //[0][2]
                     },
                     {
                         { ck_->GetBlock(Lx, y - 1, Lz - 1), ck_->GetBlock(Lx, y - 1, Lz), ck_->GetBlock(Lx, y - 1, Lz + 1) },             //[0][0]
-                        { ck_->GetBlock(Lx, y, Lz - 1),     ck_->GetBlock(Lx, y, Lz), ck_->GetBlock(Lx, y, Lz + 1) },                     //[0][1]
+                        { ck_->GetBlock(Lx, y, Lz - 1),     ck_->GetBlock(Lx, y, Lz),     ck_->GetBlock(Lx, y, Lz + 1) },                 //[0][1]
                         { ck_->GetBlock(Lx, y + 1, Lz - 1), ck_->GetBlock(Lx, y + 1, Lz), ck_->GetBlock(Lx, y + 1, Lz + 1) },             //[0][2]
                     },
                     {
                         { ck_->GetBlock(Lx + 1, y - 1, Lz - 1), ck_->GetBlock(Lx + 1, y - 1, Lz), ck_->GetBlock(Lx + 1, y - 1, Lz + 1) }, //[0][0]
-                        { ck_->GetBlock(Lx + 1, y, Lz - 1), ck_->GetBlock(Lx + 1, y, Lz), ck_->GetBlock(Lx + 1, y, Lz + 1) },             //[0][1]
+                        { ck_->GetBlock(Lx + 1, y, Lz - 1),     ck_->GetBlock(Lx + 1, y, Lz),     ck_->GetBlock(Lx + 1, y, Lz + 1) },     //[0][1]
                         { ck_->GetBlock(Lx + 1, y + 1, Lz - 1), ck_->GetBlock(Lx + 1, y + 1, Lz), ck_->GetBlock(Lx + 1, y + 1, Lz + 1) }, //[0][2]
                     }
                 };
