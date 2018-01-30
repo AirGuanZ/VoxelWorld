@@ -331,10 +331,18 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
     {
         AddFace({ 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f },
                 { 1.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f },
-                BlockAO(blks[0][2][2].light, blks[0][2][1].light, blks[1][2][1].light, blks[1][2][2].light),
-                BlockAO(blks[0][2][1].light, blks[0][2][0].light, blks[1][2][0].light, blks[1][2][1].light),
-                BlockAO(blks[1][2][1].light, blks[1][2][0].light, blks[2][2][0].light, blks[2][2][1].light),
-                BlockAO(blks[1][2][2].light, blks[1][2][1].light, blks[2][2][1].light, blks[2][2][2].light),
+                BlockAO(
+                    blks[0][2][2].light, blks[0][2][1].light,
+                    blks[1][2][1].light, blks[1][2][2].light),
+                BlockAO(
+                    blks[0][2][1].light, blks[0][2][0].light,
+                    blks[1][2][0].light, blks[1][2][1].light),
+                BlockAO(
+                    blks[1][2][1].light, blks[1][2][0].light,
+                    blks[2][2][0].light, blks[2][2][1].light),
+                BlockAO(
+                    blks[1][2][2].light, blks[1][2][1].light,
+                    blks[2][2][1].light, blks[2][2][2].light),
                 3, model);
     }
     //y-

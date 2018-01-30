@@ -48,13 +48,13 @@ void Actor::UpdateCamera(float deltaT, ChunkManager *ckMgr)
     Vector3 horMove = static_cast<float>(horFBMove) * horDir
                     + static_cast<float>(horLRMove) * horLeftDir;
     horMove.Normalize();
-    pos += horMoveSpeed_ * horMove * deltaT;
+    pos += horMoveSpeed_ * horMove * 16.66f;
     if(input.IsKeyDown(VK_LCONTROL))
-        pos += horMoveSpeed_ * horMove * deltaT * 8.0f;
+        pos += horMoveSpeed_ * horMove * (16.66f * 4.0f);
 
     //碰撞检测
 
-    //摄像机位置 -> 角色是否碰撞
+    //将一个位置设置为摄像机新位置，若它不会发生碰撞
     auto TryPos = [&](const Vector3 &p) -> bool
     {
         if(!ckMgr->DetectCollision(AABB{ p - Vector3{ 0.2f, 1.6f, 0.2f },

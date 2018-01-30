@@ -15,7 +15,7 @@ Created by AirGuanZ
 class Crosshair
 {
 public:
-    Crosshair(void);
+    bool Initialize(void);
 
     void Draw(ImmediateScreen2D *imScr2D);
 

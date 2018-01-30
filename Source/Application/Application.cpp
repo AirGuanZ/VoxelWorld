@@ -201,6 +201,11 @@ void Application::Run(void)
     }
 
     Crosshair crosshair;
+    if(!crosshair.Initialize())
+    {
+        std::cerr << "Failed to initialize crosshair icon" << std::endl;
+        return;
+    }
 
     input.LockCursor(true, window.ClientCentreX(), window.ClientCentreY());
     input.ShowCursor(false);

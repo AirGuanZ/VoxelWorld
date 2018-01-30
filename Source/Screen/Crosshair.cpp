@@ -7,9 +7,11 @@ Created by AirGuanZ
 #include "../Window/Window.h"
 #include "Crosshair.h"
 
-Crosshair::Crosshair(void)
+bool Crosshair::Initialize(void)
 {
-    tex_.LoadFromFile(CROSSHAIR_BASIC_TEXTURE);
+    if(!tex_.IsAvailable())
+        return tex_.LoadFromFile(CROSSHAIR_BASIC_TEXTURE);
+    return true;
 }
 
 void Crosshair::Draw(ImmediateScreen2D *imScr2D)
@@ -17,7 +19,7 @@ void Crosshair::Draw(ImmediateScreen2D *imScr2D)
     assert(imScr2D != nullptr);
     Window &win = Window::GetInstance();
 
-    constexpr float CROSSHAIR_PIXEL_SIZE = 35;
+    constexpr float CROSSHAIR_PIXEL_SIZE = 35.0f;
     float XSize = 0.5f * CROSSHAIR_PIXEL_SIZE / win.GetClientWidth();
     float YSize = 0.5f * CROSSHAIR_PIXEL_SIZE / win.GetClientHeight();
 
