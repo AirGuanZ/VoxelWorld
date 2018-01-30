@@ -85,6 +85,9 @@
     <Filter Include="Source\Chunk\Background">
       <UniqueIdentifier>{464f42f7-3556-4b41-83b9-f82eade51c1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Land\V1">
+      <UniqueIdentifier>{728ad859-3f52-4e5c-ae85-0c2731c875a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -188,6 +191,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
       <Filter>Source\Chunk\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\V1\Biome.cpp">
+      <Filter>Source\Land\V1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\V1\LandGenerator.cpp">
+      <Filter>Source\Land\V1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +334,15 @@
     </ClInclude>
     <ClInclude Include="..\Source\Utility\LinkedHashMap.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V1\Biome.h">
+      <Filter>Source\Land\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V1\Common.h">
+      <Filter>Source\Land\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V1\LandGenerator.h">
+      <Filter>Source\Land\V1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

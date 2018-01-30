@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_MATH_H
 #define VW_MATH_H
 
+#include <cmath>
 #include <d3d11.h>
 #include <SimpleMath.h>
 
@@ -39,6 +40,22 @@ inline bool operator==(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
 inline bool operator<(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
 {
     return lhs.x < rhs.x || (lhs.x == rhs.x && lhs.z < rhs.z);
+}
+
+inline IntVectorXZ operator+(const IntVectorXZ &lhs, const IntVectorXZ &rhs) noexcept
+{
+    return { lhs.x + rhs.x, lhs.z + rhs.z };
+}
+
+inline IntVectorXZ operator*(int lhs, const IntVectorXZ &rhs) noexcept
+{
+    return { lhs * rhs.x, lhs * rhs.z };
+}
+
+inline float Distance(const IntVectorXZ &L, const IntVectorXZ &R) noexcept
+{
+    return std::sqrt(static_cast<float>(
+        (L.x - R.x) * (L.x - R.x) + (L.z - R.z) * (L.z - R.z)));
 }
 
 struct IntVectorXZHasher

@@ -14,22 +14,22 @@ Created by AirGuanZ
 
 enum class BlockType : std::uint8_t
 {
-    Air             = 0,
-    Bedrock         = Air               + 1,
-    Stone           = Bedrock           + 1,
-    Dirt            = Stone             + 1,
-    GrassBox        = Dirt              + 1,
-    Sand            = GrassBox + 1,
-    Wood            = Sand              + 1,
-    Leaf            = Wood              + 1,
-    RedGlowStone    = Leaf              + 1,
-    GreenGlowStone  = RedGlowStone      + 1,
-    BlueGlowStone   = GreenGlowStone    + 1,
-    Grass           = BlueGlowStone     + 1,
-    Flower          = Grass             + 1,
-    Water           = Flower            + 1,
+    Air,
+    Bedrock,
+    Stone,
+    Dirt,
+    GrassBox,
+    Sand,
+    Wood,
+    Leaf,
+    RedGlowStone,
+    GreenGlowStone,
+    BlueGlowStone,
+    Grass,
+    Flower,
+    Water,
 
-    BlockTypeNum    = Water             + 1
+    BlockTypeNum = Water + 1
 };
 
 enum class BlockRenderer : std::uint8_t

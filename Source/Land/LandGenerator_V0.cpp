@@ -31,57 +31,34 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
         {
             int h = GetHeight(x + xBase, z + zBase);
 
-            ck->SetBlock(x, 0, z,
-            { BlockType::Bedrock, LIGHT_ALL_MIN });
+            ck->SetBlockType(x, 0, z, BlockType::Bedrock);
 
             for(int y = 1; y != h - 2; ++y)
-            {
-                ck->SetBlock(x, y, z,
-                { BlockType::Stone, LIGHT_ALL_MIN });
-            }
+                ck->SetBlockType(x, y, z, BlockType::Stone);
 
             for(int y = h - 2; y != h; ++y)
-            {
-                ck->SetBlock(x, y, z,
-                { BlockType::Dirt, LIGHT_ALL_MIN });
-            }
+                ck->SetBlockType(x, y, z, BlockType::Dirt);
 
             constexpr int WATER_LEVEL = 40;
             if(h < WATER_LEVEL)
             {
                 for(int y = h; y <= WATER_LEVEL; ++y)
-                {
-                    ck->SetBlock(x, y, z,
-                    { BlockType::Water, LIGHT_ALL_MIN });
-                }
+                    ck->SetBlockType(x, y, z, BlockType::Water);
                 h = WATER_LEVEL;
             }
             else
             {
-                ck->SetBlock(x, h, z,
-                { BlockType::GrassBox, LIGHT_ALL_MIN });
+                ck->SetBlockType(x, h, z, BlockType::GrassBox);
 
                 float gfv = Random(1, x + xBase, z + zBase, 0.0f, 1.0f);
                 if(gfv < 0.1f)
-                {
-                    ck->SetBlock(x, h + 1, z,
-                    { BlockType::Grass, LIGHT_ALL_MIN });
-                    ++h;
-                }
+                    ck->SetBlockType(x, ++h, z, BlockType::Grass);
                 else if(gfv < 0.11f)
-                {
-                    ck->SetBlock(x, h + 1, z,
-                    { BlockType::Flower, LIGHT_ALL_MIN });
-                    ++h;
-                }
-
+                    ck->SetBlockType(x, ++h, z, BlockType::Flower);
             }
 
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
-            {
-                ck->SetBlock(x, y, z,
-                { BlockType::Air, LIGHT_ALL_MIN });
-            }
+                ck->SetBlockType(x, y, z, BlockType::Air);
 
             ck->SetHeight(x, z, h);
         }
@@ -94,11 +71,12 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
     {
         for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
         {
-            for(int y = ck->GetHeight(x, z) + 1; y < CHUNK_MAX_HEIGHT; ++y)
-            {
-                ck->SetBlockLight(x, y, z, MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
-                                                     LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX));
-            }
+            int H = ck->GetHeight(x, z);
+            for(int y = 0; y <= H; ++y)
+                ck->SetBlockLight(x, y, z, LIGHT_ALL_MIN);
+
+            for(int y = H + 1; y < CHUNK_MAX_HEIGHT; ++y)
+                ck->SetBlockLight(x, y, z, LIGHT_MIN_MIN_MIN_MAX);
         }
     }
 }

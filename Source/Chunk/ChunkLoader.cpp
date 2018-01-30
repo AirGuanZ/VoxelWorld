@@ -7,6 +7,8 @@ Created by AirGuanZ
 #include <cassert>
 
 #include "../Land/LandGenerator_V0.h"
+#include "../Land/V1/LandGenerator.h"
+
 #include "../Utility/HelperFunctions.h"
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
@@ -260,13 +262,14 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
     };
 
     constexpr LandGenerator_V0::Seed seed = 123;
+    LandGenerator_V0 land(seed);
 
     for(int i = 0; i != 8; ++i)
     {
         Chunk &dst = neis[i];
         if(!ckPool_.GetChunk(dst))
         {
-            LandGenerator_V0(seed).GenerateLand(&dst);
+            land.GenerateLand(&dst);
 
             Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
             CopyChunkData(*addedCk, dst);
@@ -276,7 +279,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
 
     if(!ckPool_.GetChunk(*ck))
     {
-        LandGenerator_V0(seed).GenerateLand(ck);
+        land.GenerateLand(ck);
 
         Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
         CopyChunkData(*addedCk, *ck);
