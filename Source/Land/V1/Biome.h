@@ -22,12 +22,12 @@ namespace LandGenerator_V1
         BiomeTypeNum = Hill + 1,
     };
 
-    constexpr int BIOME_GRID_SIZE = 1;
+    constexpr int BIOME_GRID_SIZE = 8;
 
     inline int ChunkXZ_To_BiomeGridXZ(int pos)
     {
-        return (pos + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) / (CHUNK_SECTION_SIZE * BIOME_GRID_SIZE)
-            - BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET / (CHUNK_SECTION_SIZE * BIOME_GRID_SIZE);
+        return (pos + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) / BIOME_GRID_SIZE
+            - BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET / BIOME_GRID_SIZE;
     }
 
     inline IntVectorXZ ChunkXZ_To_BiomeGridXZ(const IntVectorXZ pos)
@@ -37,7 +37,7 @@ namespace LandGenerator_V1
 
     inline int ChunkXZ_To_ChunkXZInBiomeGrid(int pos)
     {
-        return (pos + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) % (CHUNK_SECTION_SIZE * BIOME_GRID_SIZE);
+        return (pos + BLOCK_POSITION_CONVENTION_POSITIVE_OFFSET) % BIOME_GRID_SIZE;
     }
 
     inline IntVectorXZ ChunkXZ_To_ChunkXZInBiomeGrid(const IntVectorXZ pos)
@@ -53,8 +53,10 @@ namespace LandGenerator_V1
         //factor和neiFactor之和应为1，用来做群系之间的高度插值
         struct BiomeResult
         {
-            BiomeType type, neiType;
-            float factor, neiFactor;
+            BiomeType type;
+            BiomeType neiType;
+            float factor;
+            float neiFactor;
         };
 
         BiomeGenerator(Seed seed);

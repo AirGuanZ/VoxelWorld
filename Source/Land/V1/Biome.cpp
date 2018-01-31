@@ -68,19 +68,32 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
     auto [gridX, gridZ] = ChunkXZ_To_BiomeGridXZ({ ckX, ckZ });
     auto [rckX, rckZ]   = ChunkXZ_To_ChunkXZInBiomeGrid({ ckX, ckZ });
 
-    IntVectorXZ gridCentre[5][5];
-    BiomeType gridCentreType[5][5];
+    constexpr int GRID_RADIUS = 2;
+    constexpr int GRID_NUM = 2 * GRID_RADIUS + 1;
+    constexpr int PNT_NUM_IN_GRID = 2;
 
-    for(int ix = 0; ix != 5; ++ix)
+    struct GridPnt
     {
-        int gx = gridX + ix - 2;
-        for(int iz = 0; iz != 5; ++iz)
-        {
-            int gz = gridZ + iz - 2;
+        IntVectorXZ centre;
+        BiomeType type;
+    };
+    std::vector<GridPnt> pnts;
 
-            gridCentre[ix][iz] = CHUNK_SECTION_SIZE * BIOME_GRID_SIZE * IntVectorXZ{ ix - 2, iz - 2 }
-                                 + RandCentre(seed_, gx, gz);
-            gridCentreType[ix][iz] = RandBiome(seed_, gx, gz);
+    for(int ix = 0; ix != GRID_NUM; ++ix)
+    {
+        int gx = gridX + ix - GRID_RADIUS;
+        for(int iz = 0; iz != GRID_NUM; ++iz)
+        {
+            int gz = gridZ + iz - GRID_RADIUS;
+
+            for(int i = 0; i != PNT_NUM_IN_GRID; ++i)
+            {
+                IntVectorXZ pos = CHUNK_SECTION_SIZE * BIOME_GRID_SIZE *
+                                    IntVectorXZ{ ix - GRID_RADIUS, iz - GRID_RADIUS }
+                                    + RandCentre(seed_ * (i * 13) + gx, gx, gz);
+                BiomeType type = RandBiome(seed_, gx, gz);
+                pnts.push_back({ pos, type });
+            }
         }
     }
 
@@ -98,17 +111,13 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
             float minDis  = (std::numeric_limits<float>::max)();
             float minDis2 = (std::numeric_limits<float>::max)();
 
-            for(int ix = 0; ix != 5; ++ix)
+            for(const GridPnt &p : pnts)
             {
-                for(int iz = 0; iz != 5; ++iz)
+                float dis = Distance(p.centre, { x, z });
+                if(dis < minDis)
                 {
-                    float dis = Distance(gridCentre[ix][iz], { x, z });
-                    if(dis < minDis)
-                    {
-                        minDis2 = minDis, minDis = dis;
-                        minDis2Biome = minDisBiome, minDisBiome = gridCentreType[ix][iz];
-                        //std::cerr << "OMG";
-                    }
+                    minDis2 = minDis, minDis = dis;
+                    minDis2Biome = minDisBiome, minDisBiome = p.type;
                 }
             }
 
