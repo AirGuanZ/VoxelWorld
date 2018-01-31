@@ -113,7 +113,7 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
 
             for(const GridPnt &p : pnts)
             {
-                float dis = Distance(p.centre, { x, z });
+                float dis = Distance(p.centre, { x, z }) * Distance(p.centre, { x, z });
                 if(dis < minDis)
                 {
                     minDis2 = minDis, minDis = dis;

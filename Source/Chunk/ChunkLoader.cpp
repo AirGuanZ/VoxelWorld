@@ -261,7 +261,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
-    LandGenerator_V1::LandGenerator land(4861586);
+    LandGenerator_V0 land(4861586);
 
     for(int i = 0; i != 8; ++i)
     {

@@ -27,9 +27,9 @@ void LandGenerator::GenerateLand(Chunk *ck)
         {
             auto biomeRt = biome.GetResult(x, z);
 
-            float baseHeight = biomeRt.factor * BaseHeight(biomeRt.type) +
+            float baseHeight = biomeRt.factor    * BaseHeight(biomeRt.type) +
                                biomeRt.neiFactor * BaseHeight(biomeRt.neiType);
-            float variHeight = biomeRt.factor * VariHeight(biomeRt.type) +
+            float variHeight = biomeRt.factor    * VariHeight(biomeRt.type) +
                                biomeRt.neiFactor * VariHeight(biomeRt.neiType);
 
             int h = static_cast<int>(baseHeight + variHeight * Noise(xBase + x, zBase + z));

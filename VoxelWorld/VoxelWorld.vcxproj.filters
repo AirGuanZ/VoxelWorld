@@ -88,6 +88,9 @@
     <Filter Include="Source\Land\V1">
       <UniqueIdentifier>{728ad859-3f52-4e5c-ae85-0c2731c875a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Land\PerlinNoise">
+      <UniqueIdentifier>{23abce2b-22a5-4b23-a980-8635d63e20b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
