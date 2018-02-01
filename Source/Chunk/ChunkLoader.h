@@ -61,6 +61,23 @@ public:
     ChunkLoaderMessage *FetchMsg(void);
     std::queue<ChunkLoaderMessage*> FetchAllMsgs(void);
 
+    template<typename FuncType>
+    void DelTaskIf(FuncType &&func)
+    {
+        std::lock_guard<std::mutex> lk(taskQueueMutex_);
+        std::queue<ChunkLoaderTask*> newTasks;
+        while(loaderTasks_.size())
+        {
+            ChunkLoaderTask *task = loaderTasks_.front();
+            loaderTasks_.pop();
+            if(func(task))
+                newTasks.push(task);
+            else
+                Helper::SafeDeleteObjects(task);
+        }
+        loaderTasks_ = std::move(newTasks);
+    }
+
     //真正的区块数据加载函数
     //和线程没啥关系
     void LoadChunkData(Chunk *ck);
@@ -88,6 +105,11 @@ public:
     ~ChunkLoaderTask_LoadChunkData(void);
 
     void Run(ChunkLoader *loader);
+
+    IntVectorXZ GetPosition(void)
+    {
+        return ck_->GetPosition();
+    }
 
 private:
     Chunk *ck_;

@@ -347,6 +347,9 @@
     <ClInclude Include="..\Source\Land\V1\LandGenerator.h">
       <Filter>Source\Land\V1</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Land\PerlinNoise\PerlinNoise2D.h">
+      <Filter>Source\Land\PerlinNoise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

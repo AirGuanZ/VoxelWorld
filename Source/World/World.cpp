@@ -3,6 +3,8 @@ Filename: World.cpp
 Date: 2018.1.20
 Created by AirGuanZ
 ================================================================*/
+#include <iostream>
+
 #include "../Block/BlockInfoManager.h"
 #include "../Input/InputManager.h"
 #include "../Resource/ResourceName.h"
@@ -45,7 +47,7 @@ void World::Update(float deltaT)
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().x)),
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().z)));
 
-    //∑ΩøÈ∆∆ªµ
+    //∑ΩøÈ∆∆ªµ∫Õ∑≈÷√
     Block blk; BlockFace face; IntVector3 pickPos;
     if(ckMgr_.PickBlock(actor_.GetCameraPosition(), actor_.GetCamera().GetDirection(),
         10.0f, 0.01f, IsNotAirOrWater, blk, face, pickPos))

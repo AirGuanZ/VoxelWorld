@@ -22,7 +22,7 @@ namespace LandGenerator_V1
         BiomeTypeNum = Hill + 1,
     };
 
-    constexpr int BIOME_GRID_SIZE = 8;
+    constexpr int BIOME_GRID_SIZE = 32;
 
     inline int ChunkXZ_To_BiomeGridXZ(int pos)
     {
@@ -56,7 +56,6 @@ namespace LandGenerator_V1
             BiomeType type;
             BiomeType neiType;
             float factor;
-            float neiFactor;
         };
 
         BiomeGenerator(Seed seed);
@@ -67,7 +66,7 @@ namespace LandGenerator_V1
 
     private:
         Seed seed_;
-        BiomeResult result[CHUNK_SECTION_SIZE * CHUNK_SECTION_SIZE];
+        BiomeResult result[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
     };
 }
 

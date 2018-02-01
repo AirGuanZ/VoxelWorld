@@ -27,7 +27,7 @@ using namespace LandGenerator_V1;
 这一信息应当被缓存下来
 */
 
-#define RESULT(X, Z) result[Chunk::XZ((X), (Z))]
+#define RESULT(X, Z) result[(X)][(Z)]
 
 namespace
 {
@@ -58,8 +58,7 @@ namespace
 BiomeGenerator::BiomeGenerator(Seed seed)
     : seed_(seed)
 {
-    for(BiomeResult &unit : result)
-        unit = BiomeResult{ BiomeType::Field, BiomeType::Field, 1.0f, 0.0f };
+
 }
 
 void BiomeGenerator::Generate(int ckX, int ckZ)
@@ -68,7 +67,7 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
     auto [gridX, gridZ] = ChunkXZ_To_BiomeGridXZ({ ckX, ckZ });
     auto [rckX, rckZ]   = ChunkXZ_To_ChunkXZInBiomeGrid({ ckX, ckZ });
 
-    constexpr int GRID_RADIUS = 2;
+    constexpr int GRID_RADIUS = 4;
     constexpr int GRID_NUM = 2 * GRID_RADIUS + 1;
     constexpr int PNT_NUM_IN_GRID = 2;
 
@@ -90,7 +89,7 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
             {
                 IntVectorXZ pos = CHUNK_SECTION_SIZE * BIOME_GRID_SIZE *
                                     IntVectorXZ{ ix - GRID_RADIUS, iz - GRID_RADIUS }
-                                    + RandCentre(seed_ * (i * 13) + gx, gx, gz);
+                                    + RandCentre(seed_ * (i * 13), gx, gz);
                 BiomeType type = RandBiome(seed_, gx, gz);
                 pnts.push_back({ pos, type });
             }
@@ -107,22 +106,30 @@ void BiomeGenerator::Generate(int ckX, int ckZ)
         {
             int z = zBase + bz;
 
-            BiomeType minDisBiome = BiomeType::Field, minDis2Biome = BiomeType::Field;
+            BiomeType minDisBiome  = BiomeType::Field;
+            BiomeType minDis2Biome = BiomeType::Field;
             float minDis  = (std::numeric_limits<float>::max)();
             float minDis2 = (std::numeric_limits<float>::max)();
 
             for(const GridPnt &p : pnts)
             {
-                float dis = Distance(p.centre, { x, z }) * Distance(p.centre, { x, z });
+                float dis = Distance(p.centre, { x, z });
                 if(dis < minDis)
                 {
-                    minDis2 = minDis, minDis = dis;
-                    minDis2Biome = minDisBiome, minDisBiome = p.type;
+                    minDis2 = minDis;
+                    minDis = dis;
+                    minDis2Biome = minDisBiome;
+                    minDisBiome = p.type;
+                }
+                else if(dis < minDis2)
+                {
+                    minDis2 = dis;
+                    minDis2Biome = p.type;
                 }
             }
 
-            float factor = (std::min)(0.5f, 0.8f * (minDis2 - minDis) / (minDis2 + minDis)) + 0.5f;
-            RESULT(bx, bz) = BiomeResult{ minDisBiome, minDis2Biome, factor, 1.0f - factor };
+            float factor = (std::min)(1.0f, (minDis2 - minDis) / (minDis2 + minDis));
+            RESULT(bx, bz) = BiomeResult{ minDisBiome, minDis2Biome, factor };
         }
     }
 }

@@ -217,6 +217,15 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     //缺数据的建立加载任务
     //不缺数据的看看需不需要建立模型任务
 
+    ckLoader_.DelTaskIf([=](ChunkLoaderTask *task) -> bool
+    {
+        assert(task != nullptr);
+
+        ChunkLoaderTask_LoadChunkData *t = dynamic_cast<ChunkLoaderTask_LoadChunkData*>(task);
+        auto [x, z] = t->GetPosition();
+        return !InLoadingRange(x, z);
+    });
+
     int loadRangeXEnd = centrePos_.x + loadDistance_;
     int loadRangeZEnd = centrePos_.z + loadDistance_;
     for(int newCkX = centrePos_.x - loadDistance_; newCkX <= loadRangeXEnd; ++newCkX)

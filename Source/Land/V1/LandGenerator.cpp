@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <cstdlib>
 
+#include "../OakGenerator_V0.h"
 #include "Biome.h"
 #include "LandGenerator.h"
 
@@ -27,12 +28,17 @@ void LandGenerator::GenerateLand(Chunk *ck)
         {
             auto biomeRt = biome.GetResult(x, z);
 
-            float baseHeight = biomeRt.factor    * BaseHeight(biomeRt.type) +
-                               biomeRt.neiFactor * BaseHeight(biomeRt.neiType);
-            float variHeight = biomeRt.factor    * VariHeight(biomeRt.type) +
-                               biomeRt.neiFactor * VariHeight(biomeRt.neiType);
+            float bhFactor = biomeRt.type == biomeRt.neiType ? 1.0f :
+                (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.2f) / 0.8f) / 2.0f);
+            float baseHeight = bhFactor * BaseHeight(biomeRt.type) + 30.0f;
 
-            int h = static_cast<int>(baseHeight + variHeight * Noise(xBase + x, zBase + z));
+            float vhFactor = /*biomeRt.type == biomeRt.neiType ? 1.0f :*/
+                (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.2f) / 0.8f) / 4.0f);
+            float variHeight = vhFactor * VariHeight(biomeRt.type);
+
+            int h = static_cast<int>(baseHeight + variHeight * Noise(0, xBase + x, zBase + z) +
+                        30 * Noise(137, xBase + x, zBase + z));
+
             switch(biomeRt.type)
             {
             case BiomeType::Ocean:
@@ -56,6 +62,8 @@ void LandGenerator::GenerateLand(Chunk *ck)
         }
     }
 
+    OakGenerator_V0(seed_).Make(ck);
+
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
         for(int z = 0; z != CHUNK_SECTION_SIZE; ++z)
@@ -63,7 +71,6 @@ void LandGenerator::GenerateLand(Chunk *ck)
             int H = ck->GetHeight(x, z);
             for(int y = 0; y <= H; ++y)
                 ck->SetBlockLight(x, y, z, LIGHT_ALL_MIN);
-
             for(int y = H + 1; y < CHUNK_MAX_HEIGHT; ++y)
                 ck->SetBlockLight(x, y, z, LIGHT_MIN_MIN_MIN_MAX);
         }
@@ -76,7 +83,7 @@ float LandGenerator::Random(Seed seedOffset, int blkX, int blkZ, float min, floa
         RandomEngine((seed_ + seedOffset) * blkX + blkZ));
 }
 
-float LandGenerator::Noise(int x, int z) const
+float LandGenerator::Noise(Seed offset, int x, int z) const
 {
     constexpr int LEVEL_NUM = 5;
     constexpr int MAX_GRID_SIZE = 128;
@@ -88,7 +95,7 @@ float LandGenerator::Noise(int x, int z) const
 
     auto randXZ = [&](int x, int z, int level)
     {
-        return dis(RandomEngine(seed_ * x + z + level * level));
+        return dis(RandomEngine((seed_ + offset) * x + z + level * level));
     };
 
     auto lerp = [](float a, float b, float t)
@@ -120,20 +127,9 @@ float LandGenerator::Noise(int x, int z) const
 
 float LandGenerator::BaseHeight(BiomeType type) const
 {
-    switch(type)
-    {
-    case BiomeType::Ocean:
-        return 25.0f;
-    case BiomeType::Field:
-        return 35.0f;
-    case BiomeType::Plain:
-        return 30.0f;
-    case BiomeType::Desert:
-        return 30.0f;
-    case BiomeType::Hill:
-        return 40.0f;
-    }
-    return 10.0f;
+    if(type == BiomeType::Ocean)
+        return -30.0f;
+    return 0.0f;
 }
 
 float LandGenerator::VariHeight(BiomeType type) const
@@ -141,15 +137,15 @@ float LandGenerator::VariHeight(BiomeType type) const
     switch(type)
     {
     case BiomeType::Ocean:
-        return 5.0f;
+        return 4.0f;
     case BiomeType::Field:
-        return 10.0f;
+        return 40.0f;
     case BiomeType::Plain:
-        return 3.0f;
+        return 4.0f;
     case BiomeType::Desert:
-        return 10.0f;
-    case BiomeType::Hill:
         return 30.0f;
+    case BiomeType::Hill:
+        return 80.0f;
     }
     return 10.0f;
 }
@@ -163,7 +159,7 @@ void LandGenerator::MakeOcean(Chunk *ck, int x, int z, int h) const
         Random(457, ck->GetXPosBase() + x, ck->GetZPosBase() + z, 0.0f, 1.0f) > 0.5f ?
         BlockType::Sand : BlockType::Stone);
 
-    constexpr int WATER_LEVEL = 30;
+    constexpr int WATER_LEVEL = 28;
     for(int y = h + 1; y <= WATER_LEVEL; ++y)
         ck->SetBlockType(x, y, z, BlockType::Water);
     h = (std::max)(h, WATER_LEVEL);
@@ -214,5 +210,12 @@ void LandGenerator::MakeDesert(Chunk *ck, int x, int z, int h) const
 
 void LandGenerator::MakeHill(Chunk *ck, int x, int z, int h) const
 {
-    MakeField(ck, x, z, h);
+    ck->SetBlockType(x, 0, z, BlockType::Bedrock);
+    for(int y = 1; y <= h; ++y)
+        ck->SetBlockType(x, y, z, BlockType::Stone);
+
+    for(int y = h + 1; y < CHUNK_MAX_HEIGHT; ++y)
+        ck->SetBlockType(x, y, z, BlockType::Air);
+
+    ck->SetHeight(x, z, h);
 }

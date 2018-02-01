@@ -25,7 +25,7 @@ namespace LandGenerator_V1
 
     private:
         float Random(Seed seedOffset, int blkX, int blkZ, float min, float max) const;
-        float Noise(int x, int z) const;
+        float Noise(Seed offset, int x, int z) const;
 
         float BaseHeight(BiomeType type) const;
         float VariHeight(BiomeType type) const;

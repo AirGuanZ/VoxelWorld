@@ -151,9 +151,7 @@ namespace
     inline BlockLight GetLight(Chunk *(&cks)[3][3], int x, int y, int z)
     {
         if(OutOfBound(x, y, z))
-        {
             return LIGHT_ALL_MAX;
-        }
         return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
             ->GetBlockLight(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
     }
@@ -169,9 +167,7 @@ namespace
     inline BlockType GetType(Chunk *(&cks)[3][3], int x, int y, int z)
     {
         if(OutOfBound(x, y, z))
-        {
             return BlockType::Air;
-        }
         return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
             ->GetBlockType(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
     }
@@ -261,7 +257,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
-    LandGenerator_V0 land(4861586);
+    LandGenerator_V1::LandGenerator land(4861586);
 
     for(int i = 0; i != 8; ++i)
     {
@@ -284,7 +280,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         CopyChunkData(*addedCk, *ck);
         ckPool_.AddChunk(addedCk);
     }
-
+    
     Chunk *cks[3][3] =
     {
         { neis + 4, neis + 0, neis + 5 },

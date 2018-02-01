@@ -42,7 +42,7 @@ static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially
 inline std::uint8_t GetRed     (BlockLight bl) { return bl >> 12; }
 inline std::uint8_t GetGreen   (BlockLight bl) { return (bl >> 8) & 0x0F; }
 inline std::uint8_t GetBlue    (BlockLight bl) { return (bl >> 4) & 0x0F; }
-inline std::uint8_t GetSunlight(BlockLight bl) { return bl & 0x0F; }
+inline std::uint8_t GetSunlight(BlockLight bl) { return bl & 0x000F; }
 
 inline BlockLight SetRed     (BlockLight bl, std::uint8_t r) { return (r << 12) | (bl & 0x0FFF); }
 inline BlockLight SetGreen   (BlockLight bl, std::uint8_t g) { return (g << 8) | (bl & 0xF0FF); }
