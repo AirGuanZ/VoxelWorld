@@ -69,17 +69,10 @@ namespace
     }
 }
 
+//IMPROVE
 void ChunkManager::RemoveLightSource(int x, int y, int z)
 {
-    struct RMNode
-    {
-        IntVector3 pos;
-        BlockLight light;
-    };
-    std::deque<RMNode> rmQueue;
-    std::deque<IntVector3> pgQueue;
-
-    //TODO
+    UpdateLight(x, y, z);
 }
 
 void ChunkManager::UpdateLight(int x, int y, int z)

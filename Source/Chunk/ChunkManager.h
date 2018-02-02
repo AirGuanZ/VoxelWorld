@@ -137,8 +137,7 @@ public:
         }
 
         if(BlockInfoManager::GetInstance().IsGlow(type))
-            //RemoveLightSource(blkX, blkY, blkZ);
-            UpdateLight(blkX, blkY, blkZ);
+            RemoveLightSource(blkX, blkY, blkZ);
         else
             UpdateLight(blkX, blkY, blkZ);
     }

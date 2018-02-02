@@ -36,4 +36,9 @@ Created by AirGuanZ
 
 #define CROSSHAIR_BASIC_TEXTURE VW_FILENAME(Bin/Texture/Crosshair/cross.png)
 
+//ActorRendererœ‡πÿ
+
+#define ACTOR_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Actor/vertex.hlsl)
+#define ACTOR_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Actor/pixel.hlsl)
+
 #endif //VW_RESOURCE_NAME_H
