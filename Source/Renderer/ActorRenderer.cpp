@@ -22,3 +22,9 @@ bool ActorRenderer::Initialize(void)
 {
     //TODO
 }
+
+void ActorRenderer::Destroy(void)
+{
+    shader_.Destroy();
+    Helper::ReleaseCOMObjects(inputLayout_);
+}
