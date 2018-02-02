@@ -22,11 +22,8 @@ float OakGenerator_V0::Random(Seed seedOffset, int blkX, int blkZ, float min, fl
 void OakGenerator_V0::Try(Chunk *ck, int x, int y, int z) const
 {
     assert(ck != nullptr);
-    
-    Chunk::BlockTypeData &blks = ck->blocks;
-    Chunk::HeightMap &hm = ck->heightMap;
 
-    //放置橡树的合法性检验
+    //合法性检验
 
     if(((x - 3) | (CHUNK_SECTION_SIZE - 1 - (x + 3)) |
         (z - 3) | (CHUNK_SECTION_SIZE - 1 - (z + 3)) |

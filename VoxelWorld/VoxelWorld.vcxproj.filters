@@ -201,6 +201,9 @@
     <ClCompile Include="..\Source\Land\V1\LandGenerator.cpp">
       <Filter>Source\Land\V1</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Land\V1\PalmGenerator.cpp">
+      <Filter>Source\Land\V1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Land\PerlinNoise\PerlinNoise2D.h">
       <Filter>Source\Land\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V1\PalmGenerator.h">
+      <Filter>Source\Land\V1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

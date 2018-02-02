@@ -9,6 +9,7 @@ Created by AirGuanZ
 #include "../OakGenerator_V0.h"
 #include "Biome.h"
 #include "LandGenerator.h"
+#include "PalmGenerator.h"
 
 using namespace LandGenerator_V1;
 
@@ -29,11 +30,10 @@ void LandGenerator::GenerateLand(Chunk *ck)
             auto biomeRt = biome.GetResult(x, z);
 
             float bhFactor = biomeRt.type == biomeRt.neiType ? 1.0f :
-                (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.2f) / 0.8f) / 2.0f);
+                (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.3f) / 0.5f) / 2.0f);
             float baseHeight = bhFactor * BaseHeight(biomeRt.type) + 30.0f;
 
-            float vhFactor = /*biomeRt.type == biomeRt.neiType ? 1.0f :*/
-                (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.2f) / 0.8f) / 4.0f);
+            float vhFactor = (std::min)(1.0f, std::pow(3000.0f, (biomeRt.factor - 0.2f) / 0.8f) / 4.0f);
             float variHeight = vhFactor * VariHeight(biomeRt.type);
 
             int h = static_cast<int>(baseHeight + variHeight * Noise(0, xBase + x, zBase + z) +
@@ -63,6 +63,7 @@ void LandGenerator::GenerateLand(Chunk *ck)
     }
 
     OakGenerator_V0(seed_).Make(ck);
+    PalmGenerator(seed_).Make(ck, biome);
 
     for(int x = 0; x != CHUNK_SECTION_SIZE; ++x)
     {
@@ -152,14 +153,22 @@ float LandGenerator::VariHeight(BiomeType type) const
 
 void LandGenerator::MakeOcean(Chunk *ck, int x, int z, int h) const
 {
+    constexpr int WATER_LEVEL = 28;
+
     ck->SetBlockType(x, 0, z, BlockType::Bedrock);
     for(int y = 1; y < h; ++y)
-        ck->SetBlockType(x, y, z, BlockType::Stone);
-    ck->SetBlockType(x, h, z,
-        Random(457, ck->GetXPosBase() + x, ck->GetZPosBase() + z, 0.0f, 1.0f) > 0.5f ?
-        BlockType::Sand : BlockType::Stone);
+        ck->SetBlockType(x, y, z, BlockType::Sand);
+    if(h < WATER_LEVEL)
+    {
+        ck->SetBlockType(x, h, z,
+            Random(457, ck->GetXPosBase() + x, ck->GetZPosBase() + z, 0.0f, 1.0f) > 0.5f ?
+            BlockType::Sand : BlockType::Stone);
+    }
+    else
+    {
+        ck->SetBlockType(x, h, z, BlockType::Sand);
+    }
 
-    constexpr int WATER_LEVEL = 28;
     for(int y = h + 1; y <= WATER_LEVEL; ++y)
         ck->SetBlockType(x, y, z, BlockType::Water);
     h = (std::max)(h, WATER_LEVEL);

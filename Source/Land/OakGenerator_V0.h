@@ -16,12 +16,6 @@ public:
     using RandomEngine = typename LandGenerator_V0::RandomEngine;
     using Seed         = typename LandGenerator_V0::Seed;
 
-    struct Unit
-    {
-        IntVector3 pos;
-        BlockType type;
-    };
-
     OakGenerator_V0(Seed seed);
 
     void Make(Chunk *ck) const;
