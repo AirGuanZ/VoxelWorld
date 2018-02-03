@@ -91,6 +91,12 @@
     <Filter Include="Source\Land\PerlinNoise">
       <UniqueIdentifier>{23abce2b-22a5-4b23-a980-8635d63e20b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Land\V2">
+      <UniqueIdentifier>{17b96f42-537f-40d6-882c-2c5bb0549e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Land\V0">
+      <UniqueIdentifier>{f0aa84c9-ce80-494d-bfa6-efbc9a4fe03f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -153,9 +159,6 @@
     <ClCompile Include="..\Source\World\World.cpp">
       <Filter>Source\World</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp">
-      <Filter>Source\Land</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Camera\CameraFrustum.cpp">
       <Filter>Source\Actor\Camera</Filter>
     </ClCompile>
@@ -180,9 +183,6 @@
     <ClCompile Include="..\Source\Chunk\ChunkTraversal.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp">
-      <Filter>Source\Land</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\D3DObject\BlendState.cpp">
       <Filter>Source\D3DObject</Filter>
     </ClCompile>
@@ -204,11 +204,17 @@
     <ClCompile Include="..\Source\Land\V1\PalmGenerator.cpp">
       <Filter>Source\Land\V1</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Model\ActorModel.cpp">
-      <Filter>Source\Model</Filter>
+    <ClCompile Include="..\Source\Land\V2\LandGenerator_V2.cpp">
+      <Filter>Source\Land\V2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Renderer\ActorRenderer.cpp">
-      <Filter>Source\Renderer</Filter>
+    <ClCompile Include="..\Source\Land\V2\Area_V2.cpp">
+      <Filter>Source\Land\V2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp">
+      <Filter>Source\Land\V0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp">
+      <Filter>Source\Land\V0</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +299,6 @@
     <ClInclude Include="..\Source\World\World.h">
       <Filter>Source\World</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Land\LandGenerator_V0.h">
-      <Filter>Source\Land</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Camera\CameraFrustum.h">
       <Filter>Source\Actor\Camera</Filter>
     </ClInclude>
@@ -322,9 +325,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Chunk\ChunkTraversal.h">
       <Filter>Source\Chunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Land\OakGenerator_V0.h">
-      <Filter>Source\Land</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\FPSCounter.h">
       <Filter>Source\Utility</Filter>
@@ -362,11 +362,26 @@
     <ClInclude Include="..\Source\Land\V1\PalmGenerator.h">
       <Filter>Source\Land\V1</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Model\ActorModel.h">
-      <Filter>Source\Model</Filter>
+    <ClInclude Include="..\Source\Land\V2\LandGenerator_V2.h">
+      <Filter>Source\Land\V2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Renderer\ActorRenderer.h">
-      <Filter>Source\Renderer</Filter>
+    <ClInclude Include="..\Source\Land\V2\Common_V2.h">
+      <Filter>Source\Land\V2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V2\Area_V2.h">
+      <Filter>Source\Land\V2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V2\Noise_V2.h">
+      <Filter>Source\Land\V2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\V2\Biome_V2.h">
+      <Filter>Source\Land\V2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\OakGenerator_V0.h">
+      <Filter>Source\Land\V0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Land\LandGenerator_V0.h">
+      <Filter>Source\Land\V0</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ class DefaultLevelHeight
 public:
     RT operator()(int level)
     {
-        return RT(std::pow(RT(1.2), level));
+        return RT(std::pow(RT(2), level));
     }
 };
 
@@ -25,7 +25,7 @@ class DefaultGridSize
 public:
     RT operator()(int level)
     {
-        return RT(std::pow(RT(1.6), level + 4));
+        return RT(std::pow(RT(2), level + 2));
     }
 };
 
@@ -35,7 +35,8 @@ class DefaultPNLerp
 public:
     RT operator()(RT a, RT b, RT t)
     {
-        return RT(a + (b - a) * (3 * t * t - 2 * t * t * t));
+        //return RT(a + (b - a) * (3 * t * t - 2 * t * t * t));
+        return RT(a + (b - a) * (t * t * t * (t * (t * 6 - 15) + 10)));
     }
 };
 

@@ -14,7 +14,7 @@ Created by AirGuanZ
 #include "ChunkManager.h"
 
 ChunkLoader::ChunkLoader(size_t ckPoolSize)
-    : ckPool_(ckPoolSize)
+    : ckPool_(ckPoolSize), landGen_(4892485)
 {
 
 }
@@ -257,14 +257,12 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         { ck->GetChunkManager(), { ckPos.x + 1, ckPos.z + 1 } },    //7
     };
 
-    LandGenerator_V1::LandGenerator land(897249834);
-
     for(int i = 0; i != 8; ++i)
     {
         Chunk &dst = neis[i];
         if(!ckPool_.GetChunk(dst))
         {
-            land.GenerateLand(&dst);
+            landGen_.GenerateLand(&dst);
 
             Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
             CopyChunkData(*addedCk, dst);
@@ -274,7 +272,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
 
     if(!ckPool_.GetChunk(*ck))
     {
-        land.GenerateLand(ck);
+        landGen_.GenerateLand(ck);
 
         Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
         CopyChunkData(*addedCk, *ck);

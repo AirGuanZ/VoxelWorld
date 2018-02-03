@@ -9,11 +9,11 @@ MSAA = 4
 
 # гІТњзуЃК0 < RenderDistance < PreloadDistance <= UnloadDistance
 
-UnloadDistance  = 13
-PreloadDistance = 11
-RenderDistance  = 8
+UnloadDistance  = 30
+PreloadDistance = 16
+RenderDistance  = 14
 
 [Fog]
 
-Start = 100
+Start = 200
 Range = 20

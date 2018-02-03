@@ -84,7 +84,7 @@ void LandGenerator_V0::GenerateLand(Chunk *ck)
 
 int LandGenerator_V0::GetHeight(int x, int z)
 {
-    return static_cast<int>(BasicPerlinNoise2D<>::Gen(seed_, x, z, 6, 10.0f, 100.0f));
+    return static_cast<int>(BasicPerlinNoise2D<>::Gen(seed_, x, z, 4, 10.0f, 100.0f));
 }
 
 float LandGenerator_V0::Random(Seed seedOffset, int blkX, int blkZ, float min, float max)

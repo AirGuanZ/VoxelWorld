@@ -12,6 +12,9 @@ Created by AirGuanZ
 #include <thread>
 #include <vector>
 
+#include "../Land/LandGenerator_V0.h"
+#include "../Land/V1/LandGenerator.h"
+#include "../Land/V2/LandGenerator_V2.h"
 #include "Chunk.h"
 #include "ChunkDataPool.h"
 
@@ -96,6 +99,8 @@ private:
 
     std::mutex taskQueueMutex_;
     std::mutex msgQueueMutex_;
+
+    LandGenerator_V2::LandGenerator landGen_;
 };
 
 class ChunkLoaderTask_LoadChunkData : public ChunkLoaderTask
