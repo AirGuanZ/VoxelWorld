@@ -15,20 +15,10 @@ Created by AirGuanZ
 
 ChunkManager::ChunkManager(int loadDistance,
                            int renderDistance,
-                           int unloadDistance,
-                           int maxImpModelUpdates,
-                           int maxUniModelUpdates,
-                           int maxModelUpdates,
-                           int maxUniLightUpdates,
-                           int uniLightUpdateDistance)
+                           int unloadDistance)
     : loadDistance_(loadDistance),
       renderDistance_(renderDistance),
       unloadDistance_(unloadDistance),
-      maxImpModelUpdates_(maxImpModelUpdates),
-      maxUniModelUpdates_(maxUniModelUpdates),
-      maxModelUpdates_(maxModelUpdates),
-      maxUniLightUpdates_(maxUniLightUpdates),
-      uniLightUpdateDistance_(uniLightUpdateDistance),
       ckLoader_((loadDistance + 2) * (loadDistance + 2))
 {
     centrePos_.x = (std::numeric_limits<decltype(centrePos_.x)>::min)();
@@ -319,9 +309,7 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 
 void ChunkManager::ProcessModelUpdates(void)
 {
-    //优先处理重要更新
-    int updatesCount = 0;
-    while(!importantModelUpdates_.empty() && updatesCount < maxImpModelUpdates_)
+    while(!importantModelUpdates_.empty())
     {
         IntVector3 pos = *importantModelUpdates_.begin();
         importantModelUpdates_.erase(pos);
@@ -331,7 +319,6 @@ void ChunkManager::ProcessModelUpdates(void)
             continue;
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());
-        ++updatesCount;
     }
 }
 

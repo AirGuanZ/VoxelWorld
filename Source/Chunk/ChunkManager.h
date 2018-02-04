@@ -48,10 +48,7 @@ Created by AirGuanZ
 class ChunkManager
 {
 public:
-    ChunkManager(int loadDistance, int renderDistance, int unloadDistance,
-        int maxImpModelUpdates, int maxUniModelUpdates, int maxModelUpdates,
-        int maxUniLightUpdates,
-        int uniLightUpdateDistance);
+    ChunkManager(int loadDistance, int renderDistance, int unloadDistance);
     ~ChunkManager(void);
 
     void StartLoading(void);
@@ -210,15 +207,7 @@ private:
     
     std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
 
-    int maxImpModelUpdates_;
-    int maxUniModelUpdates_;
-    int maxModelUpdates_;
-
     ChunkLoader ckLoader_;
-
-    int maxUniLightUpdates_;
-
-    int uniLightUpdateDistance_;
 };
 
 #endif //VW_CHUNK_MANAGER_H
