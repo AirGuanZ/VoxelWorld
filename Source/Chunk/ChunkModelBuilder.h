@@ -24,4 +24,10 @@ private:
     int section_;
 };
 
+class BackgroundChunkModelBuilder : public Uncopiable
+{
+public:
+    ChunkSectionModels *Build(Chunk *(&cks)[3][3], int section) const;
+};
+
 #endif //VW_CHUNK_MODEL_BUILDER_H

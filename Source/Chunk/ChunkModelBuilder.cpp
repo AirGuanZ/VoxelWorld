@@ -34,12 +34,6 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
         if(!BlockInfoManager::GetInstance().IsRenderable(blk.type))
             continue;
 
-        Block pX = ckMgr_->GetBlock(x + 1, y, z),
-              nX = ckMgr_->GetBlock(x - 1, y, z),
-              pZ = ckMgr_->GetBlock(x, y, z + 1),
-              nZ = ckMgr_->GetBlock(x, y, z - 1),
-              pY = ckMgr_->GetBlock(x, y + 1, z),
-              nY = ckMgr_->GetBlock(x, y - 1, z);
         const Block blks[3][3][3] =
         {
             {
@@ -97,6 +91,74 @@ ChunkSectionModels *ChunkModelBuilder::Build(void)
                 };
                 GetBlockModelBuilder(blk.type)->Build(
                     Vector3(static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)),
+                    blks, models);
+            }
+        }
+    }
+
+    for(int i = 0; i != BASIC_RENDERER_TEXTURE_NUM; ++i)
+        models->basic[i].MakeVertexBuffer();
+    for(int i = 0; i != CARVE_RENDERER_TEXTURE_NUM; ++i)
+        models->carve[i].MakeVertexBuffer();
+    for(int i = 0; i != LIQUID_RENDERER_TEXTURE_NUM; ++i)
+        models->liquid[i].MakeVertexBuffer();
+    return models;
+}
+
+ChunkSectionModels *BackgroundChunkModelBuilder::Build(Chunk *(&cks)[3][3], int section) const
+{
+    Chunk *ck = cks[1][1];
+
+    int xBase = ck->GetXPosBase();
+    int zBase = ck->GetZPosBase();
+    int yBase = ChunkSectionIndex_To_BlockY(section);
+
+    ChunkSectionModels *models = new ChunkSectionModels;
+
+    auto GetBlock = [&](int x, int y, int z) -> Block
+    {
+        if((y < 0) | (y >= CHUNK_MAX_HEIGHT))
+            return { BlockType::Air, LIGHT_ALL_MAX };
+        return cks[x / CHUNK_SECTION_SIZE][z / CHUNK_SECTION_SIZE]
+            ->GetBlock(x % CHUNK_SECTION_SIZE, y, z % CHUNK_SECTION_SIZE);
+    };
+
+    for(int Lx = 0; Lx < CHUNK_SECTION_SIZE; ++Lx)
+    {
+        int x = Lx + CHUNK_SECTION_SIZE;
+        for(int Lz = 0; Lz < CHUNK_SECTION_SIZE; ++Lz)
+        {
+            int z = Lz + CHUNK_SECTION_SIZE;
+            for(int Ly = 0; Ly < CHUNK_SECTION_SIZE; ++Ly)
+            {
+                int y = Ly + yBase;
+
+                Block blk = GetBlock(x, y, z);
+                if(!BlockInfoManager::GetInstance().IsRenderable(blk.type))
+                    continue;
+
+                const Block blks[3][3][3] =
+                {
+                    {
+                        { GetBlock(x - 1, y - 1, z - 1), GetBlock(x - 1, y - 1, z), GetBlock(x - 1, y - 1, z + 1) }, //[0][0]
+                        { GetBlock(x - 1, y, z - 1),     GetBlock(x - 1, y, z),     GetBlock(x - 1, y, z + 1) },     //[0][1]
+                        { GetBlock(x - 1, y + 1, z - 1), GetBlock(x - 1, y + 1, z), GetBlock(x - 1, y + 1, z + 1) }, //[0][2]
+                    },
+                    {
+                        { GetBlock(x, y - 1, z - 1), GetBlock(x, y - 1, z), GetBlock(x, y - 1, z + 1) },             //[0][0]
+                        { GetBlock(x, y, z - 1),     blk,                   GetBlock(x, y, z + 1) },                 //[0][1]
+                        { GetBlock(x, y + 1, z - 1), GetBlock(x, y + 1, z), GetBlock(x, y + 1, z + 1) },             //[0][2]
+                    },
+                    {
+                        { GetBlock(x + 1, y - 1, z - 1), GetBlock(x + 1, y - 1, z), GetBlock(x + 1, y - 1, z + 1) }, //[0][0]
+                        { GetBlock(x + 1, y, z - 1),     GetBlock(x + 1, y, z),     GetBlock(x + 1, y, z + 1) },     //[0][1]
+                        { GetBlock(x + 1, y + 1, z - 1), GetBlock(x + 1, y + 1, z), GetBlock(x + 1, y + 1, z + 1) }, //[0][2]
+                    }
+                };
+                GetBlockModelBuilder(blk.type)->Build(
+                    Vector3(static_cast<float>(Lx + xBase),
+                            static_cast<float>(y),
+                            static_cast<float>(Lz + zBase)),
                     blks, models);
             }
         }

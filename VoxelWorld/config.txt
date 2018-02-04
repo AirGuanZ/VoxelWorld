@@ -3,7 +3,7 @@
 WindowWidth  = 1060
 WindowHeight = 768
 
-MSAA = 4
+MSAA = 1
 
 [World]
 

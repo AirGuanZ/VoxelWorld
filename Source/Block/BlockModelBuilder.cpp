@@ -44,6 +44,8 @@ inline Color BlockAO(BlockLight l0, BlockLight l1, BlockLight l2, BlockLight l3)
                                                                 LightToRGBA(l2) + LightToRGBA(l3));
 }
 
+constexpr float UV_OFFSET = 0.0005f;
+
 void BlockModelBuilder_BasicRenderer_Box::Build(
     const Vector3 &posOffset,
     const Block(&blks)[3][3][3],
@@ -80,22 +82,22 @@ void BlockModelBuilder_BasicRenderer_Box::Build(
 
         output.AddVertex({ 
             posOffset + vtx0,
-            { texBaseU + 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+            { texBaseU + UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c0.R(), c0.G(), c0.B() }, c0.A()
         });
         output.AddVertex({
             posOffset + vtx1,
-            { texBaseU + 0.0005f, texBaseV + 0.0005f },
+            { texBaseU + UV_OFFSET, texBaseV + UV_OFFSET },
             { c1.R(), c1.G(), c1.B() }, c1.A()
         });
         output.AddVertex({
             posOffset + vtx2,
-            { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + 0.0005f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + UV_OFFSET },
             { c2.R(), c2.G(), c2.B() }, c2.A()
         });
         output.AddVertex({
             posOffset + vtx3,
-            { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c3.R(), c3.G(), c3.B() }, c3.A()
         });
 
@@ -260,22 +262,22 @@ void BlockModelBuilder_CarveRenderer_Box::Build(
 
         output.AddVertex({
             posOffset + vtx0,
-            { texBaseU + 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+            { texBaseU + UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c0.R(), c0.G(), c0.B() }, c0.A()
         });
         output.AddVertex({
             posOffset + vtx1,
-            { texBaseU + 0.0005f, texBaseV + 0.0005f },
+            { texBaseU + UV_OFFSET, texBaseV + UV_OFFSET },
             { c1.R(), c1.G(), c1.B() }, c1.A()
         });
         output.AddVertex({
             posOffset + vtx2,
-            { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + 0.0005f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + UV_OFFSET },
             { c2.R(), c2.G(), c2.B() }, c2.A()
         });
         output.AddVertex({
             posOffset + vtx3,
-            { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c3.R(), c3.G(), c3.B() }, c3.A()
         });
 
@@ -443,22 +445,22 @@ void BlockModelBuilder_CarveRenderer_Cross::Build(
 
             output.AddVertex({
                 posOffset + vtx0,
-                { texBaseU + 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+                { texBaseU + UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
                 { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
             });
             output.AddVertex({
                 posOffset + vtx1,
-                { texBaseU + 0.0005f, texBaseV + 0.0005f },
+                { texBaseU + UV_OFFSET, texBaseV + UV_OFFSET },
                 { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
             });
             output.AddVertex({
                 posOffset + vtx2,
-                { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + 0.0005f },
+                { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + UV_OFFSET },
                 { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
             });
             output.AddVertex({
                 posOffset + vtx3,
-                { texBaseU + TEX_GRID_SIZE - 0.0005f, texBaseV + TEX_GRID_SIZE - 0.0005f },
+                { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
                 { rgbs.R(), rgbs.G(), rgbs.B() }, rgbs.A()
             });
 
@@ -527,22 +529,22 @@ void BlockModelBuilder_TransLiquidRenderer_Liquid::Build(
 
         output.AddVertex({
             posOffset + vtxPosFactor * vtx0,
-            { texBaseU + 0.02f, texBaseV + TEX_GRID_SIZE - 0.02f },
+            { texBaseU + UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c0.R(), c0.G(), c0.B() }, c0.A()
         });
         output.AddVertex({
             posOffset + vtxPosFactor * vtx1,
-            { texBaseU + 0.02f, texBaseV + 0.02f },
+            { texBaseU + UV_OFFSET, texBaseV + UV_OFFSET },
             { c1.R(), c1.G(), c1.B() }, c1.A()
         });
         output.AddVertex({
             posOffset + vtxPosFactor * vtx2,
-            { texBaseU + TEX_GRID_SIZE - 0.02f, texBaseV + 0.02f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + UV_OFFSET },
             { c2.R(), c2.G(), c2.B() }, c2.A()
         });
         output.AddVertex({
             posOffset + vtxPosFactor * vtx3,
-            { texBaseU + TEX_GRID_SIZE - 0.02f, texBaseV + TEX_GRID_SIZE - 0.02f },
+            { texBaseU + TEX_GRID_SIZE - UV_OFFSET, texBaseV + TEX_GRID_SIZE - UV_OFFSET },
             { c3.R(), c3.G(), c3.B() }, c3.A()
         });
 

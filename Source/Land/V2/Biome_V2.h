@@ -28,9 +28,9 @@ namespace LandGenerator_V2
             switch(type)
             {
             case AreaType::Normal:
-                return 15.0f;
+                return 2.0f;
             case AreaType::Desert:
-                return 5.0f;
+                return 2.0f;
             }
             return 10.0f;
         }

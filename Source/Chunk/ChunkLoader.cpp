@@ -12,6 +12,7 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
+#include "ChunkModelBuilder.h"
 
 ChunkLoader::ChunkLoader(size_t ckPoolSize)
     : ckPool_(ckPoolSize), landGen_(4892485)
@@ -285,7 +286,11 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         { neis + 2, ck,       neis + 3 },
         { neis + 6, neis + 1, neis + 7 }
     };
+
     LightProg(cks);
+    
+    /*for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
+        ck->SetModels(section, BackgroundChunkModelBuilder().Build(cks, section));*/
 
     delete[] neis;
 }

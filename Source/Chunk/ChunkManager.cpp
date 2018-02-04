@@ -457,6 +457,7 @@ void ChunkManager::ProcessModelUpdates(void)
             continue;
 
         bool con = false;
+        Chunk *cks[3][3];
         for(int dx = -1; dx <= 1; ++dx)
         {
             for(int dz = -1; dz <= 1; ++dz)
@@ -467,6 +468,7 @@ void ChunkManager::ProcessModelUpdates(void)
                     con = true;
                     goto DEC_CON;
                 }
+                cks[dx + 1][dz + 1] = chunks_.find({ pos.x + dx, pos.z + dz })->second;
             }
         }
     DEC_CON:
@@ -475,6 +477,7 @@ void ChunkManager::ProcessModelUpdates(void)
 
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());
+        //AddSectionModel(pos, BackgroundChunkModelBuilder().Build(cks, pos.y));
         ++updatesCount;
         ++uniUpdatesCount;
     }

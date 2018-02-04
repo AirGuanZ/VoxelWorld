@@ -52,11 +52,11 @@ bool Camera::InFrustum(const AABB &aabb) const
 {
     Vector3 dir = GetDirection();
     return (InPosHalfSpace(pos_, dir, aabb.L) |
-           InPosHalfSpace(pos_, dir, aabb.H)) ||
+            InPosHalfSpace(pos_, dir, aabb.H)) ||
            (InPosHalfSpace(pos_, dir, { aabb.H.x, aabb.L.y, aabb.L.z }) |
-           InPosHalfSpace(pos_, dir, { aabb.L.x, aabb.H.y, aabb.L.z })) ||
+            InPosHalfSpace(pos_, dir, { aabb.L.x, aabb.H.y, aabb.L.z })) ||
            (InPosHalfSpace(pos_, dir, { aabb.L.x, aabb.L.y, aabb.H.z }) |
-           InPosHalfSpace(pos_, dir, { aabb.L.x, aabb.H.y, aabb.H.z })) ||
+            InPosHalfSpace(pos_, dir, { aabb.L.x, aabb.H.y, aabb.H.z })) ||
            (InPosHalfSpace(pos_, dir, { aabb.H.x, aabb.L.y, aabb.H.z }) |
-           InPosHalfSpace(pos_, dir, { aabb.H.x, aabb.H.y, aabb.L.z }));
+            InPosHalfSpace(pos_, dir, { aabb.H.x, aabb.H.y, aabb.L.z }));
 }
