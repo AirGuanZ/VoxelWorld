@@ -24,6 +24,8 @@ Created by AirGuanZ
 #include "../World/World.h"
 #include "Application.h"
 
+#define PRINT_FPS 0
+
 void Application::Run(void)
 {
     ConfigFile conf(L"config.txt");
@@ -213,20 +215,24 @@ void Application::Run(void)
     Clock clock;
     clock.Restart();
 
+#if PRINT_FPS
     FPSCounter fps;
     fps.Restart();
+#endif
 
     float daynightT = 0.0f;
 
     while(!input.IsKeyDown(VK_ESCAPE))
     {
-        /*static float lastFPS = 0.0f;
+#if PRINT_FPS
+        static float lastFPS = 0.0f;
         fps.Tick();
         if(fps.GetFPS() != lastFPS)
         {
             lastFPS = fps.GetFPS();
             std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b" << lastFPS;
-        }*/
+        }
+#endif
 
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
@@ -295,7 +301,9 @@ void Application::Run(void)
 
         crosshair.Draw(&imScr2D);
 
-        //window.SetVsync(false);
+#if PRINT_FPS
+        window.SetVsync(false);
+#endif
         window.Present();
         window.DoEvents();
         clock.Tick();

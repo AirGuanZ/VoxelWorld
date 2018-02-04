@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_CHUNK_H
 
 #include "../Block/Block.h"
+#include "../Camera/Camera.h"
 #include "../Model/BasicModel.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Renderer/CarveRenderer.h"
@@ -209,7 +210,7 @@ public:
         return ckMgr_;
     }
 
-    void Render(ChunkSectionRenderQueue *renderQueue);
+    void Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue);
 
 private:
     ChunkManager *ckMgr_;

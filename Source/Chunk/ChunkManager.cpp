@@ -480,7 +480,7 @@ void ChunkManager::ProcessModelUpdates(void)
     }
 }
 
-void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
+void ChunkManager::Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue)
 {
     assert(renderQueue != nullptr);
 
@@ -488,7 +488,7 @@ void ChunkManager::Render(ChunkSectionRenderQueue *renderQueue)
     {
         if(!InRenderRange(it.first.x, it.first.z))
             continue;
-        it.second->Render(renderQueue);
+        it.second->Render(cam, renderQueue);
     }
 }
 

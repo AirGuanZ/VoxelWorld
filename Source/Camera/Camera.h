@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_CAMERA_H
 #define VW_CAMERA_H
 
+#include "../Collision/AABB.h"
 #include "../Utility/D3D11Header.h"
 #include "../Utility/Math.h"
 
@@ -102,6 +103,8 @@ public:
     }
 
     void UpdateViewProjMatrix(void);
+
+    bool InFrustum(const AABB &aabb) const;
 
 private:
     float yaw_;

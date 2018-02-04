@@ -159,9 +159,6 @@
     <ClCompile Include="..\Source\World\World.cpp">
       <Filter>Source\World</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Camera\CameraFrustum.cpp">
-      <Filter>Source\Actor\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
@@ -298,9 +295,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\World\World.h">
       <Filter>Source\World</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Camera\CameraFrustum.h">
-      <Filter>Source\Actor\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Renderer\CarveRenderer.h">
       <Filter>Source\Renderer</Filter>

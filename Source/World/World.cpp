@@ -81,5 +81,5 @@ void World::Render(ChunkSectionRenderQueue *renderQueue)
 {
     assert(renderQueue != nullptr);
 
-    ckMgr_.Render(renderQueue);
+    ckMgr_.Render(actor_.GetCamera(), renderQueue);
 }

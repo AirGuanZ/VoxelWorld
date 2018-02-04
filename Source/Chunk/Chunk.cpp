@@ -23,14 +23,20 @@ Chunk::~Chunk(void)
         Helper::SafeDeleteObjects(model);
 }
 
-void Chunk::Render(ChunkSectionRenderQueue *renderQueue)
+void Chunk::Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue)
 {
     assert(renderQueue != nullptr);
+
+    float xL = static_cast<float>(ChunkXZ_To_BlockXZ(ckPos_.x));
+    float zL = static_cast<float>(ChunkXZ_To_BlockXZ(ckPos_.z));
+    float xH = xL + CHUNK_SECTION_SIZE, zH = zL + CHUNK_SECTION_SIZE;
+    float yL = 0.0f;
 
     for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
     {
         ChunkSectionModels *models;
-        if(models = GetModels(section))
+        if((models = GetModels(section)) &&
+            cam.InFrustum(AABB({ xL, yL, zL }, { xH, yL + CHUNK_SECTION_SIZE, zH })))
         {
             for(int b = 0; b != BASIC_RENDERER_TEXTURE_NUM; ++b)
                 renderQueue->basic[b].AddModel(&models->basic[b]);
@@ -39,5 +45,6 @@ void Chunk::Render(ChunkSectionRenderQueue *renderQueue)
             for(int b = 0; b != LIQUID_RENDERER_TEXTURE_NUM; ++b)
                 renderQueue->liquid[b].AddModel(&models->liquid[b]);
         }
+        yL += static_cast<float>(CHUNK_SECTION_SIZE);
     }
 }

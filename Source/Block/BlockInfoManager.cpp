@@ -159,6 +159,16 @@ BlockInfoManager::BlockInfoManager(void)
             { { 0.0f, 0.0f, 0.0f },{ -1.0f, -1.0f, -1.0f } }
         },
         {
+            BlockType::DriedGrass,
+            "DriedGrass",
+            BlockShape::Cross,
+            BlockRenderer::CarveRenderer,
+            false, true, false,
+            false,
+            1, { 0, 0, 0 },
+            { { 0.0f, 0.0f, 0.0f },{ -1.0f, -1.0f, -1.0f } }
+        },
+        {
             BlockType::Water,
             "Water",
             BlockShape::Liquid,
@@ -217,6 +227,7 @@ BlockInfoManager::BlockInfoManager(void)
     SetBasicBoxTexPos(BlockType::BlueGlowStone,  0, 7, 7, 7, 7, 7, 7);
     SetCarveCrossTexPos(BlockType::Grass,        0, 1, 1);
     SetCarveCrossTexPos(BlockType::Flower,       0, 2, 2);
+    SetCarveCrossTexPos(BlockType::DriedGrass,   0, 3, 3);
     SetLiquidTexPos(BlockType::Water,            0, 0, 0, 0, 0, 0, 0);
 }
 

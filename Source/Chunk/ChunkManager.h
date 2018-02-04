@@ -14,7 +14,7 @@ Created by AirGuanZ
 #include <unordered_set>
 
 #include "../Block/BlockInfoManager.h"
-#include "../Camera/CameraFrustum.h"
+#include "../Camera/Camera.h"
 #include "../Utility/Math.h"
 #include "../Utility/Uncopiable.h"
 #include "Chunk.h"
@@ -187,7 +187,7 @@ public:
 
     void ProcessModelUpdates(void);
 
-    void Render(ChunkSectionRenderQueue *renderQueue);
+    void Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue);
 
     bool DetectCollision(const Vector3 &pnt);
     bool DetectCollision(const AABB &aabb);

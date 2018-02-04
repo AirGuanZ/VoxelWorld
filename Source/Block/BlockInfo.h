@@ -27,6 +27,7 @@ enum class BlockType : std::uint8_t
     BlueGlowStone,
     Grass,
     Flower,
+    DriedGrass,
     Water,
 
     BlockTypeNum = Water + 1

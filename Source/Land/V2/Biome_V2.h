@@ -104,6 +104,10 @@ namespace LandGenerator_V2
             for(int y = h - 4; y <= h; ++y)
                 ck->SetBlockType(x, y, z, BlockType::Sand);
 
+            float gfv = Rand(13, x + ck->GetXPosBase(), z + ck->GetZPosBase(), 0.0f, 1.0f);
+            if(gfv < 0.005f)
+                ck->SetBlockType(x, ++h, z, BlockType::DriedGrass);
+
             for(int y = h + 1; y != CHUNK_MAX_HEIGHT; ++y)
                 ck->SetBlockType(x, y, z, BlockType::Air);
 
