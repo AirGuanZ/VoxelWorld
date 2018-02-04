@@ -183,8 +183,6 @@ public:
 
     void ProcessChunkLoaderMessages(void);
 
-    void ProcessLightUpdates(void);
-
     void ProcessModelUpdates(void);
 
     void Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue);
@@ -211,17 +209,12 @@ private:
     std::unordered_map<IntVectorXZ, Chunk*, IntVectorXZHasher> chunks_;
     
     std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
-    std::unordered_set<IntVector3, IntVector3Hasher> unimportantModelUpdates_;
-
-    std::unordered_set<IntVector3, IntVector3Hasher> uniModelWaiting_;
 
     int maxImpModelUpdates_;
     int maxUniModelUpdates_;
     int maxModelUpdates_;
 
     ChunkLoader ckLoader_;
-
-    std::deque<IntVector3> unimportantLightUpdates_;
 
     int maxUniLightUpdates_;
 

@@ -72,7 +72,6 @@ void World::Update(float deltaT)
         }
     }
 
-    ckMgr_.ProcessLightUpdates();
     ckMgr_.ProcessModelUpdates();
     ckMgr_.ProcessChunkLoaderMessages();
 }

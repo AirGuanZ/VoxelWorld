@@ -54,7 +54,6 @@ void ChunkManager::Destroy(void)
         Helper::SafeDeleteObjects(it.second);
     chunks_.clear();
     importantModelUpdates_.clear();
-    unimportantModelUpdates_.clear();
 }
 
 namespace
@@ -233,14 +232,6 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
                     new ChunkLoaderTask_LoadChunkData(
                         new Chunk(this, { newCkX, newCkZ })));
             }
-            else if(InRenderRange(newCkX, newCkZ)) //有数据了，看看在不在渲染范围内
-            {
-                for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
-                {
-                    if(!it->second->GetModels(section))
-                        unimportantModelUpdates_.insert({ newCkX, section, newCkZ });
-                }
-            }
         }
     }
 }
@@ -272,23 +263,9 @@ void ChunkManager::AddChunkData(Chunk *ck)
     if(InRenderRange(pos.x, pos.z)) //是否需要创建模型任务
     {
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
-            unimportantModelUpdates_.insert({ pos.x, section, pos.z });
-    }
-
-    for(int dx = -1; dx <= 1; ++dx)
-    {
-        for(int dz = -1; dz <= 1; ++dz)
         {
-            for(int sec = 0; sec != CHUNK_SECTION_NUM; ++sec)
-            {
-                IntVector3 p = { pos.x + dx, sec, pos.z + dz };
-                auto it = uniModelWaiting_.find(p);
-                if(it != uniModelWaiting_.end())
-                {
-                    uniModelWaiting_.erase(it);
-                    unimportantModelUpdates_.insert(p);
-                }
-            }
+            if(!ck->GetModels(section))
+                importantModelUpdates_.insert({ pos.x, section, pos.z });
         }
     }
 }
@@ -340,92 +317,6 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
     }
 }
 
-void ChunkManager::ProcessLightUpdates(void)
-{
-    int uniUpdatesCount = 0;
-    size_t OORCount = 0;
-    while(unimportantLightUpdates_.size() &&
-          uniUpdatesCount < maxUniLightUpdates_)
-    {
-        ++uniUpdatesCount;
-
-        IntVector3 pos = unimportantLightUpdates_.front();
-        unimportantLightUpdates_.pop_front();
-
-        int ckX = BlockXZ_To_ChunkXZ(pos.x);
-        int ckZ = BlockXZ_To_ChunkXZ(pos.z);
-
-        if(ckX < centrePos_.x - uniLightUpdateDistance_ || ckX > centrePos_.x + uniLightUpdateDistance_ ||
-           ckZ < centrePos_.z - uniLightUpdateDistance_ || ckZ > centrePos_.z + uniLightUpdateDistance_)
-        {
-            if(!InLoadingRange(ckX, ckZ))
-                continue;
-
-            unimportantLightUpdates_.push_back(pos);
-            if(++OORCount >= unimportantLightUpdates_.size())
-                break;
-            continue;
-        }
-
-        int blkX = BlockXZ_To_BlockXZInChunk(pos.x);
-        int blkZ = BlockXZ_To_BlockXZInChunk(pos.z);
-
-        Chunk *ck = GetChunk(ckX, ckZ);
-        Block blk = GetBlock(pos.x, pos.y, pos.z);
-        const BlockInfo &blkInfo = BlockInfoManager::GetInstance().GetBlockInfo(blk.type);
-        int lightDec = blkInfo.lightDec;
-
-        BlockLight pX = GetBlockLight(pos.x + 1, pos.y, pos.z),
-                   nX = GetBlockLight(pos.x - 1, pos.y, pos.z),
-                   pY = GetBlockLight(pos.x, pos.y + 1, pos.z),
-                   nY = GetBlockLight(pos.x, pos.y - 1, pos.z),
-                   pZ = GetBlockLight(pos.x, pos.y, pos.z + 1),
-                   nZ = GetBlockLight(pos.x, pos.y, pos.z - 1);
-
-        BlockLight newLight = MakeLight(
-            blkInfo.lightEmission.x,
-            blkInfo.lightEmission.y,
-            blkInfo.lightEmission.z,
-            pos.y > ck->heightMap[Chunk::XZ(blkX, blkZ)] ? LIGHT_COMPONENT_MAX : LIGHT_COMPONENT_MIN);
-
-        auto Max6 = [=](int ori, int _0, int _1, int _2, int _3, int _4, int _5) -> int
-        {
-            return static_cast<std::uint8_t>((std::max)(
-            { (std::max)({ _0, _1, _2, _3, _4, _5 }) - lightDec, ori, static_cast<int>(LIGHT_COMPONENT_MIN) }));
-        };
-
-        newLight = SetRed(newLight, Max6(GetRed(newLight), GetRed(pX), GetRed(nX),
-                                         GetRed(pY), GetRed(nY),
-                                         GetRed(pZ), GetRed(nZ)));
-        newLight = SetGreen(newLight, Max6(GetGreen(newLight), GetGreen(pX), GetGreen(nX),
-                                           GetGreen(pY), GetGreen(nY),
-                                           GetGreen(pZ), GetGreen(nZ)));
-        newLight = SetBlue(newLight, Max6(GetBlue(newLight), GetBlue(pX), GetBlue(nX),
-                                          GetBlue(pY), GetBlue(nY),
-                                          GetBlue(pZ), GetBlue(nZ)));
-        newLight = SetSunlight(newLight, Max6(GetSunlight(newLight), GetSunlight(pX), GetSunlight(nX),
-                                              GetSunlight(pY), GetSunlight(nY),
-                                              GetSunlight(pZ), GetSunlight(nZ)));
-        if(newLight != blk.light)
-        {
-            ck->SetBlockLight(blkX, pos.y, blkZ, newLight);
-            unimportantLightUpdates_.push_front({ pos.x + 1, pos.y, pos.z });
-            unimportantLightUpdates_.push_front({ pos.x - 1, pos.y, pos.z });
-            if(pos.y < CHUNK_MAX_HEIGHT - 1)
-                unimportantLightUpdates_.push_front({ pos.x, pos.y + 1, pos.z });
-            if(pos.y > 0)
-                unimportantLightUpdates_.push_front({ pos.x, pos.y - 1, pos.z });
-            unimportantLightUpdates_.push_front({ pos.x, pos.y, pos.z + 1 });
-            unimportantLightUpdates_.push_front({ pos.x, pos.y, pos.z - 1 });
-        }
-
-        int blkY = pos.y;
-        int secY = BlockY_To_ChunkSectionIndex(pos.y);
-
-        ComputeModelUpdates(pos.x, pos.y, pos.z, unimportantModelUpdates_);
-    }
-}
-
 void ChunkManager::ProcessModelUpdates(void)
 {
     //优先处理重要更新
@@ -441,45 +332,6 @@ void ChunkManager::ProcessModelUpdates(void)
         ChunkModelBuilder builder(this, it->second, pos.y);
         AddSectionModel(pos, builder.Build());
         ++updatesCount;
-    }
-
-    //然后才处理不重要更新
-    int uniUpdatesCount = 0;
-    while(!unimportantModelUpdates_.empty() &&
-          uniUpdatesCount < maxUniModelUpdates_ &&
-          updatesCount < maxModelUpdates_)
-    {
-        IntVector3 pos = *unimportantModelUpdates_.begin();
-        unimportantModelUpdates_.erase(pos);
-
-        auto it = chunks_.find({ pos.x, pos.z });
-        if(it == chunks_.end())
-            continue;
-
-        bool con = false;
-        Chunk *cks[3][3];
-        for(int dx = -1; dx <= 1; ++dx)
-        {
-            for(int dz = -1; dz <= 1; ++dz)
-            {
-                if(chunks_.find({ pos.x + dx, pos.z + dz }) == chunks_.end())
-                {
-                    uniModelWaiting_.insert(pos);
-                    con = true;
-                    goto DEC_CON;
-                }
-                cks[dx + 1][dz + 1] = chunks_.find({ pos.x + dx, pos.z + dz })->second;
-            }
-        }
-    DEC_CON:
-        if(con)
-            continue;
-
-        ChunkModelBuilder builder(this, it->second, pos.y);
-        AddSectionModel(pos, builder.Build());
-        //AddSectionModel(pos, BackgroundChunkModelBuilder().Build(cks, pos.y));
-        ++updatesCount;
-        ++uniUpdatesCount;
     }
 }
 

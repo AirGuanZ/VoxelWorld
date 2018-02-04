@@ -245,7 +245,7 @@ namespace
 
 void ChunkLoader::LoadChunkData(Chunk *ck)
 {
-    IntVectorXZ ckPos;
+    IntVectorXZ ckPos = ck->GetPosition();
     Chunk *neis = new Chunk[8]
     {
         { ck->GetChunkManager(), { ckPos.x - 1, ckPos.z } },        //0
@@ -289,8 +289,8 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
 
     LightProg(cks);
     
-    /*for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
-        ck->SetModels(section, BackgroundChunkModelBuilder().Build(cks, section));*/
+    for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
+        ck->SetModels(section, BackgroundChunkModelBuilder().Build(cks, section));
 
     delete[] neis;
 }
