@@ -43,7 +43,7 @@ void ChunkManager::Destroy(void)
     for(auto it : chunks_)
         Helper::SafeDeleteObjects(it.second);
     chunks_.clear();
-    importantModelUpdates_.clear();
+    modelUpdates_.clear();
 }
 
 namespace
@@ -128,7 +128,7 @@ void ChunkManager::UpdateLight(int x, int y, int z)
             pgQueue.push_front({ pos.x, pos.y, pos.z - 1 });
         }
 
-        ComputeModelUpdates(pos.x, pos.y, pos.z, importantModelUpdates_);
+        ComputeModelUpdates(pos.x, pos.y, pos.z, modelUpdates_);
     }
 }
 
@@ -231,7 +231,7 @@ void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)
     auto it = chunks_.find({ x, z });
     if(it == chunks_.end() || !InRenderRange(x, z))
         return;
-    importantModelUpdates_.insert({ x, y, z });
+    modelUpdates_.insert({ x, y, z });
 }
 
 void ChunkManager::AddChunkData(Chunk *ck)
@@ -255,7 +255,7 @@ void ChunkManager::AddChunkData(Chunk *ck)
         for(int section = 0; section != CHUNK_SECTION_NUM; ++section)
         {
             if(!ck->GetModels(section))
-                importantModelUpdates_.insert({ pos.x, section, pos.z });
+                modelUpdates_.insert({ pos.x, section, pos.z });
         }
     }
 }
@@ -309,10 +309,10 @@ void ChunkManager::ProcessChunkLoaderMessages(void)
 
 void ChunkManager::ProcessModelUpdates(void)
 {
-    while(!importantModelUpdates_.empty())
+    while(modelUpdates_.size())
     {
-        IntVector3 pos = *importantModelUpdates_.begin();
-        importantModelUpdates_.erase(pos);
+        IntVector3 pos = *modelUpdates_.begin();
+        modelUpdates_.erase(pos);
 
         auto it = chunks_.find({ pos.x, pos.z });
         if(it == chunks_.end())

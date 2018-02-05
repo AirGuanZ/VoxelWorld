@@ -11,7 +11,7 @@ Created by AirGuanZ
 #include "World.h"
 
 World::World(int preloadDis, int renderDis, int unloadDis)
-    : ckMgr_(preloadDis, renderDis, unloadDis, 5, 5, 7, 300, renderDis)
+    : ckMgr_(preloadDis, renderDis, unloadDis)
 {
 
 }

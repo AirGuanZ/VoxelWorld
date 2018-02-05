@@ -205,7 +205,7 @@ private:
 
     std::unordered_map<IntVectorXZ, Chunk*, IntVectorXZHasher> chunks_;
     
-    std::unordered_set<IntVector3, IntVector3Hasher> importantModelUpdates_;
+    std::unordered_set<IntVector3, IntVector3Hasher> modelUpdates_;
 
     ChunkLoader ckLoader_;
 };

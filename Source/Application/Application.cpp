@@ -308,6 +308,4 @@ void Application::Run(void)
         window.DoEvents();
         clock.Tick();
     }
-
-    window.Destroy();
 }
