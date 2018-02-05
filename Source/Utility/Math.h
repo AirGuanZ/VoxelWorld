@@ -8,12 +8,7 @@ Created by AirGuanZ
 
 #include <cmath>
 #include <d3d11.h>
-#include <SimpleMath.h>
-
-#ifdef _DEBUG
-#include <crtdbg.h>
-#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)  
-#endif  
+#include <DirectXTK/SimpleMath.h>
 
 using DirectX::SimpleMath::Vector2;
 using DirectX::SimpleMath::Vector3;

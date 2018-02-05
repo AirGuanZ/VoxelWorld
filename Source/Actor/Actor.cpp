@@ -6,8 +6,8 @@ Created by AirGuanZ
 #include <algorithm>
 
 #include <Windows.h>
-#include <Keyboard.h>
-#include <Mouse.h>
+#include <DirectXTK/Keyboard.h>
+#include <DirectXTK/Mouse.h>
 
 #include "../Input/InputManager.h"
 #include "Actor.h"

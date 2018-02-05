@@ -36,9 +36,13 @@ Created by AirGuanZ
 
 #define CROSSHAIR_BASIC_TEXTURE VW_FILENAME(Bin/Texture/Crosshair/cross.png)
 
-//ActorRenderer相关
+//ActorModel相关
 
-#define ACTOR_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Actor/vertex.hlsl)
-#define ACTOR_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Actor/pixel.hlsl)
+#define ACTOR_DEFAULT_HEAD_MODEL       VW_FILENAME(Bin/Model/Actor/head.owevxl)
+#define ACTOR_DEFAULT_BODY_MODEL       VW_FILENAME(Bin/Model/Actor/body.owevxl)
+#define ACTOR_DEFAULT_LEFT_HAND_MODEL  VW_FILENAME(Bin/Model/Actor/leftHand.owevxl)
+#define ACTOR_DEFAULT_RIGHT_HAND_MODEL VW_FILENAME(Bin/Model/Actor/rightHand.owevxl)
+#define ACTOR_DEFAULT_LEFT_FOOT_MODEL  VW_FILENAME(Bin/Model/Actor/leftFoot.owevxl)
+#define ACTOR_DEFAULT_RIGHT_FOOT_MODEL VW_FILENAME(Bin/Model/Actor/rightFoot.owevxl)
 
 #endif //VW_RESOURCE_NAME_H

@@ -3,8 +3,8 @@ Filename: TextureFile.cpp
 Date: 2018.1.14
 Created by AirGuanZ
 ================================================================*/
-#include <ScreenGrab.h>
-#include <WICTextureLoader.h>
+#include <DirectXTK/ScreenGrab.h>
+#include <DirectXTK/WICTextureLoader.h>
 #include <wincodec.h>
 
 #include "../Window/Window.h"

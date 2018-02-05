@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include <string>
 
 #include <Windows.h>
-#include <Keyboard.h>
+#include <DirectXTK/Keyboard.h>
 
 #include "../Input/InputManager.h"
 #include "../Utility/D3D11Header.h"

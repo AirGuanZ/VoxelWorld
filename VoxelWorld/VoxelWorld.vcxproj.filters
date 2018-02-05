@@ -210,6 +210,9 @@
     <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Actor\ActorModel.cpp">
+      <Filter>Source\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -379,7 +382,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Bin\Shader\Basic\pixel.hlsl">
       <Filter>Bin\Shader\Basic</Filter>
     </None>
