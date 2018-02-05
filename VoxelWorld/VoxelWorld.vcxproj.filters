@@ -82,9 +82,6 @@
     <Filter Include="Source\Actor\Camera">
       <UniqueIdentifier>{e7d53162-e83f-4bf1-943d-d911479a460a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Chunk\Background">
-      <UniqueIdentifier>{464f42f7-3556-4b41-83b9-f82eade51c1f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Land\V1">
       <UniqueIdentifier>{728ad859-3f52-4e5c-ae85-0c2731c875a5}</UniqueIdentifier>
     </Filter>
@@ -186,12 +183,6 @@
     <ClCompile Include="..\Source\Renderer\LiquidRenderer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
-      <Filter>Source\Chunk\Background</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
-      <Filter>Source\Chunk\Background</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Land\V1\Biome.cpp">
       <Filter>Source\Land\V1</Filter>
     </ClCompile>
@@ -212,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp">
       <Filter>Source\Land\V0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp">
+      <Filter>Source\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
+      <Filter>Source\Chunk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,12 +329,6 @@
     <ClInclude Include="..\Source\Collision\AABB.h">
       <Filter>Source\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Chunk\ChunkLoader.h">
-      <Filter>Source\Chunk\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Chunk\ChunkDataPool.h">
-      <Filter>Source\Chunk\Background</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\LinkedHashMap.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
@@ -376,6 +367,15 @@
     </ClInclude>
     <ClInclude Include="..\Source\Land\LandGenerator_V0.h">
       <Filter>Source\Land\V0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkLoader.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Chunk\ChunkDataPool.h">
+      <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Actor\ActorModel.h">
+      <Filter>Source\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

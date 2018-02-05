@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Actor\Actor.h" />
+    <ClInclude Include="..\Source\Actor\ActorModel.h" />
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Block\Block.h" />
     <ClInclude Include="..\Source\Block\BlockInfo.h" />

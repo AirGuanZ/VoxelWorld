@@ -15,5 +15,5 @@ RenderDistance  = 12
 
 [Fog]
 
-Start = 170
-Range = 20
+Start = 150
+Range = 40

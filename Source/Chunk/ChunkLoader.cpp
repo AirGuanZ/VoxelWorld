@@ -15,7 +15,7 @@ Created by AirGuanZ
 #include "ChunkModelBuilder.h"
 
 ChunkLoader::ChunkLoader(size_t ckPoolSize)
-    : ckPool_(ckPoolSize), landGen_(4892485)
+    : ckPool_(ckPoolSize), landGen_(546254)
 {
 
 }

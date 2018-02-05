@@ -91,7 +91,7 @@ public:
     }
 
     //真正的区块数据加载函数
-    //和线程没啥关系
+    //线程无关
     void LoadChunkData(Chunk *ck);
 
     void TryAddLoadingTask(ChunkManager *ckMgr, int ckX, int ckZ);

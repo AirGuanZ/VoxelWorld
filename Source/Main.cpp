@@ -13,9 +13,6 @@ Created by AirGuanZ
 
 #include "Application\Application.h"
 
-#include "Land\V1\Biome.h"
-#include <Windows.h>
-
 int main(void)
 {
 #ifdef _DEBUG
