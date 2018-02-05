@@ -46,12 +46,9 @@ void ChunkLoader::Destroy(void)
     }
     threads_.clear();
 
-    while(loaderTasks_.size())
-    {
-        ChunkLoaderTask *task = loaderTasks_.front();
-        loaderTasks_.pop();
-        Helper::SafeDeleteObjects(task);
-    }
+    for(auto it : loaderTasks_)
+        Helper::SafeDeleteObjects(it.second);
+    loaderTasks_.clear();
 
     ckPool_.Destroy();
 }
@@ -61,7 +58,7 @@ void ChunkLoader::AddTask(ChunkLoaderTask *task)
     assert(task != nullptr);
 
     std::lock_guard<std::mutex> lk(taskQueueMutex_);
-    loaderTasks_.push(task);
+    loaderTasks_.insert(std::make_pair(task->GetPosition(), task));
 }
 
 void ChunkLoader::AddMsg(ChunkLoaderMessage *msg)
@@ -100,8 +97,9 @@ void ChunkLoader::TaskThreadEntry(void)
             std::lock_guard<std::mutex> lk(taskQueueMutex_);
             if(loaderTasks_.size())
             {
-                task = loaderTasks_.front();
-                loaderTasks_.pop();
+                auto it = loaderTasks_.begin();
+                task = it->second;
+                loaderTasks_.erase(it);
             }
         }
 
@@ -115,13 +113,13 @@ void ChunkLoader::TaskThreadEntry(void)
     }
 }
 
-ChunkLoaderTask_LoadChunkData::ChunkLoaderTask_LoadChunkData(Chunk *ck)
+ChunkLoaderTask::ChunkLoaderTask(Chunk *ck)
     : ck_(ck)
 {
     assert(ck != nullptr);
 }
 
-void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
+void ChunkLoaderTask::Run(ChunkLoader *loader)
 {
     assert(loader != nullptr);
 
@@ -135,7 +133,7 @@ void ChunkLoaderTask_LoadChunkData::Run(ChunkLoader *loader)
     loader->AddMsg(msg);
 }
 
-ChunkLoaderTask_LoadChunkData::~ChunkLoaderTask_LoadChunkData(void)
+ChunkLoaderTask::~ChunkLoaderTask(void)
 {
     Helper::SafeDeleteObjects(ck_);
 }
@@ -293,4 +291,15 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         ck->SetModels(section, BackgroundChunkModelBuilder().Build(cks, section));
 
     delete[] neis;
+}
+
+void ChunkLoader::TryAddLoadingTask(ChunkManager *ckMgr, int x, int z)
+{
+    assert(ckMgr != nullptr);
+    std::lock_guard<std::mutex> lk(taskQueueMutex_);
+    if(loaderTasks_.find({ x, z }) == loaderTasks_.end())
+    {
+        loaderTasks_.insert(std::make_pair(
+            IntVectorXZ{ x, z }, new ChunkLoaderTask(new Chunk(ckMgr, { x, z }))));
+    }
 }

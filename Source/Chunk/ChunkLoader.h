@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_CHUNK_LOADER_H
 
 #include <atomic>
+#include <deque>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -36,8 +37,18 @@ class ChunkLoader;
 class ChunkLoaderTask
 {
 public:
-    virtual void Run(ChunkLoader *loader) = 0;
-    virtual ~ChunkLoaderTask(void) { }
+    ChunkLoaderTask(Chunk *ck);
+    ~ChunkLoaderTask(void);
+
+    void Run(ChunkLoader *loader);
+
+    IntVectorXZ GetPosition(void)
+    {
+        return ck_->GetPosition();
+    }
+
+private:
+    Chunk *ck_;
 };
 
 struct ChunkLoaderMessage
@@ -68,15 +79,13 @@ public:
     void DelTaskIf(FuncType &&func)
     {
         std::lock_guard<std::mutex> lk(taskQueueMutex_);
-        std::queue<ChunkLoaderTask*> newTasks;
-        while(loaderTasks_.size())
+        decltype(loaderTasks_) newTasks;
+        for(auto it : loaderTasks_)
         {
-            ChunkLoaderTask *task = loaderTasks_.front();
-            loaderTasks_.pop();
-            if(func(task))
-                newTasks.push(task);
+            if(!func(it.second))
+                newTasks.insert(it);
             else
-                Helper::SafeDeleteObjects(task);
+                Helper::SafeDeleteObjects(it.second);
         }
         loaderTasks_ = std::move(newTasks);
     }
@@ -84,6 +93,8 @@ public:
     //真正的区块数据加载函数
     //和线程没啥关系
     void LoadChunkData(Chunk *ck);
+
+    void TryAddLoadingTask(ChunkManager *ckMgr, int ckX, int ckZ);
 
 private:
     void TaskThreadEntry(void);
@@ -94,30 +105,13 @@ private:
     std::vector<std::thread> threads_;
     std::atomic<bool> running_;
 
-    std::queue<ChunkLoaderTask*> loaderTasks_;
+    std::unordered_map<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
     std::queue<ChunkLoaderMessage*> loaderMsgs_;
 
     std::mutex taskQueueMutex_;
     std::mutex msgQueueMutex_;
 
     LandGenerator_V2::LandGenerator landGen_;
-};
-
-class ChunkLoaderTask_LoadChunkData : public ChunkLoaderTask
-{
-public:
-    ChunkLoaderTask_LoadChunkData(Chunk *ck);
-    ~ChunkLoaderTask_LoadChunkData(void);
-
-    void Run(ChunkLoader *loader);
-
-    IntVectorXZ GetPosition(void)
-    {
-        return ck_->GetPosition();
-    }
-
-private:
-    Chunk *ck_;
 };
 
 #endif //VW_CHUNK_LOADER_H

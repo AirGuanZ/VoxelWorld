@@ -195,19 +195,15 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     }
     chunks_ = std::move(newChunks_);
 
-    //遍历新范围内的Chunk
-    //缺数据的建立加载任务
-    //不缺数据的看看需不需要建立模型任务
-
+    //取消出了范围的加载任务
     ckLoader_.DelTaskIf([=](ChunkLoaderTask *task) -> bool
     {
         assert(task != nullptr);
-
-        ChunkLoaderTask_LoadChunkData *t = dynamic_cast<ChunkLoaderTask_LoadChunkData*>(task);
-        auto [x, z] = t->GetPosition();
+        auto [x, z] = task->GetPosition();
         return !InLoadingRange(x, z);
     });
 
+    //创建新的任务
     int loadRangeXEnd = centrePos_.x + loadDistance_;
     int loadRangeZEnd = centrePos_.z + loadDistance_;
     for(int newCkX = centrePos_.x - loadDistance_; newCkX <= loadRangeXEnd; ++newCkX)
@@ -215,13 +211,8 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
         for(int newCkZ = centrePos_.z - loadDistance_; newCkZ <= loadRangeZEnd; ++newCkZ)
         {
             assert(InLoadingRange(newCkX, newCkZ));
-            auto it = chunks_.find({ newCkX, newCkZ });
-            if(it == chunks_.end()) //还没有这个区块的数据
-            {
-                ckLoader_.AddTask(
-                    new ChunkLoaderTask_LoadChunkData(
-                        new Chunk(this, { newCkX, newCkZ })));
-            }
+            if(chunks_.find({ newCkX, newCkZ }) == chunks_.end()) //还没有这个区块的数据，也没有任务
+                ckLoader_.TryAddLoadingTask(this, newCkX, newCkZ);
         }
     }
 }
