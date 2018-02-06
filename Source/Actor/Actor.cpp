@@ -5,10 +5,6 @@ Created by AirGuanZ
 ================================================================*/
 #include <algorithm>
 
-#include <Windows.h>
-#include <DirectXTK/Keyboard.h>
-#include <DirectXTK/Mouse.h>
-
 #include "../Input/InputManager.h"
 #include "Actor.h"
 
@@ -69,12 +65,12 @@ void Actor::UpdateCamera(float deltaT, ChunkManager *ckMgr)
     std::vector<Vector3> tryList =
     {
         pos,
-        { oldPos.x, pos.y, pos.z },
-        { pos.x, pos.y, oldPos.z },
-        { pos.x, oldPos.y, pos.z },
-        { oldPos.x, pos.y, oldPos.z },
+        { oldPos.x, pos.y,    pos.z },
+        { pos.x,    pos.y,    oldPos.z },
+        { pos.x,    oldPos.y, pos.z },
+        { oldPos.x, pos.y,    oldPos.z },
         { oldPos.x, oldPos.y, pos.z },
-        { pos.x, oldPos.y, oldPos.z },
+        { pos.x,    oldPos.y, oldPos.z },
         oldPos
     };
 

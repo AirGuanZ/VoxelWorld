@@ -27,12 +27,28 @@ struct ActorModelVertex
     Vector2 uv;     // TEXCOORD
 };
 
+class ActorRenderer
+{
+public:
+    using Shader = OWE::Shader<SS_VS, SS_PS>;
+    using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
+
+    ActorRenderer(void);
+
+    bool Initialize(std::string &errMsg);
+
+    void Begin(void);
+    void End(void);
+
+private:
+    Shader shader_;
+    ID3D11InputLayout *inputLayout_;
+};
+
 class ActorModelComponent
 {
 public:
-    using Vertex = ActorModelVertex;
-    using Shader = OWE::Shader<SS_VS, SS_PS>;
-    using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
+    using Vertex   = ActorModelVertex;
 
     ActorModelComponent(void);
     
@@ -59,23 +75,23 @@ public:
     void SetState(ActorModelState state);
     void Update(float deltaT);
     
-    void SetTransform(const Matrix &mat);
     void SetBrightness(float brightness);
 
-    void Render(const Camera &cam);
+    void Render(const Camera &cam, const Matrix &worldTrans);
     
 private:
+    void Destroy(void);
+
     void InitState_Standing(void);
     void InitState_Running(void);
     
-    void UpdateState_Standing(void);
-    void UpdateState_Running(void);
+    void UpdateState_Standing(float deltaT);
+    void UpdateState_Running(float deltaT);
 
 private:
     ActorModelState state_;
     float time_;
     
-    Matrix worldTrans_;
     float brightness_;
 
     ActorModelComponent headModel_;
@@ -85,12 +101,12 @@ private:
     ActorModelComponent leftFootModel_;
     ActorModelComponent rightFootModel_;
     
-    Matrix headTrans_;
-    Matrix bodyTrans_;
-    Matrix leftHandTrans_;
-    Matrix rightHandTrans_;
-    Matrix leftFootTrans_;
-    Matrix rightFootTrans_;
+    Matrix headLocalTrans_;
+    Matrix bodyLocalTrans_;
+    Matrix leftHandLocalTrans_;
+    Matrix rightHandLocalTrans_;
+    Matrix leftFootLocalTrans_;
+    Matrix rightFootLocalTrans_;
     
     Texture2D headTex_;
     Texture2D bodyTex_;

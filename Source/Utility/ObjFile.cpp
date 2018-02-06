@@ -14,12 +14,12 @@ namespace
 {
     bool parsePosition(const std::string &line, Vector3 &pos)
     {
-        return std::sscanf(line.c_str(), "v%f%f%f", &pos.x, &pos.y, &pos.z) == 3;
+        return std::sscanf(line.c_str(), "v%f%f%f", &pos.z, &pos.x, &pos.y) == 3;
     }
 
     bool parseNormal(const std::string &line, Vector3 &nor)
     {
-        return std::sscanf(line.c_str(), "vn %f%f%f", &nor.x, &nor.y, &nor.z) == 3;
+        return std::sscanf(line.c_str(), "vn %f%f%f", &nor.z, &nor.x, &nor.y) == 3;
     }
 
     bool parseTexCoord(const std::string &line, Vector2 &texCoord)

@@ -45,4 +45,14 @@ Created by AirGuanZ
 #define ACTOR_DEFAULT_LEFT_FOOT_MODEL  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
 #define ACTOR_DEFAULT_RIGHT_FOOT_MODEL VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
 
+#define ACTOR_DEFAULT_HEAD_TEXTURE VW_FILENAME(Bin/Texture/Actor/head.png)
+#define ACTOR_DEFAULT_BODY_TEXTURE VW_FILENAME(Bin/Texture/Actor/body.png)
+#define ACTOR_DEFAULT_LEFT_HAND_TEXTURE VW_FILENAME(Bin/Texture/Actor/leftHand.png)
+#define ACTOR_DEFAULT_RIGHT_HAND_TEXTURE VW_FILENAME(Bin/Texture/Actor/rightHand.png)
+#define ACTOR_DEFAULT_LEFT_FOOT_TEXTURE VW_FILENAME(Bin/Texture/Actor/leftFoot.png)
+#define ACTOR_DEFAULT_RIGHT_FOOT_TEXTURE VW_FILENAME(Bin/Texture/Actor/rightFoot.png)
+
+#define ACTOR_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Actor/vertex.hlsl)
+#define ACTOR_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Actor/pixel.hlsl)
+
 #endif //VW_RESOURCE_NAME_H
