@@ -46,9 +46,8 @@ void ChunkLoader::Destroy(void)
     }
     threads_.clear();
 
-    for(auto it : loaderTasks_)
-        Helper::SafeDeleteObjects(it.second);
-    loaderTasks_.clear();
+    loaderTasks_.ForEach([](ChunkLoaderTask *t) { Helper::SafeDeleteObjects(t); });
+    loaderTasks_.Clear();
 
     ckPool_.Destroy();
 }
@@ -58,7 +57,7 @@ void ChunkLoader::AddTask(ChunkLoaderTask *task)
     assert(task != nullptr);
 
     std::lock_guard<std::mutex> lk(taskQueueMutex_);
-    loaderTasks_.insert(std::make_pair(task->GetPosition(), task));
+    loaderTasks_.PushFront(task->GetPosition(), task);
 }
 
 void ChunkLoader::AddMsg(ChunkLoaderMessage *msg)
@@ -95,11 +94,10 @@ void ChunkLoader::TaskThreadEntry(void)
 
         {
             std::lock_guard<std::mutex> lk(taskQueueMutex_);
-            if(loaderTasks_.size())
+            if(loaderTasks_.Size())
             {
-                auto it = loaderTasks_.begin();
-                task = it->second;
-                loaderTasks_.erase(it);
+                task = loaderTasks_.Back();
+                loaderTasks_.PopBack();
             }
         }
 
@@ -297,9 +295,10 @@ void ChunkLoader::TryAddLoadingTask(ChunkManager *ckMgr, int x, int z)
 {
     assert(ckMgr != nullptr);
     std::lock_guard<std::mutex> lk(taskQueueMutex_);
-    if(loaderTasks_.find({ x, z }) == loaderTasks_.end())
+    ChunkLoaderTask *oldTask = nullptr;
+    if(!loaderTasks_.Exists({ x, z }))
     {
-        loaderTasks_.insert(std::make_pair(
-            IntVectorXZ{ x, z }, new ChunkLoaderTask(new Chunk(ckMgr, { x, z }))));
+        loaderTasks_.PushFront(
+            IntVectorXZ{ x, z }, new ChunkLoaderTask(new Chunk(ckMgr, { x, z })));
     }
 }

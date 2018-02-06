@@ -204,6 +204,7 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
     });
 
     //创建新的任务
+    std::vector<IntVectorXZ> possibleLoadingTasks;
     int loadRangeXEnd = centrePos_.x + loadDistance_;
     int loadRangeZEnd = centrePos_.z + loadDistance_;
     for(int newCkX = centrePos_.x - loadDistance_; newCkX <= loadRangeXEnd; ++newCkX)
@@ -212,9 +213,18 @@ void ChunkManager::SetCentrePosition(int ckX, int ckZ)
         {
             assert(InLoadingRange(newCkX, newCkZ));
             if(chunks_.find({ newCkX, newCkZ }) == chunks_.end()) //还没有这个区块的数据，也没有任务
-                ckLoader_.TryAddLoadingTask(this, newCkX, newCkZ);
+                possibleLoadingTasks.push_back({ newCkX, newCkZ });
         }
     }
+
+    std::sort(std::begin(possibleLoadingTasks), std::end(possibleLoadingTasks),
+        [=](const IntVectorXZ &lhs, const IntVectorXZ &rhs)->bool
+    {
+        return (lhs.x - ckX) * (lhs.x - ckX) + (lhs.z - ckZ) * (lhs.z - ckZ) <
+            (rhs.x - ckX) * (rhs.x - ckX) + (rhs.z - ckZ) * (rhs.z - ckZ);
+    });
+    for(const IntVectorXZ &p : possibleLoadingTasks)
+        ckLoader_.TryAddLoadingTask(this, p.x, p.z);
 }
 
 void ChunkManager::MakeSectionModelInvalid(int x, int y, int z)

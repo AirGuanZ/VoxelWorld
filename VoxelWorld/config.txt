@@ -9,7 +9,7 @@ MSAA = 1
 
 # гІТњзуЃК0 < RenderDistance < PreloadDistance <= UnloadDistance
 
-UnloadDistance  = 30
+UnloadDistance  = 16
 PreloadDistance = 14
 RenderDistance  = 12
 

@@ -17,6 +17,15 @@ public:
     using Value = ValueType;
     using Hasher = KeyHasherType;
 
+    LinkedHashMap<KeyType, ValueType, KeyHasherType> &operator=(
+        LinkedHashMap<KeyType, ValueType, KeyHasherType> &&other)
+    {
+        list_.swap(other.list_);
+        map_.swap(other.map_);
+        other.Clear();
+        return *this;
+    }
+
     bool Empty(void) const noexcept
     {
         return list_.empty();
@@ -54,6 +63,15 @@ public:
     ValueType &Front(void)
     {
         return list_.front().value;
+    }
+
+    void PushFront(const Key &key, Value &&value)
+    {
+        ListNode lstNode;
+        lstNode.value = value;
+        list_.push_front(lstNode);
+        auto itRt = map_.insert(std::make_pair(key, HashNode{ list_.begin() }));
+        list_.front().hashItor = itRt.first;
     }
 
     void PushFront(const Key &key, Value &value)

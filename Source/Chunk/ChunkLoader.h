@@ -16,6 +16,7 @@ Created by AirGuanZ
 #include "../Land/LandGenerator_V0.h"
 #include "../Land/V1/LandGenerator.h"
 #include "../Land/V2/LandGenerator_V2.h"
+#include "../Utility/LinkedHashMap.h"
 #include "Chunk.h"
 #include "ChunkDataPool.h"
 
@@ -80,13 +81,13 @@ public:
     {
         std::lock_guard<std::mutex> lk(taskQueueMutex_);
         decltype(loaderTasks_) newTasks;
-        for(auto it : loaderTasks_)
+        loaderTasks_.ForEach([&](ChunkLoaderTask *task)
         {
-            if(!func(it.second))
-                newTasks.insert(it);
+            if(func(task))
+                newTasks.PushFront(task->GetPosition(), task);
             else
-                Helper::SafeDeleteObjects(it.second);
-        }
+                Helper::SafeDeleteObjects(task);
+        });
         loaderTasks_ = std::move(newTasks);
     }
 
@@ -105,7 +106,7 @@ private:
     std::vector<std::thread> threads_;
     std::atomic<bool> running_;
 
-    std::unordered_map<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
+    LinkedHashMap<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
     std::queue<ChunkLoaderMessage*> loaderMsgs_;
 
     std::mutex taskQueueMutex_;
