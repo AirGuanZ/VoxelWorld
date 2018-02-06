@@ -30,9 +30,9 @@ ChunkManager::~ChunkManager(void)
     Destroy();
 }
 
-void ChunkManager::StartLoading(void)
+void ChunkManager::StartLoading(int loaderCount)
 {
-    ckLoader_.Initialize();
+    ckLoader_.Initialize(loaderCount);
 }
 
 void ChunkManager::Destroy(void)

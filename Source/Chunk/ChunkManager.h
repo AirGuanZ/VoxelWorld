@@ -51,7 +51,7 @@ public:
     ChunkManager(int loadDistance, int renderDistance, int unloadDistance);
     ~ChunkManager(void);
 
-    void StartLoading(void);
+    void StartLoading(int loaderCount);
     void Destroy(void);
 
     //返回的Chunk在本帧内绝不会失效

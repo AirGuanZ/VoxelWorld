@@ -13,6 +13,10 @@ UnloadDistance  = 16
 PreloadDistance = 14
 RenderDistance  = 12
 
+# 后台区块加载线程数
+# 设置为-1则自动取为适合硬件的值
+LoaderCount = -1
+
 [Fog]
 
 Start = 150

@@ -21,9 +21,9 @@ World::~World(void)
     Destroy();
 }
 
-void World::Initialize(void)
+void World::Initialize(int loaderCount)
 {
-    ckMgr_.StartLoading();
+    ckMgr_.StartLoading(loaderCount);
 }
 
 void World::Destroy(void)

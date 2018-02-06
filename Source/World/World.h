@@ -16,7 +16,7 @@ public:
     World(int preloadDis, int renderDis, int unloadDis);
     ~World(void);
 
-    void Initialize(void);
+    void Initialize(int loaderCount);
     void Destroy(void);
 
     void Update(float deltaT);

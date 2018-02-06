@@ -191,7 +191,7 @@ void Application::Run(void)
     World world(std::stoi(conf("World", "PreloadDistance")),
                 std::stoi(conf("World", "RenderDistance")),
                 std::stoi(conf("World", "UnloadDistance")));
-    world.Initialize();
+    world.Initialize(std::stoi(conf("World", "LoaderCount")));
 
     //×¼ÐÇ
 
