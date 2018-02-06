@@ -213,6 +213,9 @@
     <ClCompile Include="..\Source\Actor\ActorModel.cpp">
       <Filter>Source\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Utility\ObjFile.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Actor\ActorModel.h">
       <Filter>Source\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\ObjFile.h">
+      <Filter>Source\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

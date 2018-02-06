@@ -38,11 +38,11 @@ Created by AirGuanZ
 
 //ActorModelœ‡πÿ
 
-#define ACTOR_DEFAULT_HEAD_MODEL       VW_FILENAME(Bin/Model/Actor/head.owevxl)
-#define ACTOR_DEFAULT_BODY_MODEL       VW_FILENAME(Bin/Model/Actor/body.owevxl)
-#define ACTOR_DEFAULT_LEFT_HAND_MODEL  VW_FILENAME(Bin/Model/Actor/leftHand.owevxl)
-#define ACTOR_DEFAULT_RIGHT_HAND_MODEL VW_FILENAME(Bin/Model/Actor/rightHand.owevxl)
-#define ACTOR_DEFAULT_LEFT_FOOT_MODEL  VW_FILENAME(Bin/Model/Actor/leftFoot.owevxl)
-#define ACTOR_DEFAULT_RIGHT_FOOT_MODEL VW_FILENAME(Bin/Model/Actor/rightFoot.owevxl)
+#define ACTOR_DEFAULT_HEAD_MODEL       VW_FILENAME(Bin/Model/Actor/head.obj)
+#define ACTOR_DEFAULT_BODY_MODEL       VW_FILENAME(Bin/Model/Actor/body.obj)
+#define ACTOR_DEFAULT_LEFT_HAND_MODEL  VW_FILENAME(Bin/Model/Actor/leftHand.obj)
+#define ACTOR_DEFAULT_RIGHT_HAND_MODEL VW_FILENAME(Bin/Model/Actor/rightHand.obj)
+#define ACTOR_DEFAULT_LEFT_FOOT_MODEL  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
+#define ACTOR_DEFAULT_RIGHT_FOOT_MODEL VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
 
 #endif //VW_RESOURCE_NAME_H

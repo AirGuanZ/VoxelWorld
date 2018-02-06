@@ -9,6 +9,7 @@ Created by AirGuanZ
 #include <vector>
 #include <OWEShader.hpp>
 
+#include "../Camera/Camera.h"
 #include "../D3DObject/BasicBuffer.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Math.h"
@@ -22,7 +23,8 @@ enum class ActorModelState
 struct ActorModelVertex
 {
     Vector3 pos;    // POSITION
-    Vector3 color;  // COLOR
+    Vector3 nor;    // NORMAL
+    Vector2 uv;     // TEXCOORD
 };
 
 class ActorModelComponent
@@ -39,7 +41,7 @@ public:
     void Destroy(void);
     bool IsAvailable(void) const;
     
-    void Draw(void) const;
+    void Draw(void);
     
 private:
     BasicBuffer<D3D11_BIND_VERTEX_BUFFER, false> vtxBuf_;
