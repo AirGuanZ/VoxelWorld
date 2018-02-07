@@ -6,7 +6,9 @@ Created by AirGuanZ
 #ifndef VW_LINKED_HASH_MAP_H
 #define VW_LINKED_HASH_MAP_H
 
+#include <algorithm>
 #include <list>
+#include <map>
 #include <unordered_map>
 
 template<typename KeyType, typename ValueType, typename KeyHasherType = std::hash<KeyType>>
@@ -16,6 +18,21 @@ public:
     using Key = KeyType;
     using Value = ValueType;
     using Hasher = KeyHasherType;
+
+    struct HashNode;
+
+    using Map = std::map<Key, HashNode>;
+
+    struct ListNode
+    {
+        typename Map::iterator hashItor;
+        Value value;
+    };
+
+    struct HashNode
+    {
+        typename std::list<ListNode>::iterator listItor;
+    };
 
     LinkedHashMap<KeyType, ValueType, KeyHasherType> &operator=(
         LinkedHashMap<KeyType, ValueType, KeyHasherType> &&other)
@@ -101,22 +118,20 @@ public:
         return map_.find(key) != map_.end();
     }
 
+    template<typename FuncType>
+    void Sort(FuncType &&func)
+    {
+        list_.sort([&](const ListNode &L, const ListNode &R)
+        {
+            return func(L.hashItor->first, R.hashItor->first);
+        });
+        for(auto it = std::begin(list_); it != std::end(list_); ++it)
+            it->hashItor->second.listItor = it;
+    }
+
 private:
-    struct HashNode;
-
-    struct ListNode
-    {
-        typename std::unordered_map<Key, HashNode, Hasher>::iterator hashItor;
-        Value value;
-    };
-
-    struct HashNode
-    {
-        typename std::list<ListNode>::iterator listItor;
-    };
-
     std::list<ListNode> list_;
-    std::unordered_map<Key, HashNode, Hasher> map_;
+    Map map_;
 };
 
 #endif //VW_LINKED_HASH_MAP_H

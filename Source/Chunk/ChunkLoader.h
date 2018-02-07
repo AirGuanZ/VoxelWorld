@@ -91,6 +91,13 @@ public:
         loaderTasks_ = std::move(newTasks);
     }
 
+    template<typename FuncType>
+    void Sort(FuncType &&func)
+    {
+        std::lock_guard<std::mutex> lk(taskQueueMutex_);
+        loaderTasks_.Sort(std::forward<FuncType>(func));
+    }
+
     //真正的区块数据加载函数
     //线程无关
     void LoadChunkData(Chunk *ck);
