@@ -48,8 +48,10 @@ void Application::Run(void)
 
     //雾效参数
 
-    float fogStart = std::stof(conf("Fog", "Start"));
-    float fogRange = std::stof(conf("Fog", "Range"));
+    float maxFogStart = std::stof(conf("Fog", "Start"));
+    float maxFogRange = std::stof(conf("Fog", "Range"));
+
+    float fogStart = 0.0f, fogRange = 1.0f;
 
     //渲染器和纹理
 
@@ -254,6 +256,9 @@ void Application::Run(void)
             ->SetBufferData(DC, { sunlight });
 
         //雾设置
+
+        fogStart = (std::min)(fogStart + 0.08f, maxFogStart);
+        fogRange = (std::min)(fogRange + 0.1f, maxFogRange);
 
         basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog")
             ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });

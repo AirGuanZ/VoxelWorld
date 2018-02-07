@@ -63,6 +63,12 @@ FAILED:
     return false;
 }
 
+void ActorRenderer::Destroy(void)
+{
+    Helper::ReleaseCOMObjects(inputLayout_);
+    shader_.Destroy();
+}
+
 void ActorRenderer::Begin(void)
 {
     assert(inputLayout_ != nullptr && shader_.IsAllStagesAvailable());
@@ -77,6 +83,11 @@ void ActorRenderer::End(void)
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
     DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
+}
+
+ActorRenderer::Shader &ActorRenderer::GetShader(void)
+{
+    return shader_;
 }
 
 ActorModelComponent::ActorModelComponent(void)
@@ -164,8 +175,10 @@ namespace
     }
 }
 
-bool ActorModel::Initialize(void)
+bool ActorModel::Initialize(std::string &errMsg)
 {
+    errMsg = "";
+
     if(!LoadActorModelComponent(ACTOR_DEFAULT_HEAD_MODEL, headModel_) ||
        !LoadActorModelComponent(ACTOR_DEFAULT_BODY_MODEL, bodyModel_) ||
        !LoadActorModelComponent(ACTOR_DEFAULT_LEFT_HAND_MODEL, leftHandModel_) ||
@@ -173,6 +186,7 @@ bool ActorModel::Initialize(void)
        !LoadActorModelComponent(ACTOR_DEFAULT_LEFT_FOOT_MODEL, leftFootModel_) ||
        !LoadActorModelComponent(ACTOR_DEFAULT_RIGHT_FOOT_MODEL, rightFootModel_))
     {
+        errMsg = "Failed to load actor model from file";
         Destroy();
         return false;
     }
@@ -184,6 +198,28 @@ bool ActorModel::Initialize(void)
        !leftFootTex_.LoadFromFile(ACTOR_DEFAULT_LEFT_FOOT_TEXTURE) ||
        !rightFootTex_.LoadFromFile(ACTOR_DEFAULT_RIGHT_FOOT_TEXTURE))
     {
+        errMsg = "Failed to load actor texture from file";
+        Destroy();
+        return false;
+    }
+
+    if(!sampler_)
+    {
+        errMsg = "Failed to initialize texture sampler for actor rendering";
+        Destroy();
+        return false;
+    }
+
+    if(!renderer_.Initialize(errMsg))
+    {
+        Destroy();
+        return false;
+    }
+
+    uniforms_.reset(renderer_.GetShader().CreateUniformManager());
+    if(!uniforms_)
+    {
+        errMsg = "Failed to create shader uniform manager for actor rendering";
         Destroy();
         return false;
     }
@@ -228,6 +264,82 @@ void ActorModel::SetBrightness(float brightness)
     brightness_ = brightness;
 }
 
+void ActorModel::Render(const Camera &cam, const Matrix &worldTrans)
+{
+    struct VSCBTrans
+    {
+        Matrix WVP;
+    };
+
+    struct PSCBBrightness
+    {
+        alignas(16) float brightness;
+    };
+
+    ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
+    ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
+
+    auto vscbTrans = uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>
+        (dev, "Trans");
+    auto psTex = uniforms_->GetShaderResource<SS_PS>("tex");
+
+    uniforms_->GetConstantBuffer<SS_PS, PSCBBrightness, true>(dev, "Brightness")
+        ->SetBufferData(DC, { brightness_ });
+    uniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
+
+    auto RenderComponent = [&](const Matrix &localTrans, Texture2D &tex, ActorModelComponent &model)
+    {
+        vscbTrans->SetBufferData(DC, { (localTrans * worldTrans).Transpose() });
+        psTex->SetShaderResource(tex);
+        uniforms_->Bind(DC);
+        model.Draw();
+    };
+
+    renderer_.Begin();
+    {
+        RenderComponent(headLocalTrans_,      headTex_,      headModel_);
+        RenderComponent(bodyLocalTrans_,      bodyTex_,      bodyModel_);
+        RenderComponent(leftHandLocalTrans_,  leftHandTex_,  leftHandModel_);
+        RenderComponent(rightHandLocalTrans_, rightHandTex_, rightHandModel_);
+        RenderComponent(leftFootLocalTrans_,  leftFootTex_,  leftFootModel_);
+        RenderComponent(rightFootLocalTrans_, rightFootTex_, rightFootModel_);
+
+        uniforms_->Unbind(DC);
+    }
+    renderer_.End();
+}
+
+void ActorModel::Destroy(void)
+{
+    state_ = ActorModelState::Standing;
+    time_ = 0.0f;
+    brightness_ = 1.0f;
+
+    headModel_.Destroy();
+    bodyModel_.Destroy();
+    leftHandModel_.Destroy();
+    rightHandModel_.Destroy();
+    leftFootModel_.Destroy();
+    rightFootModel_.Destroy();
+
+    headLocalTrans_ = Matrix::Identity;
+    bodyLocalTrans_ = Matrix::Identity;
+    leftHandLocalTrans_ = Matrix::Identity;
+    rightHandLocalTrans_ = Matrix::Identity;
+    leftFootLocalTrans_ = Matrix::Identity;
+    rightFootLocalTrans_ = Matrix::Identity;
+
+    headTex_.Destroy();
+    bodyTex_.Destroy();
+    leftHandTex_.Destroy();
+    rightHandTex_.Destroy();
+    leftFootTex_.Destroy();
+    rightFootTex_.Destroy();
+
+    renderer_.Destroy();
+    uniforms_.reset();
+}
+
 void ActorModel::InitState_Standing(void)
 {
     state_ = ActorModelState::Standing;
@@ -256,32 +368,4 @@ void ActorModel::UpdateState_Running(float deltaT)
 {
     //TODO
     UpdateState_Standing(deltaT);
-}
-
-void ActorModel::Destroy(void)
-{
-    state_ = ActorModelState::Standing;
-    time_ = 0.0f;
-    brightness_ = 1.0f;
-
-    headModel_.Destroy();
-    bodyModel_.Destroy();
-    leftHandModel_.Destroy();
-    rightHandModel_.Destroy();
-    leftFootModel_.Destroy();
-    rightFootModel_.Destroy();
-
-    headLocalTrans_      = Matrix::Identity;
-    bodyLocalTrans_      = Matrix::Identity;
-    leftHandLocalTrans_  = Matrix::Identity;
-    rightHandLocalTrans_ = Matrix::Identity;
-    leftFootLocalTrans_  = Matrix::Identity;
-    rightFootLocalTrans_ = Matrix::Identity;
-
-    headTex_.Destroy();
-    bodyTex_.Destroy();
-    leftHandTex_.Destroy();
-    rightHandTex_.Destroy();
-    leftFootTex_.Destroy();
-    rightFootTex_.Destroy();
 }

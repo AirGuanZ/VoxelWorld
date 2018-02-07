@@ -94,6 +94,9 @@
     <Filter Include="Source\Land\V0">
       <UniqueIdentifier>{f0aa84c9-ce80-494d-bfa6-efbc9a4fe03f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Shader\Actor">
+      <UniqueIdentifier>{57673da4-ca07-419f-bcc1-0e2641e191d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -421,5 +424,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Bin\Shader\Actor\VertexShader.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </FxCompile>
+    <FxCompile Include="Bin\Shader\Actor\pixel.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

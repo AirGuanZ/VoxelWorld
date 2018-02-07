@@ -6,11 +6,14 @@ Created by AirGuanZ
 #ifndef VW_ACTOR_MODEL_H
 #define VW_ACTOR_MODEL_H
 
+#include <memory>
 #include <vector>
+
 #include <OWEShader.hpp>
 
 #include "../Camera/Camera.h"
 #include "../D3DObject/BasicBuffer.h"
+#include "../D3DObject/Sampler.h"
 #include "../Texture/Texture2D.h"
 #include "../Utility/Math.h"
 
@@ -36,9 +39,12 @@ public:
     ActorRenderer(void);
 
     bool Initialize(std::string &errMsg);
+    void Destroy(void);
 
     void Begin(void);
     void End(void);
+
+    Shader &GetShader(void);
 
 private:
     Shader shader_;
@@ -70,7 +76,7 @@ class ActorModel
 public:
     ActorModel(void);
     
-    bool Initialize(void);
+    bool Initialize(std::string &errMsg);
 
     void SetState(ActorModelState state);
     void Update(float deltaT);
@@ -114,6 +120,10 @@ private:
     Texture2D rightHandTex_;
     Texture2D leftFootTex_;
     Texture2D rightFootTex_;
+
+    Sampler sampler_;
+    ActorRenderer renderer_;
+    std::unique_ptr<ActorRenderer::Uniforms> uniforms_;
 };
 
 #endif //VW_ACTOR_MODEL_H
