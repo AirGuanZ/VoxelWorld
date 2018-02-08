@@ -257,7 +257,7 @@ void Application::Run(void)
 
         //ÎíÉèÖÃ
 
-        fogStart = (std::min)(fogStart + 0.08f, maxFogStart);
+        fogStart = (std::min)(fogStart + 0.12f, maxFogStart);
         fogRange = (std::min)(fogRange + 0.1f, maxFogRange);
 
         basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog")
