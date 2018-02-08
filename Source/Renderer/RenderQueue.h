@@ -22,11 +22,7 @@ public:
     void Render(void)
     {
         for(const Model *model : models_)
-        {
-            model->Bind();
             model->Draw();
-            model->Unbind();
-        }
         models_.clear();
     }
 

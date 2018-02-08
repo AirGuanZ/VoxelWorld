@@ -116,7 +116,7 @@
     <ClInclude Include="..\Source\Utility\FPSCounter.h" />
     <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
     <ClInclude Include="..\Source\Utility\D3D11Header.h" />
-    <ClInclude Include="..\Source\Utility\LinkedHashMap.h" />
+    <ClInclude Include="..\Source\Utility\LinkedMap.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />
     <ClInclude Include="..\Source\Utility\ObjFile.h" />
     <ClInclude Include="..\Source\Utility\Singleton.h" />

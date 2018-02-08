@@ -41,7 +41,7 @@ namespace
 
 void World::Update(float deltaT)
 {
-    actor_.UpdateCamera(deltaT, &ckMgr_);
+    actor_.Update(deltaT, &ckMgr_);
 
     ckMgr_.SetCentrePosition(
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().x)),

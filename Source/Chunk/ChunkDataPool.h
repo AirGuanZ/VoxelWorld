@@ -10,7 +10,7 @@ Created by AirGuanZ
 #include <unordered_map>
 #include <vector>
 
-#include "../Utility/LinkedHashMap.h"
+#include "../Utility/LinkedMap.h"
 #include "../Utility/Uncopiable.h"
 #include "Chunk.h"
 
@@ -39,7 +39,7 @@ private:
     size_t maxDataCnt_;
 
     std::mutex mapMutex_;
-    LinkedHashMap<IntVectorXZ, Chunk*, IntVectorXZHasher> map_;
+    LinkedMap<IntVectorXZ, Chunk*, IntVectorXZHasher> map_;
 };
 
 #endif //VW_CHUNK_DATA_POOL_H

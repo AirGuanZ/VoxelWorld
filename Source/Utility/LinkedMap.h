@@ -1,10 +1,10 @@
 /*================================================================
-Filename: LinkedHashMap.h
+Filename: LinkedMap.h
 Date: 2018.1.29
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LINKED_HASH_MAP_H
-#define VW_LINKED_HASH_MAP_H
+#ifndef VW_LINKED_MAP_H
+#define VW_LINKED_MAP_H
 
 #include <algorithm>
 #include <list>
@@ -12,7 +12,7 @@ Created by AirGuanZ
 #include <unordered_map>
 
 template<typename KeyType, typename ValueType, typename KeyHasherType = std::hash<KeyType>>
-class LinkedHashMap
+class LinkedMap
 {
 public:
     using Key = KeyType;
@@ -34,8 +34,8 @@ public:
         typename std::list<ListNode>::iterator listItor;
     };
 
-    LinkedHashMap<KeyType, ValueType, KeyHasherType> &operator=(
-        LinkedHashMap<KeyType, ValueType, KeyHasherType> &&other)
+    LinkedMap<KeyType, ValueType, KeyHasherType> &operator=(
+        LinkedMap<KeyType, ValueType, KeyHasherType> &&other)
     {
         list_.swap(other.list_);
         map_.swap(other.map_);
@@ -85,7 +85,7 @@ public:
     void PushFront(const Key &key, Value &&value)
     {
         ListNode lstNode;
-        lstNode.value = value;
+        lstNode.value = std::move(value);
         list_.push_front(lstNode);
         auto itRt = map_.insert(std::make_pair(key, HashNode{ list_.begin() }));
         list_.front().hashItor = itRt.first;
@@ -134,4 +134,4 @@ private:
     Map map_;
 };
 
-#endif //VW_LINKED_HASH_MAP_H
+#endif //VW_LINKED_MAP_H

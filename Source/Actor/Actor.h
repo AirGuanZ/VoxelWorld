@@ -11,10 +11,16 @@ Created by AirGuanZ
 #include "../Utility/Math.h"
 #include "../Window/Window.h"
 
+/*
+    Actor状态和动画的组织设计：
+        内部用状态机组织，模型动画的切换和更新封装出来
+        内部状态的转移由UserInput和EnvirInput来推动（和以前尴尬的Monomorphism一样）
+*/
+
 class Actor
 {
 public:
-    void UpdateCamera(float deltaT, ChunkManager *ckMgr);
+    void Update(float deltaT, ChunkManager *ckMgr);
 
     const Matrix &GetViewProjMatrix(void) const
     {
@@ -32,12 +38,20 @@ public:
     }
 
 private:
+    void UpdateCameraDirection(float deltaT, ChunkManager *ckMgr);
+    void UpdateActorPosition  (float deltaT, ChunkManager *ckMgr);
+    void UpdateCameraApperance(float deltaT, ChunkManager *ckMgr);
+
+private:
     float flyUpSpeed_ = 0.009f;
     float flyDownSpeed_ = 0.009f;
     float horMoveSpeed_ = 0.0085f;
 
     float mouseXSpeed_ = 0.00014f;
     float mouseYSpeed_ = 0.00010f;
+
+    Vector3 pos_ = Vector3(0.0f, 80.0f, 0.0f);
+    float yaw_ = 0.0f;
 
     Camera camera_;
 };

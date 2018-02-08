@@ -19,5 +19,5 @@ LoaderCount = -1
 
 [Fog]
 
-Start = 150
-Range = 40
+Start = 170
+Range = 20

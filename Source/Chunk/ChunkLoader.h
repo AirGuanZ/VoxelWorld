@@ -16,7 +16,7 @@ Created by AirGuanZ
 #include "../Land/LandGenerator_V0.h"
 #include "../Land/V1/LandGenerator.h"
 #include "../Land/V2/LandGenerator_V2.h"
-#include "../Utility/LinkedHashMap.h"
+#include "../Utility/LinkedMap.h"
 #include "Chunk.h"
 #include "ChunkDataPool.h"
 
@@ -113,7 +113,7 @@ private:
     std::vector<std::thread> threads_;
     std::atomic<bool> running_;
 
-    LinkedHashMap<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
+    LinkedMap<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
     std::queue<ChunkLoaderMessage*> loaderMsgs_;
 
     std::mutex taskQueueMutex_;

@@ -28,10 +28,6 @@ public:
 
     bool IsAvailable(void) const;
 
-    void Bind(void) const;
-    
-    void Unbind(void) const;
-
     void Draw(void) const;
 
 private:

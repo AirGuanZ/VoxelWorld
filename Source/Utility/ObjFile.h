@@ -39,7 +39,7 @@ public:
            z /
         而实际形状完全没变
         所以对magica voxel导出的obj，放心用就行了；
-        对其他来源的obj，注意对照一下坐标系，和上面的文件坐标系一致才能用
+        对其他来源的obj，注意对照一下坐标系
     */
     bool LoadFromFile(const std::wstring &filename, float scale = 1.0f);
 
