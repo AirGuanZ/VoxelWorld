@@ -28,7 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Actor\Actor.cpp" />
-    <ClCompile Include="..\Source\Actor\ActorModel.cpp" />
     <ClCompile Include="..\Source\Application\Application.cpp" />
     <ClCompile Include="..\Source\Block\BlockInfoManager.cpp" />
     <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp" />
@@ -70,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Actor\Actor.h" />
-    <ClInclude Include="..\Source\Actor\ActorModel.h" />
     <ClInclude Include="..\Source\Application\Application.h" />
     <ClInclude Include="..\Source\Block\Block.h" />
     <ClInclude Include="..\Source\Block\BlockInfo.h" />
@@ -160,28 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Bin\Shader\Actor\vertex.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Vertex</ShaderType>
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Bin\Shader\Actor\pixel.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Pixel</ShaderType>
-      <FileType>Document</FileType>
-    </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

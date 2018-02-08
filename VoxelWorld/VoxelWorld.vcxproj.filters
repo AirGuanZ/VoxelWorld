@@ -213,9 +213,6 @@
     <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Actor\ActorModel.cpp">
-      <Filter>Source\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Utility\ObjFile.cpp">
       <Filter>Source\Utility</Filter>
     </ClCompile>
@@ -383,9 +380,6 @@
     <ClInclude Include="..\Source\Chunk\ChunkDataPool.h">
       <Filter>Source\Chunk</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Actor\ActorModel.h">
-      <Filter>Source\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\ObjFile.h">
       <Filter>Source\Utility</Filter>
     </ClInclude>
@@ -410,12 +404,6 @@
       <Filter>Bin\Shader\ImmediateScreen2D</Filter>
     </None>
     <None Include="..\ReadMe.md" />
-    <None Include="Bin\Shader\Actor\pixel.hlsl">
-      <Filter>Bin\Shader\Actor</Filter>
-    </None>
-    <None Include="Bin\Shader\Actor\vertex.hlsl">
-      <Filter>Bin\Shader\Actor</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
