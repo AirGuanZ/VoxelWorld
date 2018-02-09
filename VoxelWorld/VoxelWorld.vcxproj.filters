@@ -103,6 +103,9 @@
     <Filter Include="Source\Utility\ObjFile">
       <UniqueIdentifier>{5c4a9295-04d2-4f4c-85b5-f129ffe54601}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Animation">
+      <UniqueIdentifier>{116e696c-fab5-47ca-89a6-570a46c9dce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -221,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Utility\ObjFile.cpp">
       <Filter>Source\Utility\ObjFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Animation\SkeletonData.cpp">
+      <Filter>Source\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +394,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\Utility\LinkedMap.h">
       <Filter>Source\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Actor\ActorModel.h">
+      <Filter>Source\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Animation\SkeletonData.h">
+      <Filter>Source\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -220,6 +220,7 @@ void Application::Run(void)
 #if PRINT_FPS
     FPSCounter fps;
     fps.Restart();
+    float lastFPS = 0.0f
 #endif
 
     float daynightT = 0.0f;
@@ -227,7 +228,6 @@ void Application::Run(void)
     while(!input.IsKeyDown(VK_ESCAPE))
     {
 #if PRINT_FPS
-        static float lastFPS = 0.0f;
         fps.Tick();
         if(fps.GetFPS() != lastFPS)
         {
@@ -258,7 +258,7 @@ void Application::Run(void)
         //ÎíÉèÖÃ
 
         fogStart = (std::min)(fogStart + 0.12f, maxFogStart);
-        fogRange = (std::min)(fogRange + 0.1f, maxFogRange);
+        fogRange = (std::min)(fogRange + 0.12f, maxFogRange);
 
         basicRendererUniforms0->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog")
             ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });

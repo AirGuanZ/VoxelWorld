@@ -39,8 +39,7 @@ namespace LandGenerator_V2
             auto RandXZ = [=](int x, int z) -> float
             {
                 return std::uniform_real_distribution<float>(0.0f, 1.0f)
-                    (RandomEngine((seed_ + x) * z +
-                    std::uniform_int_distribution<Seed>()(RandomEngine(x))));
+                    (RandomEngine(41177 * seed_ + 49843 * x + 3847 * z));
             };
 
             float xz   = RandXZ(gridX, gridZ);

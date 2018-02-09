@@ -84,11 +84,11 @@ void ChunkManager::UpdateLight(int x, int y, int z)
         int lightDec = blkInfo.lightDec;
 
         BlockLight pX = GetBlockLight(pos.x + 1, pos.y, pos.z),
-            nX = GetBlockLight(pos.x - 1, pos.y, pos.z),
-            pY = GetBlockLight(pos.x, pos.y + 1, pos.z),
-            nY = GetBlockLight(pos.x, pos.y - 1, pos.z),
-            pZ = GetBlockLight(pos.x, pos.y, pos.z + 1),
-            nZ = GetBlockLight(pos.x, pos.y, pos.z - 1);
+                   nX = GetBlockLight(pos.x - 1, pos.y, pos.z),
+                   pY = GetBlockLight(pos.x, pos.y + 1, pos.z),
+                   nY = GetBlockLight(pos.x, pos.y - 1, pos.z),
+                   pZ = GetBlockLight(pos.x, pos.y, pos.z + 1),
+                   nZ = GetBlockLight(pos.x, pos.y, pos.z - 1);
 
         BlockLight newLight = MakeLight(
             blkInfo.lightEmission.x,
