@@ -35,7 +35,7 @@ bool Helper::ReadFileBinary(const std::wstring &filename, std::vector<char> &buf
     std::streampos fileSize = fb->pubseekoff(0, std::ios::end, std::ios::in);
     fb->pubseekpos(0, std::ios::in);
 
-    buf.resize(fileSize);
+    buf.resize(static_cast<std::vector<char>::size_type>(fileSize));
     fb->sgetn(buf.data(), fileSize);
 
     return true;

@@ -13,14 +13,12 @@ Created by AirGuanZ
 #include "../Utility/HelperFunctions.h"
 #include "SkeletonDataLoader.h"
 
-using namespace Skeleton;
+SINGLETON_CLASS_DEFINITION(Skeleton::SkeletonDataLoader);
 
-SINGLETON_CLASS_DEFINITION(SkeletonDataLoader);
-
-bool SkeletonDataLoader::LoadFromFile(const std::wstring &filename,
-                                      Skeleton &skeleton,
-                                      std::vector<BasicVertex> &vertices,
-                                      std::string &errMsg)
+bool Skeleton::SkeletonDataLoader::LoadFromFile(const std::wstring &filename,
+                                                Skeleton &skeleton,
+                                                std::vector<BasicVertex> &vertices,
+                                                std::string &errMsg)
 {
     errMsg = "";
     skeleton.Clear();
