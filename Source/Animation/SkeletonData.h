@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_SKELETON_DATA_H
 #define VW_SKELETON_DATA_H
 
+#include <cstdint>
 #include <map>
 #include <string>
 #include <vector>
@@ -14,6 +15,15 @@ Created by AirGuanZ
 
 namespace Skeleton
 {
+    struct BasicVertex
+    {
+        Vector3 pos;
+        Vector3 nor;
+        Vector2 uv;
+        Vector3 boneWeights;
+        std::uint8_t boneIndices[4];
+    };
+
     struct Keyframe
     {
         float time;
@@ -68,6 +78,7 @@ namespace Skeleton
     public:
         void Initialize(std::vector<int> &&parents,
                         std::vector<Matrix> &&offsets);
+        void Clear(void);
 
         bool AddClip(const std::string &name, AniClip &&clipData);
 

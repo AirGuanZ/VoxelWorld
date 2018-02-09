@@ -71,6 +71,13 @@ void Skeleton::Skeleton::Initialize(std::vector<int> &&parents, std::vector<Matr
     aniClips_.clear();
 }
 
+void Skeleton::Skeleton::Clear(void)
+{
+    parents_.clear();
+    offsets_.clear();
+    aniClips_.clear();
+}
+
 bool Skeleton::Skeleton::AddClip(const std::string &name, AniClip &&clipData)
 {
     auto it = aniClips_.find(name);

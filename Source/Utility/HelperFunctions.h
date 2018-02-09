@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_HELPER_FUNCTIONS_H
 
 #include <string>
+#include <vector>
 
 #include "D3D11Header.h"
 
@@ -73,6 +74,7 @@ namespace Helper
     }
 
     bool ReadFile(const std::wstring &filename, std::string &output);
+    bool ReadFileBinary(const std::wstring &filename, std::vector<char> &buf);
 
     ID3D11InputLayout *CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
                                          int num, const void *byteCode, int length);

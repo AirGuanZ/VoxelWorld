@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <fstream>
 #include <iterator>
 #include <string>
+#include <vector>
 
 #include "../Window/Window.h"
 #include "D3D11Header.h"
@@ -19,6 +20,24 @@ bool Helper::ReadFile(const std::wstring &filename, std::string &output)
         return false;
     output = std::string(std::istreambuf_iterator<char>(fin),
         std::istreambuf_iterator<char>());
+    return true;
+}
+
+bool Helper::ReadFileBinary(const std::wstring &filename, std::vector<char> &buf)
+{
+    buf.clear();
+
+    std::ifstream fin(filename, std::ios::binary);
+    if(!fin)
+        return false;
+
+    std::filebuf *fb = fin.rdbuf();
+    std::streampos fileSize = fb->pubseekoff(0, std::ios::end, std::ios::in);
+    fb->pubseekpos(0, std::ios::in);
+
+    buf.resize(fileSize);
+    fb->sgetn(buf.data(), fileSize);
+
     return true;
 }
 

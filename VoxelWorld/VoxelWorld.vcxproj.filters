@@ -228,6 +228,9 @@
     <ClCompile Include="..\Source\Animation\SkeletonData.cpp">
       <Filter>Source\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Animation\SkeletonDataLoader.cpp">
+      <Filter>Source\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Application\Application.h">
@@ -399,6 +402,9 @@
       <Filter>Source\Actor</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Animation\SkeletonData.h">
+      <Filter>Source\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Animation\SkeletonDataLoader.h">
       <Filter>Source\Animation</Filter>
     </ClInclude>
   </ItemGroup>
