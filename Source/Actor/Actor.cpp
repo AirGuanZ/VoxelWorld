@@ -85,17 +85,17 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
     }
     if(input.IsKeyDown('S'))
     {
-        yaw_ = -camera_.GetYaw();
+        yaw_ = -camera_.GetYaw() + DirectX::XM_PI;
         --horFBMove;
     }
     if(input.IsKeyDown('A'))
     {
-        yaw_ = -camera_.GetYaw();
+        yaw_ = -camera_.GetYaw() - DirectX::XM_PIDIV2;
         ++horLRMove;
     }
     if(input.IsKeyDown('D'))
     {
-        yaw_ = -camera_.GetYaw();
+        yaw_ = -camera_.GetYaw() + DirectX::XM_PIDIV2;
         --horLRMove;
     }
 
