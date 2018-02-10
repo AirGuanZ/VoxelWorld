@@ -14,5 +14,5 @@ struct PSInput
 
 float4 main(PSInput input) : SV_TARGET
 {
-    return float4(brightness * tex.Sample(sam, input.uv), 1.0f);
+    return float4(pow(brightness * tex.Sample(sam, input.uv), 1.0f), 1.65f);
 }

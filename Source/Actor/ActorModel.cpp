@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include "../Resource/ResourceName.h"
 #include "../Utility/HelperFunctions.h"
+#include "../Utility/ObjFile.h"
 #include "../Window/Window.h"
 #include "ActorModel.h"
 
@@ -36,7 +37,7 @@ namespace
                 Quaternion::Identity
             },
             {
-                1.0f,
+                1000.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
                 Vector3(0.0f, 0.0f, 0.0f),
                 Quaternion::Identity
@@ -73,86 +74,32 @@ namespace
     {
         meshes.clear();
 
-        float halfSize = 0.5f;
-
-        std::vector<ActorModelVertex> vtxData =
-        {
-            //x+
-            { { +halfSize, -halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, +halfSize, +halfSize }, { 0.0f, 0.0f } },
-            { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, -halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, -halfSize, -halfSize }, { 1.0f, 1.0f } },
-                                                   
-            //x-                                                 
-            { { -halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, +halfSize, -halfSize }, { 0.0f, 0.0f } },
-            { { -halfSize, +halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, +halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, -halfSize, +halfSize }, { 1.0f, 1.0f } },
-                                                   
-            //y+                                                 
-            { { -halfSize, +halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, +halfSize, -halfSize }, { 0.0f, 0.0f } },
-            { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, +halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, +halfSize, +halfSize }, { 1.0f, 1.0f } },
-                                                   
-            //y-                                                 
-            { { -halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, -halfSize, +halfSize }, { 0.0f, 0.0f } },
-            { { +halfSize, -halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, -halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, -halfSize, -halfSize }, { 1.0f, 1.0f } },
-                                                   
-            //z-                                                 
-            { { +halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, +halfSize, -halfSize }, { 0.0f, 0.0f } },
-            { { -halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, -halfSize, -halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, +halfSize, -halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, -halfSize, -halfSize }, { 1.0f, 1.0f } },
-                                                   
-            //z+                                                 
-            { { -halfSize, -halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { -halfSize, +halfSize, +halfSize }, { 0.0f, 0.0f } },
-            { { +halfSize, +halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { -halfSize, -halfSize, +halfSize }, { 0.0f, 1.0f } },
-            { { +halfSize, +halfSize, +halfSize }, { 1.0f, 0.0f } },
-            { { +halfSize, -halfSize, +halfSize }, { 1.0f, 1.0f } }
-        };
-
-        std::vector<UINT> idxData(vtxData.size());
-        for(UINT i = 0; i != idxData.size(); ++i)
-            idxData[i] = i;
+        ObjFile_PNT obj;
+        if(!obj.LoadFromFile(L"Bin/Model/Actor/actor.obj", 0.02f))
+            return false;
 
         meshes.resize(2);
 
-        if(!meshes[0].vtxBuf.Initialize(
-                vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
-           !meshes[0].idxBuf.Initialize(
-                idxData.data(), sizeof(UINT) * idxData.size()))
+        std::vector<ActorModelVertex> vtxData(obj.vertices.size());
+        for(int i = 0; i != vtxData.size(); ++i)
         {
-            meshes.clear();
-            return false;
+            vtxData[i].pos = obj.vertices[i].pos;
+            vtxData[i].uv = obj.vertices[i].uv;
         }
-        meshes[0].boneIndex = 0;
-        meshes[0].idxCount = idxData.size();
 
-        if(!meshes[1].vtxBuf.Initialize(
-                vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
-           !meshes[1].idxBuf.Initialize(
-                idxData.data(), sizeof(UINT) * idxData.size()))
+        if(!meshes[0].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
+           !meshes[1].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
+           !meshes[0].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()) ||
+           !meshes[1].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()))
         {
             meshes.clear();
             return false;
         }
+
+        meshes[0].boneIndex = 0;
+        meshes[0].idxCount = obj.indices.size();
         meshes[1].boneIndex = 1;
-        meshes[1].idxCount = idxData.size();
+        meshes[1].idxCount = obj.indices.size();
 
         return true;
     }
@@ -317,29 +264,30 @@ void ActorModel::Render(const Camera &cam)
     DC->IASetInputLayout(inputLayout_);
     UINT stride = sizeof(ActorModelVertex), offset = 0;
 
+    uniforms_->GetConstantBuffer<SS_PS, PSCBBrightness, true>(dev, "Brightness")
+        ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
+
     for(ActorModelComponent &mesh : meshes_)
     {
         Matrix WVP = boneMats[mesh.boneIndex] * worldTrans_
                                               * cam.GetViewProjMatrix();
         uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans")
             ->SetBufferData(DC, { WVP.Transpose() });
-        uniforms_->GetConstantBuffer<SS_PS, PSCBBrightness, true>(dev, "Brightness")
-            ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
         uniforms_->Bind(DC);
 
         ID3D11Buffer *vtxBuf = mesh.vtxBuf.GetBuffer();
         DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
         DC->IASetIndexBuffer(mesh.idxBuf.GetBuffer(), DXGI_FORMAT_R16_UINT, 0);
-        //DC->DrawIndexed(mesh.idxCount, 0, 0);
-        DC->Draw(36, 0);
+        DC->DrawIndexed(mesh.idxCount, 0, 0);
+
+        uniforms_->Unbind(DC);
     }
 
     ID3D11Buffer *vtxBuf = nullptr;
     stride = 0;
     DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
-    //DC->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
+    DC->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
 
-    uniforms_->Unbind(DC);
     DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
 }

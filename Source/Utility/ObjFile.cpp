@@ -14,12 +14,12 @@ namespace
 {
     bool parsePosition(const std::string &line, Vector3 &pos)
     {
-        return std::sscanf(line.c_str(), "v%f%f%f", &pos.z, &pos.x, &pos.y) == 3;
+        return std::sscanf(line.c_str(), "v%f%f%f", &pos.x, &pos.y, &pos.z) == 3;
     }
 
     bool parseNormal(const std::string &line, Vector3 &nor)
     {
-        return std::sscanf(line.c_str(), "vn %f%f%f", &nor.z, &nor.x, &nor.y) == 3;
+        return std::sscanf(line.c_str(), "vn %f%f%f", &nor.x, &nor.y, &nor.z) == 3;
     }
 
     bool parseTexCoord(const std::string &line, Vector2 &texCoord)
@@ -47,7 +47,7 @@ bool ObjFile_PNT::LoadFromFile(const std::wstring &filename, float scale)
     std::vector<Vector2> tex;
 
     std::vector<Vertex> vtx;
-    std::vector<UINT> idx;
+    std::vector<UINT16> idx;
 
     Vector3 vpos, vnor;
     Vector2 vtex;
@@ -76,9 +76,10 @@ bool ObjFile_PNT::LoadFromFile(const std::wstring &filename, float scale)
             vtx.push_back({ pos[ipos[1] - 1], nor[inor[1] - 1], tex[itex[1] - 1] });
             vtx.push_back({ pos[ipos[2] - 1], nor[inor[2] - 1], tex[itex[2] - 1] });
 
-            idx.push_back(idx.size());
-            idx.push_back(idx.size());
-            idx.push_back(idx.size());
+            UINT16 sizeBase = static_cast<UINT16>(idx.size());
+            idx.push_back(sizeBase);
+            idx.push_back(sizeBase + 2);
+            idx.push_back(sizeBase + 1);
         }
     }
 

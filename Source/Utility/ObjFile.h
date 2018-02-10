@@ -46,7 +46,7 @@ public:
     void Clear(void);
 
     std::vector<Vertex> vertices;
-    std::vector<UINT> indices;
+    std::vector<UINT16> indices;
 };
 
 #endif //VW_OBJ_FILE_H
