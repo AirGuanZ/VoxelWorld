@@ -437,6 +437,12 @@
       <Filter>Bin\Shader\ImmediateScreen2D</Filter>
     </None>
     <None Include="..\ReadMe.md" />
+    <None Include="Bin\Shader\Actor\pixel.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </None>
+    <None Include="Bin\Shader\Actor\vertex.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
@@ -451,13 +457,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Bin\Shader\Actor\vertex.hlsl">
-      <Filter>Bin\Shader\Actor</Filter>
-    </FxCompile>
-    <FxCompile Include="Bin\Shader\Actor\pixel.hlsl">
-      <Filter>Bin\Shader\Actor</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

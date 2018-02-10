@@ -271,7 +271,7 @@ void Application::Run(void)
         liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBFog>(dev, "Fog")
             ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });
 
-        world.Update(clock.ElapsedTime());
+        world.Update(16.6667f);
 
         world.Render(&renderQueue);
 

@@ -80,22 +80,22 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
     int horFBMove = 0, horLRMove = 0;
     if(input.IsKeyDown('W'))
     {
-        yaw_ = camera_.GetYaw();
+        yaw_ = -camera_.GetYaw();
         ++horFBMove;
     }
     if(input.IsKeyDown('S'))
     {
-        yaw_ = camera_.GetYaw();
+        yaw_ = -camera_.GetYaw();
         --horFBMove;
     }
     if(input.IsKeyDown('A'))
     {
-        yaw_ = camera_.GetYaw();
+        yaw_ = -camera_.GetYaw();
         ++horLRMove;
     }
     if(input.IsKeyDown('D'))
     {
-        yaw_ = camera_.GetYaw();
+        yaw_ = -camera_.GetYaw();
         --horLRMove;
     }
 

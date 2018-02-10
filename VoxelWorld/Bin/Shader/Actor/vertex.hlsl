@@ -1,4 +1,4 @@
-cbuffer PerFrame
+cbuffer Trans
 {
     float4x4 WVP;
 };

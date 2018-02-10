@@ -26,19 +26,20 @@ namespace
         skeleton.Initialize(std::move(parents), std::move(offsets));
 
         Skeleton::AniClip clip;
+        clip.boneAnis.resize(2);
         clip.boneAnis[0].keyframes =
         {
             {
                 0.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
                 Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::CreateFromRotationMatrix(Matrix::Identity)
+                Quaternion::Identity
             },
             {
                 1.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
                 Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::CreateFromRotationMatrix(Matrix::Identity)
+                Quaternion::Identity
             }
         };
         clip.boneAnis[1].keyframes =
@@ -47,13 +48,19 @@ namespace
                 0.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
                 Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::CreateFromRotationMatrix(Matrix::Identity)
+                Quaternion::Identity
             },
             {
-                1.0f,
+                1000.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 1.0f, 0.0f),
-                Quaternion::CreateFromRotationMatrix(Matrix::Identity)
+                Vector3(0.0f, -3.0f, 0.0f),
+                Quaternion::CreateFromAxisAngle(Vector3(0.0f, 1.0f, 0.0f), 3.14159f)
+            },
+            {
+                2000.0f,
+                Vector3(1.0f, 1.0f, 1.0f),
+                Vector3(0.0f, 0.0f, 0.0f),
+                Quaternion::Identity
             }
         };
         clip.UpdateStartEndTime();
@@ -66,7 +73,7 @@ namespace
     {
         meshes.clear();
 
-        float halfSize = 0.1f;
+        float halfSize = 0.5f;
 
         std::vector<ActorModelVertex> vtxData =
         {
@@ -119,7 +126,7 @@ namespace
             { { +halfSize, -halfSize, +halfSize }, { 1.0f, 1.0f } }
         };
 
-        std::vector<UINT> idxData(36);
+        std::vector<UINT> idxData(vtxData.size());
         for(UINT i = 0; i != idxData.size(); ++i)
             idxData[i] = i;
 
@@ -134,7 +141,7 @@ namespace
             return false;
         }
         meshes[0].boneIndex = 0;
-        meshes[0].idxCount = 36;
+        meshes[0].idxCount = idxData.size();
 
         if(!meshes[1].vtxBuf.Initialize(
                 vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
@@ -145,7 +152,7 @@ namespace
             return false;
         }
         meshes[1].boneIndex = 1;
-        meshes[1].idxCount = 36;
+        meshes[1].idxCount = idxData.size();
 
         return true;
     }
@@ -323,12 +330,14 @@ void ActorModel::Render(const Camera &cam)
         ID3D11Buffer *vtxBuf = mesh.vtxBuf.GetBuffer();
         DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
         DC->IASetIndexBuffer(mesh.idxBuf.GetBuffer(), DXGI_FORMAT_R16_UINT, 0);
+        //DC->DrawIndexed(mesh.idxCount, 0, 0);
+        DC->Draw(36, 0);
     }
 
     ID3D11Buffer *vtxBuf = nullptr;
     stride = 0;
     DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
-    DC->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
+    //DC->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
 
     uniforms_->Unbind(DC);
     DC->IASetInputLayout(nullptr);

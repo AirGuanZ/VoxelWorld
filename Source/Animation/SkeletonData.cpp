@@ -6,6 +6,8 @@ Created by AirGuanZ
 #include <algorithm>
 #include <numeric>
 
+#include <iostream>
+
 #include "SkeletonData.h"
 
 void Skeleton::BoneAni::GetTransMatrix(float t, Matrix &mat) const
@@ -38,7 +40,6 @@ void Skeleton::BoneAni::GetTransMatrix(float t, Matrix &mat) const
                 mat = Matrix::CreateScale(Vector3::Lerp(kf0.scale, kf1.scale, lerpT)) *
                       Matrix::CreateFromQuaternion(Quaternion::Lerp(kf0.rotate, kf1.rotate, lerpT)) *
                       Matrix::CreateTranslation(Vector3::Lerp(kf0.translate, kf1.translate, lerpT));
-
                 break;
             }
         }
