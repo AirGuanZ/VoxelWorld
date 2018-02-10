@@ -8,11 +8,36 @@ Created by AirGuanZ
 #include "../Input/InputManager.h"
 #include "Actor.h"
 
+bool Actor::Initialize(std::string &errMsg)
+{
+    flyUpSpeed_ = 0.009f;
+    flyDownSpeed_ = 0.009f;
+    horMoveSpeed_ = 0.0085f;
+
+    mouseXSpeed_ = 0.00014f;
+    mouseYSpeed_ = 0.00010f;
+
+    pos_ = Vector3(0.0f, 80.0f, 0.0f);
+    yaw_ = 0.0f;
+
+    if(!model_.Initialize(errMsg))
+        return false;
+    model_.SetAnimationClip("test", true);
+
+    return true;
+}
+
 void Actor::Update(float deltaT, ChunkManager *ckMgr)
 {
     UpdateCameraDirection(deltaT, ckMgr);
     UpdateActorPosition  (deltaT, ckMgr);
     UpdateCameraApperance(deltaT, ckMgr);
+    model_.Update(deltaT);
+}
+
+void Actor::Render(void)
+{
+    model_.Render(camera_);
 }
 
 void Actor::UpdateCameraDirection(float deltaT, ChunkManager *ckMgr)
@@ -112,6 +137,10 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
         if(TryPos(p))
             break;
     }
+
+    model_.SetTransform(
+        Matrix::CreateFromAxisAngle({ 0.0f, 1.0f, 0.0f }, -yaw_) *
+        Matrix::CreateTranslation(pos_ + 5.0f * camera_.GetDirection()));
 }
 
 void Actor::UpdateCameraApperance(float deltaT, ChunkManager *ckMgr)

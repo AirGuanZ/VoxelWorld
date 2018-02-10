@@ -18,7 +18,6 @@ namespace Skeleton
     public:
         bool LoadFromFile(const std::wstring &filename,
                           Skeleton &skeleton,
-                          std::vector<BasicVertex> &vertices,
                           std::string &errMsg);
     };
 }

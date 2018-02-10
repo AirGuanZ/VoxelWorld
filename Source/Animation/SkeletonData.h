@@ -15,15 +15,7 @@ Created by AirGuanZ
 
 namespace Skeleton
 {
-    struct BasicVertex
-    {
-        Vector3 pos;
-        Vector3 nor;
-        Vector2 uv;
-        Vector3 boneWeights;
-        std::uint8_t boneIndices[4];
-    };
-
+    //一块骨骼的一个关键帧数据
     struct Keyframe
     {
         float time;
@@ -33,6 +25,7 @@ namespace Skeleton
         Quaternion rotate;
     };
 
+    //一块骨骼的一个动作
     struct BoneAni
     {
         void GetTransMatrix(float t, Matrix &mat) const;
@@ -52,6 +45,7 @@ namespace Skeleton
         std::vector<Keyframe> keyframes;
     };
 
+    //一系列骨骼的一个动作
     struct AniClip
     {
         void GetTransMatrix(float t, std::vector<Matrix> &mats) const;
@@ -73,6 +67,7 @@ namespace Skeleton
         float startTime, endTime;
     };
 
+    //一系列骨骼的一组动作
     class Skeleton
     {
     public:
@@ -84,6 +79,12 @@ namespace Skeleton
 
         bool GetTransMatrix(const std::string &clip, float t,
                             std::vector<Matrix> &mats) const;
+
+        const AniClip *GetAniClip(const std::string &name) const
+        {
+            auto it = aniClips_.find(name);
+            return it != aniClips_.end() ? &it->second : nullptr;
+        }
 
     private:
         std::vector<int> parents_;

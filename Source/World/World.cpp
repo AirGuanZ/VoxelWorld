@@ -21,9 +21,14 @@ World::~World(void)
     Destroy();
 }
 
-void World::Initialize(int loaderCount)
+bool World::Initialize(int loaderCount, std::string &errMsg)
 {
     ckMgr_.StartLoading(loaderCount);
+
+    if(!actor_.Initialize(errMsg))
+        return false;
+
+    return true;
 }
 
 void World::Destroy(void)

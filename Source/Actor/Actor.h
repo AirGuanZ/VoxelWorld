@@ -6,10 +6,13 @@ Created by AirGuanZ
 #ifndef VW_ACTOR_H
 #define VW_ACTOR_H
 
+#include <string>
+
 #include "../Camera/Camera.h"
 #include "../Chunk/ChunkManager.h"
 #include "../Utility/Math.h"
 #include "../Window/Window.h"
+#include "ActorModel.h"
 
 /*
     Actor状态和动画的组织设计：
@@ -20,7 +23,11 @@ Created by AirGuanZ
 class Actor
 {
 public:
+    bool Initialize(std::string &errMsg);
+
     void Update(float deltaT, ChunkManager *ckMgr);
+
+    void Render(void);
 
     const Matrix &GetViewProjMatrix(void) const
     {
@@ -54,6 +61,8 @@ private:
     float yaw_ = 0.0f;
 
     Camera camera_;
+
+    ActorModel model_;
 };
 
 #endif //VW_ACTOR_H

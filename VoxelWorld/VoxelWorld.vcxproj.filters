@@ -106,6 +106,9 @@
     <Filter Include="Source\Animation">
       <UniqueIdentifier>{116e696c-fab5-47ca-89a6-570a46c9dce0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Shader\Actor">
+      <UniqueIdentifier>{f53e06fc-c517-4c37-84df-35984682ec9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Animation\SkeletonDataLoader.cpp">
       <Filter>Source\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Actor\ActorModel.cpp">
+      <Filter>Source\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +413,9 @@
     <ClInclude Include="..\Source\Animation\SkeletonDataLoader.h">
       <Filter>Source\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\D3DObject\InputLayout.h">
+      <Filter>Source\D3DObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -442,5 +451,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Bin\Shader\Actor\vertex.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </FxCompile>
+    <FxCompile Include="Bin\Shader\Actor\pixel.hlsl">
+      <Filter>Bin\Shader\Actor</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

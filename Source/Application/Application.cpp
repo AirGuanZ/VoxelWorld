@@ -193,7 +193,11 @@ void Application::Run(void)
     World world(std::stoi(conf("World", "PreloadDistance")),
                 std::stoi(conf("World", "RenderDistance")),
                 std::stoi(conf("World", "UnloadDistance")));
-    world.Initialize(std::stoi(conf("World", "LoaderCount")));
+    if(!world.Initialize(std::stoi(conf("World", "LoaderCount")), initErrMsg))
+    {
+        std::cerr << initErrMsg << std::endl;
+        return;
+    }
 
     //×¼ÐÇ
 
@@ -303,6 +307,8 @@ void Application::Run(void)
         renderQueue.liquid[0].Render();
         liquidRendererUniforms0->Unbind(DC);
         liquidRenderer.End();
+
+        world.GetActor().Render();
 
         crosshair.Draw(&imScr2D);
 

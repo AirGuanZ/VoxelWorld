@@ -15,36 +15,42 @@ Created by AirGuanZ
 
 SINGLETON_CLASS_DEFINITION(Skeleton::SkeletonDataLoader);
 
+namespace
+{
+    std::unique_ptr<const aiScene> ReadModel(const std::wstring &filename, std::string &errMsg)
+    {
+        std::vector<char> fileBuf;
+        if(!Helper::ReadFileBinary(filename, fileBuf))
+            return false;
+
+        Assimp::Importer importer;
+        std::unique_ptr<const aiScene> scene;
+        scene.reset(importer.ReadFileFromMemory(
+            fileBuf.data(), fileBuf.size(),
+            aiProcess_JoinIdenticalVertices |   //便于使用顶点缓存
+            aiProcess_Triangulate |             //只允许三角形
+            aiProcess_GenUVCoords |             //强制使用UV
+            aiProcess_FlipUVs |                 //UV原点设置在左上角
+            aiProcess_FlipWindingOrder          //以CW为正面
+        ));
+
+        if(!scene)
+            errMsg = importer.GetErrorString();
+        return scene;
+    }
+}
+
 bool Skeleton::SkeletonDataLoader::LoadFromFile(const std::wstring &filename,
                                                 Skeleton &skeleton,
-                                                std::vector<BasicVertex> &vertices,
                                                 std::string &errMsg)
 {
-    errMsg = "";
     skeleton.Clear();
-    vertices.clear();
+    errMsg = "";
 
-    //文件读取
-
-    std::vector<char> fileBuf;
-    if(!Helper::ReadFileBinary(filename, fileBuf))
-        return false;
-
-    Assimp::Importer importer;
-    std::unique_ptr<const aiScene> scene;
-    scene.reset(importer.ReadFileFromMemory(
-        fileBuf.data(), fileBuf.size(),
-        aiProcess_JoinIdenticalVertices |   //便于使用顶点缓存
-        aiProcess_Triangulate |             //只允许三角形
-        aiProcess_GenUVCoords |             //强制使用UV
-        aiProcess_FlipUVs |                 //UV原点设置在左上角
-        aiProcess_FlipWindingOrder          //以CW为正面
-    ));
+    std::unique_ptr<const aiScene> scene = ReadModel(filename, errMsg);
     if(!scene)
-    {
-        errMsg = importer.GetErrorString();
         return false;
-    }
 
     //TODO
+    return true;
 }

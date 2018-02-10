@@ -38,21 +38,9 @@ Created by AirGuanZ
 
 //ActorModelœ‡πÿ
 
-#define ACTOR_DEFAULT_HEAD_MODEL       VW_FILENAME(Bin/Model/Actor/head.obj)
-#define ACTOR_DEFAULT_BODY_MODEL       VW_FILENAME(Bin/Model/Actor/body.obj)
-#define ACTOR_DEFAULT_LEFT_HAND_MODEL  VW_FILENAME(Bin/Model/Actor/leftHand.obj)
-#define ACTOR_DEFAULT_RIGHT_HAND_MODEL VW_FILENAME(Bin/Model/Actor/rightHand.obj)
-#define ACTOR_DEFAULT_LEFT_FOOT_MODEL  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
-#define ACTOR_DEFAULT_RIGHT_FOOT_MODEL VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
-
-#define ACTOR_DEFAULT_HEAD_TEXTURE VW_FILENAME(Bin/Texture/Actor/head.png)
-#define ACTOR_DEFAULT_BODY_TEXTURE VW_FILENAME(Bin/Texture/Actor/body.png)
-#define ACTOR_DEFAULT_LEFT_HAND_TEXTURE VW_FILENAME(Bin/Texture/Actor/leftHand.png)
-#define ACTOR_DEFAULT_RIGHT_HAND_TEXTURE VW_FILENAME(Bin/Texture/Actor/rightHand.png)
-#define ACTOR_DEFAULT_LEFT_FOOT_TEXTURE VW_FILENAME(Bin/Texture/Actor/leftFoot.png)
-#define ACTOR_DEFAULT_RIGHT_FOOT_TEXTURE VW_FILENAME(Bin/Texture/Actor/rightFoot.png)
-
 #define ACTOR_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Actor/vertex.hlsl)
 #define ACTOR_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Actor/pixel.hlsl)
+
+#define ACTOR_RENDERER_TEXTURE VW_FILENAME(Bin/Texture/Actor/tex.png)
 
 #endif //VW_RESOURCE_NAME_H

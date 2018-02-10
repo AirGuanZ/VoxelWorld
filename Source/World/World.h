@@ -6,6 +6,8 @@ Created by AirGuanZ
 #ifndef VW_WORLD_H
 #define VW_WORLD_H
 
+#include <string>
+
 #include "../Actor/Actor.h"
 #include "../Chunk/ChunkManager.h"
 #include "../Texture/Texture2D.h"
@@ -16,7 +18,7 @@ public:
     World(int preloadDis, int renderDis, int unloadDis);
     ~World(void);
 
-    void Initialize(int loaderCount);
+    bool Initialize(int loaderCount, std::string &errMsg);
     void Destroy(void);
 
     void Update(float deltaT);

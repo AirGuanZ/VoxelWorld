@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Actor\Actor.cpp" />
+    <ClCompile Include="..\Source\Actor\ActorModel.cpp" />
     <ClCompile Include="..\Source\Animation\SkeletonData.cpp" />
     <ClCompile Include="..\Source\Animation\SkeletonDataLoader.cpp" />
     <ClCompile Include="..\Source\Application\Application.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\Source\D3DObject\BasicBuffer.h" />
     <ClInclude Include="..\Source\D3DObject\BlendState.h" />
     <ClInclude Include="..\Source\D3DObject\DepthStencilState.h" />
+    <ClInclude Include="..\Source\D3DObject\InputLayout.h" />
     <ClInclude Include="..\Source\D3DObject\RasterState.h" />
     <ClInclude Include="..\Source\D3DObject\Sampler.h" />
     <ClInclude Include="..\Source\Input\InputManager.h" />
@@ -163,6 +165,28 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bin\Shader\Actor\vertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Vertex</ShaderType>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bin\Shader\Actor\pixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Pixel</ShaderType>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
