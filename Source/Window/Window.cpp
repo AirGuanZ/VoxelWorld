@@ -504,6 +504,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     using DirectX::Keyboard;
     InputManager &input = InputManager::GetInstance();
 
+    static bool paused = false;
+
     switch(msg)
     {
     case WM_DESTROY:
@@ -538,6 +540,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_MOUSEWHEEL:
         input.wheelMov_ = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
+        break;
+    case WM_SETFOCUS:
+        paused = false;
+        break;
+    case WM_KILLFOCUS:
+        paused = true;
+        while(paused)
+            Window::GetInstance().DoEvents();
         break;
     }
 
