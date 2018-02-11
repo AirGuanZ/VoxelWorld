@@ -308,7 +308,7 @@ void Application::Run(void)
         liquidRendererUniforms0->Unbind(DC);
         liquidRenderer.End();
 
-        world.GetActor().Render();
+        //world.GetActor().Render();
 
         crosshair.Draw(&imScr2D);
 

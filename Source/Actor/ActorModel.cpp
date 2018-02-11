@@ -28,27 +28,12 @@ namespace
 
         Skeleton::AniClip clip;
         clip.boneAnis.resize(2);
-        clip.boneAnis[0].keyframes =
-        {
-            {
-                0.0f,
-                Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::Identity
-            },
-            {
-                1000.0f,
-                Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::Identity
-            }
-        };
         clip.boneAnis[1].keyframes =
         {
             {
                 0.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
+                Vector3(0.0f, -1.0f, 0.0f),
                 Quaternion::Identity
             },
             {
@@ -60,7 +45,7 @@ namespace
             {
                 2000.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
+                Vector3(0.0f, -1.0f, 0.0f),
                 Quaternion::Identity
             }
         };

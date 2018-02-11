@@ -12,7 +12,11 @@ Created by AirGuanZ
 
 void Skeleton::BoneAni::GetTransMatrix(float t, Matrix &mat) const
 {
-    assert(keyframes.size());
+    if(keyframes.empty())
+    {
+        mat = Matrix::Identity;
+        return;
+    }
 
     if(t <= StartTime())
     {
@@ -65,8 +69,6 @@ void Skeleton::AniClip::UpdateStartEndTime(void)
 
 void Skeleton::Skeleton::Initialize(std::vector<int> &&parents, std::vector<Matrix> &&offsets)
 {
-    assert(parents.size() && parents.size() == offsets.size());
-
     parents_ = std::move(parents);
     offsets_ = std::move(offsets);
     aniClips_.clear();
@@ -118,8 +120,7 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
             toRootTrans[i] = toParentTrans[i] * toRootTrans[parents_[i]];
     }
 
-    for(size_t i = 0; i < boneCnt; ++i)
-        mats[i] = offsets_[i] * toRootTrans[i];
+    mats = std::move(toRootTrans);
 
     return true;
 }

@@ -32,14 +32,12 @@ namespace Skeleton
 
         float StartTime(void) const
         {
-            assert(keyframes.size());
-            return keyframes.front().time;
+            return keyframes.size() ? keyframes.front().time : 0.0f;
         }
 
         float EndTime(void) const
         {
-            assert(keyframes.size());
-            return keyframes.back().time;
+            return keyframes.size() ? keyframes.back().time : 1000.0f;
         }
 
         std::vector<Keyframe> keyframes;
@@ -84,6 +82,11 @@ namespace Skeleton
         {
             auto it = aniClips_.find(name);
             return it != aniClips_.end() ? &it->second : nullptr;
+        }
+
+        const Matrix &GetOffset(int idx) const
+        {
+            return offsets_[idx];
         }
 
     private:
