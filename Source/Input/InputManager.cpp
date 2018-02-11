@@ -26,6 +26,8 @@ InputManager::InputManager(void)
     mbLast_    [0] = mbLast_    [1] = mbLast_    [2] = false;
     mbPressed_ [0] = mbPressed_ [1] = mbPressed_ [2] = false;
     mbReleased_[0] = mbReleased_[1] = mbReleased_[2] = false;
+
+    showCursor_ = true;
 }
 
 InputManager::~InputManager(void)

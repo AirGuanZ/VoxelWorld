@@ -545,9 +545,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         paused = false;
         break;
     case WM_KILLFOCUS:
+    {
+        InputManager &input = InputManager::GetInstance();
+
         paused = true;
+
+        bool showCursor = input.ShowCursor();
+        if(!showCursor)
+            input.ShowCursor(true);
+
+        bool lockCursor = input.LockCursor();
+        if(lockCursor)
+            input.LockCursor(false);
+
         while(paused)
             Window::GetInstance().DoEvents();
+
+        if(!showCursor)
+            input.ShowCursor(false);
+
+        if(lockCursor)
+            input.LockCursor(true);
+    }
         break;
     }
 

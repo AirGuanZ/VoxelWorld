@@ -86,15 +86,30 @@ public:
         return mbReleased_[static_cast<int>(button)];
     }
 
-    void LockCursor(bool lock, int x = 0, int y = 0)
+    void LockCursor(bool lock, int x, int y)
     {
         curLocked_ = lock;
         curLockX_ = x, curLockY_ = y;
     }
 
+    void LockCursor(bool lock)
+    {
+        curLocked_ = lock;
+    }
+
+    bool LockCursor(void) const
+    {
+        return curLocked_;
+    }
+
     void ShowCursor(bool show)
     {
-        ::ShowCursor(show ? TRUE : FALSE);
+        ::ShowCursor((showCursor_ = show) ? TRUE : FALSE);
+    }
+
+    bool ShowCursor(void) const
+    {
+        return showCursor_;
     }
 
 private:
@@ -122,6 +137,8 @@ private:
     bool mbLast_      [3];
     bool mbPressed_   [3];
     bool mbReleased_  [3];
+
+    bool showCursor_;
 };
 
 #endif //VW_INPUT_H
