@@ -131,6 +131,7 @@ namespace
             kf.translate = Vector3(kPos.mValue.x, kPos.mValue.y, kPos.mValue.z);
             kf.rotate    = Quaternion(kRot.mValue.x, kRot.mValue.y, kRot.mValue.z, kRot.mValue.w);
             kf.scale     = Vector3(kScl.mValue.x, kScl.mValue.y, kScl.mValue.z);
+            kf.time      = static_cast<float>(kPos.mTime);
 
             boneAni.keyframes.push_back(kf);
         }
