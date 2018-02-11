@@ -12,6 +12,7 @@ Created by AirGuanZ
 #endif
 
 #include "Application\Application.h"
+#include "Animation\SkeletonDataLoader.h"
 
 int main(void)
 {

@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_SKELETON_DATA_LOADER_H
 
 #include <string>
+#include <map>
 
 #include "../Utility/Singleton.h"
 #include "SkeletonData.h"
@@ -16,8 +17,10 @@ namespace Skeleton
     class SkeletonDataLoader : public Singleton<SkeletonDataLoader>
     {
     public:
+        //只加载名为Armature的节点下的骨骼信息
         bool LoadFromFile(const std::wstring &filename,
                           Skeleton &skeleton,
+                          std::map<std::string, int> &boneIdx,
                           std::string &errMsg);
     };
 }

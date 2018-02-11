@@ -110,9 +110,13 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
 
     it->second.GetTransMatrix(t, toParentTrans);
 
-    toRootTrans[0] = toParentTrans[0];
-    for(size_t i = 1; i < boneCnt; ++i)
-        toRootTrans[i] = toParentTrans[i] * toRootTrans[parents_[i]];
+    for(size_t i = 0; i < boneCnt; ++i)
+    {
+        if(parents_[i] < 0)
+            toRootTrans[i] = Matrix::Identity;
+        else
+            toRootTrans[i] = toParentTrans[i] * toRootTrans[parents_[i]];
+    }
 
     for(size_t i = 0; i < boneCnt; ++i)
         mats[i] = offsets_[i] * toRootTrans[i];

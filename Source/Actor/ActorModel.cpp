@@ -18,7 +18,7 @@ namespace
     {
         skeleton.Clear();
 
-        std::vector<int> parents = { 0, 0 };
+        std::vector<int> parents = { -1, 0 };
         std::vector<Matrix> offsets =
         {
             Matrix::Identity,
