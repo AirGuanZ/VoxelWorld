@@ -22,7 +22,7 @@ bool Actor::Initialize(std::string &errMsg)
 
     if(!model_.Initialize(errMsg))
         return false;
-    model_.SetAnimationClip("test", true);
+    model_.SetAnimationClip("", true);
 
     return true;
 }

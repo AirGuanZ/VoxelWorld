@@ -19,6 +19,7 @@ namespace Skeleton
     public:
         //只加载名为Armature的节点下的骨骼信息
         bool LoadFromFile(const std::wstring &filename,
+                          float timeFactor,
                           Skeleton &skeleton,
                           std::map<std::string, int> &boneIdx,
                           std::string &errMsg);

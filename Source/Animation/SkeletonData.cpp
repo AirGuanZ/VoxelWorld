@@ -115,12 +115,14 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
     for(size_t i = 0; i < boneCnt; ++i)
     {
         if(parents_[i] < 0)
-            toRootTrans[i] = Matrix::Identity;
+            toRootTrans[i] = toParentTrans[i];
         else
             toRootTrans[i] = toParentTrans[i] * toRootTrans[parents_[i]];
     }
 
-    mats = std::move(toRootTrans);
+    /*for(size_t i = 0; i < boneCnt; ++i)
+        mats[i] = offsets_[i] * toRootTrans[i];*/
+    mats = toRootTrans;
 
     return true;
 }

@@ -81,7 +81,7 @@ namespace
                                        std::map<std::string, int> &boneIdx,
                                        std::string &errMsg)
     {
-        assert(scene == nullptr);
+        assert(scene != nullptr);
         aiNode *armature = scene->mRootNode->FindNode("Armature");
         if(!armature)
         {
@@ -109,6 +109,7 @@ namespace
     //读取骨骼树中单个节点的关键帧序列
     //要求每个关键帧同时记录scaling, rotation和translation信息
     bool ReadSkeletonAnimationForSingleNode(aiNodeAnim *nodeAni,
+                                            float timeFactor,
                                             Skeleton::BoneAni &boneAni,
                                             int idx)
     {
@@ -131,7 +132,7 @@ namespace
             kf.translate = Vector3(kPos.mValue.x, kPos.mValue.y, kPos.mValue.z);
             kf.rotate    = Quaternion(kRot.mValue.x, kRot.mValue.y, kRot.mValue.z, kRot.mValue.w);
             kf.scale     = Vector3(kScl.mValue.x, kScl.mValue.y, kScl.mValue.z);
-            kf.time      = static_cast<float>(kPos.mTime);
+            kf.time      = timeFactor * static_cast<float>(kPos.mTime);
 
             boneAni.keyframes.push_back(kf);
         }
@@ -142,6 +143,7 @@ namespace
     //从scene中读取各动作中，armature骨骼树的各骨骼关键帧序列
     //要求每个关键帧同时记录scaling, rotation和translation信息
     bool InitSkeletonAnimationFromAIScene(const aiScene *scene,
+                                          float timeFactor,
                                           Skeleton::Skeleton &skeleton,
                                           const std::map<std::string, int> &boneIdx,
                                           std::string &errMsg)
@@ -168,7 +170,7 @@ namespace
 
                 //读取单个骨骼的关键帧序列
                 Skeleton::BoneAni &boneAni = aniClip.boneAnis[it->second];
-                if(!ReadSkeletonAnimationForSingleNode(ani->mChannels[i], boneAni, it->second))
+                if(!ReadSkeletonAnimationForSingleNode(ani->mChannels[i], timeFactor, boneAni, it->second))
                     return false;
             }
 
@@ -181,6 +183,7 @@ namespace
 }
 
 bool Skeleton::SkeletonDataLoader::LoadFromFile(const std::wstring &filename,
+                                                float timeFactor,
                                                 Skeleton &skeleton,
                                                 std::map<std::string, int> &boneIdx,
                                                 std::string &errMsg)
@@ -220,7 +223,7 @@ bool Skeleton::SkeletonDataLoader::LoadFromFile(const std::wstring &filename,
         goto FAILED;
     }
 
-    if(!InitSkeletonAnimationFromAIScene(scene, skeleton, boneIdx, errMsg))
+    if(!InitSkeletonAnimationFromAIScene(scene, timeFactor, skeleton, boneIdx, errMsg))
     {
         errMsg = "Failed to load animation for skeleton: " + errMsg;
         goto FAILED;

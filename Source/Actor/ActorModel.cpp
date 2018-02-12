@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
+#include "../Animation/SkeletonDataLoader.h"
 #include "../Resource/ResourceName.h"
 #include "../Utility/HelperFunctions.h"
 #include "../Utility/ObjFile.h"
@@ -14,7 +15,7 @@ Created by AirGuanZ
 
 namespace
 {
-    bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
+    bool InitActorSkeleton1(Skeleton::Skeleton &skeleton)
     {
         skeleton.Clear();
 
@@ -33,7 +34,7 @@ namespace
             {
                 0.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, -1.0f, 0.0f),
+                Vector3(0.0f, 0.0f, 0.0f),
                 Quaternion::Identity
             },
             {
@@ -45,13 +46,20 @@ namespace
             {
                 2000.0f,
                 Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, -1.0f, 0.0f),
+                Vector3(0.0f, 0.0f, 0.0f),
                 Quaternion::Identity
             }
         };
         clip.UpdateStartEndTime();
-        skeleton.AddClip("test", std::move(clip));
+        skeleton.AddClip("", std::move(clip));
         
+        return true;
+    }
+
+    bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
+    {
+        std::map<std::string, int> boneIdx; std::string errMsg;
+        Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.dae", 800.0f, skeleton, boneIdx, errMsg);
         return true;
     }
 
@@ -175,7 +183,7 @@ bool ActorModel::Initialize(std::string &errMsg)
         return false;
     }
 
-    SetAnimationClip("test", true);
+    SetAnimationClip("", true);
 
     return true;
 }
@@ -205,16 +213,16 @@ void ActorModel::SetTransform(const Matrix &mat)
 
 void ActorModel::SetAnimationClip(const std::string &name, bool loop)
 {
-    currentAniClip_ = name;
+    if(name != currentAniClip_)
+    {
+        t_ = 0.0f;
+        currentAniClip_ = name;
+    }
     aniClipLoop_ = loop;
-    t_ = 0.0f;
 }
 
 void ActorModel::Update(float deltaT)
 {
-    if(currentAniClip_ == "")
-        return;
-
     const Skeleton::AniClip *clip = skeleton_.GetAniClip(currentAniClip_);
     if(!clip)
         return;
