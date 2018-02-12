@@ -122,7 +122,7 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
 
     /*for(size_t i = 0; i < boneCnt; ++i)
         mats[i] = offsets_[i] * toRootTrans[i];*/
-    mats = toRootTrans;
+    mats = std::move(toRootTrans);
 
     return true;
 }

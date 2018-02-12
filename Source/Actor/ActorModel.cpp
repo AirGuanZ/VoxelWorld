@@ -59,7 +59,7 @@ namespace
     bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
     {
         std::map<std::string, int> boneIdx; std::string errMsg;
-        Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.dae", 800.0f, skeleton, boneIdx, errMsg);
+        Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.fbx", 16.6667f, skeleton, boneIdx, errMsg);
         return true;
     }
 
@@ -183,7 +183,7 @@ bool ActorModel::Initialize(std::string &errMsg)
         return false;
     }
 
-    SetAnimationClip("", true);
+    SetAnimationClip("Armature|Test", true);
 
     return true;
 }
