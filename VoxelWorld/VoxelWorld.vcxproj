@@ -17,119 +17,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="StaticRelease|Win32">
-      <Configuration>StaticRelease</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="StaticRelease|x64">
-      <Configuration>StaticRelease</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Source\Actor\Actor.cpp" />
-    <ClCompile Include="..\Source\Actor\ActorModel.cpp" />
-    <ClCompile Include="..\Source\Animation\SkeletonData.cpp" />
-    <ClCompile Include="..\Source\Animation\SkeletonDataLoader.cpp" />
-    <ClCompile Include="..\Source\Application\Application.cpp" />
-    <ClCompile Include="..\Source\Block\BlockInfoManager.cpp" />
-    <ClCompile Include="..\Source\Block\BlockModelBuilder.cpp" />
-    <ClCompile Include="..\Source\Camera\Camera.cpp" />
-    <ClCompile Include="..\Source\Chunk\Chunk.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkDataPool.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkLoader.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkManager.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkModelBuilder.cpp" />
-    <ClCompile Include="..\Source\Chunk\ChunkTraversal.cpp" />
-    <ClCompile Include="..\Source\D3DObject\BlendState.cpp" />
-    <ClCompile Include="..\Source\D3DObject\DepthStencilState.cpp" />
-    <ClCompile Include="..\Source\D3DObject\RasterState.cpp" />
-    <ClCompile Include="..\Source\D3DObject\Sampler.cpp" />
-    <ClCompile Include="..\Source\Input\InputManager.cpp" />
-    <ClCompile Include="..\Source\Land\LandGenerator_V0.cpp" />
-    <ClCompile Include="..\Source\Land\OakGenerator_V0.cpp" />
-    <ClCompile Include="..\Source\Land\V1\Biome.cpp" />
-    <ClCompile Include="..\Source\Land\V1\LandGenerator.cpp" />
-    <ClCompile Include="..\Source\Land\V1\PalmGenerator.cpp" />
-    <ClCompile Include="..\Source\Land\V2\Area_V2.cpp" />
-    <ClCompile Include="..\Source\Land\V2\LandGenerator_V2.cpp" />
-    <ClCompile Include="..\Source\Main.cpp" />
-    <ClCompile Include="..\Source\Model\BasicModel.cpp" />
-    <ClCompile Include="..\Source\Model\Model.cpp" />
-    <ClCompile Include="..\Source\Renderer\BasicRenderer.cpp" />
-    <ClCompile Include="..\Source\Renderer\CarveRenderer.cpp" />
-    <ClCompile Include="..\Source\Renderer\LiquidRenderer.cpp" />
-    <ClCompile Include="..\Source\Screen\Crosshair.cpp" />
-    <ClCompile Include="..\Source\Screen\ImmediateScreen2D.cpp" />
-    <ClCompile Include="..\Source\Texture\Texture2D.cpp" />
-    <ClCompile Include="..\Source\Texture\TextureFile.cpp" />
-    <ClCompile Include="..\Source\Utility\Clock.cpp" />
-    <ClCompile Include="..\Source\Utility\ConfigFile.cpp" />
-    <ClCompile Include="..\Source\Utility\HelperFunctions.cpp" />
-    <ClCompile Include="..\Source\Utility\ObjFile.cpp" />
-    <ClCompile Include="..\Source\Window\Window.cpp" />
-    <ClCompile Include="..\Source\World\World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Source\Actor\Actor.h" />
-    <ClInclude Include="..\Source\Actor\ActorModel.h" />
-    <ClInclude Include="..\Source\Animation\SkeletonData.h" />
-    <ClInclude Include="..\Source\Animation\SkeletonDataLoader.h" />
-    <ClInclude Include="..\Source\Application\Application.h" />
-    <ClInclude Include="..\Source\Block\Block.h" />
-    <ClInclude Include="..\Source\Block\BlockInfo.h" />
-    <ClInclude Include="..\Source\Block\BlockInfoManager.h" />
-    <ClInclude Include="..\Source\Block\BlockModelBuilder.h" />
-    <ClInclude Include="..\Source\Camera\Camera.h" />
-    <ClInclude Include="..\Source\Chunk\Chunk.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkDataPool.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkLoader.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkManager.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkModelBuilder.h" />
-    <ClInclude Include="..\Source\Chunk\ChunkTraversal.h" />
-    <ClInclude Include="..\Source\Collision\AABB.h" />
-    <ClInclude Include="..\Source\D3DObject\BasicBuffer.h" />
-    <ClInclude Include="..\Source\D3DObject\BlendState.h" />
-    <ClInclude Include="..\Source\D3DObject\DepthStencilState.h" />
-    <ClInclude Include="..\Source\D3DObject\InputLayout.h" />
-    <ClInclude Include="..\Source\D3DObject\RasterState.h" />
-    <ClInclude Include="..\Source\D3DObject\Sampler.h" />
-    <ClInclude Include="..\Source\Input\InputManager.h" />
-    <ClInclude Include="..\Source\Land\LandGenerator_V0.h" />
-    <ClInclude Include="..\Source\Land\OakGenerator_V0.h" />
-    <ClInclude Include="..\Source\Land\PerlinNoise\PerlinNoise2D.h" />
-    <ClInclude Include="..\Source\Land\V1\Biome.h" />
-    <ClInclude Include="..\Source\Land\V1\Common.h" />
-    <ClInclude Include="..\Source\Land\V1\LandGenerator.h" />
-    <ClInclude Include="..\Source\Land\V1\PalmGenerator.h" />
-    <ClInclude Include="..\Source\Land\V2\Area_V2.h" />
-    <ClInclude Include="..\Source\Land\V2\Biome_V2.h" />
-    <ClInclude Include="..\Source\Land\V2\Common_V2.h" />
-    <ClInclude Include="..\Source\Land\V2\LandGenerator_V2.h" />
-    <ClInclude Include="..\Source\Land\V2\Noise_V2.h" />
-    <ClInclude Include="..\Source\Model\BasicModel.h" />
-    <ClInclude Include="..\Source\Model\Model.h" />
-    <ClInclude Include="..\Source\Renderer\CarveRenderer.h" />
-    <ClInclude Include="..\Source\Renderer\BasicRenderer.h" />
-    <ClInclude Include="..\Source\Renderer\RenderQueue.h" />
-    <ClInclude Include="..\Source\Renderer\LiquidRenderer.h" />
-    <ClInclude Include="..\Source\Resource\ResourceName.h" />
-    <ClInclude Include="..\Source\Screen\Crosshair.h" />
-    <ClInclude Include="..\Source\Screen\ImmediateScreen2D.h" />
-    <ClInclude Include="..\Source\Texture\Texture2D.h" />
-    <ClInclude Include="..\Source\Texture\TextureFile.h" />
-    <ClInclude Include="..\Source\Utility\Clock.h" />
-    <ClInclude Include="..\Source\Utility\ConfigFile.h" />
-    <ClInclude Include="..\Source\Utility\FPSCounter.h" />
-    <ClInclude Include="..\Source\Utility\HelperFunctions.h" />
-    <ClInclude Include="..\Source\Utility\D3D11Header.h" />
-    <ClInclude Include="..\Source\Utility\LinkedMap.h" />
-    <ClInclude Include="..\Source\Utility\Math.h" />
-    <ClInclude Include="..\Source\Utility\ObjFile.h" />
-    <ClInclude Include="..\Source\Utility\Singleton.h" />
-    <ClInclude Include="..\Source\Utility\Uncopiable.h" />
-    <ClInclude Include="..\Source\Window\Window.h" />
-    <ClInclude Include="..\Source\World\World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ReadMe.md" />
@@ -172,8 +59,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Vertex</ShaderType>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
@@ -183,10 +68,95 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">Pixel</ShaderType>
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\VoxelWorld\Actor\Actor.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Application\Application.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Block\BlockModelBuilder.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Camera\Camera.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\Chunk.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkLoader.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkManager.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkModelBuilder.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\BlendState.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\DepthStencilState.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\RasterState.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\Sampler.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Input\InputManager.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\LandGenerator_V0.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\OakGenerator_V0.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\V1\Biome.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\V1\LandGenerator.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\V1\PalmGenerator.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\V2\Area_V2.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Land\V2\LandGenerator_V2.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Main.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Model\BasicModel.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Model\Model.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Renderer\BasicRenderer.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Renderer\CarveRenderer.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Renderer\LiquidRenderer.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\Crosshair.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Texture\Texture2D.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Texture\TextureFile.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Window\Window.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\VoxelWorld\Actor\Actor.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Application\Application.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Block\Block.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfoManager.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Block\BlockModelBuilder.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Camera\Camera.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\Chunk.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkLoader.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkManager.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkModelBuilder.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Collision\AABB.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\BasicBuffer.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\BlendState.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\DepthStencilState.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\InputLayout.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\RasterState.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\Sampler.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Input\InputManager.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\LandGenerator_V0.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\OakGenerator_V0.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\PerlinNoise\PerlinNoise2D.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V1\Biome.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V1\Common.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V1\LandGenerator.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V1\PalmGenerator.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V2\Area_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V2\Biome_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V2\Common_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V2\LandGenerator_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Land\V2\Noise_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Model\BasicModel.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Model\Model.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Renderer\BasicRenderer.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Renderer\CarveRenderer.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Renderer\LiquidRenderer.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Renderer\RenderQueue.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceName.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\Crosshair.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Texture\Texture2D.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Texture\TextureFile.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Window\Window.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\World.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -209,13 +179,6 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -223,13 +186,6 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -247,22 +203,16 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -270,17 +220,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)../Library/OWE/Inc/;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)../Library/OWE/Inc/;$(IncludePath)</IncludePath>
   </PropertyGroup>
@@ -296,7 +238,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -331,29 +274,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)../Library/DirectXTK/x86_static/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxguid.lib;DirectXTK.lib;assimp.lib;IrrXML.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)../Library/DirectXTK/x86_static/;$(ProjectDir)../Library/Assimp/x86_static/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -374,27 +296,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)../Library/DirectXTK/x86_static/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;dxguid.lib;DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)../Library/DirectXTK/x86_static/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
