@@ -127,6 +127,9 @@
     <ClInclude Include="..\..\Source\Components\SkeletonAnimation\SkeletonData.h" />
     <ClInclude Include="..\..\Source\Components\SkeletonAnimation\SkeletonDataLoader.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Source\Components\SkeletonAnimation\VWSkeletonAnimationFormat.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

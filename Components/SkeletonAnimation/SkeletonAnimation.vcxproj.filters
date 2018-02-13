@@ -22,4 +22,7 @@
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Source\Components\SkeletonAnimation\VWSkeletonAnimationFormat.txt" />
+  </ItemGroup>
 </Project>

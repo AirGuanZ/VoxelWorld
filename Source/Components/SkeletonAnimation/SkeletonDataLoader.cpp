@@ -262,13 +262,6 @@ FAILED:
     return false;
 }
 
-namespace
-{
-    const std::string VW_MODEL_HEADER_NAME = "Model";
-    const std::string VW_MODEL_SKELETON_NAME_PREFIX = "Name";
-    const std::string VW_MODEL_SKELETON_PARENT_PREFIX = "";
-}
-
 bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                                                   float timeFactor,
                                                   float sizeFactor,
