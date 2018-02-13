@@ -25,6 +25,14 @@ namespace
         return srcName.empty() ? AUTO_BONE_NAME_PREFIX + std::to_string(idx) : srcName;
     }
 
+    inline std::string TrimArmatureNamePrefix(const std::string &str)
+    {
+        static const std::string PREFIX = "Armature|";
+        if(str.substr(0, PREFIX.size()) == PREFIX)
+            return str.substr(PREFIX.size(), str.size() - PREFIX.size());
+        return str;
+    }
+
     inline void CopyMatrix(Matrix &dst, const aiMatrix4x4 &src)
     {
         dst = Matrix(src.a1, src.a2, src.a3, src.a4,
@@ -34,13 +42,12 @@ namespace
     }
 
     /*
-        递归访问节点数，在parents和offsets中构造数组表示的骨骼树
+        递归访问节点数，在parents中构造数组表示的骨骼树
         boneIdx用于记录名字到骨骼下标的映射
         对没有名字的节点，_AutoNamedBone_ + idx将作为自动命名的结果
     */
     bool ReadStaticSkeleton(aiNode *node,
                             std::vector<int> &parents,
-                            std::vector<Matrix> &offsets,
                             std::map<std::string, int> &boneIdx,
                             int &idx, int directParent,
                             std::string &errMsg)
@@ -58,17 +65,15 @@ namespace
         std::string finalName = GetBoneName(node->mName.C_Str(), idx);
         boneIdx[finalName] = idx;
 
-        assert(parents.size() == idx && offsets.size() == idx);
-        Matrix offset; CopyMatrix(offset, node->mTransformation);
-        parents.push_back(directParent);
-        offsets.push_back(offset);
+        assert(parents.size() == idx);
+        parents.push_back(idx);
 
         int thisIdx = idx++;
 
         //递归地将子节点加入骨骼树
         for(unsigned int i = 0; i != node->mNumChildren; ++i)
         {
-            if(!ReadStaticSkeleton(node->mChildren[i], parents, offsets,
+            if(!ReadStaticSkeleton(node->mChildren[i], parents,
                                    boneIdx, idx, thisIdx, errMsg))
                 return false;
         }
@@ -93,19 +98,18 @@ namespace
         
         int idx = 0;
         std::vector<int> parents;
-        std::vector<Matrix> offsets;
 
         for(unsigned int i = 0; i != armature->mNumChildren; ++i)
         {
             //对每个子节点，用-1作为direct parent，表示没有父节点
-            if(!ReadStaticSkeleton(armature->mChildren[i], parents, offsets,
+            if(!ReadStaticSkeleton(armature->mChildren[i], parents,
                                    boneIdx, idx, -1, errMsg))
                 return false;
             if(armature->mChildren[i]->mName.C_Str()[0] != '\0')
                 directChildrenNames.insert(armature->mChildren[i]->mName.C_Str());
         }
 
-        skeleton.Initialize(std::move(parents), std::move(offsets));
+        skeleton.Initialize(std::move(parents));
 
         return true;
     }
@@ -185,7 +189,8 @@ namespace
             }
 
             aniClip.UpdateStartEndTime();
-            skeleton.AddClip(ani->mName.C_Str(), std::move(aniClip));
+            if(!skeleton.AddClip(TrimArmatureNamePrefix(ani->mName.C_Str()), std::move(aniClip)))
+                return false;
         }
 
         return true;

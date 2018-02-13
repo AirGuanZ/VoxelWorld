@@ -69,8 +69,7 @@ namespace Skeleton
     class Skeleton
     {
     public:
-        void Initialize(std::vector<int> &&parents,
-                        std::vector<Matrix> &&offsets);
+        void Initialize(std::vector<int> &&parents);
         void Clear(void);
 
         bool AddClip(const std::string &name, AniClip &&clipData);
@@ -84,14 +83,8 @@ namespace Skeleton
             return it != aniClips_.end() ? &it->second : nullptr;
         }
 
-        const Matrix &GetOffset(int idx) const
-        {
-            return offsets_[idx];
-        }
-
     private:
         std::vector<int> parents_;
-        std::vector<Matrix> offsets_;
         std::map<std::string, AniClip> aniClips_;
     };
 }

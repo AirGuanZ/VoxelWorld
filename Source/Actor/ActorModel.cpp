@@ -15,51 +15,10 @@ Created by AirGuanZ
 
 namespace
 {
-    bool InitActorSkeleton1(Skeleton::Skeleton &skeleton)
-    {
-        skeleton.Clear();
-
-        std::vector<int> parents = { -1, 0 };
-        std::vector<Matrix> offsets =
-        {
-            Matrix::Identity,
-            Matrix::CreateTranslation(0.0f, -1.0f, 0.0f)
-        };
-        skeleton.Initialize(std::move(parents), std::move(offsets));
-
-        Skeleton::AniClip clip;
-        clip.boneAnis.resize(2);
-        clip.boneAnis[1].keyframes =
-        {
-            {
-                0.0f,
-                Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::Identity
-            },
-            {
-                1000.0f,
-                Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, -3.0f, 0.0f),
-                Quaternion::CreateFromAxisAngle(Vector3(0.0f, 1.0f, 0.0f), 3.14159f)
-            },
-            {
-                2000.0f,
-                Vector3(1.0f, 1.0f, 1.0f),
-                Vector3(0.0f, 0.0f, 0.0f),
-                Quaternion::Identity
-            }
-        };
-        clip.UpdateStartEndTime();
-        skeleton.AddClip("", std::move(clip));
-        
-        return true;
-    }
-
     bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
     {
         std::map<std::string, int> boneIdx; std::string errMsg;
-        Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.fbx", 16.6667f, skeleton, boneIdx, errMsg);
+        Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.dae", 400.0f, skeleton, boneIdx, errMsg);
         return true;
     }
 
@@ -183,7 +142,7 @@ bool ActorModel::Initialize(std::string &errMsg)
         return false;
     }
 
-    SetAnimationClip("Armature|Test", true);
+    SetAnimationClip("", true);
 
     return true;
 }

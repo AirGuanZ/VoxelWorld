@@ -12,7 +12,6 @@ Created by AirGuanZ
 #endif
 
 #include "Application\Application.h"
-#include "Animation\SkeletonDataLoader.h"
 
 int main(void)
 {
@@ -29,11 +28,4 @@ int main(void)
     {
         std::cerr << err.what();
     }
-
-    /*Skeleton::Skeleton skeleton;
-    std::map<std::string, int> boneIdx;
-    std::string errMsg;
-    if(!Skeleton::SkeletonDataLoader::GetInstance().LoadFromFile(L"untitled.dae", skeleton, boneIdx, errMsg))
-        std::cerr << errMsg << std::endl;
-    skeleton.Clear();*/
 }
