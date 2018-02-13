@@ -3,6 +3,9 @@ Filename: SkeletonDataLoader.cpp
 Date: 2018.2.9
 Created by AirGuanZ
 ================================================================*/
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <cstdio>
 #include <fstream>
 #include <memory>
 #include <set>
@@ -262,6 +265,41 @@ FAILED:
     return false;
 }
 
+namespace
+{
+    bool ParseVWBoneClip(const ConfigFileSection &section, Skeleton::BoneAni &ani, std::string &errMsg)
+    {
+        int kfCount = std::stoi(section["KeyframeCount"]);
+        if(kfCount < 0)
+        {
+            errMsg = "Negative keyframe count";
+            return false;
+        }
+
+        ani.keyframes.resize(kfCount);
+        for(int kfIdx = 0; kfIdx < kfCount; ++kfIdx)
+        {
+            std::string idxStr = std::to_string(kfIdx);
+            Skeleton::Keyframe &kf = ani.keyframes[kfIdx];
+
+            kf.time = std::stof(section["Time" + idxStr]);
+            
+            if(sscanf(section["Pos" + idxStr].c_str(), "%f%f%f",
+                    &kf.translate.x, &kf.translate.y, &kf.translate.z) != 3 ||
+               sscanf(section["Rot" + idxStr].c_str(), "%f%f%f%f",
+                    &kf.rotate.x, &kf.rotate.y, &kf.rotate.z, &kf.rotate.w) != 4 ||
+               sscanf(section["Scl" + idxStr].c_str(), "%f%f%f",
+                    &kf.scale.x, &kf.scale.y, &kf.scale.z) != 3)
+            {
+                errMsg = "Invalid keyframe arguments";
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                                                   float timeFactor,
                                                   float sizeFactor,
@@ -273,11 +311,97 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
     boneMap.clear();
     errMsg = "";
 
-    ConfigFile file;
-    if(!file.LoadFromFile(filename))
-        return false;
+    ConfigFile file(filename);
+    if(!file)
+    {
+        errMsg = "Failed to open skeleton animation file";
+        goto FAILED;
+    }
 
-    //TODO
+    try
+    {
+        int boneCount      = std::stoi(file("Header", "BoneCount"));
+        int animationCount = std::stoi(file("Header", "AnimationCount"));
+        std::vector<int> parents(boneCount);
+        std::vector<std::string> aniNames(animationCount);
+
+        if(boneCount <= 0 || animationCount <= 0)
+        {
+            errMsg = "Non-positive boundCount/animationCount";
+            goto FAILED;
+        }
+
+        //È¡µÃÓ³Éä£º¹Ç÷ÀÃû×Ö->¹Ç÷À±àºÅ ¹Ç÷À±àºÅ->¸¸¹Ç÷À±àºÅ
+        for(int boneIdx = 0; boneIdx < boneCount; ++boneIdx)
+        {
+            std::string idxStr = std::to_string(boneIdx);
+            std::string name = file("Bones", "Name" + idxStr);
+            int parentIdx = std::stoi(file("Bones", "Parent" + idxStr));
+
+            if(name.empty())
+            {
+                errMsg = "Empty bone name";
+                goto FAILED;
+            }
+
+            if(parentIdx < -1 || parentIdx >= boneCount)
+            {
+                errMsg = "Parent index out of range";
+                goto FAILED;
+            }
+
+            boneMap[name] = boneIdx;
+            parents[boneIdx] = parentIdx;
+        }
+
+        skeleton.Initialize(std::move(parents));
+
+        //¹Ç÷À¶¯»­Ãû×Ö
+        for(int aniIdx = 0; aniIdx < animationCount; ++aniIdx)
+        {
+            std::string name = file("Animations", "AnimationName" + std::to_string(aniIdx));
+            if(name.empty())
+            {
+                errMsg = "Empty animation clip name";
+                goto FAILED;
+            }
+            aniNames[aniIdx] = name;
+        }
+
+        //¶ÔÃ¿¸ö¶¯»­£¬±éÀúÃ¿¸ö¹Ç÷À£¬³¢ÊÔ¶ÁÈ¡Æä¹Ø¼üÖ¡ÐòÁÐ
+        for(int aniIdx = 0; aniIdx < animationCount; ++aniIdx)
+        {
+            AniClip aniClip;
+            aniClip.boneAnis.resize(boneCount);
+            std::string aniIdxStr = std::to_string(aniIdx);
+
+            for(int boneIdx = 0; boneIdx < boneCount; ++boneIdx)
+            {
+                std::string section = "BoneClip" + aniIdxStr + "_" + std::to_string(boneIdx);
+                if(!file.FindSection(section))
+                    continue;
+                if(!ParseVWBoneClip(file.GetSection(section), aniClip.boneAnis[boneIdx], errMsg))
+                    goto FAILED;;
+            }
+
+            aniClip.UpdateStartEndTime();
+            if(!skeleton.AddClip(aniNames[aniIdx], std::move(aniClip)))
+            {
+                errMsg = "Animation name repeated";
+                goto FAILED;
+            }
+        }
+    }
+    catch(const std::invalid_argument &err)
+    {
+        errMsg = std::string("Invalid argument in parsing") + err.what();
+        goto FAILED;
+    }
 
     return true;
+
+FAILED:
+    skeleton.Clear();
+    boneMap.clear();
+    return false;
 }

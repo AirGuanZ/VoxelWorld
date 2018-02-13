@@ -4,6 +4,7 @@ Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
 #include <algorithm>
+#include <array>
 
 #include "../Input/InputManager.h"
 #include "Actor.h"
@@ -79,31 +80,29 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
     Vector3 horLeftDir = { horDir.z, 0.0f, -horDir.x };
     int horFBMove = 0, horLRMove = 0;
     if(input.IsKeyDown('W'))
-    {
-        yaw_ = -camera_.GetYaw();
         ++horFBMove;
-    }
     if(input.IsKeyDown('S'))
-    {
-        yaw_ = -camera_.GetYaw() + DirectX::XM_PI;
         --horFBMove;
-    }
     if(input.IsKeyDown('A'))
-    {
-        yaw_ = -camera_.GetYaw() - DirectX::XM_PIDIV2;
         ++horLRMove;
-    }
     if(input.IsKeyDown('D'))
-    {
-        yaw_ = -camera_.GetYaw() + DirectX::XM_PIDIV2;
         --horLRMove;
-    }
 
     Vector3 horMove = static_cast<float>(horFBMove) * horDir
-        + static_cast<float>(horLRMove) * horLeftDir;
+                    + static_cast<float>(horLRMove) * horLeftDir;
+
     if(horFBMove || horLRMove)
-        yaw_ = -camera_.GetYaw() + 1.0f / ((horFBMove != 0) + (horLRMove != 0)) *
-              (-(horFBMove == -1) * DirectX::XM_PI - horLRMove * DirectX::XM_PIDIV2);
+    {
+        static const std::array<float, 9> yawOffsets =
+        {
+            1.5f * DirectX::XM_PIDIV2, DirectX::XM_PI, -1.5f * DirectX::XM_PIDIV2,
+            DirectX::XM_PIDIV2, 0.0f, -DirectX::XM_PIDIV2,
+            0.5f * DirectX::XM_PIDIV2, 0.0, -0.5f * DirectX::XM_PIDIV2
+
+        };
+        yaw_ = -camera_.GetYaw() + yawOffsets[3 * (horFBMove + 1) + (horLRMove + 1)];
+    }
+
     horMove.Normalize();
     pos_ += horMoveSpeed_ * horMove * 16.66f;
     if(input.IsKeyDown(VK_LCONTROL))

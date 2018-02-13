@@ -9,6 +9,30 @@ Created by AirGuanZ
 #include <map>
 #include <string>
 
+class ConfigFileSection
+{
+public:
+    const std::string &operator[](const std::string &key) const
+    {
+        static const std::string EMPTY;
+        auto it = data_.find(key);
+        return it != data_.end() ? it->second : EMPTY;
+    }
+
+    ConfigFileSection(const ConfigFileSection&) = default;
+
+private:
+    friend class ConfigFile;
+
+    ConfigFileSection(const std::map<std::string, std::string> &data)
+        : data_(data)
+    {
+
+    }
+
+    std::map<std::string, std::string> data_;
+};
+
 class ConfigFile
 {
 public:
@@ -22,7 +46,16 @@ public:
     operator bool(void) const;
     void Clear();
 
+    bool FindSection(const std::string &section);
+
     const std::string &operator()(const std::string &section, const std::string &key) const;
+
+    ConfigFileSection GetSection(const std::string &section) const
+    {
+        static const std::map<std::string, std::string> EMPTY;
+        decltype(map_)::const_iterator it = map_.find(section);
+        return (it != map_.end()) ? ConfigFileSection(it->second) : ConfigFileSection(EMPTY);
+    }
 
 private:
     enum State

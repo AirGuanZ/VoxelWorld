@@ -96,6 +96,11 @@ void ConfigFile::Clear(void)
     state_ = Uninitialized;
 }
 
+bool ConfigFile::FindSection(const std::string &section)
+{
+    return map_.find(section) != map_.end();
+}
+
 const std::string &ConfigFile::operator()(const std::string &section, const std::string &key) const
 {
     static const std::string EMPTY_STR;

@@ -11,9 +11,11 @@ AnimationCount = <Integer>
 Name<Index> = <String>
 Parent<Index> = <Index | -1>
 
-[Animation<Index>]
+[Animations]
 
-Name = <String>
+AnimationName<Index> = <String>
+
+[BoneClip<Index>_<Index>]
 
 KeyframeCount = <Integer>
 
