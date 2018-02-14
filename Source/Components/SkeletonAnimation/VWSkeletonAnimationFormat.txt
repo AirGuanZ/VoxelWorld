@@ -1,7 +1,7 @@
 自定义的骨骼动画格式，仅保存需要的最少信息
 模型顶点、索引均不在此格式保存的范围内
 
-[Header]
+[Head]
 
 BoneCount = <Integer>
 AnimationCount = <Integer>
@@ -15,6 +15,7 @@ Parent<Index> = <Index | -1>
 
 AnimationName<Index> = <String>
 
+//第一个是动画idx，第二个是骨骼idx
 [BoneClip<Index>_<Index>]
 
 KeyframeCount = <Integer>

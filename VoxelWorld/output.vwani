@@ -1,0 +1,81 @@
+[Head]
+
+BoneCount = 2
+AnimationCount = 2
+
+[Bones]
+
+Parent0 = -1
+Parent1 = 0
+Name0 = Armature_Body
+Name1 = Armature_Head
+
+[Animations]
+
+AnimationName0 = test0
+AnimationName1 = test1
+
+[BoneClip0_0]
+
+KeyframeCount = 2
+
+Time0 = 0.0416666194797
+
+Pos0 = 0 0 0
+Rot0 = -2.98023223877e-08 0 0 0.999999880791
+Scl0 = 1 1 1
+
+Time1 = 2.5
+
+Pos1 = 0 0 0
+Rot1 = -2.98023223877e-08 0 0 0.999999880791
+Scl1 = 1 1 1
+
+[BoneClip0_1]
+
+KeyframeCount = 2
+
+Time0 = 0.0416666194797
+
+Pos0 = 0 0.600000023842 0
+Rot0 = 0 0 0 1
+Scl0 = 1 1 1
+
+Time1 = 2.5
+
+Pos1 = 0 0.600000023842 0
+Rot1 = 0 0 -0.70710682869 0.70710670948
+Scl1 = 1 1 1
+
+[BoneClip1_0]
+
+KeyframeCount = 2
+
+Time0 = 0.0416666194797
+
+Pos0 = 0 0 0
+Rot0 = -2.98023223877e-08 0 0 0.999999880791
+Scl0 = 1 1 1
+
+Time1 = 2.5
+
+Pos1 = 0 0 0
+Rot1 = -2.98023223877e-08 0 0 0.999999880791
+Scl1 = 1 1 1
+
+[BoneClip1_1]
+
+KeyframeCount = 2
+
+Time0 = 0.0416666194797
+
+Pos0 = 0 0.600000023842 0
+Rot0 = 0 0 0 1
+Scl0 = 1 1 1
+
+Time1 = 2.5
+
+Pos1 = 0 0.600000023842 0
+Rot1 = -0.70710682869 0 0 0.70710670948
+Scl1 = 1 1 1
+

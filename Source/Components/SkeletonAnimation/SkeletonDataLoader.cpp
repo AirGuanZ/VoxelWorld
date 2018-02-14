@@ -71,7 +71,7 @@ namespace
         boneIdx[finalName] = idx;
 
         assert(parents.size() == idx);
-        parents.push_back(idx);
+        parents.push_back(directParent);
 
         int thisIdx = idx++;
 
@@ -267,7 +267,10 @@ FAILED:
 
 namespace
 {
-    bool ParseVWBoneClip(const ConfigFileSection &section, Skeleton::BoneAni &ani, std::string &errMsg)
+    bool ParseVWBoneClip(const ConfigFileSection &section,
+                         Skeleton::BoneAni &ani,
+                         float timeFactor, float sizeFactor,
+                         std::string &errMsg)
     {
         int kfCount = std::stoi(section["KeyframeCount"]);
         if(kfCount < 0)
@@ -282,7 +285,7 @@ namespace
             std::string idxStr = std::to_string(kfIdx);
             Skeleton::Keyframe &kf = ani.keyframes[kfIdx];
 
-            kf.time = std::stof(section["Time" + idxStr]);
+            kf.time = timeFactor * std::stof(section["Time" + idxStr]);
             
             if(sscanf(section["Pos" + idxStr].c_str(), "%f%f%f",
                     &kf.translate.x, &kf.translate.y, &kf.translate.z) != 3 ||
@@ -294,6 +297,8 @@ namespace
                 errMsg = "Invalid keyframe arguments";
                 return false;
             }
+            kf.translate = sizeFactor * kf.translate;
+            kf.scale = sizeFactor * kf.scale;
         }
 
         return true;
@@ -320,8 +325,8 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
 
     try
     {
-        int boneCount      = std::stoi(file("Header", "BoneCount"));
-        int animationCount = std::stoi(file("Header", "AnimationCount"));
+        int boneCount      = std::stoi(file("Head", "BoneCount"));
+        int animationCount = std::stoi(file("Head", "AnimationCount"));
         std::vector<int> parents(boneCount);
         std::vector<std::string> aniNames(animationCount);
 
@@ -331,7 +336,7 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
             goto FAILED;
         }
 
-        //È¡µÃÓ³Éä£º¹Ç÷ÀÃû×Ö->¹Ç÷À±àºÅ ¹Ç÷À±àºÅ->¸¸¹Ç÷À±àºÅ
+        //È¡µÃÓ³Éä£º¹Ç÷ÀÃû×Ö->¹Ç÷À±àºÅ£¬¹Ç÷À±àºÅ->¸¸¹Ç÷À±àºÅ
         for(int boneIdx = 0; boneIdx < boneCount; ++boneIdx)
         {
             std::string idxStr = std::to_string(boneIdx);
@@ -380,7 +385,8 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                 std::string section = "BoneClip" + aniIdxStr + "_" + std::to_string(boneIdx);
                 if(!file.FindSection(section))
                     continue;
-                if(!ParseVWBoneClip(file.GetSection(section), aniClip.boneAnis[boneIdx], errMsg))
+                if(!ParseVWBoneClip(file.GetSection(section), aniClip.boneAnis[boneIdx],
+                                    timeFactor, sizeFactor, errMsg))
                     goto FAILED;;
             }
 
@@ -404,4 +410,86 @@ FAILED:
     skeleton.Clear();
     boneMap.clear();
     return false;
+}
+
+bool Skeleton::SkeletonDataLoader::SaveToVWFile(const std::wstring &filename,
+                                                const Skeleton &skeleton,
+                                                const std::map<std::string, int> &boneMap)
+{
+    using std::endl;
+
+    std::ofstream out(filename, std::ofstream::out | std::ofstream::trunc);
+    if(!out)
+        return false;
+
+    //ÎÄ¼þÍ·
+    out << "[Head]" << endl
+        << endl
+        << "BoneCount = " << skeleton.parents_.size() << endl
+        << "AnimationCount = " << skeleton.aniClips_.size() << endl
+        << endl;
+
+    //¹Ç÷ÀÃû×ÖºÍ²ã´Î¹ØÏµ
+    out << "[Bones]" << endl
+        << endl;
+    for(int i = 0; i != skeleton.parents_.size(); ++i)
+        out << "Parent" << i << " = " << skeleton.parents_[i] << endl;
+    for(auto it : boneMap)
+        out << "Name" << it.second << " = " << it.first << endl;
+    out << endl;
+
+    //¶¯»­Ãû
+    out << "[Animations]" << endl
+        << endl;
+    std::vector<const AniClip*> anis;
+    for(const auto &it : skeleton.aniClips_)
+    {
+        out << "AnimationName" << anis.size() << " = " << it.first << endl;
+        anis.push_back(&it.second);
+    }
+    out << endl;
+
+    //±éÀúËùÓÐ¶¯»­ºÍ¹Ç÷À£¬Êä³ö¹Ø¼üÖ¡
+    for(int aniIdx = 0; aniIdx != anis.size(); ++aniIdx)
+    {
+        const AniClip &aniClip = *anis[aniIdx];
+
+        for(int boneIdx = 0; boneIdx != skeleton.parents_.size(); ++boneIdx)
+        {
+            const std::vector<Keyframe> &kfs = aniClip.boneAnis[boneIdx].keyframes;
+            if(kfs.empty())
+                continue;
+
+            out << "[BoneClip" << aniIdx << "_" << boneIdx << "]" << endl
+                << endl
+                << "KeyframeCount = " << kfs.size() << endl
+                << endl;
+
+            for(int kfIdx = 0; kfIdx != kfs.size(); ++kfIdx)
+            {
+                const Keyframe &kf = kfs[kfIdx];
+                out.precision(12);
+
+                out << "Time" << kfIdx << " = " << kf.time << endl
+                    << endl;
+
+                out << "Pos" << kfIdx << " = "
+                                      << kf.translate.x << " "
+                                      << kf.translate.y << " "
+                                      << kf.translate.z << endl
+                    << "Rot" << kfIdx << " = "
+                                      << kf.rotate.x << " "
+                                      << kf.rotate.y << " "
+                                      << kf.rotate.z << " "
+                                      << kf.rotate.w << endl
+                    << "Scl" << kfIdx << " = "
+                                      << kf.scale.x << " "
+                                      << kf.scale.y << " "
+                                      << kf.scale.z << endl
+                    << endl;
+            }
+        }
+    }
+
+    return true;
 }

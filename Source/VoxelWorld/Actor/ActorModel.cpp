@@ -20,9 +20,8 @@ namespace
     bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
     {
         std::map<std::string, int> boneIdx; std::string errMsg;
-        Skeleton::SkeletonDataLoader::GetInstance().LoadFromRawFile(
-            L"untitled.dae", 400.0f, skeleton, boneIdx, "Test", errMsg);
-        return true;
+        return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
+                L"output.vwani", 400.0f, 1.0f, skeleton, boneIdx, errMsg);
     }
 
     bool InitActorMesh(std::vector<ActorModelComponent> &meshes)
@@ -145,7 +144,7 @@ bool ActorModel::Initialize(std::string &errMsg)
         return false;
     }
 
-    SetAnimationClip("Test", true);
+    SetAnimationClip("test1", true);
 
     return true;
 }

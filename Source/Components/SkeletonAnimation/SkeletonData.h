@@ -83,7 +83,19 @@ namespace Skeleton
             return it != aniClips_.end() ? &it->second : nullptr;
         }
 
+        std::vector<int> &GetParents(void)
+        {
+            return parents_;
+        }
+
+        std::map<std::string, AniClip> &GetAniClips(void)
+        {
+            return aniClips_;
+        }
+
     private:
+        friend class SkeletonDataLoader;
+
         std::vector<int> parents_;
         std::map<std::string, AniClip> aniClips_;
     };

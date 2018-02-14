@@ -30,6 +30,9 @@ namespace Skeleton
                             Skeleton &skeleton,
                             std::map<std::string, int> boneMap,
                             std::string &errMsg);
+        bool SaveToVWFile(const std::wstring &filename,
+                          const Skeleton &skeleton,
+                          const std::map<std::string, int> &boneMap);
     };
 }
 
