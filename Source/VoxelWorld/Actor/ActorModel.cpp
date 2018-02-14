@@ -17,14 +17,14 @@ Created by AirGuanZ
 
 namespace
 {
-    bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
+    bool InitActorSkeleton(Skeleton::Skeleton &skeleton, std::map<std::string, int> &boneMap)
     {
-        std::map<std::string, int> boneIdx; std::string errMsg;
+        std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-                L"output.vwani", 400.0f, 1.0f, skeleton, boneIdx, errMsg);
+                L"output.vwani", 400.0f, 1.0f, skeleton, boneMap, errMsg);
     }
 
-    bool InitActorMesh(std::vector<ActorModelComponent> &meshes)
+    bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
     {
         meshes.clear();
 
@@ -32,28 +32,39 @@ namespace
         if(!obj.LoadFromFile(L"Bin/Model/Actor/actor.obj", 0.02f))
             return false;
 
-        meshes.resize(2);
+        meshes.resize(6);
 
         std::vector<ActorModelVertex> vtxData(obj.vertices.size());
         for(int i = 0; i != vtxData.size(); ++i)
         {
             vtxData[i].pos = obj.vertices[i].pos;
-            vtxData[i].uv = obj.vertices[i].uv;
+            vtxData[i].uv  = obj.vertices[i].uv;
         }
 
-        if(!meshes[0].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
-           !meshes[1].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
-           !meshes[0].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()) ||
-           !meshes[1].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()))
+        for(int i = 0; i != 6; ++i)
         {
-            meshes.clear();
-            return false;
+            if(!meshes[i].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
+               !meshes[i].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()))
+            {
+                meshes.clear();
+                return false;
+            }
         }
 
-        meshes[0].boneIndex = 0;
-        meshes[0].idxCount = obj.indices.size();
-        meshes[1].boneIndex = 1;
-        meshes[1].idxCount = obj.indices.size();
+        auto FindBoneIdx = [&](const char *name) -> int
+        {
+            auto it = boneMap.find(name);
+            return it != boneMap.end() ? it->second : 0;
+        };
+        meshes[0].boneIndex = FindBoneIdx("Armature_Body");
+        meshes[1].boneIndex = FindBoneIdx("Armature_Head");
+        meshes[2].boneIndex = FindBoneIdx("Armature_LeftHand");
+        meshes[3].boneIndex = FindBoneIdx("Armature_RightHand");
+        meshes[4].boneIndex = FindBoneIdx("Armature_LeftFoot");
+        meshes[5].boneIndex = FindBoneIdx("Armature_RightFoot");
+
+        for(int i = 0; i != 6; ++i)
+            meshes[i].idxCount = obj.indices.size();
 
         return true;
     }
@@ -130,21 +141,22 @@ bool ActorModel::Initialize(std::string &errMsg)
 
     worldTrans_ = Matrix::Identity;
 
-    if(!InitActorMesh(meshes_))
-    {
-        errMsg = "Failed to initialize actor meshes";
-        Destroy();
-        return false;
-    }
-
-    if(!InitActorSkeleton(skeleton_))
+    std::map<std::string, int> boneMap;
+    if(!InitActorSkeleton(skeleton_, boneMap))
     {
         errMsg = "Failed to initialize actor skeleton";
         Destroy();
         return false;
     }
 
-    SetAnimationClip("test1", true);
+    if(!InitActorMesh(boneMap, meshes_))
+    {
+        errMsg = "Failed to initialize actor meshes";
+        Destroy();
+        return false;
+    }
+
+    SetAnimationClip("Moving", true);
 
     return true;
 }

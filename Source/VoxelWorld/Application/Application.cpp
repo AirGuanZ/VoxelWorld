@@ -15,6 +15,8 @@ Created by AirGuanZ
 #include <Utility/FPSCounter.h>
 #include <Utility/HelperFunctions.h>
 
+#include <imgui.h>
+
 #include "../D3DObject/Sampler.h"
 #include "../Input/InputManager.h"
 #include "../Renderer/BasicRenderer.h"
@@ -229,7 +231,7 @@ void Application::Run(void)
 #endif
 
     float daynightT = 0.0f;
-
+    
     while(!input.IsKeyDown(VK_ESCAPE))
     {
 #if PRINT_FPS

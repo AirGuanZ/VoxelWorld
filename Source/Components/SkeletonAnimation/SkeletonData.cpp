@@ -118,6 +118,9 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
             toRootTrans[i] = toParentTrans[i] * toRootTrans[parents_[i]];
     }
 
+    for(Matrix &mat : toRootTrans)
+        mat = mat * Matrix::CreateFromYawPitchRoll(0.0, -DirectX::XM_PIDIV2, 0.0f);
+
     mats = std::move(toRootTrans);
 
     return true;

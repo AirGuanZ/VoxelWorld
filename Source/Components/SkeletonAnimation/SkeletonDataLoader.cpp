@@ -122,7 +122,6 @@ namespace
     //读取骨骼树中单个节点的关键帧序列
     //要求每个关键帧同时记录scaling, rotation和translation信息
     bool ReadSkeletonAnimationForSingleNode(aiNodeAnim *nodeAni,
-                                            const Quaternion &rotCorrection,
                                             float timeFactor,
                                             Skeleton::BoneAni &boneAni,
                                             int idx)
@@ -143,8 +142,8 @@ namespace
                 return false;
 
             Skeleton::Keyframe kf;
-            kf.translate = Vector3::Transform(Vector3(kPos.mValue.x, kPos.mValue.y, kPos.mValue.z), rotCorrection);
-            kf.rotate    = rotCorrection * Quaternion(kRot.mValue.x, kRot.mValue.y, kRot.mValue.z, kRot.mValue.w);
+            kf.translate = Vector3(kPos.mValue.x, kPos.mValue.y, kPos.mValue.z);
+            kf.rotate    = Quaternion(kRot.mValue.x, kRot.mValue.y, kRot.mValue.z, kRot.mValue.w);
             kf.scale     = Vector3(kScl.mValue.x, kScl.mValue.y, kScl.mValue.z);
             kf.time      = timeFactor * static_cast<float>(kPos.mTime);
 
@@ -157,7 +156,7 @@ namespace
     //从scene中读取各动作中，armature骨骼树的各骨骼关键帧序列
     //要求每个关键帧同时记录scaling, rotation和translation信息
     bool InitSkeletonAnimationFromAIScene(const aiScene *scene,
-                                          std::set<std::string> directBoneNames,
+                                          std::set<std::string> &directBoneNames,
                                           float timeFactor,
                                           Skeleton::Skeleton &skeleton,
                                           const std::map<std::string, int> &boneIdx,
@@ -184,13 +183,9 @@ namespace
                 if(it == boneIdx.end())
                     continue;
 
-                Quaternion rotCorrection = Quaternion::Identity;
-                if(directBoneNames.find(nodeAni->mNodeName.C_Str()) != directBoneNames.end())
-                    rotCorrection = Quaternion::CreateFromYawPitchRoll(0.0f, -DirectX::XM_PIDIV2, 0.0f);
-
                 //读取单个骨骼的关键帧序列
                 Skeleton::BoneAni &boneAni = aniClip.boneAnis[it->second];
-                if(!ReadSkeletonAnimationForSingleNode(ani->mChannels[i], rotCorrection, timeFactor, boneAni, it->second))
+                if(!ReadSkeletonAnimationForSingleNode(ani->mChannels[i], timeFactor, boneAni, it->second))
                     return false;
             }
 
@@ -309,7 +304,7 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                                                   float timeFactor,
                                                   float sizeFactor,
                                                   Skeleton &skeleton,
-                                                  std::map<std::string, int> boneMap,
+                                                  std::map<std::string, int> &boneMap,
                                                   std::string &errMsg)
 {
     skeleton.Clear();
@@ -434,6 +429,7 @@ bool Skeleton::SkeletonDataLoader::SaveToVWFile(const std::wstring &filename,
         << endl;
     for(int i = 0; i != skeleton.parents_.size(); ++i)
         out << "Parent" << i << " = " << skeleton.parents_[i] << endl;
+    out << endl;
     for(auto it : boneMap)
         out << "Name" << it.second << " = " << it.first << endl;
     out << endl;

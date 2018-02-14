@@ -28,7 +28,7 @@ namespace Skeleton
                             float timeFactor,
                             float sizeFactor,
                             Skeleton &skeleton,
-                            std::map<std::string, int> boneMap,
+                            std::map<std::string, int> &boneMap,
                             std::string &errMsg);
         bool SaveToVWFile(const std::wstring &filename,
                           const Skeleton &skeleton,
