@@ -21,6 +21,7 @@ struct InputUnit
 
 bool Input(const std::wstring &confFilename,
            std::vector<InputUnit> &output,
+           float &timeFactor,
            std::string &errMsg)
 {
     output.clear();
@@ -36,6 +37,8 @@ bool Input(const std::wstring &confFilename,
     }
 
     int fileCount = std::stoi(file("Global", "FileCount"));
+    timeFactor = std::stof(file("Global", "TimeFactor"));
+
     output.resize(fileCount);
     for(int i = 0; i < fileCount; ++i)
     {
@@ -55,6 +58,7 @@ bool Input(const std::wstring &confFilename,
 }
 
 bool Load(std::vector<InputUnit> &input,
+          float timeFactor,
           std::vector<Skeleton::Skeleton> &skts,
           std::vector<std::map<std::string, int>> &boneMaps,
           std::string &errMsg)
@@ -68,7 +72,7 @@ bool Load(std::vector<InputUnit> &input,
     for(size_t i = 0; i < input.size(); ++i)
     {
         if(!Skeleton::SkeletonDataLoader::GetInstance().LoadFromRawFile(
-            input[i].filename, 1.0f, skts[i], boneMaps[i], input[i].newAniName, errMsg))
+            input[i].filename, timeFactor, skts[i], boneMaps[i], input[i].newAniName, errMsg))
         {
             skts.clear();
             boneMaps.clear();
@@ -81,57 +85,67 @@ bool Load(std::vector<InputUnit> &input,
 
 int main(void)
 {
-    std::string errMsg;
-    std::wstring confFilename;
-
-    std::cout << "Enter configure: ";
-    std::wcin >> confFilename;
-
-    std::vector<InputUnit> files;
-    if(!Input(confFilename, files, errMsg))
+    try
     {
-        std::cout << errMsg << std::endl;
-        return -1;
-    }
+        std::string errMsg;
+        std::wstring confFilename;
 
-    std::vector<Skeleton::Skeleton> skts;
-    std::vector<std::map<std::string, int>> boneMaps;
-    if(!Load(files, skts, boneMaps, errMsg))
-    {
-        std::cout << errMsg << std::endl;
-        return -1;
-    }
+        std::cout << "Enter configure: ";
+        std::wcin >> confFilename;
 
-    if(skts.empty())
-    {
-        std::cout << "Empty input" << std::endl;
-        return -1;
-    }
-
-    assert(skts.size() == boneMaps.size());
-    for(size_t i = 1; i < skts.size(); ++i)
-    {
-        if(!SortBones(boneMaps[0], boneMaps[i], skts[i]))
+        std::vector<InputUnit> files;
+        float timeFactor;
+        if(!Input(confFilename, files, timeFactor, errMsg))
         {
-            std::cout << "Failed to sort bones for skeleton " << i << std::endl;
+            std::cout << errMsg << std::endl;
             return -1;
         }
-    }
 
-    Skeleton::Skeleton finalSkt;
-    if(!MergeSkeletonData(skts, finalSkt))
+        std::vector<Skeleton::Skeleton> skts;
+        std::vector<std::map<std::string, int>> boneMaps;
+        if(!Load(files, timeFactor, skts, boneMaps, errMsg))
+        {
+            std::cout << errMsg << std::endl;
+            return -1;
+        }
+
+        if(skts.empty())
+        {
+            std::cout << "Empty input" << std::endl;
+            return -1;
+        }
+
+        assert(skts.size() == boneMaps.size());
+        for(size_t i = 1; i < skts.size(); ++i)
+        {
+            if(!SortBones(boneMaps[0], boneMaps[i], skts[i]))
+            {
+                std::cout << "Failed to sort bones for skeleton " << i << std::endl;
+                return -1;
+            }
+        }
+
+        Skeleton::Skeleton finalSkt;
+        if(!MergeSkeletonData(skts, finalSkt))
+        {
+            std::cout << "Failed to merge" << std::endl;
+            return -1;
+        }
+
+        if(!Skeleton::SkeletonDataLoader::GetInstance().SaveToVWFile(
+            L"output.vwani", finalSkt, boneMaps[0]))
+        {
+            std::cout << "Failed to save" << std::endl;
+            return -1;
+        }
+
+        std::cout << "Successfully merged!" << std::endl;
+    }
+    catch(const std::invalid_argument &err)
     {
-        std::cout << "Failed to merge" << std::endl;
+        std::cerr << err.what() << std::endl;
         return -1;
     }
 
-    if(!Skeleton::SkeletonDataLoader::GetInstance().SaveToVWFile(
-        L"output.vwani", finalSkt, boneMaps[0]))
-    {
-        std::cout << "Failed to save" << std::endl;
-        return -1;
-    }
-
-    std::cout << "Successfully merged!" << std::endl;
     return 0;
 }

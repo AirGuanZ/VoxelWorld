@@ -158,6 +158,12 @@
     <ClInclude Include="..\Source\VoxelWorld\Window\Window.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\World.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Bin\Model\Actor\head.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{61CF260A-6019-46AB-8601-56B8732D4D35}</ProjectGuid>

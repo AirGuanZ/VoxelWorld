@@ -41,6 +41,15 @@ Created by AirGuanZ
 #define ACTOR_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Actor/vertex.hlsl)
 #define ACTOR_RENDERER_PIXEL_SHADER  VW_FILENAME(Bin/Shader/Actor/pixel.hlsl)
 
-#define ACTOR_RENDERER_TEXTURE VW_FILENAME(Bin/Texture/Actor/tex.png)
+#define ACTOR_RENDERER_DEFAULT_TEXTURE VW_FILENAME(Bin/Texture/Actor/tex.png)
+
+#define ACTOR_MODEL_DEFAULT_HEAD       VW_FILENAME(Bin/Model/Actor/head.obj)
+#define ACTOR_MODEL_DEFAULT_BODY       VW_FILENAME(Bin/Model/Actor/body.obj)
+#define ACTOR_MODEL_DEFAULT_LEFT_HAND  VW_FILENAME(Bin/Model/Actor/leftHand.obj)
+#define ACTOR_MODEL_DEFAULT_RIGHT_HAND VW_FILENAME(Bin/Model/Actor/rightHand.obj)
+#define ACTOR_MODEL_DEFAULT_LEFT_FOOT  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
+#define ACTOR_MODEL_DEFAULT_RIGHT_FOOT VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
+
+constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.02f;
 
 #endif //VW_RESOURCE_NAME_H

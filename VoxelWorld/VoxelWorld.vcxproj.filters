@@ -91,6 +91,12 @@
     <Filter Include="Source\World">
       <UniqueIdentifier>{662e011e-2d8c-4b55-b961-1435a5608ec9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Model">
+      <UniqueIdentifier>{93908a4c-a405-4cb8-9950-26e51368d085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bin\Model\Actor">
+      <UniqueIdentifier>{3a554125-5be0-4056-90d2-2a2384951c57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -117,6 +123,9 @@
     </None>
     <None Include="Bin\Shader\Actor\vertex.hlsl">
       <Filter>Bin\Shader\Actor</Filter>
+    </None>
+    <None Include="Bin\Model\Actor\head.obj">
+      <Filter>Bin\Model\Actor</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

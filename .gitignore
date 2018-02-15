@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 x86_static/
+素材/
 
 # Visual Studio 2015 cache/options directory
 .vs/

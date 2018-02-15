@@ -21,15 +21,15 @@ namespace
     {
         std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-                L"output.vwani", 400.0f, 1.0f, skeleton, boneMap, errMsg);
+                L"output.vwani", 1.0f, 1.0f, skeleton, boneMap, errMsg);
     }
 
-    bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
+    bool InitActorMesh1(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
     {
         meshes.clear();
 
         ObjFile_PNT obj;
-        if(!obj.LoadFromFile(L"Bin/Model/Actor/actor.obj", 0.02f))
+        if(!obj.LoadFromFile(ACTOR_MODEL_DEFAULT_HEAD, ACTOR_MODEL_SCALE_FACTOR))
             return false;
 
         meshes.resize(6);
@@ -68,6 +68,72 @@ namespace
 
         return true;
     }
+
+    bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
+    {
+        meshes.clear();
+        
+        static const std::wstring objFilenames[] =
+        {
+            ACTOR_MODEL_DEFAULT_HEAD,
+            ACTOR_MODEL_DEFAULT_BODY,
+            ACTOR_MODEL_DEFAULT_LEFT_HAND,
+            ACTOR_MODEL_DEFAULT_RIGHT_HAND,
+            ACTOR_MODEL_DEFAULT_LEFT_FOOT,
+            ACTOR_MODEL_DEFAULT_RIGHT_FOOT
+        };
+        
+        static const std::string boneNames[] =
+        {
+            "Armature_Head",
+            "Armature_Body",
+            "Armature_LeftHand",
+            "Armature_RightHand",
+            "Armature_LeftFoot",
+            "Armature_RightFoot"
+        };
+        
+        static_assert(Helper::ArraySize(objFilenames) == Helper::ArraySize(boneNames));
+        constexpr int BONE_NUM = Helper::ArraySize(boneNames);
+        
+        meshes.resize(BONE_NUM);
+        
+        for(int i = 0; i < BONE_NUM; ++i)
+        {
+            ObjFile_PNT obj;
+            if(!obj.LoadFromFile(objFilenames[i], ACTOR_MODEL_SCALE_FACTOR))
+            {
+                meshes.clear();
+                return false;
+            }
+            
+            std::vector<ActorModelVertex> vtxData(obj.vertices.size());
+            for(size_t vIdx = 0; vIdx < vtxData.size(); ++vIdx)
+            {
+                vtxData[vIdx].pos = obj.vertices[vIdx].pos;
+                vtxData[vIdx].uv  = obj.vertices[vIdx].uv;
+            }
+            
+            if(!meshes[i].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
+               !meshes[i].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()))
+            {
+                meshes.clear();
+                return false;
+            }
+            
+            auto it = boneMap.find(boneNames[i]);
+            if(it == boneMap.end())
+            {
+                meshes.clear();
+                return false;
+            }
+            
+            meshes[i].boneIndex = it->second;
+            meshes[i].idxCount  = obj.indices.size();
+        }
+        
+        return true;
+    }
 }
 
 bool ActorModel::Initialize(std::string &errMsg)
@@ -76,7 +142,7 @@ bool ActorModel::Initialize(std::string &errMsg)
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
 
     assert(!tex_.IsAvailable());
-    if(!tex_.LoadFromFile(ACTOR_RENDERER_TEXTURE))
+    if(!tex_.LoadFromFile(ACTOR_RENDERER_DEFAULT_TEXTURE))
     {
         errMsg = "Failed to load texture for actor renderer";
         Destroy();
