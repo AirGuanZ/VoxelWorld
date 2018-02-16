@@ -21,56 +21,13 @@ namespace
     {
         std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-                L"output.vwani", 1.0f, 1.0f, skeleton, boneMap, errMsg);
-    }
-
-    bool InitActorMesh1(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
-    {
-        meshes.clear();
-
-        ObjFile_PNT obj;
-        if(!obj.LoadFromFile(ACTOR_MODEL_DEFAULT_HEAD, ACTOR_MODEL_SCALE_FACTOR))
-            return false;
-
-        meshes.resize(6);
-
-        std::vector<ActorModelVertex> vtxData(obj.vertices.size());
-        for(int i = 0; i != vtxData.size(); ++i)
-        {
-            vtxData[i].pos = obj.vertices[i].pos;
-            vtxData[i].uv  = obj.vertices[i].uv;
-        }
-
-        for(int i = 0; i != 6; ++i)
-        {
-            if(!meshes[i].vtxBuf.Initialize(vtxData.data(), sizeof(ActorModelVertex) * vtxData.size()) ||
-               !meshes[i].idxBuf.Initialize(obj.indices.data(), sizeof(UINT16) * obj.indices.size()))
-            {
-                meshes.clear();
-                return false;
-            }
-        }
-
-        auto FindBoneIdx = [&](const char *name) -> int
-        {
-            auto it = boneMap.find(name);
-            return it != boneMap.end() ? it->second : 0;
-        };
-        meshes[0].boneIndex = FindBoneIdx("Armature_Body");
-        meshes[1].boneIndex = FindBoneIdx("Armature_Head");
-        meshes[2].boneIndex = FindBoneIdx("Armature_LeftHand");
-        meshes[3].boneIndex = FindBoneIdx("Armature_RightHand");
-        meshes[4].boneIndex = FindBoneIdx("Armature_LeftFoot");
-        meshes[5].boneIndex = FindBoneIdx("Armature_RightFoot");
-
-        for(int i = 0; i != 6; ++i)
-            meshes[i].idxCount = obj.indices.size();
-
-        return true;
+            L"output.vwani", 0.35f, 0.8f, skeleton, boneMap, errMsg);
     }
 
     bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
     {
+        constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.025f;
+
         meshes.clear();
         
         static const std::wstring objFilenames[] =

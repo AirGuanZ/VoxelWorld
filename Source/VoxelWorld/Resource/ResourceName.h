@@ -50,6 +50,4 @@ Created by AirGuanZ
 #define ACTOR_MODEL_DEFAULT_LEFT_FOOT  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
 #define ACTOR_MODEL_DEFAULT_RIGHT_FOOT VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
 
-constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.02f;
-
 #endif //VW_RESOURCE_NAME_H

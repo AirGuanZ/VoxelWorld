@@ -59,7 +59,8 @@ private:
     float mouseYSpeed_ = 0.00010f;
 
     Vector3 pos_ = Vector3(0.0f, 80.0f, 0.0f);
-    float yaw_ = 0.0f;
+    float actYaw_ = 0.0f;
+    float dstYaw_ = 0.0f;
 
     Camera camera_;
 

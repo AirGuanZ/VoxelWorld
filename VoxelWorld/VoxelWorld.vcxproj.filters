@@ -127,6 +127,21 @@
     <None Include="Bin\Model\Actor\head.obj">
       <Filter>Bin\Model\Actor</Filter>
     </None>
+    <None Include="Bin\Model\Actor\rightHand.obj">
+      <Filter>Bin\Model\Actor</Filter>
+    </None>
+    <None Include="Bin\Model\Actor\rightFoot.obj">
+      <Filter>Bin\Model\Actor</Filter>
+    </None>
+    <None Include="Bin\Model\Actor\leftHand.obj">
+      <Filter>Bin\Model\Actor</Filter>
+    </None>
+    <None Include="Bin\Model\Actor\leftFoot.obj">
+      <Filter>Bin\Model\Actor</Filter>
+    </None>
+    <None Include="Bin\Model\Actor\body.obj">
+      <Filter>Bin\Model\Actor</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">

@@ -19,7 +19,8 @@ bool Actor::Initialize(std::string &errMsg)
     mouseYSpeed_ = 0.00010f;
 
     pos_ = Vector3(0.0f, 80.0f, 0.0f);
-    yaw_ = 0.0f;
+    dstYaw_ = 0.0f;
+    actYaw_ = 0.0f;
 
     if(!model_.Initialize(errMsg))
         return false;
@@ -100,7 +101,7 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
             0.5f * DirectX::XM_PIDIV2, 0.0, -0.5f * DirectX::XM_PIDIV2
 
         };
-        yaw_ = -camera_.GetYaw() + yawOffsets[3 * (horFBMove + 1) + (horLRMove + 1)];
+        dstYaw_ = -camera_.GetYaw() + yawOffsets[3 * (horFBMove + 1) + (horLRMove + 1)];
     }
 
     horMove.Normalize();
@@ -140,8 +141,27 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
             break;
     }
 
+    //根据dstYaw计算actYaw的变化
+
+    float deltaYaw = dstYaw_ - actYaw_;
+    while(deltaYaw > DirectX::XM_PI)
+        deltaYaw -= DirectX::XM_2PI;
+    while(deltaYaw < -DirectX::XM_PI)
+        deltaYaw += DirectX::XM_2PI;
+
+    constexpr float ACT_YAW_TURN_SPEED = 0.166667f;
+    if(std::abs(deltaYaw) > 0.95 * DirectX::XM_PI)
+        actYaw_ = dstYaw_;
+    else
+    {
+        if(deltaYaw > 0.0f)
+            actYaw_ = (std::min)(actYaw_ + ACT_YAW_TURN_SPEED, actYaw_ + deltaYaw);
+        else if(deltaYaw < 0.0f)
+            actYaw_ = (std::max)(actYaw_ - ACT_YAW_TURN_SPEED, actYaw_ + deltaYaw);
+    }
+
     model_.SetTransform(
-        Matrix::CreateFromAxisAngle({ 0.0f, 1.0f, 0.0f }, -yaw_) *
+        Matrix::CreateFromAxisAngle({ 0.0f, 1.0f, 0.0f }, -actYaw_) *
         Matrix::CreateTranslation(pos_ + 5.0f * camera_.GetDirection()));
 }
 
