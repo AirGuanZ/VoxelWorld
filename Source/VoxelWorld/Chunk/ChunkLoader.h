@@ -114,7 +114,7 @@ private:
     std::vector<std::thread> threads_;
     std::atomic<bool> running_;
 
-    LinkedMap<IntVectorXZ, ChunkLoaderTask*, IntVectorXZHasher> loaderTasks_;
+    LinkedMap<IntVectorXZ, ChunkLoaderTask*> loaderTasks_;
     std::queue<ChunkLoaderMessage*> loaderMsgs_;
 
     std::mutex taskQueueMutex_;

@@ -17,7 +17,6 @@ Created by AirGuanZ
 
 /*
 LRU管理缓存数据，池子大小应该略大于需要加载数据区域的外层
-又要LRU，又要快速索引，用linked hash map实现
 */
 class ChunkDataPool : public Uncopiable
 {
@@ -40,7 +39,7 @@ private:
     size_t maxDataCnt_;
 
     std::mutex mapMutex_;
-    LinkedMap<IntVectorXZ, Chunk*, IntVectorXZHasher> map_;
+    LinkedMap<IntVectorXZ, Chunk*> map_;
 };
 
 #endif //VW_CHUNK_DATA_POOL_H

@@ -18,13 +18,15 @@ const BlockModelBuilder *GetBlockModelBuilder(BlockType type)
     static const BlockModelBuilder_CarveRenderer_Box          builder_CarveRenderer_Box;
     static const BlockModelBuilder_CarveRenderer_Cross        builder_CarveRenderer_Cross;
     static const BlockModelBuilder_TransLiquidRenderer_Liquid builder_TransLiquidRenderer_Liquid;
+    
     static const BlockModelBuilder * const rt[4][4] =
     {
-        { &builder_Null, &builder_Null, &builder_Null, &builder_Null },
-        { &builder_Null, &builder_BasicRenderer_Box, &builder_Null, &builder_Null },
+        { &builder_Null, &builder_Null,              &builder_Null,                &builder_Null },
+        { &builder_Null, &builder_BasicRenderer_Box, &builder_Null,                &builder_Null },
         { &builder_Null, &builder_CarveRenderer_Box, &builder_CarveRenderer_Cross, &builder_Null },
-        { &builder_Null, &builder_Null, &builder_Null, &builder_TransLiquidRenderer_Liquid }
+        { &builder_Null, &builder_Null,              &builder_Null,                &builder_TransLiquidRenderer_Liquid }
     };
+    
     const BlockInfo &info = BlockInfoManager::GetInstance().GetBlockInfo(type);
     return rt[static_cast<std::underlying_type_t<BlockRenderer>>(info.renderer)]
              [static_cast<std::underlying_type_t<BlockShape>>(info.shape)];
@@ -38,10 +40,13 @@ void BlockModelBuilder_Null::Build(
 
 }
 
-inline Color BlockAO(BlockLight l0, BlockLight l1, BlockLight l2, BlockLight l3)
+namespace
 {
-    return Color(0.15f, 0.15f, 0.15f, 0.15f) + 0.85f * 0.25f * (LightToRGBA(l0) + LightToRGBA(l1) +
-                                                                LightToRGBA(l2) + LightToRGBA(l3));
+    inline Color BlockAO(BlockLight l0, BlockLight l1, BlockLight l2, BlockLight l3)
+    {
+        return Color(0.15f, 0.15f, 0.15f, 0.15f) + 0.85f * 0.25f * (LightToRGBA(l0) + LightToRGBA(l1) +
+                                                                    LightToRGBA(l2) + LightToRGBA(l3));
+    }
 }
 
 constexpr float UV_OFFSET = 0.0005f;

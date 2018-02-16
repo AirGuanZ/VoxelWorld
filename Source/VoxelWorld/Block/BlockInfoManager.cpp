@@ -14,17 +14,6 @@ Created by AirGuanZ
 
 SINGLETON_CLASS_DEFINITION(BlockInfoManager);
 
-/*
-    BasicRendererTexture0
-        0, Bedrock
-        1, Stone
-        2, Dirt,
-        3, HalfGrass
-        4. GrassBox
-        5. Wood T/D
-        6. Wood Side
-*/
-
 //IMPROVE：硬编码改为从配置文件中加载
 BlockInfoManager::BlockInfoManager(void)
 {

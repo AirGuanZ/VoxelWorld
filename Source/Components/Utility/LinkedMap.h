@@ -9,15 +9,13 @@ Created by AirGuanZ
 #include <algorithm>
 #include <list>
 #include <map>
-#include <unordered_map>
 
-template<typename KeyType, typename ValueType, typename KeyHasherType = std::hash<KeyType>>
+template<typename KeyType, typename ValueType>
 class LinkedMap
 {
 public:
     using Key = KeyType;
     using Value = ValueType;
-    using Hasher = KeyHasherType;
 
     struct HashNode;
 
@@ -34,8 +32,8 @@ public:
         typename std::list<ListNode>::iterator listItor;
     };
 
-    LinkedMap<KeyType, ValueType, KeyHasherType> &operator=(
-        LinkedMap<KeyType, ValueType, KeyHasherType> &&other)
+    LinkedMap<KeyType, ValueType> &operator=(
+        LinkedMap<KeyType, ValueType> &&other)
     {
         list_.swap(other.list_);
         map_.swap(other.map_);

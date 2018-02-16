@@ -126,8 +126,8 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
     //将一个位置设置为摄像机新位置，若它不会发生碰撞
     auto TryPos = [&](const Vector3 &p) -> bool
     {
-        if(!ckMgr->DetectCollision(AABB{ p - Vector3{ 0.2f, 1.6f, 0.2f },
-            p + Vector3{ 0.2f, 0.2f, 0.2f } }))
+        if(!ckMgr->DetectCollision(AABB{ p - Vector3{ 0.2f, 0.4f, 0.2f },
+                                         p + Vector3{ 0.2f, 1.2f, 0.2f } }))
         {
             pos_ = p;
             return true;
@@ -162,11 +162,11 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
 
     model_.SetTransform(
         Matrix::CreateFromAxisAngle({ 0.0f, 1.0f, 0.0f }, -actYaw_) *
-        Matrix::CreateTranslation(pos_ + 5.0f * camera_.GetDirection()));
+        Matrix::CreateTranslation(pos_));
 }
 
 void Actor::UpdateCameraApperance(float deltaT, ChunkManager *ckMgr)
 {
-    camera_.SetPosition(pos_);
+    camera_.SetPosition(pos_ - 5.0f * camera_.GetDirection());
     camera_.UpdateViewProjMatrix();
 }

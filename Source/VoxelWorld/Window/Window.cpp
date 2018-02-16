@@ -23,7 +23,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 namespace
 {
-    constexpr DXGI_FORMAT SWAPCHAIN_BUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM;
+    constexpr DXGI_FORMAT SWAPCHAIN_BUFFER_FORMAT    = DXGI_FORMAT_R8G8B8A8_UNORM;
     constexpr DXGI_FORMAT DEPTHSTENCIL_BUFFER_FORMAT = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
     //Win32´°¿Ú
@@ -48,16 +48,16 @@ namespace
     {
         IDXGISwapChain *swapChain = nullptr;
 
-        ID3D11Device *device = nullptr;
+        ID3D11Device *device               = nullptr;
         ID3D11DeviceContext *deviceContext = nullptr;
 
         ID3D11RenderTargetView *renderTargetView = nullptr;
 
-        ID3D11Texture2D *depthStencilBuffer = nullptr;
+        ID3D11Texture2D *depthStencilBuffer      = nullptr;
         ID3D11DepthStencilView *depthStencilView = nullptr;
 
         bool isFullscreen = false;
-        bool vsync = true;
+        bool vsync        = true;
 
         float background[4];
     }
@@ -170,23 +170,23 @@ static bool CreateD3DDevice(void)
 static bool CreateSwapChain(int sampleCount, int sampleQuality)
 {
     DXGI_MODE_DESC scBuf;
-    scBuf.Width = Win::clientWidth;
-    scBuf.Height = Win::clientHeight;
-    scBuf.RefreshRate.Numerator = 60;
+    scBuf.Width                   = Win::clientWidth;
+    scBuf.Height                  = Win::clientHeight;
+    scBuf.RefreshRate.Numerator   = 60;
     scBuf.RefreshRate.Denominator = 1;
-    scBuf.Format = SWAPCHAIN_BUFFER_FORMAT;
-    scBuf.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-    scBuf.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+    scBuf.Format                  = SWAPCHAIN_BUFFER_FORMAT;
+    scBuf.ScanlineOrdering        = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+    scBuf.Scaling                 = DXGI_MODE_SCALING_UNSPECIFIED;
 
     DXGI_SWAP_CHAIN_DESC sc;
-    sc.BufferDesc = scBuf;
-    sc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sc.BufferCount = 1;
-    sc.OutputWindow = Win::hWnd;
-    sc.Windowed = true;
-    sc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-    sc.Flags = 0;
-    sc.SampleDesc.Count = sampleCount;
+    sc.BufferDesc         = scBuf;
+    sc.BufferUsage        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    sc.BufferCount        = 1;
+    sc.OutputWindow       = Win::hWnd;
+    sc.Windowed           = true;
+    sc.SwapEffect         = DXGI_SWAP_EFFECT_DISCARD;
+    sc.Flags              = 0;
+    sc.SampleDesc.Count   = sampleCount;
     sc.SampleDesc.Quality = sampleQuality;
 
     IDXGIDevice *dxgiDevice = nullptr;
@@ -236,17 +236,17 @@ static bool CreateDepthStencilBuffer(int sampleCount, int sampleQuality)
     assert(D3D::swapChain != nullptr);
 
     D3D11_TEXTURE2D_DESC depthStencilBufDesc;
-    depthStencilBufDesc.ArraySize = 1;
-    depthStencilBufDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-    depthStencilBufDesc.CPUAccessFlags = 0;
-    depthStencilBufDesc.Format = DEPTHSTENCIL_BUFFER_FORMAT;
-    depthStencilBufDesc.Width = Win::clientWidth;
-    depthStencilBufDesc.Height = Win::clientHeight;
-    depthStencilBufDesc.MipLevels = 1;
-    depthStencilBufDesc.MiscFlags = 0;
-    depthStencilBufDesc.SampleDesc.Count = sampleCount;
+    depthStencilBufDesc.ArraySize          = 1;
+    depthStencilBufDesc.BindFlags          = D3D11_BIND_DEPTH_STENCIL;
+    depthStencilBufDesc.CPUAccessFlags     = 0;
+    depthStencilBufDesc.Format             = DEPTHSTENCIL_BUFFER_FORMAT;
+    depthStencilBufDesc.Width              = Win::clientWidth;
+    depthStencilBufDesc.Height             = Win::clientHeight;
+    depthStencilBufDesc.MipLevels          = 1;
+    depthStencilBufDesc.MiscFlags          = 0;
+    depthStencilBufDesc.SampleDesc.Count   = sampleCount;
     depthStencilBufDesc.SampleDesc.Quality = sampleQuality;
-    depthStencilBufDesc.Usage = D3D11_USAGE_DEFAULT;
+    depthStencilBufDesc.Usage              = D3D11_USAGE_DEFAULT;
 
     HRESULT hr = D3D::device->CreateTexture2D(
         &depthStencilBufDesc, nullptr,
@@ -278,8 +278,8 @@ static void SetDefaultViewport(void)
     D3D11_VIEWPORT vp;
     vp.TopLeftX = 0;
     vp.TopLeftY = 0;
-    vp.Width = static_cast<FLOAT>(Win::clientWidth);
-    vp.Height = static_cast<FLOAT>(Win::clientHeight);
+    vp.Width    = static_cast<FLOAT>(Win::clientWidth);
+    vp.Height   = static_cast<FLOAT>(Win::clientHeight);
     vp.MaxDepth = 1.0f;
     vp.MinDepth = 0.0f;
     D3D::deviceContext->RSSetViewports(1, &vp);
