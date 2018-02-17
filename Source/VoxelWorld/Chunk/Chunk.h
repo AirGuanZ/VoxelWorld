@@ -9,8 +9,8 @@ Created by AirGuanZ
 #include <Utility\Math.h>
 #include <Utility\Uncopiable.h>
 
+#include "../Actor/Camera.h"
 #include "../Block/Block.h"
-#include "../Camera/Camera.h"
 #include "../Model/BasicModel.h"
 #include "../Renderer/BasicRenderer.h"
 #include "../Renderer/CarveRenderer.h"
