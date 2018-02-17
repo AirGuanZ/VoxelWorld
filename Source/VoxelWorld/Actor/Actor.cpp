@@ -127,7 +127,7 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
     auto TryPos = [&](const Vector3 &p) -> bool
     {
         if(!ckMgr->DetectCollision(AABB{ p - Vector3{ 0.2f, 0.4f, 0.2f },
-                                         p + Vector3{ 0.2f, 1.2f, 0.2f } }))
+                                         p + Vector3{ 0.2f, 0.7f, 0.2f } }))
         {
             pos_ = p;
             return true;
@@ -167,6 +167,6 @@ void Actor::UpdateActorPosition(float deltaT, ChunkManager *ckMgr)
 
 void Actor::UpdateCameraApperance(float deltaT, ChunkManager *ckMgr)
 {
-    camera_.SetPosition(pos_ - 5.0f * camera_.GetDirection());
+    camera_.SetPosition(pos_ + Vector3(0.0f, 1.3f, 0.0f) - 6.5f * camera_.GetDirection());
     camera_.UpdateViewProjMatrix();
 }

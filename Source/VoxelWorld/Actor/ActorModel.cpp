@@ -15,19 +15,19 @@ Created by AirGuanZ
 #include "../Window/Window.h"
 #include "ActorModel.h"
 
+constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.05625f;
+
 namespace
 {
     bool InitActorSkeleton(Skeleton::Skeleton &skeleton, std::map<std::string, int> &boneMap)
     {
         std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-            L"output.vwani", 0.35f, 0.8f, skeleton, boneMap, errMsg);
+            L"output.vwani", 0.35f, 1.0f, skeleton, boneMap, errMsg);
     }
 
     bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
     {
-        constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.025f;
-
         meshes.clear();
         
         static const std::wstring objFilenames[] =
@@ -68,6 +68,7 @@ namespace
             for(size_t vIdx = 0; vIdx < vtxData.size(); ++vIdx)
             {
                 vtxData[vIdx].pos = obj.vertices[vIdx].pos;
+                vtxData[vIdx].nor = obj.vertices[vIdx].nor;
                 vtxData[vIdx].uv  = obj.vertices[vIdx].uv;
             }
             
@@ -150,6 +151,8 @@ bool ActorModel::Initialize(std::string &errMsg)
     {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
             Helper::MemOffset(&ActorModelVertex::pos), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
+            Helper::MemOffset(&ActorModelVertex::nor), D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
             Helper::MemOffset(&ActorModelVertex::uv), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };

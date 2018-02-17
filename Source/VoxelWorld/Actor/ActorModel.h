@@ -25,6 +25,7 @@ Created by AirGuanZ
 struct ActorModelVertex
 {
     Vector3 pos;
+    Vector3 nor;
     Vector2 uv;
 };
 
