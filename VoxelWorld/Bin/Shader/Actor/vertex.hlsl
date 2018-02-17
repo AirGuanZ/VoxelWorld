@@ -22,8 +22,8 @@ VSOutput main(VSInput input)
     VSOutput rt = (VSOutput)0;
     rt.pos = mul(float4(input.pos, 1.0f), WVP);
     rt.uv  = input.uv;
-    rt.bri = min(max(abs(dot(input.nor, float3(0.0f, +1.0f, 0.0f))) + 0.6f,
-                     abs(dot(input.nor, float3(0.0f, -1.0f, 0.0f))) + 0.6f),
+    rt.bri = min(max(abs(dot(input.nor, float3(0.0f, +1.0f, 0.0f))) + 0.8f,
+                     abs(dot(input.nor, float3(0.0f, -1.0f, 0.0f))) + 0.8f),
                  1.0);
     return rt;
 }
