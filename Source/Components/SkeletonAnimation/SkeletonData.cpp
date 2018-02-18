@@ -125,3 +125,11 @@ bool Skeleton::Skeleton::GetTransMatrix(const std::string &clip, float t,
 
     return true;
 }
+
+float Skeleton::Skeleton::GetEndTime(const std::string &aniName) const
+{
+    auto it = aniClips_.find(aniName);
+    if(it == aniClips_.end())
+        return 0.0f;
+    return it->second.End();
+}

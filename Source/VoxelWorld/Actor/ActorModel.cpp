@@ -283,3 +283,12 @@ void ActorModel::Render(const Camera &cam)
     DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
 }
+
+bool ActorModel::End(void) const
+{
+    //循环动画永无结束之日
+    if(aniClipLoop_)
+        return false;
+
+    return (t_ >= skeleton_.GetEndTime(currentAniClip_));
+}

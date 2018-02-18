@@ -92,4 +92,7 @@ struct IntVector3Hasher
     }
 };
 
+constexpr float PI = DirectX::XM_PI;
+constexpr float PIDIV2 = DirectX::XM_PIDIV2;
+
 #endif //VW_MATH_H

@@ -74,10 +74,10 @@
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\Actor.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Actor\Camera.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\Application.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockModelBuilder.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Camera\Camera.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Chunk\Chunk.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkLoader.cpp" />
@@ -112,12 +112,12 @@
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\Actor.h" />
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Actor\Camera.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\Application.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfoManager.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockModelBuilder.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Camera\Camera.h" />
     <ClInclude Include="..\Source\VoxelWorld\Chunk\Chunk.h" />
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.h" />
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkLoader.h" />

@@ -93,6 +93,8 @@ namespace Skeleton
             return aniClips_;
         }
 
+        float GetEndTime(const std::string &aniName) const;
+
     private:
         friend class SkeletonDataLoader;
 

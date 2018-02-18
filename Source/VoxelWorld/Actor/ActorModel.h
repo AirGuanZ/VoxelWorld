@@ -53,6 +53,8 @@ public:
 
     void Render(const Camera &cam);
 
+    bool End(void) const;
+
 private:
     Texture2D tex_;
     Sampler sampler_;

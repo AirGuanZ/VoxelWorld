@@ -46,9 +46,6 @@
     <Filter Include="Source\Chunk">
       <UniqueIdentifier>{8a143da2-af2b-48cd-a83d-7e206d25f9e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Camera">
-      <UniqueIdentifier>{976d8496-6e2e-4c8b-95bf-208fbb62de08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Collision">
       <UniqueIdentifier>{2761e13a-c394-4976-bcc8-efaa3a2c9425}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="Bin\Model\Actor">
       <UniqueIdentifier>{3a554125-5be0-4056-90d2-2a2384951c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Actor\Camera">
+      <UniqueIdentifier>{976d8496-6e2e-4c8b-95bf-208fbb62de08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +158,6 @@
     <Text Include="config.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\VoxelWorld\Actor\Actor.cpp">
-      <Filter>Source\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">
       <Filter>Source\Actor</Filter>
     </ClCompile>
@@ -190,9 +187,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.cpp">
       <Filter>Source\Chunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Camera\Camera.cpp">
-      <Filter>Source\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\BlendState.cpp">
       <Filter>Source\D3DObject</Filter>
@@ -266,11 +260,14 @@
     <ClCompile Include="..\Source\VoxelWorld\Main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Actor\Camera.cpp">
+      <Filter>Source\Actor\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Actor\Actor.cpp">
+      <Filter>Source\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\VoxelWorld\Actor\Actor.h">
-      <Filter>Source\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
       <Filter>Source\Actor</Filter>
     </ClInclude>
@@ -306,9 +303,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.h">
       <Filter>Source\Chunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Camera\Camera.h">
-      <Filter>Source\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Collision\AABB.h">
       <Filter>Source\Collision</Filter>
@@ -408,6 +402,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\World\World.h">
       <Filter>Source\World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Actor\Actor.h">
+      <Filter>Source\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Actor\Camera.h">
+      <Filter>Source\Actor\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
