@@ -118,42 +118,43 @@ void Actor::UpdateCameraDirection(const UserInput &uI)
 
 void Actor::UpdateState(const UserInput &uI, const EnvirInput &eI)
 {
-    State newState = State::Standing;
-    switch(state_)
-    {
-    case State::Standing:
-        newState = UpdateState_Standing(uI, eI);
-        break;
-    case State::Running:
-        newState = UpdateState_Running(uI, eI);
-        break;
-    case State::Jumping:
-        newState = UpdateState_Jumping(uI, eI);
-        break;
-    default:
-        std::abort();
-    }
+    using ActorInitStateFunc = void (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
+    using ActorUpdateStateFunc = Actor::State (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
+    using ActorApplyStateFunc = void (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
 
-    if(newState != state_)
+    ActorInitStateFunc actorInitStateFuncs[] =
     {
-        switch(newState)
-        {
-        case State::Standing:
-            InitState_Standing(uI, eI);
-            UpdateState_Standing(uI, eI);
-            break;
-        case State::Running:
-            InitState_Running(uI, eI);
-            UpdateState_Running(uI, eI);
-            break;
-        case State::Jumping:
-            InitState_Jumping(uI, eI);
-            UpdateState_Jumping(uI, eI);
-            break;
-        default:
-            std::abort();
-        }
-    }
+        &Actor::InitState_Standing,
+        &Actor::InitState_Running,
+        &Actor::InitState_Walking,
+        &Actor::InitState_Jumping
+    };
+
+    ActorUpdateStateFunc actorUpdateStateFuncs[] =
+    {
+        &Actor::UpdateState_Standing,
+        &Actor::UpdateState_Running,
+        &Actor::UpdateState_Walking,
+        &Actor::UpdateState_Jumping
+    };
+
+    ActorApplyStateFunc actorApplyStateFuncs[] =
+    {
+        &Actor::ApplyState_Standing,
+        &Actor::ApplyState_Running,
+        &Actor::ApplyState_Walking,
+        &Actor::ApplyState_Jumping
+    };
+
+    //新状态
+    State newState = (this->*actorUpdateStateFuncs[static_cast<int>(state_)])(uI, eI);
+
+    //处理状态改变
+    if(newState != state_)
+        (this->*actorInitStateFuncs[static_cast<int>(state_)])(uI, eI);
+
+    //根据状态更新actor其他属性
+    (this->*actorApplyStateFuncs[static_cast<int>(state_)])(uI, eI);
 }
 
 //IMPROVE：碰撞检测恢复时搜索合适位置目前是暴力的
@@ -278,20 +279,20 @@ void Actor::InitState_Standing(const UserInput &uI, const EnvirInput &eI)
     model_.SetAnimationClip(ACTOR_ANINAME_STANDING, true);
 }
 
-void Actor::InitState_Walking(const UserInput &uI, const EnvirInput &eI)
-{
-    state_ = State::Walking;
-    vel_.y = 0.0f;
-
-    model_.SetAnimationClip(ACTOR_ANINAME_WALKING, true);
-}
-
 void Actor::InitState_Running(const UserInput &uI, const EnvirInput &eI)
 {
     state_ = State::Running;
     vel_.y = 0.0f;
 
     model_.SetAnimationClip(ACTOR_ANINAME_RUNNING, true);
+}
+
+void Actor::InitState_Walking(const UserInput &uI, const EnvirInput &eI)
+{
+    state_ = State::Walking;
+    vel_.y = 0.0f;
+
+    model_.SetAnimationClip(ACTOR_ANINAME_WALKING, true);
 }
 
 void Actor::InitState_Jumping(const UserInput &uI, const EnvirInput &eI)
@@ -308,10 +309,9 @@ namespace
 {
     inline std::pair<int, int> Get_FB_LR_Move(const Actor::UserInput &uI)
     {
-        return std::make_pair(uI.keys[ACTOR_INPUT_KEY_INDEX_FRONT] -
-                              uI.keys[ACTOR_INPUT_KEY_INDEX_BACK],
-                              uI.keys[ACTOR_INPUT_KEY_INDEX_LEFT] -
-                              uI.keys[ACTOR_INPUT_KEY_INDEX_RIGHT]);
+        return std::make_pair(
+            uI.keys[ACTOR_INPUT_KEY_INDEX_FRONT] - uI.keys[ACTOR_INPUT_KEY_INDEX_BACK],
+            uI.keys[ACTOR_INPUT_KEY_INDEX_LEFT] - uI.keys[ACTOR_INPUT_KEY_INDEX_RIGHT]);
     }
 }
 
@@ -330,20 +330,6 @@ Actor::State Actor::UpdateState_Standing(const UserInput &uI, const EnvirInput &
         return State::Running;
     }
 
-    //地面阻力对速度的影响
-    //IMPROVE：按方向来算，现在这样按分量算就是粗制滥造
-    {
-        if(vel_.x > 0.0f)
-            vel_.x = (std::max)(vel_.x - params_.standingFricAcl, 0.0f);
-        else
-            vel_.x = (std::min)(vel_.x + params_.standingFricAcl, 0.0f);
-
-        if(vel_.z > 0.0f)
-            vel_.z = (std::max)(vel_.z - params_.standingFricAcl, 0.0f);
-        else
-            vel_.z = (std::min)(vel_.z + params_.standingFricAcl, 0.0f);
-    }
-
     return State::Standing;
 }
 
@@ -355,35 +341,50 @@ Actor::State Actor::UpdateState_Running(const UserInput &uI, const EnvirInput &e
     if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
         return State::Jumping;
 
-    //获取移动按键
-
-    auto [horFB, horLR] = Get_FB_LR_Move(uI);
-    if(!horFB && !horLR)
-        return State::Standing;
-
-    if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
-        return State::Walking;
-
-    //计算前进方向
-
-    const Vector3 &camDir = camera_.GetDirection();
-    Vector3 horMove = static_cast<float>(horFB) * Vector3(camDir.x, 0.0f, camDir.z) +
-                      static_cast<float>(horLR) * Vector3(camDir.z, 0.0f, -camDir.x);
-    horMove.Normalize();
-
-    //计算新的人物目标朝向
-
-    static const std::array<float, 9> yawOffsets =
+    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
     {
-        1.5f * PIDIV2, PI,   -1.5f * PIDIV2,
-        PIDIV2,        0.0f, -PIDIV2,
-        0.5f * PIDIV2, 0.0,  -0.5f * PIDIV2
-    };
-    dstYaw_ = -camera_.GetYaw() + yawOffsets[3 *(horFB + 1) + (horLR + 1)];
-
-    //赋予移动速度
-
-    vel_ = params_.runningSpeed * horMove;
+        if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
+            return State::Walking;
+        return State::Running;
+    }
 
     return State::Standing;
 }
+
+Actor::State Actor::UpdateState_Walking(const UserInput &uI, const EnvirInput &eI)
+{
+    if(!onGround_)
+        return State::Jumping;
+
+    if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
+        return State::Jumping;
+
+    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    {
+        if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
+            return State::Walking;
+        return State::Running;
+    }
+
+    return State::Standing;
+}
+
+Actor::State Actor::UpdateState_Jumping(const UserInput &uI, const EnvirInput &eI)
+{
+    if(!onGround_)
+        return State::Jumping;
+
+    if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
+        return State::Jumping;
+
+    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    {
+        if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
+            return State::Walking;
+        return State::Running;
+    }
+
+    return State::Standing;
+}
+
+

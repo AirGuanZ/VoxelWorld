@@ -40,9 +40,10 @@ namespace ActorAux
         void Clear(void);
     };
 
+    //这里改了的话Actor::UpdateState里的跳转表也要改
     enum class ActorState
     {
-        Standing,
+        Standing = 0,
         Running,
         Walking,
         Jumping,
@@ -100,30 +101,34 @@ public:
     void SetParams(const Params &params);
 
     void Update(float deltaT, ChunkManager *ckMgr,
-                const UserInput &userInput,
-                const EnvirInput &envirInput);
+                const UserInput &uI, const EnvirInput &eI);
 
 private:
-    void UpdateCameraDirection(const UserInput &userInput);
-
-    void UpdateState(const UserInput &userInput,
-                     const EnvirInput &envirInput);
+    //摄像机视角旋转
+    void UpdateCameraDirection(const UserInput &uI);
+    //状态更新与应用
+    void UpdateState(const UserInput &uI, const EnvirInput &eI);
+    //根据速度和碰撞更新角色位置
     void UpdateActorPosition(float deltaT, ChunkManager *ckMgr);
+    //根据角色位置、摄像机视角等更新摄像机位置
     void UpdateCameraPosition(float deltaT, ChunkManager *ckMgr);
 
-    void InitState_Standing(const UserInput &uI, const EnvirInput &eI);
-    void InitState_Running(const UserInput &uI, const EnvirInput &eI);
-    void InitState_Walking(const UserInput &uI, const EnvirInput &eI);
-    void InitState_Jumping(const UserInput &uI, const EnvirInput &eI);
+    //状态初始化、转换等
 
-    State UpdateState_Standing(const UserInput &userInput,
-                               const EnvirInput &envirInput);
-    State UpdateState_Running(const UserInput &userInput,
-                              const EnvirInput &envirInput);
-    State UpdateState_Walking(const UserInput &userInput,
-                              const EnvirInput &envirInput);
-    State UpdateState_Jumping(const UserInput &userInput,
-                              const EnvirInput &envirInput);
+    void InitState_Standing(const UserInput &uI, const EnvirInput &eI);
+    void InitState_Running (const UserInput &uI, const EnvirInput &eI);
+    void InitState_Walking (const UserInput &uI, const EnvirInput &eI);
+    void InitState_Jumping (const UserInput &uI, const EnvirInput &eI);
+
+    State UpdateState_Standing(const UserInput &uI, const EnvirInput &eI);
+    State UpdateState_Running (const UserInput &uI, const EnvirInput &eI);
+    State UpdateState_Walking (const UserInput &uI, const EnvirInput &eI);
+    State UpdateState_Jumping (const UserInput &uI, const EnvirInput &eI);
+
+    void ApplyState_Standing(const UserInput &uI, const EnvirInput &eI);
+    void ApplyState_Running (const UserInput &uI, const EnvirInput &eI);
+    void ApplyState_Walking (const UserInput &uI, const EnvirInput &eI);
+    void ApplyState_Jumping (const UserInput &uI, const EnvirInput &eI);
 
 private:
     State state_;

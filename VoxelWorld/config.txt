@@ -1,7 +1,7 @@
 [Initialize]
 
-WindowWidth  = 1400
-WindowHeight = 768
+WindowWidth  = 800
+WindowHeight = 600
 
 MSAA = 1
 
@@ -9,9 +9,9 @@ MSAA = 1
 
 # 应满足：0 < RenderDistance < PreloadDistance <= UnloadDistance
 
-UnloadDistance  = 16
-PreloadDistance = 14
-RenderDistance  = 12
+UnloadDistance  = 32
+PreloadDistance = 31
+RenderDistance  = 30
 
 # 后台区块加载线程数
 # 设置为-1则自动取为适合硬件的值
