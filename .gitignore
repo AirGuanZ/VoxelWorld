@@ -24,6 +24,7 @@ bld/
 x86_static/
 Art/
 Tools/
+Design/
 
 # Visual Studio 2015 cache/options directory
 .vs/

@@ -50,19 +50,31 @@ namespace ActorAux
 
     struct ActorParam
     {
-        float runningSpeed = 0.0f;
-        float walkingSpeed = 0.0f;
+        float runningSpeed = 0.0085f;
+        float walkingSpeed = 0.003f;
         float flyingSpeed  = 0.0f;
 
-        float turningSpeed = 0.0f;
+        float turningSpeed = 0.166667f;
 
         float camMovXSpeed = 0.0001f;
         float camMovYSpeed = 0.0001f;
 
         float camDistance  = 6.5f;
+        float camDstYOffset = 1.5f;
 
         float camDownReOffset = 0.02f;
         float camUpReOffset   = 0.02f;
+
+        float collisionRadius = 0.2f;
+        float collisionHeight = 1.6f;
+        float modelYOffset    = 0.4f;
+
+        float gravityAcl      = 0.002f;
+
+        float jumpVel         = 0.1f;
+
+        float standingFricAcl = 0.0005f;
+        
     };
 }
 
@@ -92,17 +104,17 @@ public:
                 const EnvirInput &envirInput);
 
 private:
-    void UpdateCameraDirection(float deltaT, const UserInput &userInput);
+    void UpdateCameraDirection(const UserInput &userInput);
 
     void UpdateState(const UserInput &userInput,
                      const EnvirInput &envirInput);
     void UpdateActorPosition(float deltaT, ChunkManager *ckMgr);
     void UpdateCameraPosition(float deltaT, ChunkManager *ckMgr);
 
-    void InitState_Standing(void);
-    void InitState_Running(void);
-    void InitState_Walking(void);
-    void InitState_Jumping(void);
+    void InitState_Standing(const UserInput &uI, const EnvirInput &eI);
+    void InitState_Running(const UserInput &uI, const EnvirInput &eI);
+    void InitState_Walking(const UserInput &uI, const EnvirInput &eI);
+    void InitState_Jumping(const UserInput &uI, const EnvirInput &eI);
 
     State UpdateState_Standing(const UserInput &userInput,
                                const EnvirInput &envirInput);
@@ -116,10 +128,10 @@ private:
 private:
     State state_;
 
-    //脚下落地否
+    //落地否
     bool onGround_;
 
-    //角色位置和朝向
+    //位置和朝向
     Vector3 pos_;
     float actYaw_, dstYaw_;
 
