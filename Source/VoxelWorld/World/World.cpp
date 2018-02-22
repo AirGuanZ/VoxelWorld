@@ -46,7 +46,9 @@ namespace
 
 void World::Update(float deltaT)
 {
-    actor_.Update(deltaT, &ckMgr_);
+    Actor::UserInput uI;
+    ActorAux::DefaultUserInput(uI);
+    actor_.Update(deltaT, &ckMgr_, uI, Actor::EnvirInput());
 
     ckMgr_.SetCentrePosition(
         BlockXZ_To_ChunkXZ(Camera_To_Block(actor_.GetCameraPosition().x)),

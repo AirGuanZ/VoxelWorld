@@ -39,13 +39,13 @@ void ActorAux::DefaultUserInput(UserInput &userInput)
     userInput.keys[ACTOR_INPUT_KEY_INDEX_BACK]  = input.IsKeyDown('S');
     userInput.keys[ACTOR_INPUT_KEY_INDEX_LEFT]  = input.IsKeyDown('A');
     userInput.keys[ACTOR_INPUT_KEY_INDEX_RIGHT] = input.IsKeyDown('D');
-    userInput.keys[ACTOR_INPUT_KEY_INDEX_JUMP]  = input.IsKeyPressed(VK_SPACE);
+    userInput.keys[ACTOR_INPUT_KEY_INDEX_JUMP]  = input.IsKeyDown(VK_SPACE);
     userInput.keys[ACTOR_INPUT_KEY_INDEX_DOWN]  = input.IsKeyDown(VK_LSHIFT);
     userInput.keys[ACTOR_INPUT_KEY_INDEX_UP]    = input.IsKeyDown(VK_SPACE);
     userInput.keys[ACTOR_INPUT_KEY_INDEX_WALK]  = input.IsKeyDown(VK_MENU);
 
-    userInput.msMov.x = input.GetCursorMovX();
-    userInput.msMov.y = input.GetCursorMovY();
+    userInput.msMov.x = static_cast<float>(input.GetCursorMovX());
+    userInput.msMov.y = static_cast<float>(input.GetCursorMovY());
     userInput.msMov.z = static_cast<float>(input.GetMouseWheel());
 }
 
@@ -53,8 +53,12 @@ bool Actor::Initialize(std::string &errMsg)
 {
     state_ = State::Standing;
 
+    onGround_ = false;
+
     pos_ = Vector3(0.0f, 100.0f, 0.0f);
     actYaw_ = dstYaw_ = 0.0f;
+
+    vel_ = Vector3(0.0f, 0.0f, 0.0f);
 
     params_ = Params();
 
@@ -72,6 +76,11 @@ void Actor::Render(void)
 const Matrix &Actor::GetViewProjMatrix(void) const
 {
     return camera_.GetViewProjMatrix();
+}
+
+const Camera &Actor::GetCamera(void) const
+{
+    return camera_;
 }
 
 const Vector3 &Actor::GetCameraPosition(void) const
@@ -93,7 +102,7 @@ void Actor::Update(float dT, ChunkManager *ckMgr,
                    const UserInput &uI, const EnvirInput &eI)
 {
     UpdateCameraDirection(uI);
-    UpdateState(uI, eI);
+    UpdateState(dT, uI, eI);
     UpdateActorPosition(dT, ckMgr);
     UpdateCameraPosition(dT, ckMgr);
 
@@ -116,11 +125,11 @@ void Actor::UpdateCameraDirection(const UserInput &uI)
     camera_.SetPitch(newPitch);
 }
 
-void Actor::UpdateState(const UserInput &uI, const EnvirInput &eI)
+void Actor::UpdateState(float dT, const UserInput &uI, const EnvirInput &eI)
 {
-    using ActorInitStateFunc = void (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
+    using ActorInitStateFunc   = void (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
     using ActorUpdateStateFunc = Actor::State (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
-    using ActorApplyStateFunc = void (Actor::*)(const Actor::UserInput&, const Actor::EnvirInput&);
+    using ActorApplyStateFunc  = void (Actor::*)(float, const Actor::UserInput&, const Actor::EnvirInput&);
 
     ActorInitStateFunc actorInitStateFuncs[] =
     {
@@ -151,20 +160,16 @@ void Actor::UpdateState(const UserInput &uI, const EnvirInput &eI)
 
     //处理状态改变
     if(newState != state_)
-        (this->*actorInitStateFuncs[static_cast<int>(state_)])(uI, eI);
+        (this->*actorInitStateFuncs[static_cast<int>(newState)])(uI, eI);
 
     //根据状态更新actor其他属性
-    (this->*actorApplyStateFuncs[static_cast<int>(state_)])(uI, eI);
+    (this->*actorApplyStateFuncs[static_cast<int>(state_)])(dT, uI, eI);
 }
 
 //IMPROVE：碰撞检测恢复时搜索合适位置目前是暴力的
 void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
 {
-    //添加重力加速度
-    acl_.y -= params_.gravityAcl;
-
-    Vector3 vel = vel_ + dT * acl_;
-    Vector3 oldPos = pos_, newPos = pos_ + dT * vel;
+    Vector3 oldPos = pos_, newPos = pos_ + dT * vel_;
 
     std::vector<Vector3> tryList =
     {
@@ -186,14 +191,15 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
                                         p + Vector3(params_.collisionRadius,
                                                     params_.collisionHeight,
                                                     params_.collisionRadius) }))
+        {
             return false;
-
+        }
         pos_ = p;
         return true;
     };
 
     onGround_ = false;
-    int pIdx = 0;
+    size_t pIdx = 0;
     while(pIdx < tryList.size())
     {
         if(TryMoveTo(tryList[pIdx]))
@@ -222,7 +228,7 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
             finalY = newY;
         }
 #ifdef _DEBUG
-        assert(TryMoveTo({ pos_.x, finalY, pos_.z }));
+        assert(TryMoveTo({ pos_.x, finalY, pos_.z }) == true);
 #else
         pos_.y = finalY;
 #endif
@@ -246,29 +252,30 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
     else
     {
         if(deltaYaw > 0.0f)
-            actYaw_ = (std::min)(actYaw_ + params_.turningSpeed, actYaw_ + deltaYaw);
+            actYaw_ = (std::min)(actYaw_ + dT * params_.turningSpeed, actYaw_ + deltaYaw);
         else
-            actYaw_ = (std::max)(actYaw_ - params_.turningSpeed, actYaw_ + deltaYaw);
+            actYaw_ = (std::max)(actYaw_ - dT * params_.turningSpeed, actYaw_ + deltaYaw);
     }
 
     model_.SetTransform(
         Matrix::CreateFromAxisAngle({ 0.0f, 1.0f, 0.0f }, -actYaw_) *
-        Matrix::CreateTranslation(pos_));
+        Matrix::CreateTranslation(Vector3(pos_.x, pos_.y + params_.modelYOffset, pos_.z)));
 }
 
 void Actor::UpdateCameraPosition(float deltaT, ChunkManager *ckMgr)
 {
-    camera_.SetPosition(pos_ + Vector3(0.0f, params_.camDstYOffset, 0.0f) -
+    camera_.SetPosition(Vector3(pos_.x, pos_.y + params_.camDstYOffset, pos_.z) -
                         params_.camDistance * camera_.GetDirection());
     camera_.UpdateViewProjMatrix();
+    std::cerr << (int)onGround_ << " " << (int)state_ << std::endl;
 }
 
 namespace
 {
-    const std::string ACTOR_ANINAME_STANDING = "Standing";
-    const std::string ACTOR_ANINAME_RUNNING  = "Running";
-    const std::string ACTOR_ANINAME_WALKING  = "Walking";
-    const std::string ACTOR_ANINAME_JUMPING  = "Jumping";
+    const std::string ACTOR_ANINAME_STANDING = "Moving";
+    const std::string ACTOR_ANINAME_RUNNING  = "Moving";
+    const std::string ACTOR_ANINAME_WALKING  = "Moving";
+    const std::string ACTOR_ANINAME_JUMPING  = "Moving";
 }
 
 void Actor::InitState_Standing(const UserInput &uI, const EnvirInput &eI)
@@ -300,7 +307,7 @@ void Actor::InitState_Jumping(const UserInput &uI, const EnvirInput &eI)
     state_ = State::Jumping;
 
     if(onGround_ && uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
-        vel_.y = params_.jumpVel;
+        vel_.y = params_.jumpInitVel;
 
     model_.SetAnimationClip(ACTOR_ANINAME_JUMPING, true);
 }
@@ -311,7 +318,13 @@ namespace
     {
         return std::make_pair(
             uI.keys[ACTOR_INPUT_KEY_INDEX_FRONT] - uI.keys[ACTOR_INPUT_KEY_INDEX_BACK],
-            uI.keys[ACTOR_INPUT_KEY_INDEX_LEFT] - uI.keys[ACTOR_INPUT_KEY_INDEX_RIGHT]);
+            uI.keys[ACTOR_INPUT_KEY_INDEX_LEFT]  - uI.keys[ACTOR_INPUT_KEY_INDEX_RIGHT]);
+    }
+
+    inline bool HasMoving(const Actor::UserInput &uI)
+    {
+        return (uI.keys[ACTOR_INPUT_KEY_INDEX_FRONT] ^ uI.keys[ACTOR_INPUT_KEY_INDEX_BACK]) ||
+               (uI.keys[ACTOR_INPUT_KEY_INDEX_LEFT]  ^ uI.keys[ACTOR_INPUT_KEY_INDEX_RIGHT]);
     }
 }
 
@@ -323,7 +336,7 @@ Actor::State Actor::UpdateState_Standing(const UserInput &uI, const EnvirInput &
     if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
         return State::Jumping;
 
-    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    if(HasMoving(uI))
     {
         if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
             return State::Walking;
@@ -341,7 +354,7 @@ Actor::State Actor::UpdateState_Running(const UserInput &uI, const EnvirInput &e
     if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
         return State::Jumping;
 
-    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    if(HasMoving(uI))
     {
         if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
             return State::Walking;
@@ -359,7 +372,7 @@ Actor::State Actor::UpdateState_Walking(const UserInput &uI, const EnvirInput &e
     if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
         return State::Jumping;
 
-    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    if(HasMoving(uI))
     {
         if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
             return State::Walking;
@@ -377,7 +390,7 @@ Actor::State Actor::UpdateState_Jumping(const UserInput &uI, const EnvirInput &e
     if(uI.keys[ACTOR_INPUT_KEY_INDEX_JUMP])
         return State::Jumping;
 
-    if(Get_FB_LR_Move(uI) != std::make_pair<int, int>(0, 0))
+    if(HasMoving(uI))
     {
         if(uI.keys[ACTOR_INPUT_KEY_INDEX_WALK])
             return State::Walking;
@@ -387,4 +400,104 @@ Actor::State Actor::UpdateState_Jumping(const UserInput &uI, const EnvirInput &e
     return State::Standing;
 }
 
+namespace
+{
+    const std::array<float, 9> movingYawOffsets =
+    {
+        1.5f * PIDIV2, PI,   -1.5f * PIDIV2,
+        PIDIV2,        0.0f, -PIDIV2,
+        0.5f * PIDIV2, 0.0,  -0.5f * PIDIV2
+    };
 
+    //将origin长度减少fric
+    inline Vector3 ApplyFric(const Vector3 &origin, float fric)
+    {
+        Vector3 rt;
+        origin.Normalize(rt);
+        return (std::max)(0.0f, origin.Length() - fric) * rt;
+    }
+
+    //将origin在xz平面上分量的长度减少fric
+    inline Vector3 ApplyFricXZ(const Vector3 &ori, float fric)
+    {
+        Vector3 rtHor = ApplyFric(Vector3(ori.x, 0.0f, ori.z), fric);
+        return Vector3(rtHor.x, ori.y, rtHor.z);
+    }
+}
+
+void Actor::ApplyState_Standing(float dT, const UserInput &uI, const EnvirInput &eI)
+{
+    //重力加速度
+    vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
+
+    //站立时的水平阻力减速
+    vel_ = ApplyFricXZ(vel_, dT * params_.standingFricAcl);
+}
+
+void Actor::ApplyState_Running(float dT, const UserInput &uI, const EnvirInput &eI)
+{
+    //重力加速度
+    vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
+
+    assert(HasMoving(uI));
+    auto [FB, LR] = Get_FB_LR_Move(uI);
+
+    //新的dstYaw
+    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+
+    //移动方向
+    
+    const Vector3 &camDir = camera_.GetDirection();
+    Vector3 horMove = static_cast<float>(FB) * Vector3(camDir.x, 0.0f, camDir.z) +
+                      static_cast<float>(LR) * Vector3(camDir.z, 0.0f, -camDir.x);
+
+    //将移动加速度和阻力叠加到速度上
+    //移动加速作用到horMove方向上
+
+    //移动速度叠加方向
+    horMove.Normalize();
+
+    //阻力叠加方向
+    Vector3 fricDir;
+    vel_.Normalize(fricDir);
+
+    vel_ = CombineFric(vel_, fricDir, dT * params_.runningFricAcl, 0.0f);
+    vel_ = CombineAcc(vel_, horMove, dT * params_.runningAcl, params_.runningSpeed);
+}
+
+void Actor::ApplyState_Walking(float dT, const UserInput &uI, const EnvirInput &eI)
+{
+    //重力加速度
+    vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
+
+    assert(HasMoving(uI));
+    auto [FB, LR] = Get_FB_LR_Move(uI);
+
+    //新的dstYaw
+    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+
+    //移动速度增量
+
+    const Vector3 &camDir = camera_.GetDirection();
+    Vector3 horMove = static_cast<float>(FB) * Vector3(camDir.x, 0.0f, camDir.z) +
+                      static_cast<float>(LR) * Vector3(camDir.z, 0.0f, -camDir.x);
+
+    //将移动加速度和阻力叠加到速度上
+    //移动加速作用到horMove方向上
+
+    //移动速度叠加方向
+    horMove.Normalize();
+
+    //阻力叠加方向
+    Vector3 fricDir;
+    vel_.Normalize(fricDir);
+
+    vel_ = CombineFric(vel_, fricDir, dT * params_.walkingFricAcl, 0.0f);
+    vel_ = CombineAcc(vel_, horMove, dT * params_.walkingAcl, params_.walkingSpeed);
+}
+
+void Actor::ApplyState_Jumping(float dT, const UserInput &uI, const EnvirInput &eI)
+{
+    //重力加速度
+    vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
+}

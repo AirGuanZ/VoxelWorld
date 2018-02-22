@@ -6,6 +6,7 @@ Created by AirGuanZ
 #ifndef VW_MATH_H
 #define VW_MATH_H
 
+#include <algorithm>
 #include <cmath>
 #include <d3d11.h>
 #include <DirectXTK/SimpleMath.h>
@@ -16,6 +17,31 @@ using DirectX::SimpleMath::Vector4;
 using DirectX::SimpleMath::Matrix;
 using DirectX::SimpleMath::Quaternion;
 using DirectX::SimpleMath::Color;
+
+//在origin的dir方向上叠加一个长度为accV的分量
+//并用maxV作为叠加得到的分量长度的上限
+//若分量长度原本就超过maxV，则不受影响
+//dir shall be normalized
+inline Vector3 CombineAcc(const Vector3 &origin, const Vector3 &dir, float accV, float maxV)
+{
+    //origin在dir方向上的分量长度
+    float oriDirLen = origin.Dot(dir);
+    //新的dir方向上的分量长度
+    float newDirLen = (std::max)(oriDirLen, (std::min)(oriDirLen + accV, maxV));
+    //合成为最终结果
+    return (origin - oriDirLen * dir) + newDirLen * dir;
+}
+
+//在origin的-dir方向上叠加一个长度为accV的分量
+//并用minV作为叠加得到的分量长度的下限
+//若分量长度原本就低于minV，则不受影响
+//dir shall be normalized
+inline Vector3 CombineFric(const Vector3 &origin, const Vector3 &dir, float fric, float minV)
+{
+    float oriDirLen = origin.Dot(dir);
+    float newDirLen = (std::min)(oriDirLen, (std::max)(oriDirLen - fric, minV));
+    return (origin - oriDirLen * dir) + newDirLen * dir;
+}
 
 struct IntVectorXZ
 {

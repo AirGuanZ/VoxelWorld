@@ -9,9 +9,9 @@ MSAA = 1
 
 # 应满足：0 < RenderDistance < PreloadDistance <= UnloadDistance
 
-UnloadDistance  = 32
-PreloadDistance = 31
-RenderDistance  = 30
+UnloadDistance  = 14
+PreloadDistance = 13
+RenderDistance  = 12
 
 # 后台区块加载线程数
 # 设置为-1则自动取为适合硬件的值
