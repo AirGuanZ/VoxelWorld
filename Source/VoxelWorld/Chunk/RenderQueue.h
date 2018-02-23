@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include <iostream>
 #include <vector>
 
-#include "../Model/Model.h"
+#include "../Chunk/Model.h"
 
 class RenderQueue
 {

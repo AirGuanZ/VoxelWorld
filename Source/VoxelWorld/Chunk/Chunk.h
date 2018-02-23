@@ -11,11 +11,11 @@ Created by AirGuanZ
 
 #include "../Actor/Camera.h"
 #include "../Block/Block.h"
-#include "../Model/BasicModel.h"
-#include "../Renderer/BasicRenderer.h"
-#include "../Renderer/CarveRenderer.h"
-#include "../Renderer/LiquidRenderer.h"
-#include "../Renderer/RenderQueue.h"
+#include "../Chunk/BasicModel.h"
+#include "../Chunk/BasicRenderer.h"
+#include "../Chunk/CarveRenderer.h"
+#include "../Chunk/LiquidRenderer.h"
+#include "../Chunk/RenderQueue.h"
 
 //2^4，这里修改的话XYZ也要修改
 constexpr int CHUNK_SECTION_SIZE = 16;

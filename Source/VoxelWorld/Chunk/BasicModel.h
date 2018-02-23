@@ -10,7 +10,7 @@ Created by AirGuanZ
 
 #include <Utility/Uncopiable.h>
 
-#include "../Renderer/BasicRenderer.h"
+#include "../Chunk/BasicRenderer.h"
 #include "Model.h"
 
 class BasicModel : public Model, public Uncopiable

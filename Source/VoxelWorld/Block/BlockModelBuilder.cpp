@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #include <cassert>
 
-#include "../Renderer/BasicRenderer.h"
-#include "../Renderer/CarveRenderer.h"
-#include "../Renderer/LiquidRenderer.h"
+#include "../Chunk/BasicRenderer.h"
+#include "../Chunk/CarveRenderer.h"
+#include "../Chunk/LiquidRenderer.h"
 #include "BlockInfoManager.h"
 #include "BlockModelBuilder.h"
 

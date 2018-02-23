@@ -15,11 +15,9 @@ Created by AirGuanZ
 #include <Utility/FPSCounter.h>
 #include <Utility/HelperFunctions.h>
 
-#include <imgui.h>
-
 #include "../D3DObject/Sampler.h"
 #include "../Input/InputManager.h"
-#include "../Renderer/BasicRenderer.h"
+#include "../Chunk/BasicRenderer.h"
 #include "../Resource/ResourceName.h"
 #include "../Screen/Crosshair.h"
 #include "../Texture/Texture2D.h"
