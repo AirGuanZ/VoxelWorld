@@ -224,7 +224,6 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
             float newY = finalY + step;
             if(!TryMoveTo({ pos_.x, newY, pos_.z }))
                 break;
-
             finalY = newY;
         }
 #ifdef _DEBUG
@@ -504,11 +503,11 @@ void Actor::ApplyState_Jumping(float dT, const UserInput &uI, const EnvirInput &
     //重力加速度
     vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
 
-    assert(HasMoving(uI));
     auto [FB, LR] = Get_FB_LR_Move(uI);
 
     //新的dstYaw
-    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+    if(FB || LR)
+        dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
 
     //移动速度增量
 

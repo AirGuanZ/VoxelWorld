@@ -56,9 +56,9 @@ namespace ActorAux
         float turningSpeed = 0.0166667f;
 
         //摄像机旋转水平灵敏度
-        float camMovXSpeed = 0.0005f;
+        float camMovXSpeed = 0.00075f;
         //摄像机旋转垂直灵敏度
-        float camMovYSpeed = 0.0005f;
+        float camMovYSpeed = 0.00075f;
 
         //摄像机到角色视点距离
         float camDistance = 6.5f;
