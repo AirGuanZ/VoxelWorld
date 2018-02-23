@@ -122,4 +122,14 @@ constexpr float PI = DirectX::XM_PI;
 constexpr float PIDIV2 = DirectX::XM_PIDIV2;
 constexpr float _2PI = DirectX::XM_2PI;
 
+inline float Deg2Rad(float deg)
+{
+    return DirectX::XMConvertToRadians(deg);
+}
+
+inline float Rad2Deg(float rad)
+{
+    return DirectX::XMConvertToDegrees(rad);
+}
+
 #endif //VW_MATH_H

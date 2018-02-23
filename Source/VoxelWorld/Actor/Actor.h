@@ -61,7 +61,7 @@ namespace ActorAux
         float camMovYSpeed = 0.00075f;
 
         //摄像机到角色视点距离
-        float camDistance = 6.5f;
+        float camDistance = 7.5f;
         //角色视点距角色位置的高度偏移
         float camDstYOffset = 1.5f;
 
