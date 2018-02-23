@@ -212,7 +212,7 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
         //置竖直速度为0
         //根据恢复方向设置onGround
         vel_.y = 0.0f;
-        if(newPos.y < oldPos.y)
+        if(newPos.y <= oldPos.y)
             onGround_ = true;
 
         //在oldPos和newPos之间搜索一个合适的位置
@@ -267,7 +267,6 @@ void Actor::UpdateCameraPosition(float deltaT, ChunkManager *ckMgr)
     camera_.SetPosition(Vector3(pos_.x, pos_.y + params_.camDstYOffset, pos_.z) -
                         params_.camDistance * camera_.GetDirection());
     camera_.UpdateViewProjMatrix();
-    std::cerr << (int)onGround_ << " " << (int)state_ << std::endl;
 }
 
 namespace
@@ -450,18 +449,20 @@ void Actor::ApplyState_Running(float dT, const UserInput &uI, const EnvirInput &
     const Vector3 &camDir = camera_.GetDirection();
     Vector3 horMove = static_cast<float>(FB) * Vector3(camDir.x, 0.0f, camDir.z) +
                       static_cast<float>(LR) * Vector3(camDir.z, 0.0f, -camDir.x);
+    horMove.Normalize();
 
     //将移动加速度和阻力叠加到速度上
     //移动加速作用到horMove方向上
 
-    //移动速度叠加方向
-    horMove.Normalize();
+    //阻力叠加
+    Vector3 fricDir = Vector3(vel_.x, 0.0f, vel_.z);
+    if(fricDir.Length() > 1e-5f)
+    {
+        fricDir.Normalize();
+        vel_ = CombineFric(vel_, fricDir, dT * params_.runningFricAcl, 0.0f);
+    }
 
-    //阻力叠加方向
-    Vector3 fricDir;
-    vel_.Normalize(fricDir);
-
-    vel_ = CombineFric(vel_, fricDir, dT * params_.runningFricAcl, 0.0f);
+    //移动速度叠加
     vel_ = CombineAcc(vel_, horMove, dT * params_.runningAcl, params_.runningSpeed);
 }
 
@@ -485,14 +486,16 @@ void Actor::ApplyState_Walking(float dT, const UserInput &uI, const EnvirInput &
     //将移动加速度和阻力叠加到速度上
     //移动加速作用到horMove方向上
 
-    //移动速度叠加方向
+    //阻力叠加
+    Vector3 fricDir = Vector3(vel_.x, 0.0f, vel_.z);
+    if(fricDir.Length() > 1e-5f)
+    {
+        fricDir.Normalize();
+        vel_ = CombineFric(vel_, fricDir, dT * params_.walkingFricAcl, 0.0f);
+    }
+
+    //移动速度叠加
     horMove.Normalize();
-
-    //阻力叠加方向
-    Vector3 fricDir;
-    vel_.Normalize(fricDir);
-
-    vel_ = CombineFric(vel_, fricDir, dT * params_.walkingFricAcl, 0.0f);
     vel_ = CombineAcc(vel_, horMove, dT * params_.walkingAcl, params_.walkingSpeed);
 }
 
@@ -500,4 +503,31 @@ void Actor::ApplyState_Jumping(float dT, const UserInput &uI, const EnvirInput &
 {
     //重力加速度
     vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
+
+    assert(HasMoving(uI));
+    auto[FB, LR] = Get_FB_LR_Move(uI);
+
+    //新的dstYaw
+    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+
+    //移动速度增量
+
+    const Vector3 &camDir = camera_.GetDirection();
+    Vector3 horMove = static_cast<float>(FB) * Vector3(camDir.x, 0.0f, camDir.z) +
+                      static_cast<float>(LR) * Vector3(camDir.z, 0.0f, -camDir.x);
+
+    //将移动加速度和阻力叠加到速度上
+    //移动加速作用到horMove方向上
+
+    //阻力叠加
+    Vector3 fricDir = Vector3(vel_.x, 0.0f, vel_.z);
+    if(fricDir.Length() > 1e-5f)
+    {
+        fricDir.Normalize();
+        vel_ = CombineFric(vel_, fricDir, dT * params_.jumpingFricAcl, 0.0f);
+    }
+
+    //移动速度叠加
+    horMove.Normalize();
+    vel_ = CombineAcc(vel_, horMove, dT * params_.jumpingAcl, params_.jumpingSpeed);
 }

@@ -25,6 +25,69 @@ constexpr int ACTOR_INPUT_KEY_NUM         = 1 + ACTOR_INPUT_KEY_INDEX_WALK;
 
 namespace ActorAux
 {
+    struct ActorParam
+    {
+        //跑动的自给加速度
+        float runningAcl = 0.0008f;
+        //行走的自给加速度
+        float walkingAcl = 0.0007f;
+        //跳跃的自给加速度
+        float jumpingAcl = 0.0007f;
+
+        //跑动自给速度上限
+        float runningSpeed = 0.0085f;
+        //行走自给速度上限
+        float walkingSpeed = 0.0045f;
+        //跳跃自己速度上限
+        float jumpingSpeed = 0.0075f;
+        //飞行自给速度上限
+        float flyingSpeed = 0.0f;
+
+        //站立阻力加速度
+        float standingFricAcl = 0.001f;
+        //跑动阻力加速度
+        float runningFricAcl = 0.001f;
+        //行走阻力加速度
+        float walkingFricAcl = 0.001f;
+        //跳跃阻力加速度
+        float jumpingFricAcl = 0.001f;
+
+        //角色朝向转动速度
+        float turningSpeed = 0.0166667f;
+
+        //摄像机旋转水平灵敏度
+        float camMovXSpeed = 0.0005f;
+        //摄像机旋转垂直灵敏度
+        float camMovYSpeed = 0.0005f;
+
+        //摄像机到角色视点距离
+        float camDistance = 6.5f;
+        //角色视点距角色位置的高度偏移
+        float camDstYOffset = 1.5f;
+
+        //摄像机看向脚下时的最小垂直夹角
+        float camDownReOffset = 0.02f;
+        //摄像机看向天空时的最小垂直夹角
+        float camUpReOffset = 0.02f;
+
+        //角色碰撞半径
+        float collisionRadius = 0.2f;
+        //角色碰撞高度
+        float collisionHeight = 1.6f;
+        //模型位置和角色位置的垂直偏移
+        float modelYOffset = 0.4f;
+
+        //跳跃初速度
+        float jumpInitVel = 0.05f;
+
+        //重力加速度大小
+        float gravityAcl = 0.0003f;
+        //重力加速度方向
+        Vector3 gravityDir = Vector3(0.0f, -1.0f, 0.0f);
+        //重力带来的最大速度
+        float gravityMaxSpeed = 0.01f;
+    };
+
     struct UserInput
     {
         void Clear(void);
@@ -48,63 +111,6 @@ namespace ActorAux
         Running,
         Walking,
         Jumping,
-    };
-
-    struct ActorParam
-    {
-        //跑动的自给加速度
-        float runningAcl = 0.0008f;
-        //行走的自给加速度
-        float walkingAcl = 0.0006f;
-
-        //跑动自给速度上限
-        float runningSpeed = 0.0085f;
-        //行走自给速度上限
-        float walkingSpeed = 0.003f;
-        //飞行自给速度上限
-        float flyingSpeed = 0.0f;
-
-        //站立阻力加速度
-        float standingFricAcl = 0.04f;
-        //跑动阻力加速度
-        float runningFricAcl = 0.04f;
-        //行走阻力加速度
-        float walkingFricAcl = 0.04f;
-
-        //角色朝向转动速度
-        float turningSpeed = 0.0166667f;
-
-        //摄像机旋转水平灵敏度
-        float camMovXSpeed = 0.000042f;
-        //摄像机旋转垂直灵敏度
-        float camMovYSpeed = 0.000042f;
-
-        //摄像机到角色视点距离
-        float camDistance  = 6.5f;
-        //角色视点距角色位置的高度偏移
-        float camDstYOffset = 1.5f;
-
-        //摄像机看向脚下时的最小垂直夹角
-        float camDownReOffset = 0.02f;
-        //摄像机看向天空时的最小垂直夹角
-        float camUpReOffset = 0.02f;
-
-        //角色碰撞半径
-        float collisionRadius = 0.2f;
-        //角色碰撞高度
-        float collisionHeight = 1.6f;
-        //模型位置和角色位置的垂直偏移
-        float modelYOffset = 0.4f;
-
-        //跳跃初速度
-        float jumpInitVel = 0.1f;
-
-        //重力加速度大小
-        float gravityAcl = 0.0004f;
-        //重力加速度方向
-        Vector3 gravityDir = Vector3(0.0f, -1.0f, 0.0f);
-        //重力带来的最大速度
-        float gravityMaxSpeed = 0.01f;
     };
 }
 
