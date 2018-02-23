@@ -505,7 +505,7 @@ void Actor::ApplyState_Jumping(float dT, const UserInput &uI, const EnvirInput &
     vel_ = CombineAcc(vel_, params_.gravityDir, dT * params_.gravityAcl, params_.gravityMaxSpeed);
 
     assert(HasMoving(uI));
-    auto[FB, LR] = Get_FB_LR_Move(uI);
+    auto [FB, LR] = Get_FB_LR_Move(uI);
 
     //ÐÂµÄdstYaw
     dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];

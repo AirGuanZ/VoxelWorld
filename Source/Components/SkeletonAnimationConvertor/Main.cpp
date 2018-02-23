@@ -27,7 +27,7 @@ bool Input(const std::wstring &confFilename,
     output.clear();
     errMsg = "";
 
-    std::wstring_convert<std::codecvt_utf8<wchar_t>> strConv;
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strConv;
 
     ConfigFile file(confFilename);
     if(!file)
