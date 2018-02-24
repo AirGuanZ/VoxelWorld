@@ -97,6 +97,12 @@
     <Filter Include="Source\LandGen\V2">
       <UniqueIdentifier>{18e9eb5c-908b-4632-957c-f619b48bbb8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Application\MainMenu">
+      <UniqueIdentifier>{bea0cfa6-fb03-4fba-88ec-82acf0d1ad71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Screen\imgui">
+      <UniqueIdentifier>{dc4fa641-ca7a-48a8-91e0-bf74cb6f497f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -266,6 +272,12 @@
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.cpp">
       <Filter>Source\Chunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Screen\GUISystem.cpp">
+      <Filter>Source\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.cpp">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -408,6 +420,15 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.h">
       <Filter>Source\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h">
+      <Filter>Source\Application\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h">
+      <Filter>Source\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.h">
+      <Filter>Source\Screen\imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

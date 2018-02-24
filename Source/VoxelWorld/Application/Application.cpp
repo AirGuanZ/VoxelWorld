@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <stdexcept>
 #include <string>
 
+#include <imgui.h>
 #include <Windows.h>
 
 #include <Utility/Clock.h>
@@ -20,12 +21,13 @@ Created by AirGuanZ
 #include "../Chunk/BasicRenderer.h"
 #include "../Resource/ResourceName.h"
 #include "../Screen/Crosshair.h"
+#include "../Screen/GUISystem.h"
 #include "../Texture/Texture2D.h"
 #include "../Window/Window.h"
 #include "../World/World.h"
 #include "Application.h"
 
-#define PRINT_FPS 0
+#define PRINT_FPS 1
 
 void Application::Run(void)
 {
@@ -43,6 +45,7 @@ void Application::Run(void)
     {
         throw std::runtime_error(initErrMsg.c_str());
     }
+    GUISystem &gui = GUISystem::GetInstance();
 
     ID3D11Device *dev = window.GetD3DDevice();
     ID3D11DeviceContext *DC = window.GetD3DDeviceContext();
@@ -225,20 +228,21 @@ void Application::Run(void)
 #if PRINT_FPS
     FPSCounter fps;
     fps.Restart();
-    float lastFPS = 0.0f
+    float lastFPS = 0.0f;
 #endif
 
     float daynightT = 0.0f;
     
     while(!input.IsKeyDown(VK_ESCAPE))
     {
+        gui.NewFrame();
+
 #if PRINT_FPS
         fps.Tick();
         if(fps.GetFPS() != lastFPS)
-        {
             lastFPS = fps.GetFPS();
-            std::cerr << "\b\b\b\b\b\b\b\b\b\b\b\b" << lastFPS;
-        }
+        std::string FPSText = "FPS: " + std::to_string(lastFPS);
+        ImGui::Text(FPSText.c_str());
 #endif
 
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;
@@ -272,7 +276,7 @@ void Application::Run(void)
         liquidRendererUniforms0->GetConstantBuffer<SS_PS, LiquidPSCBFog>(dev, "Fog")
             ->SetBufferData(DC, { fogStart, { 0.0f, absdnt, absdnt }, fogRange, world.GetActor().GetCameraPosition() });
 
-        world.Update(clock.ElapsedTime());
+        world.Update(16.6667f);
 
         world.Render(&renderQueue);
 
@@ -313,9 +317,8 @@ void Application::Run(void)
 
         crosshair.Draw(&imScr2D);
 
-#if PRINT_FPS
-        window.SetVsync(false);
-#endif
+        gui.Render();
+
         window.Present();
         window.DoEvents();
         clock.Tick();

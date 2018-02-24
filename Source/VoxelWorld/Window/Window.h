@@ -42,6 +42,8 @@ public:
 
     ID3D11Device *GetD3DDevice(void);
     ID3D11DeviceContext *GetD3DDeviceContext(void);
+
+    HWND GetWindowHandle(void);
 };
 
 #endif //VW_WINDOW_H

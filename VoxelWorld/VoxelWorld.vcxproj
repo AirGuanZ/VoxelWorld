@@ -103,6 +103,8 @@
     <ClCompile Include="..\Source\VoxelWorld\Land\V2\LandGenerator_V2.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Main.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\Crosshair.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\GUISystem.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Texture\TextureFile.cpp" />
@@ -114,6 +116,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h" />
     <ClInclude Include="..\Source\VoxelWorld\Actor\Camera.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\Application.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfoManager.h" />
@@ -152,6 +155,8 @@
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Noise_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\Crosshair.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\TextureFile.h" />
