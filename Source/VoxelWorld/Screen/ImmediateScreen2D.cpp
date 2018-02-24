@@ -8,8 +8,8 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include "../Resource/ResourceName.h"
-#include "../Window/Window.h"
+#include <Resource/ResourceName.h>
+#include <Window/Window.h>
 #include "ImmediateScreen2D.h"
 
 ImmediateScreen2D::ImmediateScreen2D(void)

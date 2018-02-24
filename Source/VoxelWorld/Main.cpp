@@ -10,7 +10,7 @@ Created by AirGuanZ
     #include <crtdbg.h>
 #endif
 
-#include "Application\Application.h"
+#include <Application/Application.h>
 
 int main(void)
 {

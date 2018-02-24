@@ -103,6 +103,9 @@
     <Filter Include="Source\Screen\imgui">
       <UniqueIdentifier>{dc4fa641-ca7a-48a8-91e0-bf74cb6f497f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Screen\nuklear">
+      <UniqueIdentifier>{221937e9-a993-433e-9a48-0ccb5497bb53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -275,7 +278,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Screen\GUISystem.cpp">
       <Filter>Source\Screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.cpp">
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.cpp">
       <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
   </ItemGroup>
@@ -427,8 +430,20 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h">
       <Filter>Source\Screen</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui_impl_dx11.h">
+    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11.h">
+      <Filter>Source\Screen\nuklear</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_pixel_shader.h">
+      <Filter>Source\Screen\nuklear</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_vertex_shader.h">
+      <Filter>Source\Screen\nuklear</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h">
       <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nkD3D11Macros.h">
+      <Filter>Source\Screen\nuklear</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

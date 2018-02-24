@@ -7,8 +7,8 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include "../Resource/ResourceName.h"
-#include "../Window/Window.h"
+#include <Resource/ResourceName.h>
+#include <Window/Window.h>
 #include "BasicRenderer.h"
 
 namespace

@@ -9,13 +9,13 @@ Created by AirGuanZ
 #include <Utility\Math.h>
 #include <Utility\Uncopiable.h>
 
-#include "../Actor/Camera.h"
-#include "../Block/Block.h"
-#include "../Chunk/BasicModel.h"
-#include "../Chunk/BasicRenderer.h"
-#include "../Chunk/CarveRenderer.h"
-#include "../Chunk/LiquidRenderer.h"
-#include "../Chunk/RenderQueue.h"
+#include <Actor/Camera.h>
+#include <Block/Block.h>
+#include <Chunk/BasicModel.h>
+#include <Chunk/BasicRenderer.h>
+#include <Chunk/CarveRenderer.h>
+#include <Chunk/LiquidRenderer.h>
+#include <Chunk/RenderQueue.h>
 
 //2^4，这里修改的话XYZ也要修改
 constexpr int CHUNK_SECTION_SIZE = 16;

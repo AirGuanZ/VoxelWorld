@@ -6,7 +6,7 @@ Created by AirGuanZ
 #ifndef VW_BLOCK_MODEL_BUILDER_H
 #define VW_BLOCK_MODEL_BUILDER_H
 
-#include "../Chunk/Chunk.h"
+#include <Chunk/Chunk.h>
 
 constexpr float BLOCK_SIDE_BOTTOM_LIGHT_DEC_RATIO = 0.93f;
 

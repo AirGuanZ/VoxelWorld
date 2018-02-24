@@ -14,11 +14,11 @@ Created by AirGuanZ
 #include <Utility/Math.h>
 #include <Utility/Uncopiable.h>
 
-#include "../D3DObject/BasicBuffer.h"
-#include "../D3DObject/DepthStencilState.h"
-#include "../D3DObject/InputLayout.h"
-#include "../D3DObject/Sampler.h"
-#include "../Texture/Texture2D.h"
+#include <D3DObject/BasicBuffer.h>
+#include <D3DObject/DepthStencilState.h>
+#include <D3DObject/InputLayout.h>
+#include <D3DObject/Sampler.h>
+#include <Texture/Texture2D.h>
 
 class ImmediateScreen2D : public Uncopiable
 {

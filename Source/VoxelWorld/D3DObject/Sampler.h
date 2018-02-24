@@ -8,7 +8,7 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include "../Window/Window.h"
+#include <Window/Window.h>
 
 class Sampler
 {

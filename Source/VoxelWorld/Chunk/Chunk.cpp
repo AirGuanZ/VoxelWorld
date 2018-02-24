@@ -7,7 +7,7 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include "../Block/BlockInfoManager.h"
+#include <Block/BlockInfoManager.h>
 #include "Chunk.h"
 #include "ChunkManager.h"
 

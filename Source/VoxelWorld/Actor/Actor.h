@@ -8,7 +8,7 @@ Created by AirGuanZ
 
 #include <string>
 
-#include "../Chunk/ChunkManager.h"
+#include <Chunk/ChunkManager.h>
 #include "ActorModel.h"
 #include "Camera.h"
 
@@ -53,7 +53,7 @@ namespace ActorAux
         float jumpingFricAcl = 0.001f;
 
         //角色朝向转动速度
-        float turningSpeed = 0.0166667f;
+        float turningSpeed = 0.012f;
 
         //摄像机旋转水平灵敏度
         float camMovXSpeed = 0.00075f;

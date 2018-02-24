@@ -14,8 +14,8 @@ Created by AirGuanZ
 #include <Windows.h>
 #include <DirectXTK/Keyboard.h>
 
-#include "../Screen/GUISystem.h"
-#include "../Input/InputManager.h"
+#include <Screen/GUISystem.h>
+#include <Input/InputManager.h>
 #include "Window.h"
 
 SINGLETON_CLASS_DEFINITION(Window);
@@ -481,6 +481,7 @@ int Window::ClientCentreY(void)
 void Window::DoEvents(void)
 {
     InputManager::GetInstance().wheelMov_ = 0;
+    GUISystem::GetInstance().BeginInput();
     MSG msg;
     while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
     {
@@ -488,6 +489,7 @@ void Window::DoEvents(void)
         DispatchMessage(&msg);
     }
     InputManager::GetInstance().Update();
+    GUISystem::GetInstance().EndInput();
 }
 
 void Window::Present(void)

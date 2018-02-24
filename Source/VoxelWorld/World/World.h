@@ -8,9 +8,9 @@ Created by AirGuanZ
 
 #include <string>
 
-#include "../Actor/Actor.h"
-#include "../Chunk/ChunkManager.h"
-#include "../Texture/Texture2D.h"
+#include <Actor/Actor.h>
+#include <Chunk/ChunkManager.h>
+#include <Texture/Texture2D.h>
 
 class World
 {

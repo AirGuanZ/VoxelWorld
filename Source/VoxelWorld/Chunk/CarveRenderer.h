@@ -15,8 +15,8 @@ Created by AirGuanZ
 #include <Utility/Math.h>
 #include <Utility/Uncopiable.h>
 
-#include "../D3DObject/InputLayout.h"
-#include "../D3DObject/RasterState.h"
+#include <D3DObject/InputLayout.h>
+#include <D3DObject/RasterState.h>
 #include "BasicRenderer.h"
 
 constexpr int CARVE_RENDERER_TEXTURE_NUM = 1;

@@ -7,7 +7,7 @@ Created by AirGuanZ
 #include <DirectXTK/WICTextureLoader.h>
 #include <wincodec.h>
 
-#include "../Window/Window.h"
+#include <Window/Window.h>
 #include "TextureFile.h"
 
 SINGLETON_CLASS_DEFINITION(TextureFile);

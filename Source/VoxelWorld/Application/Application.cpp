@@ -16,15 +16,15 @@ Created by AirGuanZ
 #include <Utility/FPSCounter.h>
 #include <Utility/HelperFunctions.h>
 
-#include "../D3DObject/Sampler.h"
-#include "../Input/InputManager.h"
-#include "../Chunk/BasicRenderer.h"
-#include "../Resource/ResourceName.h"
-#include "../Screen/Crosshair.h"
-#include "../Screen/GUISystem.h"
-#include "../Texture/Texture2D.h"
-#include "../Window/Window.h"
-#include "../World/World.h"
+#include <D3DObject/Sampler.h>
+#include <Input/InputManager.h>
+#include <Chunk/BasicRenderer.h>
+#include <Resource/ResourceName.h>
+#include <Screen/Crosshair.h>
+#include <Screen/GUISystem.h>
+#include <Texture/Texture2D.h>
+#include <Window/Window.h>
+#include <World/World.h>
 #include "Application.h"
 
 #define PRINT_FPS 1
@@ -322,6 +322,7 @@ void Application::Run(void)
 
         gui.Render();
 
+        window.SetVsync(false);
         window.Present();
         window.DoEvents();
         clock.Tick();

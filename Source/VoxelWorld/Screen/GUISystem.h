@@ -10,7 +10,7 @@ Created by AirGuanZ
 
 #include <Utility/Singleton.h>
 
-#include "../Input/InputManager.h"
+#include <Input/InputManager.h>
 
 class GUISystem : public Singleton<GUISystem>
 {
@@ -22,6 +22,9 @@ public:
     void Render(void);
 
     //ÊäÈëÊÂ¼ş
+
+    void BeginInput(void);
+    void EndInput(void);
 
     void MouseButtonDown(MouseButton button);
     void MouseButtonUp(MouseButton button);

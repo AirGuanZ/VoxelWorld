@@ -16,10 +16,10 @@ Created by AirGuanZ
 
 #include <Utility/Math.h>
 
-#include "../D3DObject/BasicBuffer.h"
-#include "../D3DObject/InputLayout.h"
-#include "../D3DObject/Sampler.h"
-#include "../Texture/Texture2D.h"
+#include <D3DObject/BasicBuffer.h>
+#include <D3DObject/InputLayout.h>
+#include <D3DObject/Sampler.h>
+#include <Texture/Texture2D.h>
 #include "Camera.h"
 
 struct ActorModelVertex

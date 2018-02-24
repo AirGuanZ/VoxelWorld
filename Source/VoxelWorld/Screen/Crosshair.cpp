@@ -3,8 +3,8 @@ Filename: Crosshair.cpp
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#include "../Resource/ResourceName.h"
-#include "../Window/Window.h"
+#include <Resource/ResourceName.h>
+#include <Window/Window.h>
 #include "Crosshair.h"
 
 bool Crosshair::Initialize(void)

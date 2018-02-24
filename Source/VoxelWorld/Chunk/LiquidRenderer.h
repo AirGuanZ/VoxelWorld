@@ -15,9 +15,9 @@ Created by AirGuanZ
 #include <Utility/Math.h>
 #include <Utility/Uncopiable.h>
 
-#include "../D3DObject/BlendState.h"
-#include "../D3DObject/DepthStencilState.h"
-#include "../D3DObject/RasterState.h"
+#include <D3DObject/BlendState.h>
+#include <D3DObject/DepthStencilState.h>
+#include <D3DObject/RasterState.h>
 #include "BasicRenderer.h"
 
 constexpr int LIQUID_RENDERER_TEXTURE_NUM = 1;

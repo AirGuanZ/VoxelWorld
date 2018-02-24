@@ -11,8 +11,8 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 #include <Utility/ObjFile.h>
 
-#include "../Resource/ResourceName.h"
-#include "../Window/Window.h"
+#include <Resource/ResourceName.h>
+#include <Window/Window.h>
 #include "ActorModel.h"
 
 constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.05625f;

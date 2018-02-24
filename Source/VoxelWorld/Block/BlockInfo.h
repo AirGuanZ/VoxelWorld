@@ -11,7 +11,7 @@ Created by AirGuanZ
 
 #include <Utility/Math.h>
 
-#include "../Collision/AABB.h"
+#include <Collision/AABB.h>
 
 enum class BlockType : std::uint8_t
 {

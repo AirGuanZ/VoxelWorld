@@ -8,7 +8,7 @@ Created by AirGuanZ
 
 #include <Utility/Math.h>
 
-#include "../../Chunk/Chunk.h"
+#include <Chunk/Chunk.h>
 #include "Common_V2.h"
 
 namespace LandGenerator_V2

@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Utility/HelperFunctions.h>
 
-#include "../Resource/ResourceName.h"
+#include <Resource/ResourceName.h>
 #include "CarveRenderer.h"
 
 CarveRenderer::CarveRenderer(void)

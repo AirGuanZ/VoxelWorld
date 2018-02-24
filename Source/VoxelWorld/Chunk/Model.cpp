@@ -3,7 +3,7 @@ Filename: Model.cpp
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
-#include "../Window/Window.h"
+#include <Window/Window.h>
 #include "Model.h"
 
 const std::vector<ID3D11Buffer*> Model::emptyVtxBufs_(

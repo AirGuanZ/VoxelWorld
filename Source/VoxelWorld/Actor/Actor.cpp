@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include <exception>
 #include <Windows.h>
 
-#include "../Input/InputManager.h"
+#include <Input/InputManager.h>
 #include "Actor.h"
 
 namespace
