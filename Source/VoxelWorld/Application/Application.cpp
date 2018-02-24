@@ -227,8 +227,10 @@ void Application::Run(void)
 
 #if PRINT_FPS
     FPSCounter fps;
-    fps.Restart();
     float lastFPS = 0.0f;
+    {
+        fps.Restart();
+    }
 #endif
 
     float daynightT = 0.0f;
@@ -238,11 +240,12 @@ void Application::Run(void)
         gui.NewFrame();
 
 #if PRINT_FPS
-        fps.Tick();
-        if(fps.GetFPS() != lastFPS)
-            lastFPS = fps.GetFPS();
-        std::string FPSText = "FPS: " + std::to_string(lastFPS);
-        ImGui::Text(FPSText.c_str());
+        {
+            fps.Tick();
+            if(fps.GetFPS() != lastFPS)
+                lastFPS = fps.GetFPS();
+            ImGui::Text(("FPS: " + std::to_string(lastFPS)).c_str());
+        }
 #endif
 
         daynightT += input.IsKeyDown('T') ? 0.01f : 0.0001f;

@@ -85,7 +85,7 @@ namespace ActorAux
         //重力加速度方向
         Vector3 gravityDir = Vector3(0.0f, -1.0f, 0.0f);
         //重力带来的最大速度
-        float gravityMaxSpeed = 0.01f;
+        float gravityMaxSpeed = 0.014f;
     };
 
     struct UserInput
