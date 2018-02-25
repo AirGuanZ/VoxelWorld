@@ -9,6 +9,10 @@ Created by AirGuanZ
 #define VW_FILENAME(X) VW_FILENAME_AUX(X)
 #define VW_FILENAME_AUX(X) L#X
 
+//Application相关
+
+#define APPLICATION_CONFIGURE_FILE VW_FILENAME(config.txt)
+
 //BasicRenderer相关
 
 #define BASIC_RENDERER_VERTEX_SHADER VW_FILENAME(Bin/Shader/Basic/vertex.hlsl)

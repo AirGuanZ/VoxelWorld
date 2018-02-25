@@ -281,6 +281,9 @@
     <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.cpp">
       <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\ChunkRendererManager.cpp">
+      <Filter>Source\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -441,6 +444,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h">
       <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\ChunkRendererManager.h">
+      <Filter>Source\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -76,6 +76,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Actor\Camera.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\Application.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Application\ChunkRendererManager.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockModelBuilder.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Chunk\BasicModel.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h" />
     <ClInclude Include="..\Source\VoxelWorld\Actor\Camera.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\Application.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Application\ChunkRendererManager.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h" />
