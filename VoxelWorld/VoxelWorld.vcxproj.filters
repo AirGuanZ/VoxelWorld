@@ -442,8 +442,5 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h">
       <Filter>Source\Screen\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nkD3D11Macros.h">
-      <Filter>Source\Screen\nuklear</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

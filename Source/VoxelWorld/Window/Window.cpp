@@ -537,36 +537,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
         gui.KeyDown(static_cast<int>(wParam));
+        gui.KeyDownUp(wParam, lParam);
         Keyboard::ProcessMessage(msg, wParam, lParam);
         break;
     case WM_KEYUP:
     case WM_SYSKEYUP:
         gui.KeyUp(static_cast<int>(wParam));
+        gui.KeyDownUp(wParam, lParam);
         Keyboard::ProcessMessage(msg, wParam, lParam);
         break;
     case WM_LBUTTONDOWN:
         input.mbDown_[0] = true;
         gui.MouseButtonDown(MouseButton::Left);
+        gui.MouseButtonDown(MouseButton::Left, lParam);
         break;
     case WM_LBUTTONUP:
         input.mbDown_[0] = false;
         gui.MouseButtonUp(MouseButton::Left);
+        gui.MouseButtonUp(MouseButton::Left, lParam);
         break;
     case WM_MBUTTONDOWN:
         input.mbDown_[1] = true;
         gui.MouseButtonDown(MouseButton::Middle);
+        gui.MouseButtonDown(MouseButton::Middle, lParam);
         break;
     case WM_MBUTTONUP:
         input.mbDown_[1] = false;
         gui.MouseButtonUp(MouseButton::Middle);
+        gui.MouseButtonUp(MouseButton::Middle, lParam);
         break;
     case WM_RBUTTONDOWN:
         input.mbDown_[2] = true;
         gui.MouseButtonDown(MouseButton::Right);
+        gui.MouseButtonDown(MouseButton::Right, lParam);
         break;
     case WM_RBUTTONUP:
         input.mbDown_[2] = false;
         gui.MouseButtonUp(MouseButton::Right);
+        gui.MouseButtonUp(MouseButton::Right, lParam);
         break;
     case WM_MOUSEWHEEL:
     {
@@ -603,8 +611,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
         break;
     case WM_CHAR:
-        if(0 < wParam && wParam < 0x10000)
-            gui.Char(static_cast<unsigned int>(wParam));
+        gui.Char(static_cast<unsigned int>(wParam));
         break;
     }
 

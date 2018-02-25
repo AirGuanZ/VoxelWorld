@@ -12,6 +12,20 @@ Created by AirGuanZ
 
 #include <Input/InputManager.h>
 
+#define GUI_SYSTEM_IG
+//#define GUI_SYSTEM_NK
+
+#ifdef GUI_SYSTEM_IG
+#include <imgui.h>
+#endif
+
+#ifdef GUI_SYSTEM_NK
+extern "C"
+{
+    struct nk_context;
+}
+#endif
+
 class GUISystem : public Singleton<GUISystem>
 {
 public:
@@ -21,6 +35,10 @@ public:
     void NewFrame(void);
     void Render(void);
 
+#ifdef GUI_SYSTEM_NK
+    nk_context *GetNKContext(void);
+#endif
+
     // ‰»Î ¬º˛
 
     void BeginInput(void);
@@ -29,11 +47,15 @@ public:
     void MouseButtonDown(MouseButton button);
     void MouseButtonUp(MouseButton button);
 
+    void MouseButtonDown(MouseButton button, LPARAM lParam);
+    void MouseButtonUp(MouseButton button, LPARAM lParam);
+
     void MouseWheel(int wheel);
     void MouseMove(int posX, int posY);
 
     void KeyDown(int VK);
     void KeyUp(int VK);
+    void KeyDownUp(WPARAM wParam, LPARAM lParam);
 
     void Char(unsigned int ch);
 };

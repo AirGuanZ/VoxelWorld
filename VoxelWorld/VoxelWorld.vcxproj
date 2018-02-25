@@ -158,7 +158,6 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nkD3D11Macros.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_pixel_shader.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_vertex_shader.h" />

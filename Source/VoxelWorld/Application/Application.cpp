@@ -8,7 +8,6 @@ Created by AirGuanZ
 #include <stdexcept>
 #include <string>
 
-#include <imgui.h>
 #include <Windows.h>
 
 #include <Utility/Clock.h>
@@ -244,7 +243,14 @@ void Application::Run(void)
             fps.Tick();
             if(fps.GetFPS() != lastFPS)
                 lastFPS = fps.GetFPS();
-            ImGui::Text(("FPS: " + std::to_string(lastFPS)).c_str());
+            ImGui::SetNextWindowSize(ImVec2(200, 200));
+            ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_NoResize |
+                                           ImGuiWindowFlags_NoMove |
+                                           ImGuiWindowFlags_NoCollapse);
+            {
+                ImGui::Text(("FPS: " + std::to_string(lastFPS)).c_str());
+            }
+            ImGui::End();
         }
 #endif
 
@@ -322,7 +328,7 @@ void Application::Run(void)
 
         gui.Render();
 
-        window.SetVsync(false);
+        //window.SetVsync(false);
         window.Present();
         window.DoEvents();
         clock.Tick();
