@@ -33,7 +33,7 @@ SINGLETON_CLASS_DEFINITION(GUISystem);
 #define NK_IMPLEMENTATION
 #define NK_D3D11_IMPLEMENTATION
 
-#include <nuklear.h>
+#include "nuklear/nuklear.h"
 #include "nuklear/nuklear_d3d11.h"
 
 namespace

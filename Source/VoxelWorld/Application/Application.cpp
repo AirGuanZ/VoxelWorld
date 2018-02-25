@@ -26,6 +26,10 @@ Created by AirGuanZ
 #include <World/World.h>
 #include "Application.h"
 
+#ifdef GUI_SYSTEM_NK
+#include <Screen/nuklear/nuklear.h>
+#endif
+
 #define PRINT_FPS 1
 
 void Application::Run(void)
@@ -106,6 +110,7 @@ void Application::Run(void)
     }
 
     //Sampler
+
     Sampler sampler;
     if(!sampler)
     {
@@ -227,9 +232,7 @@ void Application::Run(void)
 #if PRINT_FPS
     FPSCounter fps;
     float lastFPS = 0.0f;
-    {
-        fps.Restart();
-    }
+    fps.Restart();
 #endif
 
     float daynightT = 0.0f;
