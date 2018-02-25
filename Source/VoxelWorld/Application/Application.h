@@ -9,8 +9,11 @@ Created by AirGuanZ
 #include <string>
 
 #include <Input/InputManager.h>
+#include <Screen/Crosshair.h>
 #include <Screen/GUISystem.h>
+#include <Screen/ImmediateScreen2D.h>
 #include <Window/Window.h>
+#include <World/World.h>
 #include "ChunkRendererManager.h"
 
 class Application
@@ -51,6 +54,11 @@ private:
     float fogStart_, fogRange_;
 
     ChunkRendererManager ckRendererMgr_;
+
+    ImmediateScreen2D immScr2D_;
+    Crosshair crosshair_;
+
+    std::unique_ptr<World> world_;
 };
 
 #endif //VW_APPLICATION_H

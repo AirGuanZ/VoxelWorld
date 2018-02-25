@@ -97,43 +97,26 @@ bool Application::Initialize(std::string &errMsg)
     if(!ckRendererMgr_.Initialize(errMsg))
         return false;
 
+    if(!immScr2D_.Initialize(errMsg))
+        return false;
+    if(!crosshair_.Initialize())
+    {
+        errMsg = "Failed to initialize crosshair";
+        return false;
+    }
+
+    world_ = std::make_unique<World>(appConf_.preloadDistance,
+                                     appConf_.renderDistance,
+                                     appConf_.unloadDistance);
+    if(!world_->Initialize(appConf_.loaderCount, errMsg))
+        return false;
+
     return true;
 }
 
 void Application::Run(void)
 {
-    //渲染器和纹理
-
-    std::string initErrMsg;
-
     ChunkSectionRenderQueue renderQueue;
-
-    //区块世界
-
-    World world(appConf_.preloadDistance,
-                appConf_.renderDistance,
-                appConf_.unloadDistance);
-    if(!world.Initialize(appConf_.loaderCount, initErrMsg))
-    {
-        std::cerr << initErrMsg << std::endl;
-        return;
-    }
-
-    //准星
-
-    ImmediateScreen2D imScr2D;
-    if(!imScr2D.Initialize(initErrMsg))
-    {
-        std::cerr << initErrMsg << std::endl;
-        return;
-    }
-
-    Crosshair crosshair;
-    if(!crosshair.Initialize())
-    {
-        std::cerr << "Failed to initialize crosshair icon" << std::endl;
-        return;
-    }
 
     input_.LockCursor(true, win_.ClientCentreX(), win_.ClientCentreY());
     input_.ShowCursor(false);
@@ -169,38 +152,40 @@ void Application::Run(void)
         }
 #endif
 
+        //根据时间计算天光和背景色
         daynightT += input_.IsKeyDown('T') ? 0.01f : 0.0001f;
         float absdnt = 0.5f * (std::max)((std::min)(2.0f * std::cos(daynightT), 1.0f), -1.0f) + 0.5f;
-
         Vector3 sunlight = { absdnt, absdnt, absdnt };
-
         win_.SetBackgroundColor(0.0f, absdnt, absdnt, 0.0f);
 
         win_.ClearRenderTarget();
         win_.ClearDepthStencil();
 
         //天光强度设置
-
         ckRendererMgr_.SetSunlight(DC_, sunlight);
 
         //雾设置
-
         fogStart_ = (std::min)(fogStart_ + 0.12f, appConf_.maxFogStart);
         fogRange_ = (std::min)(fogRange_ + 0.12f, appConf_.maxFogRange);
+        ckRendererMgr_.SetFog(DC_, fogStart_, fogRange_, { 0.0f, absdnt, absdnt }, world_->GetActor().GetCameraPosition());
 
-        ckRendererMgr_.SetFog(DC_, fogStart_, fogRange_, { 0.0f, absdnt, absdnt }, world.GetActor().GetCameraPosition());
+        //世界更新
+        world_->Update(16.6667f);
 
-        world.Update(16.6667f);
+        //提交区块渲染任务
+        world_->Render(&renderQueue);
 
-        world.Render(&renderQueue);
-
-        ckRendererMgr_.SetTrans(DC_, world.GetActor().GetCamera().GetViewProjMatrix().Transpose());
+        //渲染世界
+        ckRendererMgr_.SetTrans(DC_, world_->GetActor().GetCamera().GetViewProjMatrix().Transpose());
         ckRendererMgr_.Render(DC_, renderQueue);
 
-        world.GetActor().Render();
+        //渲染角色
+        world_->GetActor().Render();
 
-        crosshair.Draw(&imScr2D);
+        //绘制准星
+        crosshair_.Draw(&immScr2D_);
 
+        //绘制GUI
         gui_.Render();
 
         //win_.SetVsync(false);

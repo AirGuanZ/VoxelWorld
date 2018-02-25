@@ -13,8 +13,6 @@ Created by AirGuanZ
 #include "ImmediateScreen2D.h"
 
 ImmediateScreen2D::ImmediateScreen2D(void)
-    : norDepthStencilState_(false, false),
-      norSampler_()
 {
 
 }
@@ -72,6 +70,9 @@ bool ImmediateScreen2D::Initialize(std::string &errMsg)
         return false;
     }
 
+    norSampler_ = std::make_unique<Sampler>();
+    norDepthStencilState_ = std::make_unique<DepthStencilState>(false, false);
+
     return true;
 }
 
@@ -97,7 +98,7 @@ void ImmediateScreen2D::DrawRectangle(const Vector2 &LB, const Vector2 &RT, Text
 
     DC->IASetInputLayout(quadVtxNorLayout_);
     DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
-    DC->OMSetDepthStencilState(norDepthStencilState_, 0);
+    DC->OMSetDepthStencilState(*norDepthStencilState_, 0);
 
     struct VSTrans
     {
@@ -107,7 +108,7 @@ void ImmediateScreen2D::DrawRectangle(const Vector2 &LB, const Vector2 &RT, Text
     norUniforms_->GetConstantBuffer<SS_VS, VSTrans>(dev, "Trans")
         ->SetBufferData(DC, { LB, RT - LB });
     norUniforms_->GetShaderResource<SS_PS>("tex")->SetShaderResource(tex);
-    norUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(norSampler_);
+    norUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(*norSampler_);
 
     norShader_.Bind(DC);
     norUniforms_->Bind(DC);
