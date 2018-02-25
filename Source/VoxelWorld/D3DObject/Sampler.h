@@ -9,10 +9,17 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 
 #include <Window/Window.h>
+#include "Common.h"
 
 class Sampler
 {
 public:
+    Sampler(D3DObj_Noinit)
+        : sam_(nullptr)
+    {
+
+    }
+
     Sampler(void);
     Sampler(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addressMode);
     

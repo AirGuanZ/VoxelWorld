@@ -40,8 +40,8 @@ private:
     InputLayout quadVtxNorLayout_;
     VertexBuffer<false> quadVtxBuf_;
 
-    std::unique_ptr<DepthStencilState> norDepthStencilState_;
-    std::unique_ptr<Sampler> norSampler_;
+    DepthStencilState norDepthStencilState_;
+    Sampler norSampler_;
 
     OWE::Shader<SS_VS, SS_PS> norShader_;
     std::unique_ptr<OWE::ShaderUniforms<SS_VS, SS_PS>> norUniforms_;

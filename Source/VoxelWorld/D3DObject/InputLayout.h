@@ -14,7 +14,11 @@ Created by AirGuanZ
 class InputLayout
 {
 public:
-    InputLayout(void) = default;
+    InputLayout(void)
+        : inputLayout_(nullptr)
+    {
+
+    }
 
     InputLayout(InputLayout &other)
         : inputLayout_(other.inputLayout_)
@@ -71,7 +75,7 @@ public:
     }
 
 private:
-    ID3D11InputLayout *inputLayout_ = nullptr;
+    ID3D11InputLayout *inputLayout_;
 };
 
 #endif //VW_INPUT_LAYOUT_H

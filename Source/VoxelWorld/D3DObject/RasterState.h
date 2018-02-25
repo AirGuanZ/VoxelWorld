@@ -9,10 +9,17 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 
 #include <Window/Window.h>
+#include "Common.h"
 
 class RasterState
 {
 public:
+    RasterState(D3DObj_Noinit)
+        : state_(nullptr)
+    {
+
+    }
+
     RasterState(void);
     RasterState(D3D11_FILL_MODE fillMode, D3D11_CULL_MODE cullMode);
     

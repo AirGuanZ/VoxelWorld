@@ -8,10 +8,17 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 #include <Utility/D3D11Header.h>
+#include "Common.h"
 
 class BlendState
 {
 public:
+    BlendState(D3DObj_Noinit)
+        : state_(nullptr)
+    {
+
+    }
+
     BlendState(void)
         : BlendState(D3D11_BLEND_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA, D3D11_BLEND_OP_ADD,
                      D3D11_BLEND_ONE, D3D11_BLEND_ZERO, D3D11_BLEND_OP_ADD)

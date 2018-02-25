@@ -8,10 +8,17 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 #include <Utility/D3D11Header.h>
+#include "Common.h"
 
 class DepthStencilState
 {
 public:
+    DepthStencilState(D3DObj_Noinit)
+        : state_(nullptr)
+    {
+
+    }
+
     DepthStencilState(bool depthTest, bool depthWrite);
 
     DepthStencilState(const DepthStencilState &other)
