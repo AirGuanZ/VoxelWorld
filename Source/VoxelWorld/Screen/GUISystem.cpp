@@ -46,6 +46,11 @@ namespace
 
 #endif
 
+namespace
+{
+    bool GUISystemInited = false;
+}
+
 bool GUISystem::Initialize(std::string &errMsg)
 {
     Window &window = Window::GetInstance();
@@ -56,13 +61,19 @@ bool GUISystem::Initialize(std::string &errMsg)
                             window.GetD3DDeviceContext()))
         return false;
 
-    ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
 #endif
 
 #ifdef GUI_SYSTEM_NK
     nkCtx = nk_d3d11_init(window.GetD3DDevice(),
                           window.GetClientWidth(), window.GetClientHeight(),
                           NK_MAX_VTX_BUF, NK_MAX_IDX_BUF);
+    if(!nkCtx)
+    {
+        ImGui_ImplDX11_Shutdown();
+        return false;
+    }
+
     {
         nk_font_atlas *atlas;
         nk_d3d11_font_stash_begin(&atlas);
@@ -70,18 +81,25 @@ bool GUISystem::Initialize(std::string &errMsg)
     }
 #endif
 
+    GUISystemInited = true;
+
     return true;
 }
 
 void GUISystem::Destroy(void)
 {
+    if(GUISystemInited)
+    {
 #ifdef GUI_SYSTEM_IG
-    ImGui_ImplDX11_Shutdown();
+        ImGui_ImplDX11_Shutdown();
 #endif
 
 #ifdef GUI_SYSTEM_NK
-    nk_d3d11_shutdown();
+        nk_d3d11_shutdown();
 #endif
+
+        GUISystemInited = false;
+    }
 }
 
 void GUISystem::NewFrame(void)
