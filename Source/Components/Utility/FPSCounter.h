@@ -5,6 +5,8 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
+#include <cassert>
+
 #include "Clock.h"
 #include "Uncopiable.h"
 
@@ -26,6 +28,7 @@ public:
     void Tick(float dT)
     {
         totalTime_ += dT;
+        ++frameCnt_;
         if(totalTime_ >= 1000.0f)
         {
             int sec = 0;
@@ -34,11 +37,10 @@ public:
                 ++sec;
                 totalTime_ -= 1000.0f;
             }
+            assert(sec);
             fps_ = frameCnt_ / static_cast<float>(sec);
             frameCnt_ = 0;
         }
-        else
-            ++frameCnt_;
     }
 
     float GetFPS(void) const
