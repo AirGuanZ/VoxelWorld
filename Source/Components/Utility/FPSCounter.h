@@ -14,24 +14,28 @@ public:
     FPSCounter(void)
         : fps_(0.0f), frameCnt_(0)
     {
-        clock_.Restart();
+
     }
 
     void Restart(void)
     {
         frameCnt_ = 0;
         fps_ = 0.0f;
-        clock_.Restart();
     }
 
-    void Tick(void)
+    void Tick(float dT)
     {
-        clock_.Tick();
-        if(clock_.TotalTime() >= 1000.0f)
+        totalTime_ += dT;
+        if(totalTime_ >= 1000.0f)
         {
-            fps_ = frameCnt_ / (clock_.TotalTime() / 1000.0f);
+            int sec = 0;
+            while(totalTime_ >= 1000.0f)
+            {
+                ++sec;
+                totalTime_ -= 1000.0f;
+            }
+            fps_ = frameCnt_ / static_cast<float>(sec);
             frameCnt_ = 0;
-            clock_.Restart();
         }
         else
             ++frameCnt_;
@@ -45,5 +49,5 @@ public:
 private:
     int frameCnt_;
     float fps_;
-    Clock clock_;
+    float totalTime_;
 };
