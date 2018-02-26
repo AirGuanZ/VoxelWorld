@@ -172,9 +172,6 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_textedit.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_truetype.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_pixel_shader.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_vertex_shader.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\TextureFile.h" />
     <ClInclude Include="..\Source\VoxelWorld\Window\Window.h" />

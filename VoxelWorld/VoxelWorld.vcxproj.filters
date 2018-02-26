@@ -103,9 +103,6 @@
     <Filter Include="Source\Screen\imgui">
       <UniqueIdentifier>{dc4fa641-ca7a-48a8-91e0-bf74cb6f497f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Screen\nuklear">
-      <UniqueIdentifier>{221937e9-a993-433e-9a48-0ccb5497bb53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Bin\Font">
       <UniqueIdentifier>{5cc5920d-d2c7-4bb6-a03e-d0221eb2d486}</UniqueIdentifier>
     </Filter>
@@ -450,15 +447,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h">
       <Filter>Source\Screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11.h">
-      <Filter>Source\Screen\nuklear</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_pixel_shader.h">
-      <Filter>Source\Screen\nuklear</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_vertex_shader.h">
-      <Filter>Source\Screen\nuklear</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h">
       <Filter>Source\Screen\imgui</Filter>
