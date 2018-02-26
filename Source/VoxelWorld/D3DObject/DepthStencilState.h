@@ -3,8 +3,7 @@ Filename: DepthStencilState.h
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_DEPTH_STENCIL_STATE_H
-#define VW_DEPTH_STENCIL_STATE_H
+#pragma once
 
 #include <Utility/HelperFunctions.h>
 #include <Utility/D3D11Header.h>
@@ -50,5 +49,3 @@ public:
 private:
     ID3D11DepthStencilState *state_;
 };
-
-#endif //VW_DEPTH_STENCIL_STATE_H

@@ -3,8 +3,7 @@ Filename: BlockInfo.h
 Date: 2018.1.17
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLOCK_INFO_H
-#define VW_BLOCK_INFO_H
+#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -101,5 +100,3 @@ struct BlockInfo
         int transLiquidTexPos[7];
     };
 };
-
-#endif //VW_BLOCK_INFO_H

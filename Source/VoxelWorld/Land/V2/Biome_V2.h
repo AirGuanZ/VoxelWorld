@@ -3,8 +3,7 @@ Filename: V2/Biome_V2.h
 Date: 2018.2.3
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LANDGEN_V2_BIOME_H
-#define VW_LANDGEN_V2_BIOME_H
+#pragma once
 
 #include <cassert>
 
@@ -118,5 +117,3 @@ namespace LandGenerator_V2
         Seed seed_;
     };
 }
-
-#endif //VW_LANDGEN_V2_BIOME_H

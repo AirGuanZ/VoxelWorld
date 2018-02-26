@@ -3,8 +3,7 @@ Filename: V1/Biome.h
 Date: 2018.1.30
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LANDGEN_V1_BIOME_H
-#define VW_LANDGEN_V1_BIOME_H
+#pragma once
 
 #include "../../Chunk/Chunk.h"
 #include "Common.h"
@@ -69,5 +68,3 @@ namespace LandGenerator_V1
         BiomeResult result[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
     };
 }
-
-#endif //VW_LANDGEN_V1_BIOME_H

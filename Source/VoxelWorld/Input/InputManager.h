@@ -3,8 +3,7 @@ Filename: InputManager.h
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_INPUT_H
-#define VW_INPUT_H
+#pragma once
 
 #include <memory>
 
@@ -140,5 +139,3 @@ private:
 
     bool showCursor_;
 };
-
-#endif //VW_INPUT_H

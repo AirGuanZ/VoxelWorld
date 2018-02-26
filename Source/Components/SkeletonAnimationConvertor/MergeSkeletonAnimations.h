@@ -3,8 +3,7 @@ Filename: MergeSkeletonAnimations.h
 Date: 2018.2.14
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_MERGE_SKELETON_ANIMATIONS_H
-#define VW_MERGE_SKELETON_ANIMATIONS_H
+#pragma once
 
 #include <map>
 #include <vector>
@@ -26,5 +25,3 @@ bool SortBones(const std::map<std::string, int> &std,
 //要求parents和bongMap相同，合并的实际上是动画
 bool MergeSkeletonData(std::vector<Skeleton::Skeleton> &skts,
                        Skeleton::Skeleton &output);
-
-#endif //VW_MERGE_SKELETON_ANIMATIONS_H

@@ -3,8 +3,7 @@ Filename: OakGenerator_V0.h
 Date: 2018.1.26
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_OAK_GENERATOR_V0_H
-#define VW_OAK_GENERATOR_V0_H
+#pragma once
 
 #include "../Chunk/Chunk.h"
 #include "../Chunk/ChunkLoader.h"
@@ -28,5 +27,3 @@ private:
 private:
     Seed seed_;
 };
-
-#endif //VW_OAK_GENERATOR_V0_H

@@ -3,8 +3,7 @@ Filename: SkeletonDataLoader.h
 Date: 2018.2.9
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_SKELETON_DATA_LOADER_H
-#define VW_SKELETON_DATA_LOADER_H
+#pragma once
 
 #include <string>
 #include <map>
@@ -35,5 +34,3 @@ namespace Skeleton
                           const std::map<std::string, int> &boneMap);
     };
 }
-
-#endif //VW_SKELETON_DATA_LOADER_H

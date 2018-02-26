@@ -3,8 +3,7 @@ Filename: Sampler.h
 Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_SAMPLER_H
-#define VW_SAMPLER_H
+#pragma once
 
 #include <Utility/HelperFunctions.h>
 
@@ -52,5 +51,3 @@ public:
 private:
     ID3D11SamplerState *sam_;
 };
-
-#endif //VW_SAMPLER_H

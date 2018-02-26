@@ -3,8 +3,7 @@ Filename: LandGenerator_V0.h
 Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LAND_GENERATOR_V0_H
-#define VW_LAND_GENERATOR_V0_H
+#pragma once
 
 #include <random>
 #include <vector>
@@ -28,5 +27,3 @@ private:
 private:
     Seed seed_;
 };
-
-#endif //VW_LAND_GENERATOR_V0_H

@@ -3,8 +3,7 @@ Filename: ImmediateScreen2D.h
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_IMMEDIATE_SCREEN_2D_H
-#define VW_IMMEDIATE_SCREEN_2D_H
+#pragma once
 
 #include <memory>
 #include <string>
@@ -46,5 +45,3 @@ private:
     OWE::Shader<SS_VS, SS_PS> norShader_;
     std::unique_ptr<OWE::ShaderUniforms<SS_VS, SS_PS>> norUniforms_;
 };
-
-#endif //VW_IMMEDIATE_SCREEN_2D_H

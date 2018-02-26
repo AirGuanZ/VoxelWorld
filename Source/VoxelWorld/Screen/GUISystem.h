@@ -3,8 +3,7 @@ Filename: GUISystem.h
 Date: 2018.2.23
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_GUI_SYSTEM_H
-#define VW_GUI_SYSTEM_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -55,5 +54,3 @@ public:
 
     void Char(unsigned int ch);
 };
-
-#endif //VW_GUI_SYSTEM_H

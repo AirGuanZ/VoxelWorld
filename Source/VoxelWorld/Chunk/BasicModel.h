@@ -3,8 +3,7 @@ Filename: BasicModel.h
 Date: 2018.1.15
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BASIC_MODEL_H
-#define VW_BASIC_MODEL_H
+#pragma once
 
 #include <vector>
 
@@ -54,5 +53,3 @@ private:
 
 using CarveModel = BasicModel;
 using LiquidModel = BasicModel;
-
-#endif //VW_BASIC_MODEL_H

@@ -11,8 +11,7 @@ Created by AirGuanZ
         SINGLETON_CLASS_DEFINITION(T);
 */
 
-#ifndef VW_SINGLETON_H
-#define VW_SINGLETON_H
+#pragma once
 
 #include <cassert>
 
@@ -44,5 +43,3 @@ public:
 
 #define SINGLETON_CLASS_DEFINITION(SingletonClassName) \
     SingletonClassName Singleton<SingletonClassName>::singletonInstance_
-
-#endif //VW_SINGLETON_H

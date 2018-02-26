@@ -3,8 +3,7 @@ Filename: ActorModel.h
 Date: 2018.2.9
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_ACTOR_MODEL_H
-#define VW_ACTOR_MODEL_H
+#pragma once
 
 #include <cstdint>
 #include <memory>
@@ -72,5 +71,3 @@ private:
     bool aniClipLoop_;              //是否循环
     float t_;                       //播放时间
 };
-
-#endif //VW_ACTOR_MODEL_H

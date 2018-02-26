@@ -3,8 +3,7 @@ Filename: ChunkManager.h
 Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_MANAGER_H
-#define VW_CHUNK_MANAGER_H
+#pragma once
 
 #include <map>
 #include <mutex>
@@ -210,5 +209,3 @@ private:
 
     ChunkLoader ckLoader_;
 };
-
-#endif //VW_CHUNK_MANAGER_H

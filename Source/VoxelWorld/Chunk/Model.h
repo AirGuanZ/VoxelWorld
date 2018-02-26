@@ -3,8 +3,7 @@ Filename: Model.h
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_MODEL_H
-#define VW_MODEL_H
+#pragma once
 
 #include <vector>
 
@@ -36,5 +35,3 @@ private:
 protected:
     VertexBufferBinding vtxBufBinding_;
 };
-
-#endif //VW_MODEL_H

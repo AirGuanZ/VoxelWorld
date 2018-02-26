@@ -3,8 +3,7 @@ Filename: BlockInfoManager.h
 Date: 2018.1.17
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLOCK_INFO_MANAGER_H
-#define VW_BLOCK_INFO_MANAGER_H
+#pragma once
 
 #include <Utility/Singleton.h>
 
@@ -48,5 +47,3 @@ public:
 private:
     std::vector<BlockInfo> info_;
 };
-
-#endif //VW_BLOCK_INFO_MANAGER_H

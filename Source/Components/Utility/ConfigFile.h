@@ -3,8 +3,7 @@ Filename: ConfigFile.h
 Date: 2018.1.17
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CONFIG_FILE_H
-#define VW_CONFIG_FILE_H
+#pragma once
 
 #include <map>
 #include <string>
@@ -68,5 +67,3 @@ private:
     State state_;
     std::map<std::string, ConfigSection> map_;
 };
-
-#endif //VW_CONFIG_FILE_H

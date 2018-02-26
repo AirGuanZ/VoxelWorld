@@ -3,8 +3,7 @@ Filename: Window.h
 Date: 2018.1.12
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_WINDOW_H
-#define VW_WINDOW_H
+#pragma once
 
 #include <string>
 
@@ -48,5 +47,3 @@ public:
 
     HWND GetWindowHandle(void);
 };
-
-#endif //VW_WINDOW_H

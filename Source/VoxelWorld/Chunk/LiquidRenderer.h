@@ -3,8 +3,7 @@ Filename: LiquidRenderer.h
 Date: 2018.1.27
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LIQUID_RENDERER_H
-#define VW_LIQUID_RENDERER_H
+#pragma once
 
 #include <memory>
 #include <string>
@@ -50,5 +49,3 @@ private:
     std::unique_ptr<RasterState> raster_;
     std::unique_ptr<DepthStencilState> depth_;
 };
-
-#endif //VW_LIQUID_RENDERER_H

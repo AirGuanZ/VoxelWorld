@@ -3,8 +3,7 @@ Filename: V2/Noise_V2.h
 Date: 2018.2.3
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_NOISE_H
-#define VW_NOISE_H
+#pragma once
 
 #include <cmath>
 
@@ -57,5 +56,3 @@ namespace LandGenerator_V2
         Seed seed_;
     };
 }
-
-#endif //VW_NOISE_H

@@ -3,8 +3,7 @@ Filename: RenderQueue.h
 Date: 2018.1.16
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_RENDER_QUEUE_H
-#define VW_RENDER_QUEUE_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -29,5 +28,3 @@ public:
 private:
     std::vector<const Model*> models_;
 };
-
-#endif //VW_RENDER_QUEUE_H

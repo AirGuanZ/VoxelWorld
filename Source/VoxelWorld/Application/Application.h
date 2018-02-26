@@ -3,8 +3,7 @@ Filename: Application.h
 Date: 2018.1.12
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_APPLICATION_H
-#define VW_APPLICATION_H
+#pragma once
 
 #include <string>
 
@@ -66,5 +65,3 @@ private:
 
     DebugWin_Main mainDebugWin_;
 };
-
-#endif //VW_APPLICATION_H

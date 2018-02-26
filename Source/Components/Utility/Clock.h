@@ -3,8 +3,7 @@ Filename: Clock.h
 Date: 2017.10.16
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CLOCK_H
-#define VW_CLOCK_H
+#pragma once
 
 class Clock
 {
@@ -27,5 +26,3 @@ private:
     InternalFormat elapsedTime_;
     InternalFormat ratio_;
 };
-
-#endif //VW_CLOCK_H

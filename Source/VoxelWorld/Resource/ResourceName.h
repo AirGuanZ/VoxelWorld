@@ -3,8 +3,7 @@ Filename: ResourceName.h
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_RESOURCE_NAME_H
-#define VW_RESOURCE_NAME_H
+#pragma once
 
 #define VW_FILENAME(X) VW_FILENAME_AUX(X)
 #define VW_FILENAME_AUX(X) L#X
@@ -53,5 +52,3 @@ Created by AirGuanZ
 #define ACTOR_MODEL_DEFAULT_RIGHT_HAND VW_FILENAME(Bin/Model/Actor/rightHand.obj)
 #define ACTOR_MODEL_DEFAULT_LEFT_FOOT  VW_FILENAME(Bin/Model/Actor/leftFoot.obj)
 #define ACTOR_MODEL_DEFAULT_RIGHT_FOOT VW_FILENAME(Bin/Model/Actor/rightFoot.obj)
-
-#endif //VW_RESOURCE_NAME_H

@@ -3,8 +3,7 @@ Filename: BlockModelBuilder.h
 Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLOCK_MODEL_BUILDER_H
-#define VW_BLOCK_MODEL_BUILDER_H
+#pragma once
 
 #include <Chunk/Chunk.h>
 
@@ -65,5 +64,3 @@ public:
         const Block(&blks)[3][3][3],
         ChunkSectionModels *models) const;
 };
-
-#endif //VW_BLOCK_MODEL_BUILDER_H

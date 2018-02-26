@@ -3,8 +3,7 @@ Filename: PerlinNoise2D.h
 Date: 2018.1.31
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_PERLIN_NOISE_2D_H
-#define VW_PERLIN_NOISE_2D_H
+#pragma once
 
 #include <cmath>
 #include <random>
@@ -104,5 +103,3 @@ public:
         return rt / base * (maxV - minV) + minV;
     }
 };
-
-#endif //VW_PERLIN_NOISE_2D_H

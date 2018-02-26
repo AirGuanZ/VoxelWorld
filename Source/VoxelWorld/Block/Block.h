@@ -3,8 +3,7 @@ Filename: Block.h
 Date: 2018.1.15
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLOCK_H
-#define VW_BLOCK_H
+#pragma once
 
 #include <algorithm>
 #include <cstdint>
@@ -91,5 +90,3 @@ constexpr BlockLight LIGHT_ALL_MAX = MakeLight(LIGHT_COMPONENT_MAX, LIGHT_COMPON
 
 constexpr BlockLight LIGHT_MIN_MIN_MIN_MAX = MakeLight(LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MIN,
                                                        LIGHT_COMPONENT_MIN, LIGHT_COMPONENT_MAX);
-
-#endif //VW_BLOCK_H

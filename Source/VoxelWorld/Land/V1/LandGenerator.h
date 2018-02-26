@@ -3,8 +3,7 @@ Filename: V1/LandGenerator.h
 Date: 2018.1.30
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LANDGEN_V1_LAND_GENERATOR_H
-#define VW_LANDGEN_V1_LAND_GENERATOR_H
+#pragma once
 
 #include "../../Chunk/Chunk.h"
 #include "Biome.h"
@@ -40,5 +39,3 @@ namespace LandGenerator_V1
         Seed seed_;
     };
 }
-
-#endif //VW_LANDGEN_V1_LAND_GENERATOR_H

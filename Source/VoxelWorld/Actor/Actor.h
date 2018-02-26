@@ -3,8 +3,7 @@ Filename: Actor.h
 Date: 2018.2.17
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_ACTOR_H
-#define VW_ACTOR_H
+#pragma once
 
 #include <string>
 
@@ -186,5 +185,3 @@ private:
     Camera camera_;
     ActorModel model_;
 };
-
-#endif //VW_ACTOR_H

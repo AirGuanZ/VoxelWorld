@@ -3,8 +3,7 @@ Filename: AABB.h
 Date: 2018.1.28
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_COLLISION_H
-#define VW_COLLISION_H
+#pragma once
 
 #include <Utility/Math.h>
 
@@ -54,5 +53,3 @@ inline AABB operator+(const AABB &aabb, const Vector3 &offset)
 {
     return { aabb.L + offset, aabb.H + offset };
 }
-
-#endif //VW_COLLISION_H

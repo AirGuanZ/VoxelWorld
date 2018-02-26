@@ -3,8 +3,7 @@ Filename: InputLayout.h
 Date: 2018.2.10
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_INPUT_LAYOUT_H
-#define VW_INPUT_LAYOUT_H
+#pragma once
 
 #include <Utility/D3D11Header.h>
 #include <Utility/HelperFunctions.h>
@@ -78,4 +77,3 @@ private:
     ID3D11InputLayout *inputLayout_;
 };
 
-#endif //VW_INPUT_LAYOUT_H

@@ -3,8 +3,7 @@ Filename: ChunkLoader.h
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_LOADER_H
-#define VW_CHUNK_LOADER_H
+#pragma once
 
 #include <atomic>
 #include <deque>
@@ -122,5 +121,3 @@ private:
 
     LandGenerator_V2::LandGenerator landGen_;
 };
-
-#endif //VW_CHUNK_LOADER_H

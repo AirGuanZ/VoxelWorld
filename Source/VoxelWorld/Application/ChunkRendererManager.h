@@ -3,8 +3,7 @@ Filename: ChunkRendererManager.h
 Date: 2018.2.25
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_RENDERER_MANAGER_H
-#define VW_CHUNK_RENDERER_MANAGER_H
+#pragma once
 
 #include <array>
 #include <memory>
@@ -111,5 +110,3 @@ private:
 
     std::unique_ptr<Sampler> sampler_;
 };
-
-#endif //VW_CHUNK_RENDERER_MANAGER_H

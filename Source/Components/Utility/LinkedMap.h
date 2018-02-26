@@ -3,8 +3,7 @@ Filename: LinkedMap.h
 Date: 2018.1.29
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LINKED_MAP_H
-#define VW_LINKED_MAP_H
+#pragma once
 
 #include <algorithm>
 #include <list>
@@ -131,5 +130,3 @@ private:
     std::list<ListNode> list_;
     Map map_;
 };
-
-#endif //VW_LINKED_MAP_H

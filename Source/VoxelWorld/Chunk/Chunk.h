@@ -3,8 +3,7 @@ Filename: Chunk.h
 Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_H
-#define VW_CHUNK_H
+#pragma once
 
 #include <Utility\Math.h>
 #include <Utility\Uncopiable.h>
@@ -234,5 +233,3 @@ inline void CopyChunkData(Chunk &dst, const Chunk &src)
     std::memcpy(dst.lights, src.lights, sizeof(Chunk::BlockLightData));
     std::memcpy(dst.heightMap, src.heightMap, sizeof(Chunk::HeightMap));
 }
-
-#endif //VW_CHUNK_H

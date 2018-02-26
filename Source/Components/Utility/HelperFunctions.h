@@ -3,8 +3,7 @@ Filename: HelperFunctions.h
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_HELPER_FUNCTIONS_H
-#define VW_HELPER_FUNCTIONS_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -76,5 +75,3 @@ namespace Helper
     bool ReadFile(const std::wstring &filename, std::string &output);
     bool ReadFileBinary(const std::wstring &filename, std::vector<char> &buf);
 }
-
-#endif //VW_HELPER_FUNCTIONS_H

@@ -3,8 +3,7 @@ Filename: Crosshair.h
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CROSSHAIR_H
-#define VW_CROSSHAIR_H
+#pragma once
 
 #include <OWEShader.hpp>
 
@@ -23,5 +22,3 @@ public:
 private:
     Texture2D tex_;
 };
-
-#endif //VW_CROSSHAIR_H

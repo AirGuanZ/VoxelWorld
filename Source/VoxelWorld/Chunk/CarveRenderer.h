@@ -3,8 +3,7 @@ Filename: CarveRenderer.h
 Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CARVE_RENDERER_H
-#define VW_CARVE_RENDERER_H
+#pragma once
 
 #include <memory>
 #include <string>
@@ -48,5 +47,3 @@ private:
 
     std::unique_ptr<RasterState> raster_;
 };
-
-#endif //VW_CARVE_RENDERER_H

@@ -3,8 +3,7 @@ Filename: BasicRenderer.h
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BASIC_RENDERER_H
-#define VW_BASIC_RENDERER_H
+#pragma once
 
 #include <memory>
 #include <string>
@@ -48,5 +47,3 @@ private:
     ID3D11InputLayout *inputLayout_;
     ShaderType shader_;
 };
-
-#endif //VW_BASIC_RENDERER_H

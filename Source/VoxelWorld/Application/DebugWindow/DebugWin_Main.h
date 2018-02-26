@@ -3,8 +3,7 @@ Filename: DebugWin_Main.h
 Date: 2018.2.26
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_DEBUG_WIN_MAIN_H
-#define VW_DEBUG_WIN_MAIN_H
+#pragma once
 
 #include <Utility/Math.h>
 
@@ -72,5 +71,3 @@ private:
     int openCloseKey_;
     bool visible_;
 };
-
-#endif //VW_DEBUG_WIN_MAIN_H

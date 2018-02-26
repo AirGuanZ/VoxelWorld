@@ -3,8 +3,7 @@ Filename: ChunkModelBuilder.h
 Date: 2018.1.18
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_MODEL_BUILDER_H
-#define VW_CHUNK_MODEL_BUILDER_H
+#pragma once
 
 #include <Utility/Uncopiable.h>
 
@@ -30,5 +29,3 @@ class BackgroundChunkModelBuilder : public Uncopiable
 public:
     ChunkSectionModels *Build(Chunk *(&cks)[3][3], int section) const;
 };
-
-#endif //VW_CHUNK_MODEL_BUILDER_H

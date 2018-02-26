@@ -3,8 +3,7 @@ Filename: FPSCounter.h
 Date: 2018.1.27
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_FPS_COUNTER_H
-#define VW_FPS_COUNTER_H
+#pragma once
 
 #include "Clock.h"
 #include "Uncopiable.h"
@@ -48,5 +47,3 @@ private:
     float fps_;
     Clock clock_;
 };
-
-#endif //VW_FPS_COUNTER_H

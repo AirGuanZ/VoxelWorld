@@ -3,8 +3,7 @@ Filename: ChunkDataPool.h
 Date: 2018.1.29
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_DATA_POOL_H
-#define VW_CHUNK_DATA_POOL_H
+#pragma once
 
 #include <mutex>
 #include <unordered_map>
@@ -41,5 +40,3 @@ private:
     std::mutex mapMutex_;
     LinkedMap<IntVectorXZ, Chunk*> map_;
 };
-
-#endif //VW_CHUNK_DATA_POOL_H

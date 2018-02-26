@@ -3,8 +3,7 @@ Filename: V1/Palm.h
 Date: 2018.2.2
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_PALM_H
-#define VW_PALM_H
+#pragma once
 
 #include "Biome.h"
 #include "Common.h"
@@ -28,5 +27,3 @@ namespace LandGenerator_V1
         Seed seed_;
     };
 }
-
-#endif //VW_PALM_H

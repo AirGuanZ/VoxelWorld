@@ -3,8 +3,7 @@ Filename: ObjFile.h
 Date: 2018.2.6
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_OBJ_FILE_H
-#define VW_OBJ_FILE_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -48,5 +47,3 @@ public:
     std::vector<Vertex> vertices;
     std::vector<UINT16> indices;
 };
-
-#endif //VW_OBJ_FILE_H

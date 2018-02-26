@@ -3,8 +3,7 @@ Filename: BlendState.h
 Date: 2018.1.27
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BLEND_STATE_H
-#define VW_BLEND_STATE_H
+#pragma once
 
 #include <Utility/HelperFunctions.h>
 #include <Utility/D3D11Header.h>
@@ -61,5 +60,3 @@ public:
 private:
     ID3D11BlendState *state_;
 };
-
-#endif //VW_BLEND_STATE_H

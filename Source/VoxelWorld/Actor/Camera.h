@@ -3,8 +3,7 @@ Filename: Camera.h
 Date: 2018.1.14
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CAMERA_H
-#define VW_CAMERA_H
+#pragma once
 
 #include <Utility/D3D11Header.h>
 #include <Utility/Math.h>
@@ -122,5 +121,3 @@ private:
     Matrix proj_;
     Matrix viewProj_;
 };
-
-#endif //VW_CAMERA_H

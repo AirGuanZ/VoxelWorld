@@ -3,8 +3,7 @@ Filename: Math.h
 Date: 2018.1.16
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_MATH_H
-#define VW_MATH_H
+#pragma once
 
 #include <algorithm>
 #include <cmath>
@@ -146,5 +145,3 @@ inline float Rad2Deg(float rad)
 {
     return DirectX::XMConvertToDegrees(rad);
 }
-
-#endif //VW_MATH_H

@@ -3,8 +3,7 @@ Filename: TextureFile.h
 Date: 2018.1.14
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_TEXTURE_FILE_H
-#define VW_TEXTURE_FILE_H
+#pragma once
 
 #include <string>
 
@@ -19,5 +18,3 @@ public:
 
     TextureFile(void);
 };
-
-#endif //VW_TEXTURE_FILE_H

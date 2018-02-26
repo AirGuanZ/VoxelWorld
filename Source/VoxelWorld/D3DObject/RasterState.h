@@ -3,8 +3,7 @@ Filename: RasterState.h
 Date: 2018.1.21
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_RASTER_STATE_H
-#define VW_RASTER_STATE_H
+#pragma once
 
 #include <Utility/HelperFunctions.h>
 
@@ -52,5 +51,3 @@ public:
 private:
     ID3D11RasterizerState *state_;
 };
-
-#endif //VW_RASTER_STATE_H

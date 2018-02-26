@@ -3,8 +3,7 @@ Filename: SkeletonData.h
 Date: 2018.2.9
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_SKELETON_DATA_H
-#define VW_SKELETON_DATA_H
+#pragma once
 
 #include <cstdint>
 #include <map>
@@ -102,5 +101,3 @@ namespace Skeleton
         std::map<std::string, AniClip> aniClips_;
     };
 }
-
-#endif //VW_SKELETON_DATA_H

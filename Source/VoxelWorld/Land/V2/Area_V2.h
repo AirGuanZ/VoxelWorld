@@ -3,8 +3,7 @@ Filename: V2/Area.h
 Date: 2018.2.3
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LANGGEN_V2_AREA_H
-#define VW_LANGGEN_V2_AREA_H
+#pragma once
 
 #include <Utility/Math.h>
 
@@ -67,5 +66,3 @@ namespace LandGenerator_V2
         ResultUnit result_[CHUNK_SECTION_SIZE][CHUNK_SECTION_SIZE];
     };
 }
-
-#endif //VW_LANGGEN_V2_AREA_H

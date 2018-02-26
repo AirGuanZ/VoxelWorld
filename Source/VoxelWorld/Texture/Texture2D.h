@@ -3,8 +3,7 @@ Filename: Texture2D.h
 Date: 2018.1.14
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_TEXTURE_2D_H
-#define VW_TEXTURE_2D_H
+#pragma once
 
 #include <string>
 
@@ -45,5 +44,3 @@ private:
     ID3D11Resource *tex_;
     ID3D11ShaderResourceView *SRV_;
 };
-
-#endif //VW_TEXTURE_2D_H

@@ -3,8 +3,7 @@ Filename: BasicBuffer.h
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_BASIC_BUFFER_H
-#define VW_BASIC_BUFFER_H
+#pragma once
 
 #include <cassert>
 
@@ -140,5 +139,3 @@ using VertexBuffer = BasicBuffer<D3D11_BIND_VERTEX_BUFFER, Dynamic>;
 
 template<bool Dynamic>
 using IndexBuffer = BasicBuffer<D3D11_BIND_INDEX_BUFFER, Dynamic>;
-
-#endif //VW_BASIC_BUFFER_H

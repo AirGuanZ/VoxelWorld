@@ -3,8 +3,7 @@ Filename: ChunkTraversal.h
 Date: 2018.1.25
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_CHUNK_TRAVERSAL_H
-#define VW_CHUNK_TRAVERSAL_H
+#pragma once
 
 #include <vector>
 
@@ -27,5 +26,3 @@ private:
     std::vector<IntVectorXZ> XZInternal_;
     std::vector<IntVector3>  XYZFaces_;
 };
-
-#endif //VW_CHUNK_TRAVERSAL_H

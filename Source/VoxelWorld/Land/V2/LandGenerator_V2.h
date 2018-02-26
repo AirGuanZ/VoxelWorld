@@ -3,8 +3,7 @@ Filename: V2/LandGenerator.h
 Date: 2018.2.3
 Created by AirGuanZ
 ================================================================*/
-#ifndef VW_LANDGEN_V2_LAND_GENERATOR_H
-#define VW_LANDGEN_V2_LAND_GENERATOR_H
+#pragma once
 
 #include <vector>
 
@@ -35,5 +34,3 @@ namespace LandGenerator_V2
         float fieldHeightSum_;
     };
 }
-
-#endif //VW_LANDGEN_V2_LAND_GENERATOR_H
