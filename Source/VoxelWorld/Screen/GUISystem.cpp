@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <cstring>
 #include <memory>
+#include <iostream>
 
 #include <Window/Window.h>
 #include "GUISystem.h"
@@ -49,9 +50,13 @@ namespace
 namespace
 {
     bool GUISystemInited = false;
+
+#ifdef GUI_SYSTEM_IG
+    std::vector<ImFont*> imGuiFonts;
+#endif
 }
 
-bool GUISystem::Initialize(std::string &errMsg)
+bool GUISystem::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg)
 {
     Window &window = Window::GetInstance();
 
@@ -62,6 +67,12 @@ bool GUISystem::Initialize(std::string &errMsg)
         return false;
 
     ImGui::StyleColorsClassic();
+
+    ImGuiIO &io = ImGui::GetIO();
+    imGuiFonts.resize(ttfFonts.size() + 1);
+    imGuiFonts[0] = io.Fonts->AddFontDefault();
+    for(size_t i = 0; i < ttfFonts.size(); ++i)
+        imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
 #endif
 
 #ifdef GUI_SYSTEM_NK
@@ -121,6 +132,18 @@ void GUISystem::Render(void)
         NK_ANTI_ALIASING_ON);
 #endif
 }
+
+#ifdef GUI_SYSTEM_IG
+void GUISystem::PushFont(int idx)
+{
+    ImGui::PushFont(imGuiFonts[idx + 1]);
+}
+
+void GUISystem::PopFont(void)
+{
+    ImGui::PopFont();
+}
+#endif
 
 #ifdef GUI_SYSTEM_NK
 nk_context *GUISystem::GetNKContext(void)

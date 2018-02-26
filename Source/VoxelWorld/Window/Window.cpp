@@ -286,6 +286,11 @@ static void SetDefaultViewport(void)
     D3D::deviceContext->RSSetViewports(1, &vp);
 }
 
+static void DestroyGUISystem(void)
+{
+    GUISystem::GetInstance().Destroy();
+}
+
 static void DestroyD3D(void)
 {
     using Helper::ReleaseCOMObjects;
@@ -398,15 +403,12 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     D3D::deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    //GUI
-
-    if(!GUISystem::GetInstance().Initialize(errMsg))
-    {
-        DestroyD3D();
-        return false;
-    }
-
     return true;
+}
+
+bool Window::InitGUI(const std::vector<GUISystem::FontSpecifier> &fonts, std::string &errMsg)
+{
+    return GUISystem::GetInstance().Initialize(fonts, errMsg);
 }
 
 bool Window::IsWindowAvailable(void)
@@ -421,6 +423,7 @@ bool Window::IsD3DAvailable(void)
 
 void Window::Destroy(void)
 {
+    DestroyGUISystem();
     DestroyD3D();
     DestroyWin();
 }

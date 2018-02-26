@@ -138,6 +138,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Collision\AABB.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\BasicBuffer.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\BlendState.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\Common.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\DepthStencilState.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\InputLayout.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\RasterState.h" />

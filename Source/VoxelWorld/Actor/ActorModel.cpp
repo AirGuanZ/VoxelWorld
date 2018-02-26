@@ -182,8 +182,6 @@ bool ActorModel::Initialize(std::string &errMsg)
         return false;
     }
 
-    SetAnimationClip("Moving", true);
-
     return true;
 }
 

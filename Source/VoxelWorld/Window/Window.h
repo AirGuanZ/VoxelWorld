@@ -11,11 +11,14 @@ Created by AirGuanZ
 #include <Utility/D3D11Header.h>
 #include <Utility/Singleton.h>
 
+#include <Screen/GUISystem.h>
+
 class Window : public Singleton<Window>
 {
 public:
     bool InitWindow(int clientWidth, int clientHeight, const wchar_t *windowTitle, std::string &errMsg);
     bool InitD3D(int sampleCount, int sampleQuality, std::string &errMsg);
+    bool InitGUI(const std::vector<GUISystem::FontSpecifier> &fonts, std::string &errMsg);
 
     bool IsWindowAvailable(void);
     bool IsD3DAvailable(void);

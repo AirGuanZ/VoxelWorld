@@ -448,5 +448,8 @@
     <ClInclude Include="..\Source\VoxelWorld\Application\ChunkRendererManager.h">
       <Filter>Source\Application</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\Common.h">
+      <Filter>Source\D3DObject</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

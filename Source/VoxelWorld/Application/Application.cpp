@@ -85,9 +85,15 @@ bool Application::Initialize(std::string &errMsg)
         return false;
     }
 
+    const std::vector<GUISystem::FontSpecifier> fonts =
+    {
+        { "Bin/Fonts/DroidSans.ttf", 18.0f }
+    };
+
     if(!win_.InitWindow(appConf_.winWidth, appConf_.winHeight,
         L"VoxelWorld", errMsg) ||
-       !win_.InitD3D(appConf_.MSAA, 0, errMsg))
+       !win_.InitD3D(appConf_.MSAA, 0, errMsg) ||
+       !win_.InitGUI(fonts, errMsg))
     {
         return false;
     }
@@ -146,6 +152,10 @@ void Application::Run(void)
                                            ImGuiWindowFlags_NoMove |
                                            ImGuiWindowFlags_NoCollapse);
             {
+                gui_.PushFont(0);
+                ImGui::Text(("WindowSize: " + std::to_string(win_.GetClientWidth()) +
+                             ", " + std::to_string(win_.GetClientHeight())).c_str());
+                gui_.PopFont();
                 ImGui::Text(("FPS: " + std::to_string(lastFPS)).c_str());
             }
             ImGui::End();

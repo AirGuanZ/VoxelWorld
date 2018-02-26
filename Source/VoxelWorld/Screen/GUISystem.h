@@ -7,6 +7,7 @@ Created by AirGuanZ
 #define VW_GUI_SYSTEM_H
 
 #include <string>
+#include <vector>
 
 #include <Utility/Singleton.h>
 
@@ -29,11 +30,22 @@ extern "C"
 class GUISystem : public Singleton<GUISystem>
 {
 public:
-    bool Initialize(std::string &errMsg);
+    struct FontSpecifier
+    {
+        std::string ttfFilename;
+        float pixelSize;
+    };
+
+    bool Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg);
     void Destroy(void);
 
     void NewFrame(void);
     void Render(void);
+
+#ifdef GUI_SYSTEM_IG
+    void PushFont(int index);
+    void PopFont(void);
+#endif
 
 #ifdef GUI_SYSTEM_NK
     nk_context *GetNKContext(void);

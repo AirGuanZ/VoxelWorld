@@ -304,6 +304,24 @@ IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wPa
     return 0;
 }
 
+static void ImGui_ImplDX11_CreateFontsSampler()
+{
+    if(!g_pFontSampler)
+    {
+        D3D11_SAMPLER_DESC desc;
+        ZeroMemory(&desc, sizeof(desc));
+        desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+        desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+        desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+        desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+        desc.MipLODBias = 0.f;
+        desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+        desc.MinLOD = 0.f;
+        desc.MaxLOD = 0.f;
+        g_pd3dDevice->CreateSamplerState(&desc, &g_pFontSampler);
+    }
+}
+
 static void ImGui_ImplDX11_CreateFontsTexture()
 {
     // Build texture atlas
@@ -346,21 +364,6 @@ static void ImGui_ImplDX11_CreateFontsTexture()
 
     // Store our identifier
     io.Fonts->TexID = (void *)g_pFontTextureView;
-
-    // Create texture sampler
-    {
-        D3D11_SAMPLER_DESC desc;
-        ZeroMemory(&desc, sizeof(desc));
-        desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-        desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-        desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-        desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-        desc.MipLODBias = 0.f;
-        desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-        desc.MinLOD = 0.f;
-        desc.MaxLOD = 0.f;
-        g_pd3dDevice->CreateSamplerState(&desc, &g_pFontSampler);
-    }
 }
 
 bool    ImGui_ImplDX11_CreateDeviceObjects()
@@ -499,8 +502,6 @@ bool    ImGui_ImplDX11_CreateDeviceObjects()
         g_pd3dDevice->CreateDepthStencilState(&desc, &g_pDepthStencilState);
     }
 
-    ImGui_ImplDX11_CreateFontsTexture();
-
     return true;
 }
 
@@ -560,6 +561,9 @@ bool    ImGui_ImplDX11_Init(void* hwnd, ID3D11Device* device, ID3D11DeviceContex
     io.RenderDrawListsFn = ImGui_ImplDX11_RenderDrawLists;  // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
     io.ImeWindowHandle = g_hWnd;
 
+    if(!ImGui_ImplDX11_CreateDeviceObjects())
+        return false;
+
     return true;
 }
 
@@ -574,8 +578,11 @@ void ImGui_ImplDX11_Shutdown()
 
 void ImGui_ImplDX11_NewFrame()
 {
-    if (!g_pFontSampler)
-        ImGui_ImplDX11_CreateDeviceObjects();
+    if(!g_pFontSampler)
+    {
+        ImGui_ImplDX11_CreateFontsTexture();
+        ImGui_ImplDX11_CreateFontsSampler();
+    }
 
     ImGuiIO& io = ImGui::GetIO();
 
