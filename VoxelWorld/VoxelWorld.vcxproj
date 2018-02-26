@@ -51,6 +51,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Source\VoxelWorld\Screen\imgui\LICENSE.txt" />
     <Text Include="config.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +106,9 @@
     <ClCompile Include="..\Source\VoxelWorld\Main.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\Crosshair.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\GUISystem.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Texture\Texture2D.cpp" />
@@ -160,7 +164,13 @@
     <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceName.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\Crosshair.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\GUISystem.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imconfig.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_internal.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_rect_pack.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_textedit.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_truetype.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11.h" />
     <ClInclude Include="..\Source\VoxelWorld\Screen\nuklear\nuklear_d3d11_pixel_shader.h" />

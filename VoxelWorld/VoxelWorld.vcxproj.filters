@@ -171,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
+    <Text Include="..\Source\VoxelWorld\Screen\imgui\LICENSE.txt">
+      <Filter>Source\Screen\imgui</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">
@@ -289,6 +292,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Application\ChunkRendererManager.cpp">
       <Filter>Source\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui.cpp">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_demo.cpp">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_draw.cpp">
+      <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,6 +471,24 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\DebugWindow\DebugWin_Main.h">
       <Filter>Source\Application\DebugWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imconfig.h">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui.h">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_internal.h">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_rect_pack.h">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_textedit.h">
+      <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_truetype.h">
+      <Filter>Source\Screen\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

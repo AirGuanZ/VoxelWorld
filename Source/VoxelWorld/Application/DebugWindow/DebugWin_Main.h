@@ -44,6 +44,9 @@ public:
 
     void Render(void)
     {
+        if(!visible_)
+            return;
+
         GUISystem &gui = GUISystem::GetInstance();
 
         ImGui::SetNextWindowSize(ImVec2(400.0f, 150.0f));

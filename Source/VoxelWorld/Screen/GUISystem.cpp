@@ -17,7 +17,7 @@ SINGLETON_CLASS_DEFINITION(GUISystem);
 
 #ifdef GUI_SYSTEM_IG
 
-#include <imgui.h>
+#include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
 
 #endif

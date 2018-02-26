@@ -17,7 +17,7 @@ Created by AirGuanZ
 //#define GUI_SYSTEM_NK
 
 #ifdef GUI_SYSTEM_IG
-#include <imgui.h>
+#include "imgui/imgui.h"
 #endif
 
 #ifdef GUI_SYSTEM_NK
