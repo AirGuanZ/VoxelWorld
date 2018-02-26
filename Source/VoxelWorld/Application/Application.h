@@ -14,6 +14,8 @@ Created by AirGuanZ
 #include <Screen/ImmediateScreen2D.h>
 #include <Window/Window.h>
 #include <World/World.h>
+
+#include "DebugWindow/DebugWin_Main.h"
 #include "ChunkRendererManager.h"
 
 class Application
@@ -33,6 +35,8 @@ public:
         int renderDistance;
 
         int loaderCount;
+
+        std::vector<GUISystem::FontSpecifier> fonts;
     };
 
     Application(void);
@@ -59,6 +63,8 @@ private:
     Crosshair crosshair_;
 
     std::unique_ptr<World> world_;
+
+    DebugWin_Main mainDebugWin_;
 };
 
 #endif //VW_APPLICATION_H

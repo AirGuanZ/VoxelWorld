@@ -43,7 +43,7 @@ public:
     void Render(void);
 
 #ifdef GUI_SYSTEM_IG
-    void PushFont(int index);
+    void PushFont(int index = -1);
     void PopFont(void);
 #endif
 

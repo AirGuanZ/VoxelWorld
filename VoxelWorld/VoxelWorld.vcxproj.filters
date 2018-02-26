@@ -106,6 +106,12 @@
     <Filter Include="Source\Screen\nuklear">
       <UniqueIdentifier>{221937e9-a993-433e-9a48-0ccb5497bb53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Font">
+      <UniqueIdentifier>{5cc5920d-d2c7-4bb6-a03e-d0221eb2d486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Application\DebugWindow">
+      <UniqueIdentifier>{45cea880-3c72-4b80-8763-c40d69e8d587}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -451,5 +457,13 @@
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\Common.h">
       <Filter>Source\D3DObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\DebugWindow\DebugWin_Main.h">
+      <Filter>Source\Application\DebugWindow</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Bin\Font\DroidSans.ttf">
+      <Filter>Bin\Font</Filter>
+    </Font>
   </ItemGroup>
 </Project>

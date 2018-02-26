@@ -8,6 +8,9 @@ Created by AirGuanZ
 
 #include <algorithm>
 #include <cmath>
+#include <sstream>
+#include <string>
+
 #include <d3d11.h>
 #include <DirectXTK/SimpleMath.h>
 
@@ -17,6 +20,18 @@ using DirectX::SimpleMath::Vector4;
 using DirectX::SimpleMath::Matrix;
 using DirectX::SimpleMath::Quaternion;
 using DirectX::SimpleMath::Color;
+
+template<int WIDTH = 0>
+inline std::string ToString(const Vector3 &vec)
+{
+    std::stringstream sst;
+
+    if constexpr(WIDTH > 0)
+        sst.width(WIDTH);
+
+    sst << vec.x << ", " << vec.y << ", " << vec.z;
+    return sst.str();
+}
 
 //在origin的dir方向上叠加一个长度为accV的分量
 //并用maxV作为叠加得到的分量长度的上限

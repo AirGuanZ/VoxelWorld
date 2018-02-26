@@ -138,6 +138,9 @@ public:
     void Update(float deltaT, ChunkManager *ckMgr,
                 const UserInput &uI, const EnvirInput &eI);
 
+    bool OnGround(void) const { return onGround_; }
+    const Vector3 &GetPosition(void) const { return pos_; }
+
 private:
     //ÉãÏñ»úÊÓ½ÇĞı×ª
     void UpdateCameraDirection(const UserInput &uI);

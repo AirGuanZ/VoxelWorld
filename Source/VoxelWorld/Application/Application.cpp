@@ -53,6 +53,13 @@ namespace
 
             conf.maxFogStart = std::stof(file("Fog", "Start"));
             conf.maxFogRange = std::stof(file("Fog", "Range"));
+
+            conf.fonts.resize(std::stoi(file("Font", "Count")));
+            for(size_t i = 0; i < conf.fonts.size(); ++i)
+            {
+                conf.fonts[i].ttfFilename = file("Font", "TTFName[" + std::to_string(i) + "]");
+                conf.fonts[i].pixelSize = std::stof(file("Font", "PixelSize[" + std::to_string(i) + "]"));
+            }
         }
         catch(const std::invalid_argument&)
         {
@@ -69,7 +76,7 @@ Application::Application(void)
       gui_(GUISystem::GetInstance())
 {
     dev_ = nullptr;
-    DC_ = nullptr;
+    DC_  = nullptr;
 
     fogStart_ = 0.0f;
     fogRange_ = 1.0f;
@@ -85,26 +92,22 @@ bool Application::Initialize(std::string &errMsg)
         return false;
     }
 
-    const std::vector<GUISystem::FontSpecifier> fonts =
-    {
-        { "Bin/Fonts/DroidSans.ttf", 18.0f }
-    };
-
-    if(!win_.InitWindow(appConf_.winWidth, appConf_.winHeight,
-        L"VoxelWorld", errMsg) ||
+    if(!win_.InitWindow(appConf_.winWidth, appConf_.winHeight, L"VoxelWorld", errMsg) ||
        !win_.InitD3D(appConf_.MSAA, 0, errMsg) ||
-       !win_.InitGUI(fonts, errMsg))
+       !win_.InitGUI(appConf_.fonts, errMsg))
     {
         return false;
     }
+
     dev_ = win_.GetD3DDevice();
-    DC_ = win_.GetD3DDeviceContext();
+    DC_  = win_.GetD3DDeviceContext();
 
     if(!ckRendererMgr_.Initialize(errMsg))
         return false;
 
     if(!immScr2D_.Initialize(errMsg))
         return false;
+
     if(!crosshair_.Initialize())
     {
         errMsg = "Failed to initialize crosshair";
@@ -130,11 +133,9 @@ void Application::Run(void)
     Clock clock;
     clock.Restart();
 
-#if PRINT_FPS
     FPSCounter fps;
     float lastFPS = 0.0f;
     fps.Restart();
-#endif
 
     float daynightT = 0.0f;
     
@@ -142,25 +143,18 @@ void Application::Run(void)
     {
         gui_.NewFrame();
 
-#if PRINT_FPS
-        {
-            fps.Tick();
-            if(fps.GetFPS() != lastFPS)
-                lastFPS = fps.GetFPS();
-            ImGui::SetNextWindowSize(ImVec2(200, 200));
-            ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_NoResize |
-                                           ImGuiWindowFlags_NoMove |
-                                           ImGuiWindowFlags_NoCollapse);
-            {
-                gui_.PushFont(0);
-                ImGui::Text(("WindowSize: " + std::to_string(win_.GetClientWidth()) +
-                             ", " + std::to_string(win_.GetClientHeight())).c_str());
-                gui_.PopFont();
-                ImGui::Text(("FPS: " + std::to_string(lastFPS)).c_str());
-            }
-            ImGui::End();
-        }
-#endif
+        fps.Tick();
+        if(fps.GetFPS() != lastFPS)
+            lastFPS = fps.GetFPS();
+
+        DebugWin_Main::Info debugInfo;
+        debugInfo.FPS = lastFPS;
+        debugInfo.actorOnGround = world_->GetActor().OnGround();
+        debugInfo.actorPos = world_->GetActor().GetPosition();
+        debugInfo.camPos = world_->GetActor().GetCameraPosition();
+
+        mainDebugWin_.SetInfo(debugInfo);
+        mainDebugWin_.Update(input_);
 
         //根据时间计算天光和背景色
         daynightT += input_.IsKeyDown('T') ? 0.01f : 0.0001f;
@@ -194,6 +188,9 @@ void Application::Run(void)
 
         //绘制准星
         crosshair_.Draw(&immScr2D_);
+
+        //debug窗口绘制
+        mainDebugWin_.Render();
 
         //绘制GUI
         gui_.Render();
