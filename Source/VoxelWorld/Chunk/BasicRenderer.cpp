@@ -14,7 +14,7 @@ Created by AirGuanZ
 namespace
 {
     ID3D11InputLayout *CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC *desc,
-        int num, const void *byteCode, int length)
+        int num, const void *byteCode, size_t length)
     {
         assert(desc != nullptr && num > 0);
         assert(byteCode != nullptr && length > 0);
@@ -71,7 +71,7 @@ bool BasicRenderer::Initialize(std::string &errMsg)
             Helper::MemOffset(&Vertex::sunlight), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     inputLayout_ = CreateInputLayout(
-        inputLayoutDesc, Helper::ArraySize(inputLayoutDesc),
+        inputLayoutDesc, static_cast<int>(Helper::ArraySize(inputLayoutDesc)),
         shader_.GetShaderByteCodeWithInputSignature(),
         shader_.GetShaderByteCodeSizeWithInputSignature());
     if(!inputLayout_)

@@ -24,7 +24,7 @@ void Model::Draw(void) const
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
     DC->IASetVertexBuffers(
         vtxBufBinding_.startSlot,
-        vtxBufBinding_.bufs.size(),
+        static_cast<UINT>(vtxBufBinding_.bufs.size()),
         vtxBufBinding_.bufs.data(),
         vtxBufBinding_.strides.data(),
         vtxBufBinding_.offsets.data());
@@ -36,7 +36,7 @@ void Model::Draw(void) const
 
     DC->IASetVertexBuffers(
         vtxBufBinding_.startSlot,
-        vtxBufBinding_.bufs.size(),
+        static_cast<UINT>(vtxBufBinding_.bufs.size()),
         emptyVtxBufs_.data(),
         vtxBufBinding_.strides.data(),
         vtxBufBinding_.offsets.data());

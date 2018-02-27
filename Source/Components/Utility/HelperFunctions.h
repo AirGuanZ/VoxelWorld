@@ -12,8 +12,8 @@ Created by AirGuanZ
 
 namespace Helper
 {
-    template<typename T, size_t N>
-    inline constexpr size_t ArraySize(const T(&arr)[N])
+    template<typename T, int N>
+    inline constexpr int ArraySize(const T(&arr)[N])
     {
         return N;
     }
@@ -67,9 +67,9 @@ namespace Helper
     }
 
     template<typename ClassType, typename MemType>
-    inline size_t MemOffset(MemType ClassType::* pMem)
+    inline UINT MemOffset(MemType ClassType::* pMem)
     {
-        return reinterpret_cast<size_t>(&(reinterpret_cast<ClassType*>(0)->*pMem));
+        return static_cast<UINT>(reinterpret_cast<size_t>(&(reinterpret_cast<ClassType*>(0)->*pMem)));
     }
 
     bool ReadFile(const std::wstring &filename, std::string &output);

@@ -51,7 +51,7 @@ namespace
         };
         
         static_assert(Helper::ArraySize(objFilenames) == Helper::ArraySize(boneNames));
-        constexpr int BONE_NUM = Helper::ArraySize(boneNames);
+        constexpr int BONE_NUM = static_cast<int>(Helper::ArraySize(boneNames));
         
         meshes.resize(BONE_NUM);
         
@@ -87,7 +87,7 @@ namespace
             }
             
             meshes[i].boneIndex = it->second;
-            meshes[i].idxCount  = obj.indices.size();
+            meshes[i].idxCount  = static_cast<int>(obj.indices.size());
         }
         
         return true;

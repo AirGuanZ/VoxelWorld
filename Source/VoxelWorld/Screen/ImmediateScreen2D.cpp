@@ -64,7 +64,7 @@ bool ImmediateScreen2D::Initialize(std::string &errMsg)
           Helper::MemOffset(&QuadVertex::pos), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     if(!(quadVtxNorLayout_.Initialize(
-            inputDesc, Helper::ArraySize(inputDesc),
+            inputDesc, static_cast<int>(Helper::ArraySize(inputDesc)),
             norShader_.GetShaderByteCodeWithInputSignature(),
             norShader_.GetShaderByteCodeSizeWithInputSignature())))
     {

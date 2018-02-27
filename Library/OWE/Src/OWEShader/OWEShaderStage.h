@@ -281,7 +281,7 @@ namespace OWEShaderAux
         UINT GetShaderByteCodeSize(void) const
         {
             assert(shaderByteCode_);
-            return shaderByteCode_->GetBufferSize();
+            return static_cast<UINT>(shaderByteCode_->GetBufferSize());
         }
 
     private:

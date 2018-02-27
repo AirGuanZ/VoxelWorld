@@ -50,7 +50,7 @@ bool CarveRenderer::Initialize(std::string &errMsg)
             Helper::MemOffset(&Vertex::sunlight), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     inputLayout_.Initialize(
-        inputLayoutDesc, Helper::ArraySize(inputLayoutDesc),
+        inputLayoutDesc, static_cast<int>(Helper::ArraySize(inputLayoutDesc)),
         shader_.GetShaderByteCodeWithInputSignature(),
         shader_.GetShaderByteCodeSizeWithInputSignature());
     if(!inputLayout_)

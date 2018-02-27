@@ -7,8 +7,30 @@ Created by AirGuanZ
 #include <Window/Window.h>
 #include "ChunkRendererManager.h"
 
+ChunkRendererManager::ChunkRendererManager(void)
+    : sampler_(D3DObj_Noinit())
+{
+    DC_ = nullptr;
+
+    basicUniform_Trans_    = nullptr;
+    basicUniform_Sunlight_ = nullptr;
+    basicUniform_Fog_      = nullptr;
+    basicUniform_Tex_      = nullptr;
+
+    carveUniform_Trans_    = nullptr;
+    carveUniform_Sunlight_ = nullptr;
+    carveUniform_Fog_      = nullptr;
+    carveUniform_Tex_      = nullptr;
+
+    liquidUniform_Trans_    = nullptr;
+    liquidUniform_Sunlight_ = nullptr;
+    liquidUniform_Fog_      = nullptr;
+    liquidUniform_Tex_      = nullptr;
+}
+
 bool ChunkRendererManager::Initialize(std::string &errMsg)
 {
+    DC_               = Window::GetInstance().GetD3DDeviceContext();
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     if(!basicRenderer_.Initialize(errMsg))
@@ -50,8 +72,8 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
         return false;
     }
 
-    sampler_ = std::make_unique<Sampler>();
-    if(!*sampler_.get())
+    sampler_ = Sampler();
+    if(!sampler_)
     {
         errMsg = "Failed to create sampler object for chunk rendering";
         Destroy();
@@ -59,13 +81,13 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
     }
 
     basicUniforms_.reset(basicRenderer_.GetShader().CreateUniformManager());
-    basicUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(*sampler_);
+    basicUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
 
     carveUniforms_.reset(carveRenderer_.GetShader().CreateUniformManager());
-    carveUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(*sampler_);
+    carveUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
 
     liquidUniforms_.reset(liquidRenderer_.GetShader().CreateUniformManager());
-    liquidUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(*sampler_);
+    liquidUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
 
     basicUniform_Trans_ = basicUniforms_->GetConstantBuffer<SS_VS, BasicVSCBTrans>(dev, "Trans");
     basicUniform_Fog_ = basicUniforms_->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog");
@@ -103,56 +125,56 @@ void ChunkRendererManager::Destroy(void)
         tex.Destroy();
     liquidUniforms_.reset();
 
-    sampler_.reset();
+    sampler_ = Sampler(D3DObj_Noinit());
 
-    basicUniform_Trans_ = nullptr;
+    basicUniform_Trans_    = nullptr;
     basicUniform_Sunlight_ = nullptr;
-    basicUniform_Fog_ = nullptr;
-    basicUniform_Tex_ = nullptr;
+    basicUniform_Fog_      = nullptr;
+    basicUniform_Tex_      = nullptr;
 
-    carveUniform_Trans_ = nullptr;
+    carveUniform_Trans_    = nullptr;
     carveUniform_Sunlight_ = nullptr;
-    carveUniform_Fog_ = nullptr;
-    carveUniform_Tex_ = nullptr;
+    carveUniform_Fog_      = nullptr;
+    carveUniform_Tex_      = nullptr;
 
-    liquidUniform_Trans_ = nullptr;
+    liquidUniform_Trans_    = nullptr;
     liquidUniform_Sunlight_ = nullptr;
-    liquidUniform_Fog_ = nullptr;
-    liquidUniform_Tex_ = nullptr;
+    liquidUniform_Fog_      = nullptr;
+    liquidUniform_Tex_      = nullptr;
 }
 
-void ChunkRendererManager::SetSunlight(ID3D11DeviceContext *DC, const Vector3 &sunlight)
+void ChunkRendererManager::SetSunlight(const Vector3 &sunlight)
 {
-    basicUniform_Sunlight_->SetBufferData(DC, { sunlight });
-    carveUniform_Sunlight_->SetBufferData(DC, { sunlight });
-    liquidUniform_Sunlight_->SetBufferData(DC, { sunlight });
+    basicUniform_Sunlight_->SetBufferData(DC_, { sunlight });
+    carveUniform_Sunlight_->SetBufferData(DC_, { sunlight });
+    liquidUniform_Sunlight_->SetBufferData(DC_, { sunlight });
 }
 
-void ChunkRendererManager::SetFog(ID3D11DeviceContext *DC, float fogStart, float fogRange,
+void ChunkRendererManager::SetFog(float fogStart, float fogRange,
                                   const Vector3 &fogColor, const Vector3 &camPosW)
 {
-    basicUniform_Fog_->SetBufferData(DC, { fogStart, fogColor, fogRange, camPosW });
-    carveUniform_Fog_->SetBufferData(DC, { fogStart, fogColor, fogRange, camPosW });
-    liquidUniform_Fog_->SetBufferData(DC, { fogStart, fogColor, fogRange, camPosW });
+    basicUniform_Fog_->SetBufferData(DC_, { fogStart, fogColor, fogRange, camPosW });
+    carveUniform_Fog_->SetBufferData(DC_, { fogStart, fogColor, fogRange, camPosW });
+    liquidUniform_Fog_->SetBufferData(DC_, { fogStart, fogColor, fogRange, camPosW });
 }
 
-void ChunkRendererManager::SetTrans(ID3D11DeviceContext *DC, const Matrix &trans)
+void ChunkRendererManager::SetTrans(const Matrix &trans)
 {
-    basicUniform_Trans_->SetBufferData(DC, { trans });
-    carveUniform_Trans_->SetBufferData(DC, { trans });
-    liquidUniform_Trans_->SetBufferData(DC, { trans });
+    basicUniform_Trans_->SetBufferData(DC_, { trans });
+    carveUniform_Trans_->SetBufferData(DC_, { trans });
+    liquidUniform_Trans_->SetBufferData(DC_, { trans });
 }
 
-void ChunkRendererManager::Render(ID3D11DeviceContext *DC, ChunkSectionRenderQueue &renderQueue)
+void ChunkRendererManager::Render(ChunkSectionRenderQueue &renderQueue)
 {
     for(size_t i = 0; i < basicRendererTextures_.size(); ++i)
     {
         basicUniform_Tex_->SetShaderResource(basicRendererTextures_[i]);
 
         basicRenderer_.Begin();
-        basicUniforms_->Bind(DC);
+        basicUniforms_->Bind(DC_);
         renderQueue.basic[i].Render();
-        basicUniforms_->Unbind(DC);
+        basicUniforms_->Unbind(DC_);
         basicRenderer_.End();
     }
 
@@ -161,9 +183,9 @@ void ChunkRendererManager::Render(ID3D11DeviceContext *DC, ChunkSectionRenderQue
         carveUniform_Tex_->SetShaderResource(carveRendererTextures_[i]);
 
         carveRenderer_.Begin();
-        carveUniforms_->Bind(DC);
+        carveUniforms_->Bind(DC_);
         renderQueue.carve[i].Render();
-        carveUniforms_->Unbind(DC);
+        carveUniforms_->Unbind(DC_);
         carveRenderer_.End();
     }
 
@@ -172,9 +194,9 @@ void ChunkRendererManager::Render(ID3D11DeviceContext *DC, ChunkSectionRenderQue
         liquidUniform_Tex_->SetShaderResource(liquidRendererTextures_[i]);
 
         liquidRenderer_.Begin();
-        liquidUniforms_->Bind(DC);
+        liquidUniforms_->Bind(DC_);
         renderQueue.liquid[i].Render();
-        liquidUniforms_->Unbind(DC);
+        liquidUniforms_->Unbind(DC_);
         liquidRenderer_.End();
     }
 }

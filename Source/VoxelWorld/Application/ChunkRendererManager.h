@@ -20,20 +20,20 @@ Created by AirGuanZ
 class ChunkRendererManager
 {
 public:
-    ChunkRendererManager(void) = default;
+    ChunkRendererManager(void);
 
     bool Initialize(std::string &errMsg);
 
     void Destroy(void);
 
-    void SetSunlight(ID3D11DeviceContext *DC, const Vector3 &sunlight);
+    void SetSunlight(const Vector3 &sunlight);
 
-    void SetFog(ID3D11DeviceContext *DC, float fogStart, float fogRange,
+    void SetFog(float fogStart, float fogRange,
                 const Vector3 &fogColor, const Vector3 &camPosW);
 
-    void SetTrans(ID3D11DeviceContext *DC, const Matrix &trans);
+    void SetTrans(const Matrix &trans);
 
-    void Render(ID3D11DeviceContext *DC, ChunkSectionRenderQueue &renderQueue);
+    void Render(ChunkSectionRenderQueue &renderQueue);
 
 private:
     struct BasicVSCBTrans
@@ -84,6 +84,8 @@ private:
     };
 
 private:
+    ID3D11DeviceContext *DC_ = nullptr;
+
     BasicRenderer basicRenderer_;
     std::array<Texture2D, BASIC_RENDERER_TEXTURE_NUM> basicRendererTextures_;
     std::unique_ptr<BasicRenderer::Uniforms> basicUniforms_;
@@ -108,5 +110,5 @@ private:
     OWE::ConstantBufferObject<SS_PS, LiquidPSCBFog>      *liquidUniform_Fog_ = nullptr;
     OWE::ShaderResourceObject<SS_PS>                     *liquidUniform_Tex_ = nullptr;
 
-    std::unique_ptr<Sampler> sampler_;
+    Sampler sampler_;
 };

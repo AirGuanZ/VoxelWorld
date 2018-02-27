@@ -139,10 +139,10 @@ void Application::Run(void)
             lastFPS = fps.GetFPS();
 
         DebugWin_Main::Info debugInfo;
-        debugInfo.FPS = lastFPS;
+        debugInfo.FPS           = lastFPS;
         debugInfo.actorOnGround = world_->GetActor().OnGround();
-        debugInfo.actorPos = world_->GetActor().GetPosition();
-        debugInfo.camPos = world_->GetActor().GetCameraPosition();
+        debugInfo.actorPos      = world_->GetActor().GetPosition();
+        debugInfo.camPos        = world_->GetActor().GetCameraPosition();
 
         mainDebugWin_.SetInfo(debugInfo);
         mainDebugWin_.Update(input_);
@@ -157,12 +157,12 @@ void Application::Run(void)
         win_.ClearDepthStencil();
 
         //天光强度设置
-        ckRendererMgr_.SetSunlight(DC_, sunlight);
+        ckRendererMgr_.SetSunlight(sunlight);
 
         //雾设置
         fogStart_ = (std::min)(fogStart_ + 0.12f, appConf_.maxFogStart);
         fogRange_ = (std::min)(fogRange_ + 0.12f, appConf_.maxFogRange);
-        ckRendererMgr_.SetFog(DC_, fogStart_, fogRange_, { 0.0f, absdnt, absdnt }, world_->GetActor().GetCameraPosition());
+        ckRendererMgr_.SetFog(fogStart_, fogRange_, { 0.0f, absdnt, absdnt }, world_->GetActor().GetCameraPosition());
 
         //世界更新
         world_->Update(16.6667f);
@@ -171,8 +171,8 @@ void Application::Run(void)
         world_->Render(&renderQueue);
 
         //渲染世界
-        ckRendererMgr_.SetTrans(DC_, world_->GetActor().GetCamera().GetViewProjMatrix().Transpose());
-        ckRendererMgr_.Render(DC_, renderQueue);
+        ckRendererMgr_.SetTrans(world_->GetActor().GetCamera().GetViewProjMatrix().Transpose());
+        ckRendererMgr_.Render(renderQueue);
 
         //渲染角色
         world_->GetActor().Render();

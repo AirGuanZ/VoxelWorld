@@ -61,14 +61,14 @@ namespace OWEShaderAux
         void Bind(ID3D11DeviceContext *DC)
         {
             assert(DC != nullptr);
-            BindShaderResourceArray<StageSelector>(DC, slot_, SRVs_.size(), SRVs_.data());
+            BindShaderResourceArray<StageSelector>(DC, slot_, static_cast<UINT>(SRVs_.size()), SRVs_.data());
         }
 
         void Unbind(ID3D11DeviceContext *DC)
         {
             assert(DC != nullptr);
             std::vector<ID3D11ShaderResourceView*> emptySRVs(SRVs_.size(), nullptr);
-            BindShaderResourceArray<StageSelector>(DC, slot_, emptySRVs.size(), emptySRVs.data());
+            BindShaderResourceArray<StageSelector>(DC, slot_, static_cast<UINT>(emptySRVs.size()), emptySRVs.data());
         }
 
     private:

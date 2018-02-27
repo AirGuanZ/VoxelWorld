@@ -50,7 +50,7 @@ bool ConfigFile::LoadFromFile(const std::wstring &filename)
 
         if(line[0] == '[') //section
         {
-            int end = line.rfind(']');
+            size_t end = line.rfind(']');
             if(end == std::string::npos || end == 1)
                 goto ErrorLabel;
 

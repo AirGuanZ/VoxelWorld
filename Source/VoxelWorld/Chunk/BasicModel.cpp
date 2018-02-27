@@ -18,7 +18,7 @@ namespace
 
         D3D11_BUFFER_DESC dc;
         dc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-        dc.ByteWidth = byteSize;
+        dc.ByteWidth = static_cast<UINT>(byteSize);
         dc.CPUAccessFlags = dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
         dc.MiscFlags = 0;
         dc.StructureByteStride = 0;
@@ -39,7 +39,7 @@ namespace
 
         D3D11_BUFFER_DESC dc;
         dc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-        dc.ByteWidth = byteSize;
+        dc.ByteWidth = static_cast<UINT>(byteSize);
         dc.CPUAccessFlags = dynamic ? D3D11_CPU_ACCESS_WRITE : 0;
         dc.MiscFlags = 0;
         dc.StructureByteStride = 0;

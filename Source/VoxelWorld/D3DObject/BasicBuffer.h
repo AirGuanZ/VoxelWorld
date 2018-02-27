@@ -93,7 +93,7 @@ template<D3D11_BIND_FLAG BindFlag, bool Dynamic>
 class BasicBuffer : public BasicBufferSetter<Dynamic>
 {
 public:
-    bool Initialize(const void *data, int byteSize)
+    bool Initialize(const void *data, size_t byteSize)
     {
         assert(byteSize > 0);
         Helper::ReleaseCOMObjects(buf_);
@@ -115,7 +115,7 @@ public:
 
         D3D11_BUFFER_DESC dc;
         dc.BindFlags = BindFlag;
-        dc.ByteWidth = byteSize;
+        dc.ByteWidth = static_cast<UINT>(byteSize);
         dc.CPUAccessFlags = cpuAccessFlag;
         dc.MiscFlags = 0;
         dc.StructureByteStride = 0;
