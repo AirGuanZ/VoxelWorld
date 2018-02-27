@@ -106,8 +106,8 @@
     <Filter Include="Bin\Font">
       <UniqueIdentifier>{5cc5920d-d2c7-4bb6-a03e-d0221eb2d486}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Application\DebugWindow">
-      <UniqueIdentifier>{45cea880-3c72-4b80-8763-c40d69e8d587}</UniqueIdentifier>
+    <Filter Include="Source\Application\Game">
+      <UniqueIdentifier>{e9deea23-96f8-4bb9-adc3-0322d4508703}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +175,6 @@
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">
       <Filter>Source\Actor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\Application.cpp">
-      <Filter>Source\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp">
       <Filter>Source\Block</Filter>
@@ -287,9 +284,6 @@
     <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.cpp">
       <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\ChunkRendererManager.cpp">
-      <Filter>Source\Application</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui.cpp">
       <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
@@ -299,13 +293,25 @@
     <ClCompile Include="..\Source\VoxelWorld\Screen\imgui\imgui_draw.cpp">
       <Filter>Source\Screen\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\Common.cpp">
+      <Filter>Source\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\Game\ChunkRendererManager.cpp">
+      <Filter>Source\Application\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\Game\Game.cpp">
+      <Filter>Source\Application\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\Application.cpp">
+      <Filter>Source\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.cpp">
+      <Filter>Source\Application\MainMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
       <Filter>Source\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\Application.h">
-      <Filter>Source\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h">
       <Filter>Source\Block</Filter>
@@ -451,14 +457,8 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imgui_impl_dx11.h">
       <Filter>Source\Screen\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\ChunkRendererManager.h">
-      <Filter>Source\Application</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\Common.h">
       <Filter>Source\D3DObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\DebugWindow\DebugWin_Main.h">
-      <Filter>Source\Application\DebugWindow</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\imconfig.h">
       <Filter>Source\Screen\imgui</Filter>
@@ -477,6 +477,21 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\imgui\stb_truetype.h">
       <Filter>Source\Screen\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\Common.h">
+      <Filter>Source\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\Application.h">
+      <Filter>Source\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\Game\ChunkRendererManager.h">
+      <Filter>Source\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\Game\Game.h">
+      <Filter>Source\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\Game\DebugWindow.h">
+      <Filter>Source\Application\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

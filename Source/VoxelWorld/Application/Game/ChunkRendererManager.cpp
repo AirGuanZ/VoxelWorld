@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Resource/ResourceName.h>
 #include <Window/Window.h>
+
 #include "ChunkRendererManager.h"
 
 ChunkRendererManager::ChunkRendererManager(void)

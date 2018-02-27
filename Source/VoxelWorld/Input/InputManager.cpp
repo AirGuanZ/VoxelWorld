@@ -3,6 +3,8 @@ Filename: InputManager.cpp
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
+#include <Window/Window.h>
+
 #include "InputManager.h"
 
 SINGLETON_CLASS_DEFINITION(InputManager);
@@ -35,13 +37,26 @@ InputManager::~InputManager(void)
     this->ShowCursor(true);
 }
 
+void InputManager::LockCursor(bool lock, int x, int y)
+{
+    curLocked_ = lock;
+
+    POINT pnt = { x, y };
+    ClientToScreen(Window::GetInstance().GetWindowHandle(), &pnt);
+    curLockX_ = pnt.x, curLockY_ = pnt.y;
+}
+
 void InputManager::Update(void)
 {
+    HWND hWnd = Window::GetInstance().GetWindowHandle();
+
     kbState_ = keyboard_->GetState();
     kbTracker_.Update(kbState_);
 
     POINT cPos;
     GetCursorPos(&cPos);
+    ScreenToClient(hWnd, &cPos);
+
     curMovX_ = cPos.x - curPosX_, curMovY_ = cPos.y - curPosY_;
     curPosX_ = cPos.x, curPosY_ = cPos.y;
 
@@ -59,8 +74,10 @@ void InputManager::Update(void)
     if(curLocked_)
     {
         SetCursorPos(curLockX_, curLockY_);
+
         POINT curPos;
         GetCursorPos(&curPos);
+        ScreenToClient(hWnd, &curPos);
 
         curPosX_ = curPos.x;
         curPosY_ = curPos.y;

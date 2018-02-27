@@ -34,6 +34,8 @@ public:
     void ClearRenderTarget(void);
     void ClearDepthStencil(void);
 
+    //ClientCentre返回值为屏幕坐标而非客户区坐标
+
     int ClientCentreX(void);
     int ClientCentreY(void);
 

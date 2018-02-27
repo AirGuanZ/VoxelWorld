@@ -88,11 +88,8 @@ public:
         return mbReleased_[static_cast<int>(button)];
     }
 
-    void LockCursor(bool lock, int x, int y)
-    {
-        curLocked_ = lock;
-        curLockX_ = x, curLockY_ = y;
-    }
+    //x, y是客户区坐标
+    void LockCursor(bool lock, int x, int y);
 
     void LockCursor(bool lock)
     {
@@ -134,7 +131,7 @@ private:
     int wheelMov_;
 
     bool curLocked_;
-    int curLockX_, curLockY_;
+    int curLockX_, curLockY_; //存的是屏幕坐标
 
     bool mbDown_      [3];
     bool mbLast_      [3];

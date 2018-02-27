@@ -1,20 +1,13 @@
 /*================================================================
-Filename: Application.h
+Filename: Application/Common.cpp
 Date: 2018.2.27
 Created by AirGuanZ
 ================================================================*/
-#pragma once
+#include <Windows.h>
 
 #include "Common.h"
 
-class Application
+void ShowErrMsgBox(const std::string &errMsg)
 {
-public:
-    void Run(void);
-
-private:
-    bool Initialize(std::string &errMsg);
-
-private:
-    AppConf appConf_;
-};
+    MessageBoxA(NULL, errMsg.c_str(), "Error", MB_ICONERROR | MB_OK);
+}

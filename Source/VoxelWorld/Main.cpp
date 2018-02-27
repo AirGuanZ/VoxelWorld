@@ -21,16 +21,7 @@ int main(void)
     try
     {
         Application app;
-        
-        std::string errMsg;
-        if(app.Initialize(errMsg))
-        {
-            app.Run();
-        }
-        else
-        {
-            std::cerr << errMsg << std::endl;
-        }
+        app.Run();
     }
     catch(const std::exception &err)
     {

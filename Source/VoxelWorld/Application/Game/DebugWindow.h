@@ -1,5 +1,5 @@
 /*================================================================
-Filename: DebugWin_Main.h
+Filename: DebugWin.h
 Date: 2018.2.26
 Created by AirGuanZ
 ================================================================*/
@@ -10,7 +10,7 @@ Created by AirGuanZ
 #include <Input/InputManager.h>
 #include <Screen/GUISystem.h>
 
-class DebugWin_Main
+class DebugWindow
 {
 public:
     struct Info
@@ -21,7 +21,7 @@ public:
         Vector3 camPos;
     };
 
-    DebugWin_Main(void)
+    DebugWindow(void)
     {
         info_.actorOnGround = false;
         info_.FPS = 0.0f;

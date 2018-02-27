@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #define _CRT_SECURE_NO_WARNINGS
 
+#include <algorithm>
 #include <cassert>
 #include <cstring>
 #include <memory>
@@ -25,6 +26,8 @@ SINGLETON_CLASS_DEFINITION(GUISystem);
 namespace
 {
     bool GUISystemInited = false;
+
+    int clientWidth = 100, clientHeight = 100;
 
 #ifdef GUI_SYSTEM_IG
     std::vector<ImFont*> imGuiFonts;
@@ -51,6 +54,9 @@ bool GUISystem::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::stri
 #endif
 
     GUISystemInited = true;
+
+    clientWidth  = window.GetClientWidth();
+    clientHeight = window.GetClientHeight();
 
     return true;
 }
@@ -92,6 +98,22 @@ void GUISystem::PopFont(void)
     ImGui::PopFont();
 }
 #endif
+
+namespace
+{
+    inline int clamp(int v, int minV, int maxV)
+    {
+        return (std::min)(maxV, (std::max)(v, minV));
+    }
+}
+
+void GUISystem::MousePosition(int x, int y)
+{
+#ifdef GUI_SYSTEM_IG
+    ImGui::GetIO().MousePos = ImVec2(static_cast<float>(clamp(x, 0, clientWidth)),
+                                     static_cast<float>(clamp(y, 0, clientHeight)));
+#endif
+}
 
 void GUISystem::MouseButtonDown(MouseButton button)
 {

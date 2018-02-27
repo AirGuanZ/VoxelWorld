@@ -406,6 +406,11 @@ namespace
         PIDIV2,        0.0f, -PIDIV2,
         0.5f * PIDIV2, 0.0,  -0.5f * PIDIV2
     };
+    inline float GetMovingYawOffsets(int FB, int LR)
+    {
+        assert(-1 <= FB && FB <= 1 && -1 <= LR && LR <= 1);
+        return movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+    }
 
     //将origin长度减少fric
     inline Vector3 ApplyFric(const Vector3 &origin, float fric)
@@ -441,7 +446,7 @@ void Actor::ApplyState_Running(float dT, const UserInput &uI, const EnvirInput &
     auto [FB, LR] = Get_FB_LR_Move(uI);
 
     //新的dstYaw
-    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+    dstYaw_ = -camera_.GetYaw() + GetMovingYawOffsets(FB, LR);
 
     //移动方向
     
@@ -474,7 +479,7 @@ void Actor::ApplyState_Walking(float dT, const UserInput &uI, const EnvirInput &
     auto [FB, LR] = Get_FB_LR_Move(uI);
 
     //新的dstYaw
-    dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+    dstYaw_ = -camera_.GetYaw() + GetMovingYawOffsets(FB, LR);
 
     //移动速度增量
 
@@ -507,7 +512,7 @@ void Actor::ApplyState_Jumping(float dT, const UserInput &uI, const EnvirInput &
 
     //新的dstYaw
     if(FB || LR)
-        dstYaw_ = -camera_.GetYaw() + movingYawOffsets[3 * (FB + 1) + (LR + 1)];
+        dstYaw_ = -camera_.GetYaw() + GetMovingYawOffsets(FB, LR);
 
     //移动速度增量
 

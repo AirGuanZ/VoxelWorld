@@ -40,6 +40,9 @@ public:
 
     //输入事件，一般来说由消息循环调用
 
+    //该函数需要自己调用，消息循环不会管
+    void MousePosition(int x, int y);
+
     void MouseButtonDown(MouseButton button);
     void MouseButtonUp(MouseButton button);
 

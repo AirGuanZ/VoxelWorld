@@ -7,13 +7,11 @@ Created by AirGuanZ
 
 #include <cstdint>
 
+#include <Application/Common.h>
 #include <Texture/Texture2D.h>
 
 class MainMenu
 {
 public:
-    void Run(void);
-
-private:
-    Texture2D bkgd_;
+    AppState Run(void);
 };
