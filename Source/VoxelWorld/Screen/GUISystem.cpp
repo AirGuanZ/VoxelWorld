@@ -93,16 +93,6 @@ void GUISystem::PopFont(void)
 }
 #endif
 
-void GUISystem::BeginInput(void)
-{
-
-}
-
-void GUISystem::EndInput(void)
-{
-
-}
-
 void GUISystem::MouseButtonDown(MouseButton button)
 {
 #ifdef GUI_SYSTEM_IG

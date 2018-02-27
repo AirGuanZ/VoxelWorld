@@ -39,7 +39,7 @@ struct ActorModelComponent
 class ActorModel
 {
 public:
-    using Shader = OWE::Shader<SS_VS, SS_PS>;
+    using Shader   = OWE::Shader<SS_VS, SS_PS>;
     using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
 
     bool Initialize(std::string &errMsg);

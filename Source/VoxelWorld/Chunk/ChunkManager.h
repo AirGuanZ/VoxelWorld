@@ -22,12 +22,11 @@ Created by AirGuanZ
 
 /*
     Chunk数据加载及模型创建
-        主线程维护一个Position -> Chunk的映射M，后台只负责Chunk的数据加载，不负责模型创建
+        主线程维护一个Position -> Chunk的映射M，后台负责Chunk的数据加载和模型创建
         
         setCentrePos
             当一个Chunk因超出加载范围而被卸载时，清空其剩下的模型创建任务
             当一个新的位置进入加载范围（loadDistance）时，主线程创建加载任务，由后台完成加载
-            当一个新的位置进入渲染范围（renderDistance）时，主线程创建对应已有Chunk的模型任务
         implemented in SetCentrePosition
         
         后台加载完成时，提交“加载完成”的消息给主线程，尝试把它加入M
@@ -37,12 +36,6 @@ Created by AirGuanZ
 
         当创建一个模型任务时，如果有旧模型，留着。当模型任务完成时，替换掉旧模型
         implemented in AddSectionModel
-
-        模型任务分为两类，一类是“重要任务”，一类是“不重要任务”
-        重要任务在每一帧尽量多地处理，其阈值较高，且优先级更高
-        不重要任务阈值较低，且优先级更低
-        每帧处理的重要任务和不重要任务数量之和不超过一个阈值
-        implemented in ProcessModelUpdates
 */
 
 class ChunkManager

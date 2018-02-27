@@ -484,7 +484,6 @@ int Window::ClientCentreY(void)
 void Window::DoEvents(void)
 {
     InputManager::GetInstance().wheelMov_ = 0;
-    GUISystem::GetInstance().BeginInput();
     MSG msg;
     while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
     {
@@ -492,7 +491,6 @@ void Window::DoEvents(void)
         DispatchMessage(&msg);
     }
     InputManager::GetInstance().Update();
-    GUISystem::GetInstance().EndInput();
 }
 
 void Window::Present(void)

@@ -30,16 +30,19 @@ public:
     InputManager(void);
     ~InputManager(void);
 
+    //按键是否处于“按压”的状态
     bool IsKeyDown    (int keyCode)
     {
         return kbState_.IsKeyDown(Int2Keys(keyCode));
     }
 
+    //按键是否刚刚经历“按下”的动作
     bool IsKeyPressed (int keyCode)
     {
         return kbTracker_.IsKeyPressed(Int2Keys(keyCode));
     }
 
+    //按键是否刚刚经历“释放”的动作
     bool IsKeyReleased(int keyCode)
     {
         return kbTracker_.IsKeyReleased(Int2Keys(keyCode));
@@ -103,6 +106,7 @@ public:
 
     void ShowCursor(bool show)
     {
+        //这里“showCursor_ = show”不是==，就是为了赋值
         ::ShowCursor((showCursor_ = show) ? TRUE : FALSE);
     }
 
@@ -122,7 +126,7 @@ private:
     DirectX::Keyboard::State kbState_;
     DirectX::Keyboard::KeyboardStateTracker kbTracker_;
 
-    //消息循环需要设置mbDown和wheelMov
+    //消息循环需要手动设置mbDown和wheelMov
     //其他状态更新都由Update完成
 
     int curPosX_, curPosY_;

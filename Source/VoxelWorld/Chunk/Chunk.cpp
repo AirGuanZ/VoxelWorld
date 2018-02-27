@@ -28,6 +28,7 @@ void Chunk::Render(const Camera &cam, ChunkSectionRenderQueue *renderQueue)
 {
     assert(renderQueue != nullptr);
 
+    //ChunkµÄAABBºÐ
     float xL = static_cast<float>(ChunkXZ_To_BlockXZ(ckPos_.x));
     float zL = static_cast<float>(ChunkXZ_To_BlockXZ(ckPos_.z));
     float xH = xL + CHUNK_SECTION_SIZE, zH = zL + CHUNK_SECTION_SIZE;

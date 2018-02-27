@@ -95,6 +95,7 @@ namespace ActorAux
         Vector3 msMov;
     };
 
+    //以默认按键映射取得UserInput数据
     void DefaultUserInput(UserInput &userInput);
 
     struct EnvirInput
@@ -150,7 +151,7 @@ private:
     //根据角色位置、摄像机视角等更新摄像机位置
     void UpdateCameraPosition(float deltaT, ChunkManager *ckMgr);
 
-    //状态初始化、转换等
+    //状态初始化、转换和生效
 
     void InitState_Standing(const UserInput &uI, const EnvirInput &eI);
     void InitState_Running (const UserInput &uI, const EnvirInput &eI);

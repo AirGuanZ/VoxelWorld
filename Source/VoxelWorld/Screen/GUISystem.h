@@ -38,10 +38,7 @@ public:
     void PopFont(void);
 #endif
 
-    //输入事件
-
-    void BeginInput(void);
-    void EndInput(void);
+    //输入事件，一般来说由消息循环调用
 
     void MouseButtonDown(MouseButton button);
     void MouseButtonUp(MouseButton button);
