@@ -30,21 +30,21 @@ AppState MainMenu::Run(void)
         using namespace ImGui;
 
         gui.MousePosition(input.GetCursorPosX(), input.GetCursorPosY());
-        if(Begin("MainMenu", nullptr, ImVec2(400.0f, 400.0f), -1.0f,
+        if(Begin(u8"MainMenu", nullptr, ImVec2(400.0f, 400.0f), -1.0f,
                  ImGuiWindowFlags_NoTitleBar |
                  ImGuiWindowFlags_NoCollapse |
                  ImGuiWindowFlags_NoResize |
                  ImGuiWindowFlags_NoSavedSettings))
         {
             gui.PushFont(0);
-            Text((std::to_string(input.GetCursorPosX()) + ", " +
+            Text((std::to_string(input.GetCursorPosX()) + u8", " +
                   std::to_string(input.GetCursorPosY())).c_str());
-            if(Button("Game"))
+            if(Button(u8"Game"))
             {
                 ret = AppState::Game;
                 done = true;
             }
-            else if(Button("Exit"))
+            else if(Button(u8"Exit"))
             {
                 ret = AppState::Exit;
                 done = true;

@@ -5,6 +5,8 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
+#include <codecvt>
+#include <locale>
 #include <string>
 #include <vector>
 
@@ -74,4 +76,8 @@ namespace Helper
 
     bool ReadFile(const std::wstring &filename, std::string &output);
     bool ReadFileBinary(const std::wstring &filename, std::vector<char> &buf);
+
+    std::string ToStr(const std::wstring &wstr);
+
+    std::wstring ToWStr(const std::string &str);
 }

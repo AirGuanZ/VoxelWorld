@@ -10,6 +10,7 @@ Created by AirGuanZ
 
 #include <SkeletonAnimation/SkeletonDataLoader.h>
 #include <Utility/ConfigFile.h>
+#include <Utility/HelperFunctions.h>
 
 #include "MergeSkeletonAnimations.h"
 
@@ -27,12 +28,10 @@ bool Input(const std::wstring &confFilename,
     output.clear();
     errMsg = "";
 
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strConv;
-
     ConfigFile file(confFilename);
     if(!file)
     {
-        errMsg = "Failed to open file" + strConv.to_bytes(confFilename);
+        errMsg = "Failed to open file" + Helper::ToStr(confFilename);
         return false;
     }
 
@@ -43,7 +42,7 @@ bool Input(const std::wstring &confFilename,
     for(int i = 0; i < fileCount; ++i)
     {
         std::string idxStr = std::to_string(i);
-        output[i].filename = strConv.from_bytes(file("Global", "Filename" + idxStr));
+        output[i].filename = Helper::ToWStr(file("Global", "Filename" + idxStr));
         output[i].newAniName = file("Global", "NewAnimationName" + idxStr);
 
         if(output[i].filename.empty())

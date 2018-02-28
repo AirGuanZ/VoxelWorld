@@ -102,7 +102,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
     wc.hIconSm       = NULL;
     if(!RegisterClassEx(&wc))
     {
-        errMsg = "Failed to register window class";
+        errMsg = u8"Failed to register window class";
         return false;
     }
 
@@ -113,7 +113,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
     RECT winRect = { 0, 0, clientWidth, clientHeight };
     if(!AdjustWindowRect(&winRect, dwStyle, FALSE))
     {
-        errMsg = "Failed to adjust window size";
+        errMsg = u8"Failed to adjust window size";
         UnregisterClass(Win::windowClassName.c_str(), Win::hInstance);
         return false;
     }
@@ -133,7 +133,7 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
         NULL, NULL, Win::hInstance, NULL);
     if(!Win::hWnd)
     {
-        errMsg = "Failed to create WIN32 window";
+        errMsg = u8"Failed to create WIN32 window";
         UnregisterClass(Win::windowClassName.c_str(), Win::hInstance);
         return false;
     }
@@ -340,13 +340,13 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 {
     assert(IsWindowAvailable() && !IsD3DAvailable());
     HRESULT hr;
-    errMsg = "";
+    errMsg = u8"";
 
     // device & device context
 
     if(!CreateD3DDevice())
     {
-        errMsg = "Failed to create D3D device";
+        errMsg = u8"Failed to create D3D device";
         return false;
     }
 
@@ -357,11 +357,11 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
         SWAPCHAIN_BUFFER_FORMAT, sampleCount, &maxMSAAQuality);
     if(FAILED(hr) || static_cast<UINT>(sampleQuality) >= maxMSAAQuality)
     {
-        errMsg = "MSAA quality unsupported. SampleCount = " +
+        errMsg = u8"MSAA quality unsupported. SampleCount = " +
                  std::to_string(sampleCount) +
-                 ", SampleQuality = " +
+                 u8", SampleQuality = " +
                  std::to_string(sampleQuality) +
-                 ", SampleQuality Suppported is less than " +
+                 u8", SampleQuality Suppported is less than " +
                  std::to_string(maxMSAAQuality);
         DestroyD3D();
         return false;
@@ -371,7 +371,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     if(!CreateSwapChain(sampleCount, sampleQuality))
     {
-        errMsg = "Failed to create swap chain";
+        errMsg = u8"Failed to create swap chain";
         DestroyD3D();
         return false;
     }
@@ -380,7 +380,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     if(!CreateRenderTargetView())
     {
-        errMsg = "Failed to create render target view";
+        errMsg = u8"Failed to create render target view";
         DestroyD3D();
         return false;
     }
@@ -389,7 +389,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
     if(!CreateDepthStencilBuffer(sampleCount, sampleQuality))
     {
-        errMsg = "Failed to create depth stencil buffer";
+        errMsg = u8"Failed to create depth stencil buffer";
         DestroyD3D();
         return false;
     }

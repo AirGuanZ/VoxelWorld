@@ -43,9 +43,9 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
 
     for(size_t i = 0; i < basicRendererTextures_.size(); ++i)
     {
-        if(!basicRendererTextures_[i].LoadFromFile(rscMgr("BasicRenderer", "Texture[" + std::to_string(i) + "]")))
+        if(!basicRendererTextures_[i].LoadFromFile(rscMgr(u8"BasicRenderer", u8"Texture[" + std::to_string(i) + u8"]")))
         {
-            errMsg = "Failed to load textures for basic renderer";
+            errMsg = u8"Failed to load textures for basic renderer";
             Destroy();
             return false;
         }
@@ -59,9 +59,9 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
 
     for(size_t i = 0; i < carveRendererTextures_.size(); ++i)
     {
-        if(!carveRendererTextures_[i].LoadFromFile(rscMgr("CarveRenderer", "Texture[" + std::to_string(i) + "]")))
+        if(!carveRendererTextures_[i].LoadFromFile(rscMgr(u8"CarveRenderer", u8"Texture[" + std::to_string(i) + u8"]")))
         {
-            errMsg = "Failed to load textures for carve renderer";
+            errMsg = u8"Failed to load textures for carve renderer";
             Destroy();
             return false;
         }
@@ -75,9 +75,9 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
 
     for(size_t i = 0; i < liquidRendererTextures_.size(); ++i)
     {
-        if(!liquidRendererTextures_[i].LoadFromFile(rscMgr("LiquidRenderer", "Texture[" + std::to_string(i) + "]")))
+        if(!liquidRendererTextures_[i].LoadFromFile(rscMgr(u8"LiquidRenderer", u8"Texture[" + std::to_string(i) + u8"]")))
         {
-            errMsg = "Failed to load textures for liquid renderer";
+            errMsg = u8"Failed to load textures for liquid renderer";
             Destroy();
             return false;
         }
@@ -86,34 +86,34 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
     sampler_ = Sampler();
     if(!sampler_)
     {
-        errMsg = "Failed to create sampler object for chunk rendering";
+        errMsg = u8"Failed to create sampler object for chunk rendering";
         Destroy();
         return false;
     }
 
     basicUniforms_.reset(basicRenderer_.GetShader().CreateUniformManager());
-    basicUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
+    basicUniforms_->GetShaderSampler<SS_PS>(u8"sam")->SetSampler(sampler_);
 
     carveUniforms_.reset(carveRenderer_.GetShader().CreateUniformManager());
-    carveUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
+    carveUniforms_->GetShaderSampler<SS_PS>(u8"sam")->SetSampler(sampler_);
 
     liquidUniforms_.reset(liquidRenderer_.GetShader().CreateUniformManager());
-    liquidUniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
+    liquidUniforms_->GetShaderSampler<SS_PS>(u8"sam")->SetSampler(sampler_);
 
-    basicUniform_Trans_ = basicUniforms_->GetConstantBuffer<SS_VS, BasicVSCBTrans>(dev, "Trans");
-    basicUniform_Fog_ = basicUniforms_->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, "Fog");
-    basicUniform_Sunlight_ = basicUniforms_->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, "Sunlight");
-    basicUniform_Tex_ = basicUniforms_->GetShaderResource<SS_PS>("tex");
+    basicUniform_Trans_ = basicUniforms_->GetConstantBuffer<SS_VS, BasicVSCBTrans>(dev, u8"Trans");
+    basicUniform_Fog_ = basicUniforms_->GetConstantBuffer<SS_PS, BasicPSCBFog>(dev, u8"Fog");
+    basicUniform_Sunlight_ = basicUniforms_->GetConstantBuffer<SS_PS, BasicPSCBSunlight>(dev, u8"Sunlight");
+    basicUniform_Tex_ = basicUniforms_->GetShaderResource<SS_PS>(u8"tex");
 
-    carveUniform_Trans_ = carveUniforms_->GetConstantBuffer<SS_VS, CarveVSCBTrans>(dev, "Trans");
-    carveUniform_Fog_ = carveUniforms_->GetConstantBuffer<SS_PS, CarvePSCBFog>(dev, "Fog");
-    carveUniform_Sunlight_ = carveUniforms_->GetConstantBuffer<SS_PS, CarvePSCBSunlight>(dev, "Sunlight");
-    carveUniform_Tex_ = carveUniforms_->GetShaderResource<SS_PS>("tex");
+    carveUniform_Trans_ = carveUniforms_->GetConstantBuffer<SS_VS, CarveVSCBTrans>(dev, u8"Trans");
+    carveUniform_Fog_ = carveUniforms_->GetConstantBuffer<SS_PS, CarvePSCBFog>(dev, u8"Fog");
+    carveUniform_Sunlight_ = carveUniforms_->GetConstantBuffer<SS_PS, CarvePSCBSunlight>(dev, u8"Sunlight");
+    carveUniform_Tex_ = carveUniforms_->GetShaderResource<SS_PS>(u8"tex");
 
-    liquidUniform_Trans_ = liquidUniforms_->GetConstantBuffer<SS_VS, LiquidVSCBTrans>(dev, "Trans");
-    liquidUniform_Fog_ = liquidUniforms_->GetConstantBuffer<SS_PS, LiquidPSCBFog>(dev, "Fog");
-    liquidUniform_Sunlight_ = liquidUniforms_->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, "Sunlight");
-    liquidUniform_Tex_ = liquidUniforms_->GetShaderResource<SS_PS>("tex");
+    liquidUniform_Trans_ = liquidUniforms_->GetConstantBuffer<SS_VS, LiquidVSCBTrans>(dev, u8"Trans");
+    liquidUniform_Fog_ = liquidUniforms_->GetConstantBuffer<SS_PS, LiquidPSCBFog>(dev, u8"Fog");
+    liquidUniform_Sunlight_ = liquidUniforms_->GetConstantBuffer<SS_PS, LiquidPSCBSunlight>(dev, u8"Sunlight");
+    liquidUniform_Tex_ = liquidUniforms_->GetShaderResource<SS_PS>(u8"tex");
 
 
     return true;

@@ -223,11 +223,11 @@ private:
 inline void CopyChunkData(Chunk &dst, const Chunk &src)
 {
     static_assert(std::is_trivially_copyable_v<Chunk::BlockTypeData>,
-        "Chunk::BlockTypeData shall be trivially copiable");
+        u8"Chunk::BlockTypeData shall be trivially copiable");
     static_assert(std::is_trivially_copyable_v<Chunk::BlockLightData>,
-        "Chunk::BlockLightData shall be trivially copiable");
+        u8"Chunk::BlockLightData shall be trivially copiable");
     static_assert(std::is_trivially_copyable_v<Chunk::HeightMap>,
-        "Chunk::HeightMap shall be trivially copiable");
+        u8"Chunk::HeightMap shall be trivially copiable");
 
     std::memcpy(dst.blocks, src.blocks, sizeof(Chunk::BlockTypeData));
     std::memcpy(dst.lights, src.lights, sizeof(Chunk::BlockLightData));

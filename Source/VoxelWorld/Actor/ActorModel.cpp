@@ -34,22 +34,22 @@ namespace
         
         static const std::wstring objFilenames[] =
         {
-            rscMgr("ActorModel", "DefaultModelHead"),
-            rscMgr("ActorModel", "DefaultModelBody"),
-            rscMgr("ActorModel", "DefaultModelLeftHand"),
-            rscMgr("ActorModel", "DefaultModelRightHand"),
-            rscMgr("ActorModel", "DefaultModelLeftFoot"),
-            rscMgr("ActorModel", "DefaultModelRightFoot")
+            rscMgr(u8"ActorModel", u8"DefaultModelHead"),
+            rscMgr(u8"ActorModel", u8"DefaultModelBody"),
+            rscMgr(u8"ActorModel", u8"DefaultModelLeftHand"),
+            rscMgr(u8"ActorModel", u8"DefaultModelRightHand"),
+            rscMgr(u8"ActorModel", u8"DefaultModelLeftFoot"),
+            rscMgr(u8"ActorModel", u8"DefaultModelRightFoot")
         };
         
         static const std::string boneNames[] =
         {
-            "Armature_Head",
-            "Armature_Body",
-            "Armature_LeftHand",
-            "Armature_RightHand",
-            "Armature_LeftFoot",
-            "Armature_RightFoot"
+            u8"Armature_Head",
+            u8"Armature_Body",
+            u8"Armature_LeftHand",
+            u8"Armature_RightHand",
+            u8"Armature_LeftFoot",
+            u8"Armature_RightFoot"
         };
         
         static_assert(Helper::ArraySize(objFilenames) == Helper::ArraySize(boneNames));
@@ -104,16 +104,16 @@ bool ActorModel::Initialize(std::string &errMsg)
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
 
     assert(!tex_.IsAvailable());
-    if(!tex_.LoadFromFile(rscMgr("ActorModel", "DefaultTexture")))
+    if(!tex_.LoadFromFile(rscMgr(u8"ActorModel", u8"DefaultTexture")))
     {
-        errMsg = "Failed to load texture for actor renderer";
+        errMsg = u8"Failed to load texture for actor renderer";
         Destroy();
         return false;
     }
 
     if(!sampler_)
     {
-        errMsg = "Failed to initialize sampler for actor texture";
+        errMsg = u8"Failed to initialize sampler for actor texture";
         Destroy();
         return false;
     }
@@ -121,10 +121,10 @@ bool ActorModel::Initialize(std::string &errMsg)
     assert(!shader_.IsAllStagesAvailable());
     
     std::string VSSrc, PSSrc;
-    if(!Helper::ReadFile(rscMgr("ActorModel", "VertexShader"), VSSrc) ||
-       !Helper::ReadFile(rscMgr("ActorModel", "PixelShader"), PSSrc))
+    if(!Helper::ReadFile(rscMgr(u8"ActorModel", u8"VertexShader"), VSSrc) ||
+       !Helper::ReadFile(rscMgr(u8"ActorModel", u8"PixelShader"), PSSrc))
     {
-        errMsg = "Failed to load shader source for actor renderer";
+        errMsg = u8"Failed to load shader source for actor renderer";
         return false;
     }
 
@@ -135,36 +135,36 @@ bool ActorModel::Initialize(std::string &errMsg)
     uniforms_.reset(shader_.CreateUniformManager());
     if(!uniforms_)
     {
-        errMsg = "Failed to create shader uniforms manager for actor renderer";
+        errMsg = u8"Failed to create shader uniforms manager for actor renderer";
         Destroy();
         return false;
     }
     try
     {
-        uniforms_->GetShaderResource<SS_PS>("tex")->SetShaderResource(tex_);
-        uniforms_->GetShaderSampler<SS_PS>("sam")->SetSampler(sampler_);
+        uniforms_->GetShaderResource<SS_PS>(u8"tex")->SetShaderResource(tex_);
+        uniforms_->GetShaderSampler<SS_PS>(u8"sam")->SetSampler(sampler_);
     }
     catch(const OWE::Error &err)
     {
-        errMsg = std::string("Error in actor renderer uniforms: ") + err.what();
+        errMsg = std::string(u8"Error in actor renderer uniforms: ") + err.what();
         Destroy();
         return false;
     }
 
     D3D11_INPUT_ELEMENT_DESC inputDesc[] =
     {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
+        { u8"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
             Helper::MemOffset(&ActorModelVertex::pos), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
+        { u8"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
             Helper::MemOffset(&ActorModelVertex::nor), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
+        { u8"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
             Helper::MemOffset(&ActorModelVertex::uv), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     if(!inputLayout_.Initialize(inputDesc,
         shader_.GetShaderByteCodeWithInputSignature(),
         shader_.GetShaderByteCodeSizeWithInputSignature()))
     {
-        errMsg = "Failed to create input layout for actor renderer";
+        errMsg = u8"Failed to create input layout for actor renderer";
         Destroy();
         return false;
     }
@@ -174,14 +174,14 @@ bool ActorModel::Initialize(std::string &errMsg)
     std::map<std::string, int> boneMap;
     if(!InitActorSkeleton(skeleton_, boneMap))
     {
-        errMsg = "Failed to initialize actor skeleton";
+        errMsg = u8"Failed to initialize actor skeleton";
         Destroy();
         return false;
     }
 
     if(!InitActorMesh(boneMap, meshes_))
     {
-        errMsg = "Failed to initialize actor meshes";
+        errMsg = u8"Failed to initialize actor meshes";
         Destroy();
         return false;
     }
@@ -202,7 +202,7 @@ void ActorModel::Destroy(void)
     meshes_.clear();
 
     skeleton_.Clear();
-    currentAniClip_ = "";
+    currentAniClip_ = u8"";
     aniClipLoop_ = false;
     t_ = 0.0f;
 }
@@ -258,14 +258,14 @@ void ActorModel::Render(const Camera &cam)
     DC->IASetInputLayout(inputLayout_);
     UINT stride = sizeof(ActorModelVertex), offset = 0;
 
-    uniforms_->GetConstantBuffer<SS_PS, PSCBBrightness, true>(dev, "Brightness")
+    uniforms_->GetConstantBuffer<SS_PS, PSCBBrightness, true>(dev, u8"Brightness")
         ->SetBufferData(DC, { { 1.0f, 1.0f, 1.0f } });
 
     for(ActorModelComponent &mesh : meshes_)
     {
         Matrix WVP = boneMats[mesh.boneIndex] * worldTrans_
                                               * cam.GetViewProjMatrix();
-        uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans")
+        uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, u8"Trans")
             ->SetBufferData(DC, { WVP.Transpose() });
         uniforms_->Bind(DC);
 

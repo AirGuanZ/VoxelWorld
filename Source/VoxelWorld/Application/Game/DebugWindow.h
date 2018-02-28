@@ -49,16 +49,16 @@ public:
         GUI &gui = GUI::GetInstance();
 
         ImGui::SetNextWindowSize(ImVec2(400.0f, 150.0f));
-        if(ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_NoResize |
+        if(ImGui::Begin(u8"Debug", nullptr, ImGuiWindowFlags_NoResize |
                                           ImGuiWindowFlags_NoMove |
                                           ImGuiWindowFlags_NoCollapse))
         {
             gui.PushFont(0);
 
-            ImGui::Text(("FPS: " + std::to_string(info_.FPS)).c_str());
-            ImGui::Text(("Actor on ground: " + std::string(info_.actorOnGround ? "true" : "false")).c_str());
-            ImGui::Text(("Actor Position: "  + ToString(info_.actorPos)).c_str());
-            ImGui::Text(("Camera Position: " + ToString(info_.camPos)).c_str());
+            ImGui::Text((u8"FPS: " + std::to_string(info_.FPS)).c_str());
+            ImGui::Text((u8"Actor on ground: " + std::string(info_.actorOnGround ? u8"true" : u8"false")).c_str());
+            ImGui::Text((u8"Actor Position: "  + ToString(info_.actorPos)).c_str());
+            ImGui::Text((u8"Camera Position: " + ToString(info_.camPos)).c_str());
 
             gui.PopFont();
         }

@@ -270,10 +270,10 @@ void Actor::UpdateCameraPosition(float deltaT, ChunkManager *ckMgr)
 
 namespace
 {
-    const std::string ACTOR_ANINAME_STANDING = "Moving";
-    const std::string ACTOR_ANINAME_RUNNING  = "Moving";
-    const std::string ACTOR_ANINAME_WALKING  = "Moving";
-    const std::string ACTOR_ANINAME_JUMPING  = "Moving";
+    const std::string ACTOR_ANINAME_STANDING = u8"Moving";
+    const std::string ACTOR_ANINAME_RUNNING  = u8"Moving";
+    const std::string ACTOR_ANINAME_WALKING  = u8"Moving";
+    const std::string ACTOR_ANINAME_JUMPING  = u8"Moving";
 }
 
 void Actor::InitState_Standing(const UserInput &uI, const EnvirInput &eI)

@@ -32,7 +32,7 @@ Game::Game(const AppConf &conf)
 
 bool Game::Initialize(std::string &errMsg)
 {
-    errMsg = "";
+    errMsg = u8"";
 
     dev_ = win_.GetD3DDevice();
     DC_  = win_.GetD3DDeviceContext();
@@ -45,7 +45,7 @@ bool Game::Initialize(std::string &errMsg)
 
     if(!crosshair_.Initialize())
     {
-        errMsg = "Failed to initialize crosshair";
+        errMsg = u8"Failed to initialize crosshair";
         return false;
     }
 

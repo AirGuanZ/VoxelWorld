@@ -24,23 +24,23 @@ namespace
 
         try
         {
-            conf.winWidth  = std::stoi(file("Initialize", "WindowWidth"));
-            conf.winHeight = std::stoi(file("Initialize", "WindowHeight"));
-            conf.MSAA      = std::stoi(file("Initialize", "MSAA"));
+            conf.winWidth  = std::stoi(file(u8"Initialize", u8"WindowWidth"));
+            conf.winHeight = std::stoi(file(u8"Initialize", u8"WindowHeight"));
+            conf.MSAA      = std::stoi(file(u8"Initialize", u8"MSAA"));
 
-            conf.unloadDistance  = std::stoi(file("World", "UnloadDistance"));
-            conf.preloadDistance = std::stoi(file("World", "PreloadDistance"));
-            conf.renderDistance  = std::stoi(file("World", "RenderDistance"));
-            conf.loaderCount     = std::stoi(file("World", "LoaderCount"));
+            conf.unloadDistance  = std::stoi(file(u8"World", u8"UnloadDistance"));
+            conf.preloadDistance = std::stoi(file(u8"World", u8"PreloadDistance"));
+            conf.renderDistance  = std::stoi(file(u8"World", u8"RenderDistance"));
+            conf.loaderCount     = std::stoi(file(u8"World", u8"LoaderCount"));
 
-            conf.maxFogStart = std::stof(file("Fog", "Start"));
-            conf.maxFogRange = std::stof(file("Fog", "Range"));
+            conf.maxFogStart = std::stof(file(u8"Fog", u8"Start"));
+            conf.maxFogRange = std::stof(file(u8"Fog", u8"Range"));
 
-            conf.fonts.resize(std::stoi(rM.AsString("Font", "Count")));
+            conf.fonts.resize(std::stoi(rM.AsString(u8"Font", u8"Count")));
             for(size_t i = 0; i < conf.fonts.size(); ++i)
             {
-                conf.fonts[i].ttfFilename = rM.AsString("Font", "TTFName["   + std::to_string(i) + "]");
-                conf.fonts[i].pixelSize   = std::stof(rM.AsString("Font", "PixelSize[" + std::to_string(i) + "]"));
+                conf.fonts[i].ttfFilename = rM.AsString(u8"Font", u8"TTFName["   + std::to_string(i) + u8"]");
+                conf.fonts[i].pixelSize   = std::stof(rM.AsString(u8"Font", u8"PixelSize[" + std::to_string(i) + u8"]"));
             }
         }
         catch(const std::exception&)
@@ -82,17 +82,17 @@ void Application::Run(void)
 bool Application::Initialize(std::string &errMsg)
 {
     ResourceNameManager &rscMgr = ResourceNameManager::GetInstance();
-    errMsg = "";
+    errMsg = u8"";
 
     if(!rscMgr.LoadFromFile(L"resource.txt"))
     {
-        errMsg = "Failed to load resource configuring file: resource.conf";
+        errMsg = u8"Failed to load resource configuring file: resource.conf";
         return false;
     }
 
-    if(!LoadAppConf(appConf_, rscMgr("Application", "ConfigFile")))
+    if(!LoadAppConf(appConf_, rscMgr(u8"Application", u8"ConfigFile")))
     {
-        errMsg = "Failed to load configure file";
+        errMsg = u8"Failed to load configure file";
         return false;
     }
 
