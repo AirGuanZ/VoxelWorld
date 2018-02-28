@@ -154,7 +154,7 @@
     <None Include="Bin\Model\Actor\body.obj">
       <Filter>Bin\Model\Actor</Filter>
     </None>
-    <None Include="resource.conf" />
+    <None Include="resource.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
@@ -171,7 +171,7 @@
     <Text Include="..\Source\VoxelWorld\Screen\imgui\LICENSE.txt">
       <Filter>Source\Screen\imgui</Filter>
     </Text>
-    <Text Include="config.conf" />
+    <Text Include="config.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">

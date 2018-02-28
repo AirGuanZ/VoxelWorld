@@ -5,13 +5,6 @@ WindowHeight = 768
 
 MSAA = 1
 
-[Font]
-
-Count = 1
-
-TTFName[0] = Bin/Font/DroidSans.ttf
-PixelSize[0] = 20.0
-
 [World]
 
 # гІТњзуЃК0 < RenderDistance < PreloadDistance <= UnloadDistance

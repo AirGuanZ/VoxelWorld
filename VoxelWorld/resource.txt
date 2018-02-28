@@ -1,6 +1,6 @@
 [Application]
 
-ApplicationConfigFile = config.conf
+ConfigFile = config.txt
 
 [BasicRenderer]
 
@@ -45,3 +45,10 @@ Texture = Bin/Texture/Crosshair/cross.png
 
 VertexShader = Bin/Shader/ImmediateScreen2D/normalVertex.hlsl
 PixelShader  = Bin/Shader/ImmediateScreen2D/normalPixel.hlsl
+
+[Font]
+
+Count = 1
+
+TTFName[0] = Bin/Font/DroidSans.ttf
+PixelSize[0] = 20.0

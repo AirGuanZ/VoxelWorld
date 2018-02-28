@@ -38,6 +38,11 @@ public:
         conf_.Clear();
     }
 
+    std::string AsString(const std::string &section, const std::string &key)
+    {
+        return conf_(section, key);
+    }
+
 private:
     ConfigFile conf_;
 };

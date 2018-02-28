@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ReadMe.md" />
-    <None Include="resource.conf" />
+    <None Include="resource.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Source\VoxelWorld\Screen\imgui\LICENSE.txt" />
-    <Text Include="config.conf" />
+    <Text Include="config.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Actor\vertex.hlsl">

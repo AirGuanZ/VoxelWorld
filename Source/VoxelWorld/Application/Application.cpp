@@ -16,29 +16,31 @@ namespace
 {
     bool LoadAppConf(AppConf &conf, const std::wstring &filename)
     {
+        RscNameMgr &rM = RscNameMgr::GetInstance();
+
         ConfigFile file(filename);
         if(!file)
             return false;
 
         try
         {
-            conf.winWidth = std::stoi(file("Initialize", "WindowWidth"));
+            conf.winWidth  = std::stoi(file("Initialize", "WindowWidth"));
             conf.winHeight = std::stoi(file("Initialize", "WindowHeight"));
-            conf.MSAA = std::stoi(file("Initialize", "MSAA"));
+            conf.MSAA      = std::stoi(file("Initialize", "MSAA"));
 
-            conf.unloadDistance = std::stoi(file("World", "UnloadDistance"));
+            conf.unloadDistance  = std::stoi(file("World", "UnloadDistance"));
             conf.preloadDistance = std::stoi(file("World", "PreloadDistance"));
-            conf.renderDistance = std::stoi(file("World", "RenderDistance"));
-            conf.loaderCount = std::stoi(file("World", "LoaderCount"));
+            conf.renderDistance  = std::stoi(file("World", "RenderDistance"));
+            conf.loaderCount     = std::stoi(file("World", "LoaderCount"));
 
             conf.maxFogStart = std::stof(file("Fog", "Start"));
             conf.maxFogRange = std::stof(file("Fog", "Range"));
 
-            conf.fonts.resize(std::stoi(file("Font", "Count")));
+            conf.fonts.resize(std::stoi(rM.AsString("Font", "Count")));
             for(size_t i = 0; i < conf.fonts.size(); ++i)
             {
-                conf.fonts[i].ttfFilename = file("Font", "TTFName[" + std::to_string(i) + "]");
-                conf.fonts[i].pixelSize = std::stof(file("Font", "PixelSize[" + std::to_string(i) + "]"));
+                conf.fonts[i].ttfFilename = rM.AsString("Font", "TTFName["   + std::to_string(i) + "]");
+                conf.fonts[i].pixelSize   = std::stof(rM.AsString("Font", "PixelSize[" + std::to_string(i) + "]"));
             }
         }
         catch(const std::exception&)
@@ -82,13 +84,13 @@ bool Application::Initialize(std::string &errMsg)
     ResourceNameManager &rscMgr = ResourceNameManager::GetInstance();
     errMsg = "";
 
-    if(!rscMgr.LoadFromFile(L"resource.conf"))
+    if(!rscMgr.LoadFromFile(L"resource.txt"))
     {
         errMsg = "Failed to load resource configuring file: resource.conf";
         return false;
     }
 
-    if(!LoadAppConf(appConf_, rscMgr("Application", "ApplicationConfigFile")))
+    if(!LoadAppConf(appConf_, rscMgr("Application", "ConfigFile")))
     {
         errMsg = "Failed to load configure file";
         return false;

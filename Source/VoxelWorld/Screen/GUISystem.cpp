@@ -40,6 +40,7 @@ namespace
 
 #ifdef GUI_CE
     using CEGUIRenderer = CEGUI::Direct3D11Renderer;
+
     CEGUIRenderer::Renderer *ceRenderer = nullptr;
 #endif
 }
@@ -48,7 +49,7 @@ bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &er
 {
     Window &window = Window::GetInstance();
 
-    clientWidth = window.GetClientWidth();
+    clientWidth  = window.GetClientWidth();
     clientHeight = window.GetClientHeight();
 
 #ifdef GUI_IG
@@ -63,7 +64,10 @@ bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &er
     imGuiFonts.resize(ttfFonts.size() + 1);
     imGuiFonts[0] = io.Fonts->AddFontDefault();
     for(size_t i = 0; i < ttfFonts.size(); ++i)
-        imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
+    {
+        imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
+            ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
+    }
 #endif
 
 #ifdef GUI_CE
