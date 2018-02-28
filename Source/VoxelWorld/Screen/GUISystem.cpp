@@ -14,6 +14,9 @@ Created by AirGuanZ
 #include <Window/Window.h>
 #include "GUISystem.h"
 
+#include <CEGUI/CEGUI.h>
+#include <CEGUI/RendererModules/Direct3D11/Renderer.h>
+
 SINGLETON_CLASS_DEFINITION(GUI);
 
 #ifdef GUI_IG

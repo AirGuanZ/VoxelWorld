@@ -25,6 +25,7 @@ x86_static/
 Art/
 Tools/
 Design/
+Library/CEGUI/
 
 # Visual Studio 2015 cache/options directory
 .vs/
