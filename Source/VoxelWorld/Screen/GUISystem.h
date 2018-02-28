@@ -16,7 +16,9 @@ Created by AirGuanZ
 #define GUI_CE
 
 #ifdef GUI_IG
+
 #include "imgui/imgui.h"
+
 #endif
 
 class GUI : public Singleton<GUI>
@@ -35,13 +37,15 @@ public:
     void Render(void);
 
 #ifdef GUI_IG
+
     void PushFont(int index = -1);
     void PopFont(void);
+
 #endif
 
-    //输入事件，一般来说由消息循环调用
+    //输入事件，一般由消息循环调用
 
-    //该函数需要自己调用，消息循环不会管
+    //该函数需要自己调用
     void MousePosition(int x, int y);
 
     void MouseButtonDown(MouseButton button);

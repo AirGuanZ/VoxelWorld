@@ -7,14 +7,14 @@ MSAA = 1
 
 [World]
 
-# Ó¦Âú×ã£º0 < RenderDistance < PreloadDistance <= UnloadDistance
+# åº”æ»¡è¶³ï¼š0 < RenderDistance < PreloadDistance <= UnloadDistance
 
 UnloadDistance  = 14
 PreloadDistance = 13
 RenderDistance  = 12
 
-# ºóÌ¨Çø¿é¼ÓÔØÏß³ÌÊý
-# ÉèÖÃÎª-1Ôò×Ô¶¯È¡ÎªÊÊºÏÓ²¼þµÄÖµ
+# åŽå°åŒºå—åŠ è½½çº¿ç¨‹æ•°
+# è®¾ç½®ä¸º-1åˆ™è‡ªåŠ¨å–ä¸ºé€‚åˆç¡¬ä»¶çš„å€¼
 LoaderCount = -1
 
 [Fog]

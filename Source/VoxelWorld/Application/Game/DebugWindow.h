@@ -53,14 +53,10 @@ public:
                                           ImGuiWindowFlags_NoMove |
                                           ImGuiWindowFlags_NoCollapse))
         {
-            gui.PushFont(0);
-
             ImGui::Text((u8"FPS: " + std::to_string(info_.FPS)).c_str());
             ImGui::Text((u8"Actor on ground: " + std::string(info_.actorOnGround ? u8"true" : u8"false")).c_str());
             ImGui::Text((u8"Actor Position: "  + ToString(info_.actorPos)).c_str());
             ImGui::Text((u8"Camera Position: " + ToString(info_.camPos)).c_str());
-
-            gui.PopFont();
         }
         ImGui::End();
     }
