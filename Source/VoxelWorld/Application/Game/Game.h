@@ -34,7 +34,7 @@ private:
 
     Window &win_;
     InputManager &input_;
-    GUISystem &gui_;
+    GUI &gui_;
 
     ID3D11Device *dev_;
     ID3D11DeviceContext *DC_;

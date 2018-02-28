@@ -1,5 +1,5 @@
 /*================================================================
-Filename: GUISystem.h
+Filename: GUI.h
 Date: 2018.2.23
 Created by AirGuanZ
 ================================================================*/
@@ -12,13 +12,13 @@ Created by AirGuanZ
 
 #include <Input/InputManager.h>
 
-#define GUI_SYSTEM_IG
+#define GUI_IG
 
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
 #include "imgui/imgui.h"
 #endif
 
-class GUISystem : public Singleton<GUISystem>
+class GUI : public Singleton<GUI>
 {
 public:
     struct FontSpecifier
@@ -33,7 +33,7 @@ public:
     void NewFrame(void);
     void Render(void);
 
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     void PushFont(int index = -1);
     void PopFont(void);
 #endif

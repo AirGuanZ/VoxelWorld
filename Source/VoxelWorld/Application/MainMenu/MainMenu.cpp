@@ -12,7 +12,7 @@ Created by AirGuanZ
 AppState MainMenu::Run(void)
 {
     Window &win         = Window::GetInstance();
-    GUISystem &gui      = GUISystem::GetInstance();
+    GUI &gui      = GUI::GetInstance();
     InputManager &input = InputManager::GetInstance();
 
     bool done = false;
@@ -31,12 +31,14 @@ AppState MainMenu::Run(void)
 
         gui.MousePosition(input.GetCursorPosX(), input.GetCursorPosY());
         if(Begin("MainMenu", nullptr, ImVec2(400.0f, 400.0f), -1.0f,
+                 ImGuiWindowFlags_NoTitleBar |
                  ImGuiWindowFlags_NoCollapse |
                  ImGuiWindowFlags_NoResize |
                  ImGuiWindowFlags_NoSavedSettings))
         {
-            LabelText("MousePosition", (std::to_string(input.GetCursorPosX()) + ", " +
-                                        std::to_string(input.GetCursorPosY())).c_str());
+            gui.PushFont(0);
+            Text((std::to_string(input.GetCursorPosX()) + ", " +
+                  std::to_string(input.GetCursorPosY())).c_str());
             if(Button("Game"))
             {
                 ret = AppState::Game;
@@ -47,6 +49,7 @@ AppState MainMenu::Run(void)
                 ret = AppState::Exit;
                 done = true;
             }
+            gui.PopFont();
         }
         End();
 

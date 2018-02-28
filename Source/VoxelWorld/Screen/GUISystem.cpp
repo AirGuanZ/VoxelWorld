@@ -1,5 +1,5 @@
 /*================================================================
-Filename: GUISystem.cpp
+Filename: GUI.cpp
 Date: 2018.2.23
 Created by AirGuanZ
 ================================================================*/
@@ -14,9 +14,9 @@ Created by AirGuanZ
 #include <Window/Window.h>
 #include "GUISystem.h"
 
-SINGLETON_CLASS_DEFINITION(GUISystem);
+SINGLETON_CLASS_DEFINITION(GUI);
 
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
@@ -29,16 +29,16 @@ namespace
 
     int clientWidth = 100, clientHeight = 100;
 
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     std::vector<ImFont*> imGuiFonts;
 #endif
 }
 
-bool GUISystem::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg)
+bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg)
 {
     Window &window = Window::GetInstance();
 
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     if(!ImGui_ImplDX11_Init(window.GetWindowHandle(),
                             window.GetD3DDevice(),
                             window.GetD3DDeviceContext()))
@@ -61,11 +61,11 @@ bool GUISystem::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::stri
     return true;
 }
 
-void GUISystem::Destroy(void)
+void GUI::Destroy(void)
 {
     if(GUISystemInited)
     {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
         ImGui_ImplDX11_Shutdown();
 #endif
 
@@ -73,27 +73,27 @@ void GUISystem::Destroy(void)
     }
 }
 
-void GUISystem::NewFrame(void)
+void GUI::NewFrame(void)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     ImGui_ImplDX11_NewFrame();
 #endif
 }
 
-void GUISystem::Render(void)
+void GUI::Render(void)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     ImGui::Render();
 #endif
 }
 
-#ifdef GUI_SYSTEM_IG
-void GUISystem::PushFont(int idx)
+#ifdef GUI_IG
+void GUI::PushFont(int idx)
 {
     ImGui::PushFont(imGuiFonts[idx + 1]);
 }
 
-void GUISystem::PopFont(void)
+void GUI::PopFont(void)
 {
     ImGui::PopFont();
 }
@@ -107,89 +107,85 @@ namespace
     }
 }
 
-void GUISystem::MousePosition(int x, int y)
+void GUI::MousePosition(int x, int y)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     ImGui::GetIO().MousePos = ImVec2(static_cast<float>(clamp(x, 0, clientWidth)),
                                      static_cast<float>(clamp(y, 0, clientHeight)));
 #endif
 }
 
-void GUISystem::MouseButtonDown(MouseButton button)
+void GUI::MouseButtonDown(MouseButton button)
 {
-#ifdef GUI_SYSTEM_IG
-    int butIdx = 0;
+#ifdef GUI_IG
     switch(button)
     {
     case MouseButton::Left:
-        butIdx = 0;
+        ImGui::GetIO().MouseDown[0] = true;
         break;
     case MouseButton::Middle:
-        butIdx = 1;
+        ImGui::GetIO().MouseDown[1] = true;
         break;
     case MouseButton::Right:
-        butIdx = 2;
+        ImGui::GetIO().MouseDown[2] = true;
         break;
     }
-    ImGui::GetIO().MouseDown[butIdx] = true;
 #endif
 }
 
-void GUISystem::MouseButtonUp(MouseButton button)
+void GUI::MouseButtonUp(MouseButton button)
 {
-#ifdef GUI_SYSTEM_IG
-    int butIdx = 0;
+#ifdef GUI_IG
     switch(button)
     {
     case MouseButton::Left:
-        butIdx = 0;
+        ImGui::GetIO().MouseDown[0] = false;
         break;
     case MouseButton::Middle:
-        butIdx = 1;
+        ImGui::GetIO().MouseDown[1] = false;
         break;
     case MouseButton::Right:
-        butIdx = 2;
+        ImGui::GetIO().MouseDown[2] = false;
         break;
     }
-    ImGui::GetIO().MouseDown[butIdx] = false;
 #endif
 }
 
-void GUISystem::MouseWheel(int wheel)
+void GUI::MouseWheel(int wheel)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     ImGui::GetIO().MouseWheel += static_cast<float>(wheel);
 #endif
 }
 
-void GUISystem::MouseMove(int posX, int posY)
+void GUI::MouseMove(int posX, int posY)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     ImGuiIO &io = ImGui::GetIO();
     io.MousePos.x = static_cast<float>(posX);
     io.MousePos.y = static_cast<float>(posY);
 #endif
 }
 
-void GUISystem::KeyDown(int VK)
+void GUI::KeyDown(int VK)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     if(0 <= VK && VK < 256)
         ImGui::GetIO().KeysDown[VK] = true;
 #endif
 }
 
-void GUISystem::KeyUp(int VK)
+void GUI::KeyUp(int VK)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     if(0 <= VK && VK < 256)
         ImGui::GetIO().KeysDown[VK] = false;
 #endif
 }
 
-void GUISystem::Char(unsigned int ch)
+void GUI::Char(unsigned int ch)
 {
-#ifdef GUI_SYSTEM_IG
+#ifdef GUI_IG
     if(0 < ch && ch < 0x10000)
         ImGui::GetIO().AddInputCharacter(static_cast<ImWchar>(ch));
 #endif

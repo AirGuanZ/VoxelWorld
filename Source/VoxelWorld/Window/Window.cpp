@@ -288,7 +288,7 @@ static void SetDefaultViewport(void)
 
 static void DestroyGUISystem(void)
 {
-    GUISystem::GetInstance().Destroy();
+    GUI::GetInstance().Destroy();
 }
 
 static void DestroyD3D(void)
@@ -296,7 +296,7 @@ static void DestroyD3D(void)
     using Helper::ReleaseCOMObjects;
     using namespace D3D;
 
-    GUISystem::GetInstance().Destroy();
+    GUI::GetInstance().Destroy();
 
     isFullscreen = false;
     vsync = true;
@@ -406,9 +406,9 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
     return true;
 }
 
-bool Window::InitGUI(const std::vector<GUISystem::FontSpecifier> &fonts, std::string &errMsg)
+bool Window::InitGUI(const std::vector<GUI::FontSpecifier> &fonts, std::string &errMsg)
 {
-    return GUISystem::GetInstance().Initialize(fonts, errMsg);
+    return GUI::GetInstance().Initialize(fonts, errMsg);
 }
 
 bool Window::IsWindowAvailable(void)
@@ -523,7 +523,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;
     InputManager &input = InputManager::GetInstance();
-    GUISystem &gui = GUISystem::GetInstance();
+    GUI &gui = GUI::GetInstance();
 
     static bool paused = false;
 

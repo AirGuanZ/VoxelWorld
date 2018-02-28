@@ -26,7 +26,7 @@ Created by AirGuanZ
 Game::Game(const AppConf &conf)
     : win_(Window::GetInstance()),
       input_(InputManager::GetInstance()),
-      gui_(GUISystem::GetInstance()),
+      gui_(GUI::GetInstance()),
       appConf_(conf)
 {
     dev_ = nullptr;

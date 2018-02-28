@@ -25,7 +25,7 @@ struct AppConf
 
     int loaderCount;
 
-    std::vector<GUISystem::FontSpecifier> fonts;
+    std::vector<GUI::FontSpecifier> fonts;
 };
 
 enum class AppState
