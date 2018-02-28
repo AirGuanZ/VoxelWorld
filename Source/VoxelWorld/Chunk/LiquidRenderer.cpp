@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Utility/HelperFunctions.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include "LiquidRenderer.h"
 
 LiquidRenderer::LiquidRenderer(void)

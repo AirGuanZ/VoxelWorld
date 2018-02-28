@@ -3,7 +3,7 @@ Filename: ChunkRendererManager.cpp
 Date: 2018.2.25
 Created by AirGuanZ
 ================================================================*/
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 
 #include "ChunkRendererManager.h"
@@ -31,6 +31,7 @@ ChunkRendererManager::ChunkRendererManager(void)
 
 bool ChunkRendererManager::Initialize(std::string &errMsg)
 {
+    RscNameMgr &rscMgr = RscNameMgr::GetInstance();
     DC_               = Window::GetInstance().GetD3DDeviceContext();
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
@@ -40,11 +41,14 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
         return false;
     }
 
-    if(!basicRendererTextures_[0].LoadFromFile(BASIC_RENDERER_TEXTURE_0))
+    for(size_t i = 0; i < basicRendererTextures_.size(); ++i)
     {
-        errMsg = "Failed to load texture for basic renderer 0";
-        Destroy();
-        return false;
+        if(!basicRendererTextures_[i].LoadFromFile(rscMgr("BasicRenderer", "Texture[" + std::to_string(i) + "]")))
+        {
+            errMsg = "Failed to load textures for basic renderer";
+            Destroy();
+            return false;
+        }
     }
 
     if(!carveRenderer_.Initialize(errMsg))
@@ -53,11 +57,14 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
         return false;
     }
 
-    if(!carveRendererTextures_[0].LoadFromFile(CARVE_RENDERER_TEXTURE_0))
+    for(size_t i = 0; i < carveRendererTextures_.size(); ++i)
     {
-        errMsg = "Failed to load texture for carve renderer 0";
-        Destroy();
-        return false;
+        if(!carveRendererTextures_[i].LoadFromFile(rscMgr("CarveRenderer", "Texture[" + std::to_string(i) + "]")))
+        {
+            errMsg = "Failed to load textures for carve renderer";
+            Destroy();
+            return false;
+        }
     }
 
     if(!liquidRenderer_.Initialize(errMsg))
@@ -66,11 +73,14 @@ bool ChunkRendererManager::Initialize(std::string &errMsg)
         return false;
     }
 
-    if(!liquidRendererTextures_[0].LoadFromFile(LIQUID_RENDERER_TEXTURE_0))
+    for(size_t i = 0; i < liquidRendererTextures_.size(); ++i)
     {
-        errMsg = "Failed to load texture for liquid renderer 0";
-        Destroy();
-        return false;
+        if(!liquidRendererTextures_[i].LoadFromFile(rscMgr("LiquidRenderer", "Texture[" + std::to_string(i) + "]")))
+        {
+            errMsg = "Failed to load textures for liquid renderer";
+            Destroy();
+            return false;
+        }
     }
 
     sampler_ = Sampler();

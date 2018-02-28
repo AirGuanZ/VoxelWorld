@@ -14,8 +14,10 @@ Created by AirGuanZ
 #include <Window/Window.h>
 #include "GUISystem.h"
 
+#ifdef GUI_CE
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Direct3D11/Renderer.h>
+#endif
 
 SINGLETON_CLASS_DEFINITION(GUI);
 
@@ -35,11 +37,19 @@ namespace
 #ifdef GUI_IG
     std::vector<ImFont*> imGuiFonts;
 #endif
+
+#ifdef GUI_CE
+    using CEGUIRenderer = CEGUI::Direct3D11Renderer;
+    CEGUIRenderer::Renderer *ceRenderer = nullptr;
+#endif
 }
 
 bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg)
 {
     Window &window = Window::GetInstance();
+
+    clientWidth = window.GetClientWidth();
+    clientHeight = window.GetClientHeight();
 
 #ifdef GUI_IG
     if(!ImGui_ImplDX11_Init(window.GetWindowHandle(),
@@ -56,10 +66,12 @@ bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &er
         imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
 #endif
 
-    GUISystemInited = true;
+#ifdef GUI_CE
+    ceRenderer = &CEGUI::Direct3D11Renderer::bootstrapSystem(
+        window.GetD3DDevice(), window.GetD3DDeviceContext());
+#endif
 
-    clientWidth  = window.GetClientWidth();
-    clientHeight = window.GetClientHeight();
+    GUISystemInited = true;
 
     return true;
 }
@@ -70,6 +82,11 @@ void GUI::Destroy(void)
     {
 #ifdef GUI_IG
         ImGui_ImplDX11_Shutdown();
+#endif
+
+#ifdef GUI_CE
+        CEGUIRenderer::destroySystem();
+        ceRenderer = nullptr;
 #endif
 
         GUISystemInited = false;

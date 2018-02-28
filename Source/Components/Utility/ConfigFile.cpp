@@ -10,6 +10,17 @@ Created by AirGuanZ
 
 #include "ConfigFile.h"
 
+namespace
+{
+    const std::string EMPTY_STR;
+}
+
+const std::string &ConfigFileSection::operator[](const std::string &key) const
+{
+    auto it = data_.find(key);
+    return it != data_.end() ? it->second : EMPTY_STR;
+}
+
 ConfigFile::ConfigFile(void)
     : state_(Uninitialized)
 {
@@ -103,8 +114,6 @@ bool ConfigFile::FindSection(const std::string &section)
 
 const std::string &ConfigFile::operator()(const std::string &section, const std::string &key) const
 {
-    static const std::string EMPTY_STR;
-
     auto fIt = map_.find(section);
     if(fIt == map_.end())
         return EMPTY_STR;
@@ -115,4 +124,11 @@ const std::string &ConfigFile::operator()(const std::string &section, const std:
         return EMPTY_STR;
 
     return sIt->second;
+}
+
+ConfigFileSection ConfigFile::GetSection(const std::string &section) const
+{
+    static const std::map<std::string, std::string> EMPTY;
+    decltype(map_)::const_iterator it = map_.find(section);
+    return (it != map_.end()) ? ConfigFileSection(it->second) : ConfigFileSection(EMPTY);
 }

@@ -11,12 +11,7 @@ Created by AirGuanZ
 class ConfigFileSection
 {
 public:
-    const std::string &operator[](const std::string &key) const
-    {
-        static const std::string EMPTY;
-        auto it = data_.find(key);
-        return it != data_.end() ? it->second : EMPTY;
-    }
+    const std::string &operator[](const std::string &key) const;
 
     ConfigFileSection(const ConfigFileSection&) = default;
 
@@ -47,14 +42,10 @@ public:
 
     bool FindSection(const std::string &section);
 
+    //Ä¬ÈÏsectionÃûÎª"Global"
     const std::string &operator()(const std::string &section, const std::string &key) const;
 
-    ConfigFileSection GetSection(const std::string &section) const
-    {
-        static const std::map<std::string, std::string> EMPTY;
-        decltype(map_)::const_iterator it = map_.find(section);
-        return (it != map_.end()) ? ConfigFileSection(it->second) : ConfigFileSection(EMPTY);
-    }
+    ConfigFileSection GetSection(const std::string &section) const;
 
 private:
     enum State

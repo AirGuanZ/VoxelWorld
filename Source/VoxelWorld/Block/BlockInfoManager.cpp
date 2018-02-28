@@ -8,7 +8,6 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include <Resource/ResourceName.h>
 #include "Block.h"
 #include "BlockInfoManager.h"
 

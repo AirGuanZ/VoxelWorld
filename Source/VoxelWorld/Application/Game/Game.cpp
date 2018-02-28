@@ -11,16 +11,10 @@ Created by AirGuanZ
 #include <Windows.h>
 
 #include <Utility/Clock.h>
-#include <Utility/ConfigFile.h>
 #include <Utility/FPSCounter.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Input/InputManager.h>
-#include <Resource/ResourceName.h>
-#include <Screen/Crosshair.h>
-#include <Texture/Texture2D.h>
-#include <Window/Window.h>
-#include <World/World.h>
 #include "Game.h"
 
 Game::Game(const AppConf &conf)

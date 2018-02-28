@@ -11,7 +11,7 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 #include <Utility/ObjFile.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 #include "ActorModel.h"
 
@@ -29,15 +29,17 @@ namespace
     bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
     {
         meshes.clear();
+
+        RscNameMgr &rscMgr = RscNameMgr::GetInstance();
         
         static const std::wstring objFilenames[] =
         {
-            ACTOR_MODEL_DEFAULT_HEAD,
-            ACTOR_MODEL_DEFAULT_BODY,
-            ACTOR_MODEL_DEFAULT_LEFT_HAND,
-            ACTOR_MODEL_DEFAULT_RIGHT_HAND,
-            ACTOR_MODEL_DEFAULT_LEFT_FOOT,
-            ACTOR_MODEL_DEFAULT_RIGHT_FOOT
+            rscMgr("ActorModel", "DefaultModelHead"),
+            rscMgr("ActorModel", "DefaultModelBody"),
+            rscMgr("ActorModel", "DefaultModelLeftHand"),
+            rscMgr("ActorModel", "DefaultModelRightHand"),
+            rscMgr("ActorModel", "DefaultModelLeftFoot"),
+            rscMgr("ActorModel", "DefaultModelRightFoot")
         };
         
         static const std::string boneNames[] =
@@ -96,11 +98,13 @@ namespace
 
 bool ActorModel::Initialize(std::string &errMsg)
 {
+    RscNameMgr &rscMgr = RscNameMgr::GetInstance();
+
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
 
     assert(!tex_.IsAvailable());
-    if(!tex_.LoadFromFile(ACTOR_RENDERER_DEFAULT_TEXTURE))
+    if(!tex_.LoadFromFile(rscMgr("ActorModel", "DefaultTexture")))
     {
         errMsg = "Failed to load texture for actor renderer";
         Destroy();
@@ -117,8 +121,8 @@ bool ActorModel::Initialize(std::string &errMsg)
     assert(!shader_.IsAllStagesAvailable());
     
     std::string VSSrc, PSSrc;
-    if(!Helper::ReadFile(ACTOR_RENDERER_VERTEX_SHADER, VSSrc) ||
-       !Helper::ReadFile(ACTOR_RENDERER_PIXEL_SHADER, PSSrc))
+    if(!Helper::ReadFile(rscMgr("ActorModel", "VertexShader"), VSSrc) ||
+       !Helper::ReadFile(rscMgr("ActorModel", "PixelShader"), PSSrc))
     {
         errMsg = "Failed to load shader source for actor renderer";
         return false;

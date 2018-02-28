@@ -7,7 +7,7 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 #include "BasicRenderer.h"
 
@@ -41,12 +41,14 @@ BasicRenderer::~BasicRenderer(void)
 bool BasicRenderer::Initialize(std::string &errMsg)
 {
     assert(Window::GetInstance().IsD3DAvailable());
+
+    RscNameMgr &rM = RscNameMgr::GetInstance();
     errMsg = "";
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(BASIC_RENDERER_VERTEX_SHADER, vsSrc) ||
-       !Helper::ReadFile(BASIC_RENDERER_PIXEL_SHADER, psSrc))
+    if(!Helper::ReadFile(rM("BasicRenderer", "VertexShader"), vsSrc) ||
+       !Helper::ReadFile(rM("BasicRenderer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source for basic renderer";
         return false;

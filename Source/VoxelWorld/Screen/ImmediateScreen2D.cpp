@@ -8,7 +8,7 @@ Created by AirGuanZ
 
 #include <Utility/HelperFunctions.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 #include "ImmediateScreen2D.h"
 
@@ -22,11 +22,13 @@ ImmediateScreen2D::ImmediateScreen2D(void)
 bool ImmediateScreen2D::Initialize(std::string &errMsg)
 {
     assert(!IsAvailable() && Window::GetInstance().IsD3DAvailable());
+
+    RscNameMgr &rM = RscNameMgr::GetInstance();
     errMsg = "";
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(IMMEDIATE_SCREEN_2D_NOR_VERTEX_SHADER, vsSrc) ||
-       !Helper::ReadFile(IMMEDIATE_SCREEN_2D_NOR_PIXEL_SHADER, psSrc))
+    if(!Helper::ReadFile(rM("ImmediateScreen2D", "VertexShader"), vsSrc) ||
+       !Helper::ReadFile(rM("ImmediateScreen2D", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load source file for ImmediateScreen2D";
         return false;

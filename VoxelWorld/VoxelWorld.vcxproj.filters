@@ -154,6 +154,7 @@
     <None Include="Bin\Model\Actor\body.obj">
       <Filter>Bin\Model\Actor</Filter>
     </None>
+    <None Include="resource.conf" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
@@ -167,10 +168,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="config.txt" />
     <Text Include="..\Source\VoxelWorld\Screen\imgui\LICENSE.txt">
       <Filter>Source\Screen\imgui</Filter>
     </Text>
+    <Text Include="config.conf" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">
@@ -308,6 +309,9 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.cpp">
       <Filter>Source\Application\MainMenu</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Resource\ResourceNameManager.cpp">
+      <Filter>Source\Resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -384,9 +388,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Noise_V2.h">
       <Filter>Source\LandGen\V2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceName.h">
-      <Filter>Source\Resource</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\Crosshair.h">
       <Filter>Source\Screen</Filter>
@@ -492,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\Game\DebugWindow.h">
       <Filter>Source\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceNameManager.h">
+      <Filter>Source\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

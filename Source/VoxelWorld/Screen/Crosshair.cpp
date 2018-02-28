@@ -3,14 +3,14 @@ Filename: Crosshair.cpp
 Date: 2018.1.23
 Created by AirGuanZ
 ================================================================*/
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 #include "Crosshair.h"
 
 bool Crosshair::Initialize(void)
 {
     if(!tex_.IsAvailable())
-        return tex_.LoadFromFile(CROSSHAIR_BASIC_TEXTURE);
+        return tex_.LoadFromFile(RscNameMgr::GetInstance()("Crosshair", "Texture"));
     return true;
 }
 

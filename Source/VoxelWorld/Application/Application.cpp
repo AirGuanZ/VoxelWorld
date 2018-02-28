@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Utility/ConfigFile.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
 
 #include "Application.h"
@@ -79,9 +79,16 @@ void Application::Run(void)
 
 bool Application::Initialize(std::string &errMsg)
 {
+    ResourceNameManager &rscMgr = ResourceNameManager::GetInstance();
     errMsg = "";
 
-    if(!LoadAppConf(appConf_, APPLICATION_CONFIGURE_FILE))
+    if(!rscMgr.LoadFromFile(L"resource.conf"))
+    {
+        errMsg = "Failed to load resource configuring file: resource.conf";
+        return false;
+    }
+
+    if(!LoadAppConf(appConf_, rscMgr("Application", "ApplicationConfigFile")))
     {
         errMsg = "Failed to load configure file";
         return false;

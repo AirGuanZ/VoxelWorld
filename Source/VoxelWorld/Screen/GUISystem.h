@@ -13,6 +13,7 @@ Created by AirGuanZ
 #include <Input/InputManager.h>
 
 #define GUI_IG
+#define GUI_CE
 
 #ifdef GUI_IG
 #include "imgui/imgui.h"

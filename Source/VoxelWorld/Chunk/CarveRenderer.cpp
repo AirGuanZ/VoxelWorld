@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Utility/HelperFunctions.h>
 
-#include <Resource/ResourceName.h>
+#include <Resource/ResourceNameManager.h>
 #include "CarveRenderer.h"
 
 CarveRenderer::CarveRenderer(void)
@@ -20,12 +20,13 @@ CarveRenderer::~CarveRenderer(void)
 
 bool CarveRenderer::Initialize(std::string &errMsg)
 {
+    RscNameMgr &rM = RscNameMgr::GetInstance();
     errMsg = "";
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(CARVE_RENDERER_VERTEX_SHADER, vsSrc) ||
-       !Helper::ReadFile(CARVE_RENDERER_PIXEL_SHADER, psSrc))
+    if(!Helper::ReadFile(rM("CarveRenderer", "VertexShader"), vsSrc) ||
+       !Helper::ReadFile(rM("CarveRenderer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source";
         return false;
