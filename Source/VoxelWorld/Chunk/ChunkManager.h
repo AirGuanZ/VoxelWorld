@@ -21,20 +21,20 @@ Created by AirGuanZ
 #include "ChunkLoader.h"
 
 /*
-    Chunk���ݼ��ؼ�ģ�ʹ���
-        ���߳�ά��һ��Position -> Chunk��ӳ��M����̨����Chunk�����ݼ��غ�ģ�ʹ���
+    Chunk数据加载及模型创建
+        主线程维护一个Position -> Chunk的映射M，后台负责Chunk的数据加载和模型创建
         
         setCentrePos
-            ��һ��Chunk�򳬳����ط�Χ����ж��ʱ�������ʣ�µ�ģ�ʹ�������
-            ��һ���µ�λ�ý�����ط�Χ��loadDistance��ʱ�����̴߳������������ɺ�̨��ɼ���
+            当一个新的位置进入加载范围（loadDistance）时，主线程创建加载任务，由后台完成加载
+            当一个位置离开加载范围时，清空其相关的加载任务（如果有的话）
         implemented in SetCentrePosition
         
-        ��̨�������ʱ���ύ��������ɡ�����Ϣ�����̣߳����԰�������M
-        ����Ѿ����ˣ�����ʧ�ܣ������ٴ���һ���������������ú�̨������
-        ��һ��Chunk���ɹ�����Mʱ�����������Ⱦ��Χ�ڣ�������Ӧ��ģ������
+        后台加载完成时，提交“加载完成”的消息给主线程，尝试把它加入M
+        如果已经有了（加入失败），就再创建一个数据销毁任务，让后台销毁它
+        当一个Chunk被成功加入M时，如果它在渲染范围内，创建对应的模型任务
         implemented in AddChunkData & ProcessChunkLoaderMessages
 
-        ������һ��ģ������ʱ������о�ģ�ͣ����š���ģ���������ʱ���滻����ģ��
+        当创建一个模型任务时，如果有旧模型，留着。当模型任务完成时，替换掉旧模型
         implemented in AddSectionModel
 */
 
@@ -47,7 +47,7 @@ public:
     void StartLoading(int loaderCount);
     void Destroy(void);
 
-    //���ص�Chunk�ڱ�֡�ھ�����ʧЧ
+    //返回的Chunk在本帧内不会失效
     Chunk *GetChunk(int ckX, int ckZ)
     {
         auto it = chunks_.find({ ckX, ckZ });
@@ -136,14 +136,14 @@ public:
 
     void UpdateLight(int x, int y, int z);
 
-    //�Ը��������ߺ����еķ�����
-    //����true���ҽ�����maxLen���ҵ�������PickBlockFunc�ķ���
-    //������ֵΪtrue����
-    //      blk��ŵ�һ�����������ķ���
-    //      faceָ���Ǵ���һ�����÷����
-    //      rtPosָ���÷�����Block����ϵ�е�λ��
-    //��ԭ��������������ķ����ڲ�����faceֵΪ����ֵ�е���һ��
-    //ע�⣺λ��Խ���dummyBlockҲ�������һ�󽻹���
+    //以给定的射线和已有的方块求交
+    //返回true当且仅当在maxLen内找到了满足PickBlockFunc的方块
+    //若返回值为true，则
+    //      blk存放第一个满足条件的方块
+    //      face指出是从哪一面进入该方块的
+    //      rtPos指出该方块在Block坐标系中的位置
+    //若原点就在满足条件的方块内部，则face值为六个值中的任一个
+    //注意：位置越界的dummyBlock也会参与这一求交过程
     using PickBlockFunc = bool(*)(const Block&);
     bool PickBlock(const Vector3 &origin, const Vector3 &dir,
                    float maxLen, float step, PickBlockFunc func,
@@ -181,11 +181,11 @@ public:
     bool DetectCollision(const AABB &aabb);
 
 private:
-    //����һ�����غõ�Chunk
+    //交付一个加载好的Chunk
     void AddChunkData(Chunk *ck);
-    //����һ�������õ�Model
+    //交付一个创建好的Model
     void AddSectionModel(const IntVector3 &pos, ChunkSectionModels *models);
-    //���������̼߳�����������
+    //立即在主线程加载区块数据
     void LoadChunk(int ckX, int ckZ);
 
     void ComputeModelUpdates(int x, int y, int z, std::unordered_set<IntVector3, IntVector3Hasher> &updates);
