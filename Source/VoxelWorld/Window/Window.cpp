@@ -406,7 +406,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
     return true;
 }
 
-bool Window::InitGUI(const std::vector<GUI::FontSpecifier> &fonts, std::string &errMsg)
+bool Window::InitGUI(const std::vector<GUI::ImFontSpec> &fonts, std::string &errMsg)
 {
     return GUI::GetInstance().Initialize(fonts, errMsg);
 }

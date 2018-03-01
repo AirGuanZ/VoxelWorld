@@ -24,13 +24,18 @@ Created by AirGuanZ
 class GUI : public Singleton<GUI>
 {
 public:
-    struct FontSpecifier
+    struct ImFontSpec
     {
         std::string ttfFilename;
         float pixelSize;
     };
 
-    bool Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg);
+    struct ImFontID
+    {
+        int id;
+    };
+
+    bool Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg);
     void Destroy(void);
 
     void NewFrame(void);
@@ -38,8 +43,10 @@ public:
 
 #ifdef GUI_IG
 
-    void PushFont(int index = -1);
+    void PushFont(ImFontID id);
     void PopFont(void);
+
+    ImFontID GetFontByName(const std::string &name);
 
 #endif
 

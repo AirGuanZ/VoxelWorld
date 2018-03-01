@@ -8,7 +8,12 @@ Created by AirGuanZ
 #include <algorithm>
 #include <cassert>
 #include <cstring>
+#include <map>
 #include <memory>
+
+#include <filesystem>
+
+namespace filesystem = std::experimental::filesystem::v1;
 
 #include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
@@ -38,6 +43,7 @@ namespace
 #ifdef GUI_IG
 
     std::vector<ImFont*> imGuiFonts;
+    std::map<std::string, int> imGuiFontMap;
 
 #endif
 
@@ -91,7 +97,7 @@ static bool InitCEGUI(void)
 
 #endif
 
-bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &errMsg)
+bool GUI::Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg)
 {
     Window &window = Window::GetInstance();
 
@@ -111,10 +117,12 @@ bool GUI::Initialize(const std::vector<FontSpecifier> &ttfFonts, std::string &er
     ImGuiIO &io = ImGui::GetIO();
     imGuiFonts.resize(ttfFonts.size() + 1);
     imGuiFonts[0] = io.Fonts->AddFontDefault();
+    imGuiFontMap[u8"Default"] = 0;
     for(size_t i = 0; i < ttfFonts.size(); ++i)
     {
         imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
             ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
+        imGuiFontMap[filesystem::path(ttfFonts[i].ttfFilename).stem().u8string()] = i + 1;
     }
 
 #endif
@@ -173,14 +181,20 @@ void GUI::Render(void)
 
 #ifdef GUI_IG
 
-void GUI::PushFont(int idx)
+void GUI::PushFont(ImFontID id)
 {
-    ImGui::PushFont(imGuiFonts[idx + 1]);
+    ImGui::PushFont(imGuiFonts[id.id]);
 }
 
 void GUI::PopFont(void)
 {
     ImGui::PopFont();
+}
+
+GUI::ImFontID GUI::GetFontByName(const std::string &name)
+{
+    auto it = imGuiFontMap.find(name);
+    return { it != imGuiFontMap.end() ? it->second : 0 };
 }
 
 #endif

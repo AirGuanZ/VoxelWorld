@@ -20,6 +20,8 @@ AppState MainMenu::Run(void)
 
     win.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
+    GUI::ImFontID font = gui.GetFontByName("IMFePIrm29P");
+
     while(!done)
     {
         gui.NewFrame();
@@ -36,7 +38,7 @@ AppState MainMenu::Run(void)
                  ImGuiWindowFlags_NoResize |
                  ImGuiWindowFlags_NoSavedSettings))
         {
-            gui.PushFont(0);
+            gui.PushFont(font);
             Text((std::to_string(input.GetCursorPosX()) + u8", " +
                   std::to_string(input.GetCursorPosY())).c_str());
             if(Button(u8"Game"))
