@@ -145,3 +145,20 @@ inline float Rad2Deg(float rad)
 {
     return DirectX::XMConvertToDegrees(rad);
 }
+
+struct Rect
+{
+    Rect(void)
+        : Rect(0.0f, 0.0f, 0.0f, 0.0f)
+    {
+
+    }
+
+    Rect(float _x, float _y, float _w, float _h)
+        : x(_x), y(_y), w(_w), h(_h)
+    {
+
+    }
+
+    float x, y, w, h;
+};

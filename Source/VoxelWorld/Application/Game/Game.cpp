@@ -15,12 +15,12 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 
 #include <Input/InputManager.h>
+#include <Screen/GUISystem.h>
 #include "Game.h"
 
 Game::Game(const AppConf &conf)
     : win_(Window::GetInstance()),
       input_(InputManager::GetInstance()),
-      gui_(GUI::GetInstance()),
       appConf_(conf)
 {
     dev_ = nullptr;
@@ -83,7 +83,7 @@ AppState Game::Run(void)
     
     while(!input_.IsKeyDown(VK_ESCAPE))
     {
-        gui_.NewFrame();
+        GUI::NewFrame();
 
         fps.Tick(clock.ElapsedTime());
         if(fps.GetFPS() != lastFPS)
@@ -135,7 +135,7 @@ AppState Game::Run(void)
         mainDebugWin_.Render();
 
         //ªÊ÷∆GUI
-        gui_.Render();
+        GUI::RenderImGui();
 
         //win_.SetVsync(false);
         win_.Present();

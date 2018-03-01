@@ -9,7 +9,6 @@ Created by AirGuanZ
 
 #include <Input/InputManager.h>
 #include <Screen/Crosshair.h>
-#include <Screen/GUISystem.h>
 #include <Screen/ImmediateScreen2D.h>
 #include <Window/Window.h>
 #include <World/World.h>
@@ -34,7 +33,6 @@ private:
 
     Window &win_;
     InputManager &input_;
-    GUI &gui_;
 
     ID3D11Device *dev_;
     ID3D11DeviceContext *DC_;

@@ -46,8 +46,6 @@ public:
         if(!visible_)
             return;
 
-        GUI &gui = GUI::GetInstance();
-
         ImGui::SetNextWindowSize(ImVec2(400.0f, 150.0f));
         if(ImGui::Begin(u8"Debug", nullptr, ImGuiWindowFlags_NoResize |
                                           ImGuiWindowFlags_NoMove |

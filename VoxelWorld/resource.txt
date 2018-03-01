@@ -56,3 +56,9 @@ PixelSize[0] = 50.0f
 [CEGUI]
 
 DefaultResourceDirectory = Bin/CEGUI
+
+Scheme = AlfiskoSkin
+
+FontCount = 1
+
+Font[0] = DejaVuSans-14

@@ -8,20 +8,23 @@ Created by AirGuanZ
 #include <string>
 #include <vector>
 
+#include <Utility/Math.h>
 #include <Utility/Singleton.h>
 
 #include <Input/InputManager.h>
 
-#define GUI_IG
-#define GUI_CE
-
-#ifdef GUI_IG
-
 #include "imgui/imgui.h"
 
-#endif
+class GUI;
+class GUIContext;
 
-class GUI : public Singleton<GUI>
+namespace CEGUI
+{
+    class GUIContext;
+    class Window;
+}
+
+class GUI
 {
 public:
     struct ImFontSpec
@@ -35,34 +38,60 @@ public:
         int id;
     };
 
-    bool Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg);
-    void Destroy(void);
+    static bool Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg);
+    static void Destroy(void);
 
-    void NewFrame(void);
-    void Render(void);
+    static void NewFrame(void);
+    static void RenderImGui(void);
 
-#ifdef GUI_IG
+    static void BeginCERender(void);
+    static void EndCERender(void);
 
-    void PushFont(ImFontID id);
-    void PopFont(void);
+    static void PushFont(ImFontID id);
+    static void PopFont(void);
 
-    ImFontID GetFontByName(const std::string &name);
+    static ImFontID GetFontByName(const std::string &name);
 
-#endif
+    static void LoadCEGUIScheme(const std::string &schemeName);
+    static void LoadCEGUIFont(const std::string &fontName);
+
+    static GUIContext *CreateGUIContext(void);
+    static void DestroyGUIContext(GUIContext *ctx);
 
     //输入事件，一般由消息循环调用
 
     //该函数需要自己调用
-    void MousePosition(int x, int y);
+    static void MousePosition(int x, int y);
 
-    void MouseButtonDown(MouseButton button);
-    void MouseButtonUp(MouseButton button);
+    static void MouseButtonDown(MouseButton button);
+    static void MouseButtonUp(MouseButton button);
 
-    void MouseWheel(int wheel);
-    void MouseMove(int posX, int posY);
+    static void MouseWheel(int wheel);
+    static void MouseMove(int posX, int posY);
 
-    void KeyDown(int VK);
-    void KeyUp(int VK);
+    static void KeyDown(int VK);
+    static void KeyUp(int VK);
 
-    void Char(unsigned int ch);
+    static void Char(unsigned int ch);
+};
+
+class GUIContext
+{
+public:
+    void SetDefaultFont(const std::string &fontName);
+
+    static void SetWidgetRect(CEGUI::Window *wdgt, const Rect &rectPerc, const Rect &rectPixl);
+    CEGUI::Window *CreateWidget(const std::string &type, const std::string &name, const Rect &rectPerc, const Rect &rectPixl);
+
+    void Render(void);
+
+private:
+    friend class GUI;
+
+    GUIContext(void);
+    ~GUIContext(void);
+
+private:
+    CEGUI::GUIContext *ctx_;
+    CEGUI::Window *root_;
 };

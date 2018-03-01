@@ -19,42 +19,50 @@ namespace filesystem = std::experimental::filesystem::v1;
 #include <Window/Window.h>
 #include "GUISystem.h"
 
-#ifdef GUI_CE
-
 #include <CEGUI/CEGUI.h>
 #include <CEGUI/RendererModules/Direct3D11/Renderer.h>
 
-#endif
-
 SINGLETON_CLASS_DEFINITION(GUI);
-
-#ifdef GUI_IG
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
-
-#endif
 
 namespace
 {
     bool GUISystemInited = false;
     int clientWidth = 100, clientHeight = 100;
 
-#ifdef GUI_IG
-
     std::vector<ImFont*> imGuiFonts;
     std::map<std::string, int> imGuiFontMap;
 
-#endif
-
-#ifdef GUI_CE
-
     CEGUI::Direct3D11Renderer::Renderer *ceguiRenderer = nullptr;
-
-#endif
 }
 
-#ifdef GUI_CE
+static bool InitImGui(const std::vector<GUI::ImFontSpec> &ttfFonts)
+{
+    Window &window = Window::GetInstance();
+
+    if(!ImGui_ImplDX11_Init(window.GetWindowHandle(),
+                            window.GetD3DDevice(),
+                            window.GetD3DDeviceContext()))
+        return false;
+
+    ImGui::StyleColorsClassic();
+
+    //ImGui字体设置
+    ImGuiIO &io = ImGui::GetIO();
+    imGuiFonts.resize(ttfFonts.size() + 1);
+    imGuiFonts[0] = io.Fonts->AddFontDefault();
+    imGuiFontMap[u8"Default"] = 0;
+    for(size_t i = 0; i < ttfFonts.size(); ++i)
+    {
+        imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
+            ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
+        imGuiFontMap[filesystem::path(ttfFonts[i].ttfFilename).stem().u8string()] = i + 1;
+    }
+
+    return true;
+}
 
 static bool InitCEGUI(void)
 {
@@ -85,17 +93,25 @@ static bool InitCEGUI(void)
     rp->setResourceGroupDirectory(
         u8"lua_scripts", defaultRscDir + u8"/lua_scripts/");
     
-    CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
-    CEGUI::Scheme::setDefaultResourceGroup("schemes");
-    CEGUI::Font::setDefaultResourceGroup("fonts");
-    CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
-    CEGUI::WindowManager::setDefaultResourceGroup("layouts");
-    CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup(u8"imagesets");
+    CEGUI::Scheme::setDefaultResourceGroup(u8"schemes");
+    CEGUI::Font::setDefaultResourceGroup(u8"fonts");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup(u8"looknfeel");
+    CEGUI::WindowManager::setDefaultResourceGroup(u8"layouts");
+    CEGUI::ScriptModule::setDefaultResourceGroup(u8"lua_scripts");
+
+    //scheme加载
+
+    GUI::LoadCEGUIScheme(rM.AsString(u8"CEGUI", u8"Scheme"));
+
+    //font加载
+
+    int fontNum = std::stoi(rM(u8"CEGUI", u8"FontCount"));
+    for(int i = 0; i < fontNum; ++i)
+        GUI::LoadCEGUIFont(rM.AsString(u8"CEGUI", u8"Font[" + std::to_string(i) + u8"]"));
 
     return true;
 }
-
-#endif
 
 bool GUI::Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg)
 {
@@ -104,38 +120,14 @@ bool GUI::Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMs
     clientWidth  = window.GetClientWidth();
     clientHeight = window.GetClientHeight();
 
-#ifdef GUI_IG
-
-    if(!ImGui_ImplDX11_Init(window.GetWindowHandle(),
-                            window.GetD3DDevice(),
-                            window.GetD3DDeviceContext()))
+    if(!InitImGui(ttfFonts))
         return false;
-
-    ImGui::StyleColorsClassic();
-
-    //ImGui字体设置
-    ImGuiIO &io = ImGui::GetIO();
-    imGuiFonts.resize(ttfFonts.size() + 1);
-    imGuiFonts[0] = io.Fonts->AddFontDefault();
-    imGuiFontMap[u8"Default"] = 0;
-    for(size_t i = 0; i < ttfFonts.size(); ++i)
-    {
-        imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
-            ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
-        imGuiFontMap[filesystem::path(ttfFonts[i].ttfFilename).stem().u8string()] = i + 1;
-    }
-
-#endif
-
-#ifdef GUI_CE
 
     if(!InitCEGUI())
     {
         ImGui_ImplDX11_Shutdown();
         return false;
     }
-
-#endif
 
     GUISystemInited = true;
     return true;
@@ -145,41 +137,34 @@ void GUI::Destroy(void)
 {
     if(!GUISystemInited)
         return;
-#ifdef GUI_IG
 
     ImGui_ImplDX11_Shutdown();
 
-#endif
-
-#ifdef GUI_CE
-
     CEGUI::Direct3D11Renderer::destroySystem();
     ceguiRenderer = nullptr;
-
-#endif
 
     GUISystemInited = false;
 }
 
 void GUI::NewFrame(void)
 {
-#ifdef GUI_IG
-
     ImGui_ImplDX11_NewFrame();
-
-#endif
 }
 
-void GUI::Render(void)
+void GUI::RenderImGui(void)
 {
-#ifdef GUI_IG
-
     ImGui::Render();
-
-#endif
 }
 
-#ifdef GUI_IG
+void GUI::BeginCERender(void)
+{
+    ceguiRenderer->beginRendering();
+}
+
+void GUI::EndCERender(void)
+{
+    ceguiRenderer->endRendering();
+}
 
 void GUI::PushFont(ImFontID id)
 {
@@ -197,7 +182,28 @@ GUI::ImFontID GUI::GetFontByName(const std::string &name)
     return { it != imGuiFontMap.end() ? it->second : 0 };
 }
 
-#endif
+void GUI::LoadCEGUIScheme(const std::string &schemeName)
+{
+    CEGUI::SchemeManager::getSingleton().createFromFile(schemeName + u8".scheme");
+}
+
+void GUI::LoadCEGUIFont(const std::string &fontName)
+{
+    CEGUI::FontManager::getSingleton().createFromFile(fontName + u8".font");
+}
+
+GUIContext *GUI::CreateGUIContext(void)
+{
+    return new GUIContext();
+}
+
+void GUI::DestroyGUIContext(GUIContext *ctx)
+{
+    if(!ctx)
+        return;
+
+    delete ctx;
+}
 
 namespace
 {
@@ -209,18 +215,12 @@ namespace
 
 void GUI::MousePosition(int x, int y)
 {
-#ifdef GUI_IG
-
     ImGui::GetIO().MousePos = ImVec2(static_cast<float>(clamp(x, 0, clientWidth)),
                                      static_cast<float>(clamp(y, 0, clientHeight)));
-
-#endif
 }
 
 void GUI::MouseButtonDown(MouseButton button)
 {
-#ifdef GUI_IG
-
     switch(button)
     {
     case MouseButton::Left:
@@ -233,14 +233,10 @@ void GUI::MouseButtonDown(MouseButton button)
         ImGui::GetIO().MouseDown[2] = true;
         break;
     }
-
-#endif
 }
 
 void GUI::MouseButtonUp(MouseButton button)
 {
-#ifdef GUI_IG
-
     switch(button)
     {
     case MouseButton::Left:
@@ -253,56 +249,78 @@ void GUI::MouseButtonUp(MouseButton button)
         ImGui::GetIO().MouseDown[2] = false;
         break;
     }
-
-#endif
 }
 
 void GUI::MouseWheel(int wheel)
 {
-#ifdef GUI_IG
-
     ImGui::GetIO().MouseWheel += static_cast<float>(wheel);
-
-#endif
 }
 
 void GUI::MouseMove(int posX, int posY)
 {
-#ifdef GUI_IG
-
     ImGuiIO &io = ImGui::GetIO();
     io.MousePos.x = static_cast<float>(posX);
     io.MousePos.y = static_cast<float>(posY);
-
-#endif
 }
 
 void GUI::KeyDown(int VK)
 {
-#ifdef GUI_IG
-
     if(0 <= VK && VK < 256)
         ImGui::GetIO().KeysDown[VK] = true;
-
-#endif
 }
 
 void GUI::KeyUp(int VK)
 {
-#ifdef GUI_IG
-
     if(0 <= VK && VK < 256)
         ImGui::GetIO().KeysDown[VK] = false;
-
-#endif
 }
 
 void GUI::Char(unsigned int ch)
 {
-#ifdef GUI_IG
-
     if(0 < ch && ch < 0x10000)
         ImGui::GetIO().AddInputCharacter(static_cast<ImWchar>(ch));
+}
 
-#endif
+void GUIContext::SetDefaultFont(const std::string &fontName)
+{
+    ctx_->setDefaultFont(fontName);
+}
+
+void GUIContext::SetWidgetRect(CEGUI::Window *wdgt, const Rect &rectPerc, const Rect &rectPixl)
+{
+    assert(wdgt != nullptr);
+
+    wdgt->setPosition(CEGUI::UVector2(CEGUI::UDim(rectPerc.x, rectPixl.x),
+                                      CEGUI::UDim(rectPerc.y, rectPixl.y)));
+    wdgt->setSize(CEGUI::USize(CEGUI::UDim(rectPerc.w, rectPixl.w),
+                               CEGUI::UDim(rectPerc.h, rectPixl.h)));
+}
+
+CEGUI::Window *GUIContext::CreateWidget(const std::string &type, const std::string &name,
+                                        const Rect &rectPerc, const Rect &rectPixl)
+{
+    CEGUI::Window *rt = CEGUI::WindowManager::getSingleton().createWindow(type, name);
+    root_->addChild(rt);
+    SetWidgetRect(rt, rectPerc, rectPixl);
+    return rt;
+}
+
+void GUIContext::Render(void)
+{
+    ctx_->draw();
+}
+
+GUIContext::GUIContext(void)
+{
+    ctx_ = &CEGUI::System::getSingleton().createGUIContext(
+        ceguiRenderer->getDefaultRenderTarget());
+    root_ = CEGUI::WindowManager::getSingleton().createWindow(
+        "DefaultWindow", "Root");
+    ctx_->setRootWindow(root_);
+}
+
+GUIContext::~GUIContext(void)
+{
+    if(ctx_)
+        CEGUI::System::getSingleton().destroyGUIContext(*ctx_);
 }

@@ -288,7 +288,7 @@ static void SetDefaultViewport(void)
 
 static void DestroyGUISystem(void)
 {
-    GUI::GetInstance().Destroy();
+    GUI::Destroy();
 }
 
 static void DestroyD3D(void)
@@ -296,7 +296,7 @@ static void DestroyD3D(void)
     using Helper::ReleaseCOMObjects;
     using namespace D3D;
 
-    GUI::GetInstance().Destroy();
+    GUI::Destroy();
 
     isFullscreen = false;
     vsync = true;
@@ -408,7 +408,7 @@ bool Window::InitD3D(int sampleCount, int sampleQuality, std::string &errMsg)
 
 bool Window::InitGUI(const std::vector<GUI::ImFontSpec> &fonts, std::string &errMsg)
 {
-    return GUI::GetInstance().Initialize(fonts, errMsg);
+    return GUI::Initialize(fonts, errMsg);
 }
 
 bool Window::IsWindowAvailable(void)
@@ -523,7 +523,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;
     InputManager &input = InputManager::GetInstance();
-    GUI &gui = GUI::GetInstance();
 
     static bool paused = false;
 
@@ -537,43 +536,43 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
-        gui.KeyDown(static_cast<int>(wParam));
+        GUI::KeyDown(static_cast<int>(wParam));
         Keyboard::ProcessMessage(msg, wParam, lParam);
         break;
     case WM_KEYUP:
     case WM_SYSKEYUP:
-        gui.KeyUp(static_cast<int>(wParam));
+        GUI::KeyUp(static_cast<int>(wParam));
         Keyboard::ProcessMessage(msg, wParam, lParam);
         break;
     case WM_LBUTTONDOWN:
         input.mbDown_[0] = true;
-        gui.MouseButtonDown(MouseButton::Left);
+        GUI::MouseButtonDown(MouseButton::Left);
         break;
     case WM_LBUTTONUP:
         input.mbDown_[0] = false;
-        gui.MouseButtonUp(MouseButton::Left);
+        GUI::MouseButtonUp(MouseButton::Left);
         break;
     case WM_MBUTTONDOWN:
         input.mbDown_[1] = true;
-        gui.MouseButtonDown(MouseButton::Middle);
+        GUI::MouseButtonDown(MouseButton::Middle);
         break;
     case WM_MBUTTONUP:
         input.mbDown_[1] = false;
-        gui.MouseButtonUp(MouseButton::Middle);
+        GUI::MouseButtonUp(MouseButton::Middle);
         break;
     case WM_RBUTTONDOWN:
         input.mbDown_[2] = true;
-        gui.MouseButtonDown(MouseButton::Right);
+        GUI::MouseButtonDown(MouseButton::Right);
         break;
     case WM_RBUTTONUP:
         input.mbDown_[2] = false;
-        gui.MouseButtonUp(MouseButton::Right);
+        GUI::MouseButtonUp(MouseButton::Right);
         break;
     case WM_MOUSEWHEEL:
     {
         int wh = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
         input.wheelMov_ = wh;
-        gui.MouseWheel(wh);
+        GUI::MouseWheel(wh);
     }
         break;
     case WM_SETFOCUS:
@@ -604,7 +603,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
         break;
     case WM_CHAR:
-        gui.Char(static_cast<unsigned int>(wParam));
+        GUI::Char(static_cast<unsigned int>(wParam));
         break;
     }
 
