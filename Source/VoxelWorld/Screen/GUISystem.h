@@ -81,7 +81,8 @@ public:
     void SetDefaultFont(const std::string &fontName);
 
     static void SetWidgetRect(CEGUI::Window *wdgt, const Rect &rectPerc, const Rect &rectPixl);
-    CEGUI::Window *CreateWidget(const std::string &type, const std::string &name, const Rect &rectPerc, const Rect &rectPixl);
+    CEGUI::Window *CreateWidget(const std::string &type, const std::string &name,
+                                const Rect &rectPerc, const Rect &rectPixl);
 
     void Render(void);
 
