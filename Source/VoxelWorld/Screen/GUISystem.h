@@ -56,11 +56,11 @@ public:
     static void LoadCEGUIFont(const std::string &fontName);
 
     static GUIContext *CreateGUIContext(void);
+    static GUIContext *CreateGUIContextFromLayoutFile(const std::string &layoutFilename);
     static void DestroyGUIContext(GUIContext *ctx);
 
     //输入事件，一般由消息循环调用
 
-    //该函数需要自己调用
     static void MousePosition(int x, int y);
 
     static void MouseButtonDown(MouseButton button);
@@ -90,6 +90,7 @@ private:
     friend class GUI;
 
     GUIContext(void);
+    GUIContext(const std::string &layoutFilename);
     ~GUIContext(void);
 
 private:

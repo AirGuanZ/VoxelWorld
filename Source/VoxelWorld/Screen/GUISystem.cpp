@@ -197,6 +197,11 @@ GUIContext *GUI::CreateGUIContext(void)
     return new GUIContext();
 }
 
+GUIContext *GUI::CreateGUIContextFromLayoutFile(const std::string &filename)
+{
+    return new GUIContext(filename);
+}
+
 void GUI::DestroyGUIContext(GUIContext *ctx)
 {
     if(!ctx)
@@ -316,6 +321,14 @@ GUIContext::GUIContext(void)
         ceguiRenderer->getDefaultRenderTarget());
     root_ = CEGUI::WindowManager::getSingleton().createWindow(
         "DefaultWindow", "Root");
+    ctx_->setRootWindow(root_);
+}
+
+GUIContext::GUIContext(const std::string &layoutFilename)
+{
+    ctx_ = &CEGUI::System::getSingleton().createGUIContext(
+        ceguiRenderer->getDefaultRenderTarget());
+    root_ = CEGUI::WindowManager::getSingleton().loadLayoutFromFile(layoutFilename);
     ctx_->setRootWindow(root_);
 }
 

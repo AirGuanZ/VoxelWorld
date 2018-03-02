@@ -3,6 +3,7 @@ Filename: InputManager.cpp
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
+#include <Screen/GUISystem.h>
 #include <Window/Window.h>
 
 #include "InputManager.h"
@@ -82,4 +83,6 @@ void InputManager::Update(void)
         curPosX_ = curPos.x;
         curPosY_ = curPos.y;
     }
+    else
+        GUI::MousePosition(curPosX_, curPosY_);
 }

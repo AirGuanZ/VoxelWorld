@@ -24,10 +24,11 @@ AppState MainMenu::Run(void)
     GUI::ImFontID font = GUI::GetFontByName(u8"IMFePIrm29P");
 
     GUIContext *ctx = GUI::CreateGUIContext();
-    ctx->SetDefaultFont(u8"DejaVuSans-14");
+    ctx->SetDefaultFont(u8"IMFePIrm29P");
 
     CEGUI::PushButton *but = static_cast<CEGUI::PushButton*>(
-        ctx->CreateWidget(u8"AlfiskoSkin/Button", u8"MyButton", { 0.5f, 0.5f, 0.1f, 0.05f }, {  }));
+        ctx->CreateWidget(u8"AlfiskoSkin/Button", u8"MyButton",
+                          { 0.5f, 0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 144.0f, 38.0f }));
     but->setText(u8"Hello, CEGUI");
 
     while(!done)
@@ -39,7 +40,6 @@ AppState MainMenu::Run(void)
 
         using namespace ImGui;
 
-        GUI::MousePosition(input.GetCursorPosX(), input.GetCursorPosY());
         if(Begin(u8"MainMenu", nullptr, ImVec2(400.0f, 400.0f), -1.0f,
                  ImGuiWindowFlags_NoTitleBar |
                  ImGuiWindowFlags_NoCollapse |
