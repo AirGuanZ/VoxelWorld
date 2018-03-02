@@ -26,53 +26,23 @@ AppState MainMenu::Run(void)
     win.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
     std::unique_ptr<GUIContext, GUIContext::Deleter> ctx(
-        GUI::CreateGUIContextFromLayoutFile(rM.AsString(u8"MainMenu", u8"LayoutFile")));
-    ctx->SetDefaultFont(rM.AsString(u8"MainMenu", u8"Font"));
-
-    class ButtonClicked
-    {
-    public:
-        bool Game(const CEGUI::EventArgs&)
-        {
-            game = true;
-            return true;
-        }
-
-        bool Exit(const CEGUI::EventArgs&)
-        {
-            exit = true;
-            return true;
-        }
-
-        bool game = false;
-        bool exit = false;
-    } buttonClicked;
+        GUI::CreateGUIContextFromLayoutFile(rM.AsString("MainMenu", "LayoutFile")));
+    ctx->SetDefaultFont(rM.AsString("MainMenu", "Font"));
 
     CEGUI::PushButton *gameButton = static_cast<CEGUI::PushButton*>
-        (ctx->GetCEGUIContext()->getRootWindow()->getChild(u8"Game"));
+        (ctx->GetCEGUIContext()->getRootWindow()->getChild("Game"));
     gameButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
-                               CEGUI::Event::Subscriber(&ButtonClicked::Game, &buttonClicked));
+                               CEGUI::Event::Subscriber(&MainMenu::GameClicked, this));
 
     CEGUI::PushButton *exitButton = static_cast<CEGUI::PushButton*>
-        (ctx->GetCEGUIContext()->getRootWindow()->getChild(u8"Exit"));
+        (ctx->GetCEGUIContext()->getRootWindow()->getChild("Exit"));
     exitButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
-                               CEGUI::Event::Subscriber(&ButtonClicked::Exit, &buttonClicked));
+                               CEGUI::Event::Subscriber(&MainMenu::ExitClicked, this));
 
     while(!done)
     {
         win.ClearDepthStencil();
         win.ClearRenderTarget();
-
-        if(buttonClicked.game)
-        {
-            ret = AppState::Game;
-            done = true;
-        }
-        else if(buttonClicked.exit)
-        {
-            ret = AppState::Exit;
-            done = true;
-        }
 
         GUI::BeginCERender();
         ctx->Render();
@@ -80,6 +50,17 @@ AppState MainMenu::Run(void)
 
         win.Present();
         win.DoEvents();
+
+        if(gameClicked_)
+        {
+            ret = AppState::Game;
+            done = true;
+        }
+        else if(exitClicked_)
+        {
+            ret = AppState::Exit;
+            done = true;
+        }
     }
 
     return ret;

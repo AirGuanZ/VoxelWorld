@@ -56,7 +56,7 @@ static bool InitImGui(const std::vector<ImFontSpec> &ttfFonts)
     ImGuiIO &io = ImGui::GetIO();
     imGuiFonts.resize(ttfFonts.size() + 1);
     imGuiFonts[0] = io.Fonts->AddFontDefault();
-    imGuiFontMap[u8"Default"] = 0;
+    imGuiFontMap["Default"] = 0;
     for(size_t i = 0; i < ttfFonts.size(); ++i)
     {
         imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
@@ -77,41 +77,41 @@ static bool InitCEGUI(void)
 
     //设置默认资源路径
 
-    std::string defaultRscDir = rM.AsString(u8"CEGUI", u8"DefaultResourceDirectory");
+    std::string defaultRscDir = rM.AsString("CEGUI", "DefaultResourceDirectory");
 
     CEGUI::DefaultResourceProvider *rp = reinterpret_cast<CEGUI::DefaultResourceProvider*>
         (CEGUI::System::getSingleton().getResourceProvider());
     assert(rp != nullptr);
 
     rp->setResourceGroupDirectory(
-        u8"imagesets",   defaultRscDir + u8"/imagesets/");
+        "imagesets",   defaultRscDir + "/imagesets/");
     rp->setResourceGroupDirectory(
-        u8"schemes",     defaultRscDir + u8"/schemes/");
+        "schemes",     defaultRscDir + "/schemes/");
     rp->setResourceGroupDirectory(
-        u8"fonts",       defaultRscDir + u8"/fonts/");
+        "fonts",       defaultRscDir + "/fonts/");
     rp->setResourceGroupDirectory(
-        u8"layouts",     defaultRscDir + u8"/layouts/");
+        "layouts",     defaultRscDir + "/layouts/");
     rp->setResourceGroupDirectory(
-        u8"looknfeel",   defaultRscDir + u8"/looknfeel/");
+        "looknfeel",   defaultRscDir + "/looknfeel/");
     rp->setResourceGroupDirectory(
-        u8"lua_scripts", defaultRscDir + u8"/lua_scripts/");
+        "lua_scripts", defaultRscDir + "/lua_scripts/");
     
-    CEGUI::ImageManager::setImagesetDefaultResourceGroup(u8"imagesets");
-    CEGUI::Scheme::setDefaultResourceGroup(u8"schemes");
-    CEGUI::Font::setDefaultResourceGroup(u8"fonts");
-    CEGUI::WidgetLookManager::setDefaultResourceGroup(u8"looknfeel");
-    CEGUI::WindowManager::setDefaultResourceGroup(u8"layouts");
-    CEGUI::ScriptModule::setDefaultResourceGroup(u8"lua_scripts");
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
+    CEGUI::Scheme::setDefaultResourceGroup("schemes");
+    CEGUI::Font::setDefaultResourceGroup("fonts");
+    CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeel");
+    CEGUI::WindowManager::setDefaultResourceGroup("layouts");
+    CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
 
     //scheme加载
 
-    GUI::LoadCEGUIScheme(rM.AsString(u8"CEGUI", u8"Scheme"));
+    GUI::LoadCEGUIScheme(rM.AsString("CEGUI", "Scheme"));
 
     //font加载
 
-    int fontNum = std::stoi(rM(u8"CEGUI", u8"FontCount"));
+    int fontNum = std::stoi(rM("CEGUI", "FontCount"));
     for(int i = 0; i < fontNum; ++i)
-        GUI::LoadCEGUIFont(rM.AsString(u8"CEGUI", u8"Font[" + std::to_string(i) + u8"]"));
+        GUI::LoadCEGUIFont(rM.AsString("CEGUI", "Font[" + std::to_string(i) + "]"));
 
     return true;
 }
@@ -187,12 +187,12 @@ ImFontID GUI::GetFontByName(const std::string &name)
 
 void GUI::LoadCEGUIScheme(const std::string &schemeName)
 {
-    CEGUI::SchemeManager::getSingleton().createFromFile(schemeName + u8".scheme");
+    CEGUI::SchemeManager::getSingleton().createFromFile(schemeName + ".scheme");
 }
 
 void GUI::LoadCEGUIFont(const std::string &fontName)
 {
-    CEGUI::FontManager::getSingleton().createFromFile(fontName + u8".font");
+    CEGUI::FontManager::getSingleton().createFromFile(fontName + ".font");
 }
 
 GUIContext *GUI::CreateGUIContext(void)

@@ -37,7 +37,7 @@ struct Block
     BlockLight light = 0;
 };
 
-static_assert(std::is_trivially_copyable_v<Block>, u8"Block type must be trivially copiable");
+static_assert(std::is_trivially_copyable_v<Block>, "Block type must be trivially copiable");
 
 inline std::uint8_t GetRed     (BlockLight bl) { return bl >> 12; }
 inline std::uint8_t GetGreen   (BlockLight bl) { return (bl >> 8) & 0x0F; }

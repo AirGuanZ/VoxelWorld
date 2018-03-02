@@ -21,14 +21,14 @@ CarveRenderer::~CarveRenderer(void)
 bool CarveRenderer::Initialize(std::string &errMsg)
 {
     RscNameMgr &rM = RscNameMgr::GetInstance();
-    errMsg = u8"";
+    errMsg = "";
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM(u8"CarveRenderer", u8"VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM(u8"CarveRenderer", u8"PixelShader"), psSrc))
+    if(!Helper::ReadFile(rM("CarveRenderer", "VertexShader"), vsSrc) ||
+       !Helper::ReadFile(rM("CarveRenderer", "PixelShader"), psSrc))
     {
-        errMsg = u8"Failed to load shader source";
+        errMsg = "Failed to load shader source";
         return false;
     }
 
@@ -41,13 +41,13 @@ bool CarveRenderer::Initialize(std::string &errMsg)
 
     D3D11_INPUT_ELEMENT_DESC inputLayoutDesc[] =
     {
-        { u8"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
             Helper::MemOffset(&Vertex::pos), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { u8"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,
             Helper::MemOffset(&Vertex::texCoord), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { u8"LIGHTCOLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
+        { "LIGHTCOLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
             Helper::MemOffset(&Vertex::lightColor), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { u8"SUNLIGHT", 0, DXGI_FORMAT_R32_FLOAT, 0,
+        { "SUNLIGHT", 0, DXGI_FORMAT_R32_FLOAT, 0,
             Helper::MemOffset(&Vertex::sunlight), D3D11_INPUT_PER_VERTEX_DATA, 0 }
     };
     inputLayout_.Initialize(

@@ -48,10 +48,7 @@ PixelShader  = Bin/Shader/ImmediateScreen2D/normalPixel.hlsl
 
 [Font]
 
-Count = 1
-
-TTFName[0] = Bin/Font/IMFePIrm29P.ttf
-PixelSize[0] = 50.0f
+Count = 0
 
 [CEGUI]
 
@@ -59,14 +56,11 @@ DefaultResourceDirectory = Bin/CEGUI
 
 Scheme = TaharezLook
 
-FontCount = 4
+FontCount = 1
 
-Font[0] = DejaVuSans-14
-Font[1] = DejaVuSans-12
-Font[2] = DejaVuSans-10
-Font[3] = IMFePIrm29P
+Font[0] = IMFePIrm29P-18
 
 [MainMenu]
 
-Font = IMFePIrm29P
+Font = IMFePIrm29P-18
 LayoutFile = MainMenu.layout

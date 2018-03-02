@@ -19,7 +19,7 @@ BlockInfoManager::BlockInfoManager(void)
     info_ = {
         {
             BlockType::Air,
-            u8"Air",
+            "Air",
             BlockShape::Null,
             BlockRenderer::Null,
             false, false, true,
@@ -29,7 +29,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Bedrock,
-            u8"Bedrock",
+            "Bedrock",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -39,7 +39,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Stone,
-            u8"Stone",
+            "Stone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -49,7 +49,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Dirt,
-            u8"Dirt",
+            "Dirt",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -59,7 +59,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::GrassBox,
-            u8"GrassBox",
+            "GrassBox",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -69,7 +69,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Sand,
-            u8"Sand",
+            "Sand",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -79,7 +79,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Wood,
-            u8"Wood",
+            "Wood",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -89,7 +89,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Leaf,
-            u8"Leaf",
+            "Leaf",
             BlockShape::Box,
             BlockRenderer::CarveRenderer,
             false, true, false,
@@ -99,7 +99,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::RedGlowStone,
-            u8"RedGlowStone",
+            "RedGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -109,7 +109,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::GreenGlowStone,
-            u8"GreenGlowStone",
+            "GreenGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -119,7 +119,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::BlueGlowStone,
-            u8"BlueGlowStone",
+            "BlueGlowStone",
             BlockShape::Box,
             BlockRenderer::BasicRenderer,
             true, true, false,
@@ -129,7 +129,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Grass,
-            u8"Grass",
+            "Grass",
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
             false, true, false,
@@ -139,7 +139,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Flower,
-            u8"Flower",
+            "Flower",
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
             false, true, false,
@@ -149,7 +149,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::DriedGrass,
-            u8"DriedGrass",
+            "DriedGrass",
             BlockShape::Cross,
             BlockRenderer::CarveRenderer,
             false, true, false,
@@ -159,7 +159,7 @@ BlockInfoManager::BlockInfoManager(void)
         },
         {
             BlockType::Water,
-            u8"Water",
+            "Water",
             BlockShape::Liquid,
             BlockRenderer::TransLiquid,
             false, true, true,

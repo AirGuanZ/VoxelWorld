@@ -9,5 +9,5 @@ Created by AirGuanZ
 
 void ShowErrMsgBox(const std::string &errMsg)
 {
-    MessageBoxA(NULL, errMsg.c_str(), u8"Error", MB_ICONERROR | MB_OK);
+    MessageBoxA(NULL, errMsg.c_str(), "Error", MB_ICONERROR | MB_OK);
 }
