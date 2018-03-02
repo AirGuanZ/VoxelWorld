@@ -41,7 +41,7 @@ namespace
     std::set<CEGUI::GUIContext*> ceguiCtxs;
 }
 
-static bool InitImGui(const std::vector<GUI::ImFontSpec> &ttfFonts)
+static bool InitImGui(const std::vector<ImFontSpec> &ttfFonts)
 {
     Window &window = Window::GetInstance();
 
@@ -179,7 +179,7 @@ void GUI::PopFont(void)
     ImGui::PopFont();
 }
 
-GUI::ImFontID GUI::GetFontByName(const std::string &name)
+ImFontID GUI::GetFontByName(const std::string &name)
 {
     auto it = imGuiFontMap.find(name);
     return { it != imGuiFontMap.end() ? it->second : 0 };
@@ -326,7 +326,7 @@ void GUI::MousePosition(int x, int y)
     float fx = static_cast<float>(clamp(x, 0, clientWidth));
     float fy = static_cast<float>(clamp(y, 0, clientHeight));
     ImGui::GetIO().MousePos = ImVec2(fx, fy);
-    for(auto *ctx : ceguiCtxs)
+    for(auto ctx : ceguiCtxs)
         ctx->injectMousePosition(fx, fy);
 }
 
@@ -336,17 +336,17 @@ void GUI::MouseButtonDown(MouseButton button)
     {
     case MouseButton::Left:
         ImGui::GetIO().MouseDown[0] = true;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonDown(CEGUI::MouseButton::LeftButton);
         break;
     case MouseButton::Middle:
         ImGui::GetIO().MouseDown[1] = true;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonDown(CEGUI::MouseButton::MiddleButton);
         break;
     case MouseButton::Right:
         ImGui::GetIO().MouseDown[2] = true;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonDown(CEGUI::MouseButton::RightButton);
         break;
     }
@@ -358,17 +358,17 @@ void GUI::MouseButtonUp(MouseButton button)
     {
     case MouseButton::Left:
         ImGui::GetIO().MouseDown[0] = false;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonUp(CEGUI::MouseButton::LeftButton);
         break;
     case MouseButton::Middle:
         ImGui::GetIO().MouseDown[1] = false;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonUp(CEGUI::MouseButton::MiddleButton);
         break;
     case MouseButton::Right:
         ImGui::GetIO().MouseDown[2] = false;
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectMouseButtonUp(CEGUI::MouseButton::RightButton);
         break;
     }
@@ -378,7 +378,7 @@ void GUI::MouseWheel(int wheel)
 {
     float delta = static_cast<float>(wheel);
     ImGui::GetIO().MouseWheel += delta;
-    for(auto *ctx : ceguiCtxs)
+    for(auto ctx : ceguiCtxs)
         ctx->injectMouseWheelChange(delta);
 }
 
@@ -407,7 +407,7 @@ void GUI::Char(unsigned int ch)
     if(0 < ch && ch < 0x10000)
     {
         ImGui::GetIO().AddInputCharacter(static_cast<ImWchar>(ch));
-        for(auto *ctx : ceguiCtxs)
+        for(auto ctx : ceguiCtxs)
             ctx->injectChar(ch);
     }
 }

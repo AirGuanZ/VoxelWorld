@@ -3,6 +3,8 @@ Filename: MainMenu.cpp
 Date: 2018.2.27
 Created by AirGuanZ
 ================================================================*/
+#include <memory>
+
 #include <CEGUI/CEGUI.h>
 
 #include <Input/InputManager.h>
@@ -21,9 +23,10 @@ AppState MainMenu::Run(void)
 
     win.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
-    GUI::ImFontID font = GUI::GetFontByName(u8"IMFePIrm29P");
+    ImFontID font = GUI::GetFontByName(u8"IMFePIrm29P");
 
-    GUIContext *ctx = GUI::CreateGUIContextFromLayoutFile("MainMenu.layout");
+    std::unique_ptr<GUIContext, GUIContext::Deleter> ctx(
+        GUI::CreateGUIContextFromLayoutFile("MainMenu.layout"));
     ctx->SetDefaultFont(u8"IMFePIrm29P");
 
     class ButtonClicked
@@ -80,8 +83,6 @@ AppState MainMenu::Run(void)
         win.Present();
         win.DoEvents();
     }
-
-    GUI::DestroyGUIContext(ctx);
 
     return ret;
 }

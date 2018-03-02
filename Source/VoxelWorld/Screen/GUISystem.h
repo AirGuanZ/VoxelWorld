@@ -24,20 +24,20 @@ namespace CEGUI
     class Window;
 }
 
+struct ImFontSpec
+{
+    std::string ttfFilename;
+    float pixelSize;
+};
+
+struct ImFontID
+{
+    int id;
+};
+
 class GUI
 {
 public:
-    struct ImFontSpec
-    {
-        std::string ttfFilename;
-        float pixelSize;
-    };
-
-    struct ImFontID
-    {
-        int id;
-    };
-
     static bool Initialize(const std::vector<ImFontSpec> &ttfFonts, std::string &errMsg);
     static void Destroy(void);
 
@@ -77,6 +77,16 @@ public:
 class GUIContext
 {
 public:
+    class Deleter
+    {
+    public:
+        void operator()(GUIContext *ctx)
+        {
+            if(ctx)
+                GUI::DestroyGUIContext(ctx);
+        }
+    };
+
     void SetDefaultFont(const std::string &fontName);
 
     static void SetWidgetRect(CEGUI::Window *wdgt, const Rect &rectPerc, const Rect &rectPixl);
