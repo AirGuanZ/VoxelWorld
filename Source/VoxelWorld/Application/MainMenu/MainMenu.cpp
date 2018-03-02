@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <CEGUI/CEGUI.h>
 
 #include <Input/InputManager.h>
+#include <Resource/ResourceNameManager.h>
 #include <Screen/GUISystem.h>
 #include <Window/Window.h>
 
@@ -17,17 +18,16 @@ AppState MainMenu::Run(void)
 {
     Window &win         = Window::GetInstance();
     InputManager &input = InputManager::GetInstance();
+    RscNameMgr &rM      = RscNameMgr::GetInstance();
 
     bool done = false;
     AppState ret = AppState::Exit;
 
     win.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
 
-    ImFontID font = GUI::GetFontByName(u8"IMFePIrm29P");
-
     std::unique_ptr<GUIContext, GUIContext::Deleter> ctx(
-        GUI::CreateGUIContextFromLayoutFile("MainMenu.layout"));
-    ctx->SetDefaultFont(u8"IMFePIrm29P");
+        GUI::CreateGUIContextFromLayoutFile(rM.AsString(u8"MainMenu", u8"LayoutFile")));
+    ctx->SetDefaultFont(rM.AsString(u8"MainMenu", u8"Font"));
 
     class ButtonClicked
     {
@@ -60,8 +60,6 @@ AppState MainMenu::Run(void)
 
     while(!done)
     {
-        GUI::NewFrame();
-
         win.ClearDepthStencil();
         win.ClearRenderTarget();
 

@@ -65,3 +65,8 @@ Font[0] = DejaVuSans-14
 Font[1] = DejaVuSans-12
 Font[2] = DejaVuSans-10
 Font[3] = IMFePIrm29P
+
+[MainMenu]
+
+Font = IMFePIrm29P
+LayoutFile = MainMenu.layout
