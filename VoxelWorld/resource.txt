@@ -57,7 +57,7 @@ PixelSize[0] = 50.0f
 
 DefaultResourceDirectory = Bin/CEGUI
 
-Scheme = AlfiskoSkin
+Scheme = TaharezLook
 
 FontCount = 4
 

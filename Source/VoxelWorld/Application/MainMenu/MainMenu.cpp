@@ -23,13 +23,37 @@ AppState MainMenu::Run(void)
 
     GUI::ImFontID font = GUI::GetFontByName(u8"IMFePIrm29P");
 
-    GUIContext *ctx = GUI::CreateGUIContext();
+    GUIContext *ctx = GUI::CreateGUIContextFromLayoutFile("MainMenu.layout");
     ctx->SetDefaultFont(u8"IMFePIrm29P");
 
-    CEGUI::PushButton *but = static_cast<CEGUI::PushButton*>(
-        ctx->CreateWidget(u8"AlfiskoSkin/Button", u8"MyButton",
-                          { 0.5f, 0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 144.0f, 38.0f }));
-    but->setText(u8"Hello, CEGUI");
+    class ButtonClicked
+    {
+    public:
+        bool Game(const CEGUI::EventArgs&)
+        {
+            game = true;
+            return true;
+        }
+
+        bool Exit(const CEGUI::EventArgs&)
+        {
+            exit = true;
+            return true;
+        }
+
+        bool game = false;
+        bool exit = false;
+    } buttonClicked;
+
+    CEGUI::PushButton *gameButton = static_cast<CEGUI::PushButton*>
+        (ctx->GetCEGUIContext()->getRootWindow()->getChild(u8"Game"));
+    gameButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
+                               CEGUI::Event::Subscriber(&ButtonClicked::Game, &buttonClicked));
+
+    CEGUI::PushButton *exitButton = static_cast<CEGUI::PushButton*>
+        (ctx->GetCEGUIContext()->getRootWindow()->getChild(u8"Exit"));
+    exitButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
+                               CEGUI::Event::Subscriber(&ButtonClicked::Exit, &buttonClicked));
 
     while(!done)
     {
@@ -38,36 +62,20 @@ AppState MainMenu::Run(void)
         win.ClearDepthStencil();
         win.ClearRenderTarget();
 
-        using namespace ImGui;
-
-        if(Begin(u8"MainMenu", nullptr, ImVec2(400.0f, 400.0f), -1.0f,
-                 ImGuiWindowFlags_NoTitleBar |
-                 ImGuiWindowFlags_NoCollapse |
-                 ImGuiWindowFlags_NoResize |
-                 ImGuiWindowFlags_NoSavedSettings))
+        if(buttonClicked.game)
         {
-            GUI::PushFont(font);
-            Text((std::to_string(input.GetCursorPosX()) + u8", " +
-                  std::to_string(input.GetCursorPosY())).c_str());
-            if(Button(u8"Game"))
-            {
-                ret = AppState::Game;
-                done = true;
-            }
-            else if(Button(u8"Exit"))
-            {
-                ret = AppState::Exit;
-                done = true;
-            }
-            GUI::PopFont();
+            ret = AppState::Game;
+            done = true;
         }
-        End();
+        else if(buttonClicked.exit)
+        {
+            ret = AppState::Exit;
+            done = true;
+        }
 
         GUI::BeginCERender();
         ctx->Render();
         GUI::EndCERender();
-
-        GUI::RenderImGui();
 
         win.Present();
         win.DoEvents();

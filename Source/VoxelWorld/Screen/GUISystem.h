@@ -67,7 +67,6 @@ public:
     static void MouseButtonUp(MouseButton button);
 
     static void MouseWheel(int wheel);
-    static void MouseMove(int posX, int posY);
 
     static void KeyDown(int VK);
     static void KeyUp(int VK);
@@ -83,6 +82,8 @@ public:
     static void SetWidgetRect(CEGUI::Window *wdgt, const Rect &rectPerc, const Rect &rectPixl);
     CEGUI::Window *CreateWidget(const std::string &type, const std::string &name,
                                 const Rect &rectPerc, const Rect &rectPixl);
+
+    CEGUI::GUIContext *GetCEGUIContext(void) { return ctx_; }
 
     void Render(void);
 

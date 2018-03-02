@@ -10,6 +10,7 @@ Created by AirGuanZ
 #include <cstring>
 #include <map>
 #include <memory>
+#include <set>
 
 #include <filesystem>
 
@@ -36,6 +37,8 @@ namespace
     std::map<std::string, int> imGuiFontMap;
 
     CEGUI::Direct3D11Renderer::Renderer *ceguiRenderer = nullptr;
+
+    std::set<CEGUI::GUIContext*> ceguiCtxs;
 }
 
 static bool InitImGui(const std::vector<GUI::ImFontSpec> &ttfFonts)
@@ -194,12 +197,16 @@ void GUI::LoadCEGUIFont(const std::string &fontName)
 
 GUIContext *GUI::CreateGUIContext(void)
 {
-    return new GUIContext();
+    GUIContext *ctx = new GUIContext();
+    ceguiCtxs.insert(ctx->GetCEGUIContext());
+    return ctx;
 }
 
 GUIContext *GUI::CreateGUIContextFromLayoutFile(const std::string &filename)
 {
-    return new GUIContext(filename);
+    GUIContext *ctx = new GUIContext(filename);
+    ceguiCtxs.insert(ctx->GetCEGUIContext());
+    return ctx;
 }
 
 void GUI::DestroyGUIContext(GUIContext *ctx)
@@ -207,6 +214,7 @@ void GUI::DestroyGUIContext(GUIContext *ctx)
     if(!ctx)
         return;
 
+    ceguiCtxs.erase(ctx->GetCEGUIContext());
     delete ctx;
 }
 
@@ -220,8 +228,11 @@ namespace
 
 void GUI::MousePosition(int x, int y)
 {
-    ImGui::GetIO().MousePos = ImVec2(static_cast<float>(clamp(x, 0, clientWidth)),
-                                     static_cast<float>(clamp(y, 0, clientHeight)));
+    float fx = static_cast<float>(clamp(x, 0, clientWidth));
+    float fy = static_cast<float>(clamp(y, 0, clientHeight));
+    ImGui::GetIO().MousePos = ImVec2(fx, fy);
+    for(auto *ctx : ceguiCtxs)
+        ctx->injectMousePosition(fx, fy);
 }
 
 void GUI::MouseButtonDown(MouseButton button)
@@ -230,12 +241,18 @@ void GUI::MouseButtonDown(MouseButton button)
     {
     case MouseButton::Left:
         ImGui::GetIO().MouseDown[0] = true;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonDown(CEGUI::MouseButton::LeftButton);
         break;
     case MouseButton::Middle:
         ImGui::GetIO().MouseDown[1] = true;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonDown(CEGUI::MouseButton::MiddleButton);
         break;
     case MouseButton::Right:
         ImGui::GetIO().MouseDown[2] = true;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonDown(CEGUI::MouseButton::RightButton);
         break;
     }
 }
@@ -246,12 +263,18 @@ void GUI::MouseButtonUp(MouseButton button)
     {
     case MouseButton::Left:
         ImGui::GetIO().MouseDown[0] = false;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonUp(CEGUI::MouseButton::LeftButton);
         break;
     case MouseButton::Middle:
         ImGui::GetIO().MouseDown[1] = false;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonUp(CEGUI::MouseButton::MiddleButton);
         break;
     case MouseButton::Right:
         ImGui::GetIO().MouseDown[2] = false;
+        for(auto *ctx : ceguiCtxs)
+            ctx->injectMouseButtonUp(CEGUI::MouseButton::RightButton);
         break;
     }
 }
@@ -259,13 +282,6 @@ void GUI::MouseButtonUp(MouseButton button)
 void GUI::MouseWheel(int wheel)
 {
     ImGui::GetIO().MouseWheel += static_cast<float>(wheel);
-}
-
-void GUI::MouseMove(int posX, int posY)
-{
-    ImGuiIO &io = ImGui::GetIO();
-    io.MousePos.x = static_cast<float>(posX);
-    io.MousePos.y = static_cast<float>(posY);
 }
 
 void GUI::KeyDown(int VK)
