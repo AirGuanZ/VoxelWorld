@@ -1,10 +1,11 @@
 /*================================================================
-Filename: VoxelModelEditor.h
+Filename: VoxelModelAnimationDisplay.h
 Date: 2018.3.3
 Created by AirGuanZ
 ================================================================*/
 #pragma once
 
+#include <map>
 #include <memory>
 
 #include <OWEShader.hpp>
@@ -12,38 +13,43 @@ Created by AirGuanZ
 #include <SkeletonAnimation/SkeletonData.h>
 #include <SkeletonAnimation/SkeletonDataLoader.h>
 
+#include <D3DObject/InputLayout.h>
 #include "VoxelModel.h"
 
-class VoxelModelEditor
+class VoxelModelAnimationDisplay
 {
 public:
     using Shader = OWE::Shader<SS_VS, SS_PS>;
     using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
 
-    VoxelModelEditor(void);
+    VoxelModelAnimationDisplay(void);
 
-    //VoxelModelEditor不具有models和skeleton数据的所有权
+    //VoxelModelEditor不具有数据所有权
     bool Initialize(const std::vector<VoxelModel*> &models,
-                    const std::vector<std::string> modelBindings,
-                    const Skeleton::Skeleton *skeleton);
+                    const Skeleton::Skeleton *skeleton,
+                    const std::vector<std::string> &modelBindings,
+                    const std::map<std::string, int> &boneMap,
+                    std::string &errMsg);
+    void Clear(void);
     void SetModel(int idx, VoxelModel *model);
 
     bool SetCurrentAnimation(const std::string &aniName, bool loop);
-    void PlayAnimation(void);
-    void PauseAnimation(void);
-    void StopAnimation(void);
+    void RestartAnimation(void);
 
     void Update(float dT);
-    void Render(void);
+    void Render(const Matrix &WVP);
 
 private:
-    const std::vector<VoxelModel*> models_;
+    std::vector<VoxelModel*> models_;
+    std::vector<int> modelToBone_;
     const Skeleton::Skeleton *skeleton_;
 
-    std::string curAni_;
+    std::string curAniName_;
+    const Skeleton::AniClip *curAni_;
     float aniTime_;
     bool aniLoop_;
 
     Shader shader_;
     std::unique_ptr<Uniforms> uniforms_;
+    InputLayout inputLayout_;
 };
