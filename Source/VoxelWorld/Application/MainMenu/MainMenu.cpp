@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <memory>
 
 #include <CEGUI/CEGUI.h>
+#include <Utility/Clock.h>
 
 #include <Input/InputManager.h>
 #include <Resource/ResourceNameManager.h>
@@ -28,6 +29,7 @@ AppState MainMenu::Run(void)
     std::unique_ptr<GUIContext, GUIContext::Deleter> ctx(
         GUI::CreateGUIContextFromLayoutFile(rM.AsString("MainMenu", "LayoutFile")));
     ctx->SetDefaultFont(rM.AsString("MainMenu", "Font"));
+    ctx->Enable();
 
     CEGUI::PushButton *gameButton = static_cast<CEGUI::PushButton*>
         (ctx->GetCEGUIContext()->getRootWindow()->getChild("Game"));
@@ -38,6 +40,9 @@ AppState MainMenu::Run(void)
         (ctx->GetCEGUIContext()->getRootWindow()->getChild("Exit"));
     exitButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
                                CEGUI::Event::Subscriber(&MainMenu::ExitClicked, this));
+
+    Clock clock;
+    clock.Restart();
 
     while(!done)
     {
@@ -50,6 +55,9 @@ AppState MainMenu::Run(void)
 
         win.Present();
         win.DoEvents();
+
+        clock.Tick();
+        GUI::TimeElapsed(clock.ElapsedTime());
 
         if(gameClicked_)
         {

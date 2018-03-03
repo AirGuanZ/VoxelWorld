@@ -198,14 +198,12 @@ void GUI::LoadCEGUIFont(const std::string &fontName)
 GUIContext *GUI::CreateGUIContext(void)
 {
     GUIContext *ctx = new GUIContext();
-    ceguiCtxs.insert(ctx->GetCEGUIContext());
     return ctx;
 }
 
 GUIContext *GUI::CreateGUIContextFromLayoutFile(const std::string &filename)
 {
     GUIContext *ctx = new GUIContext(filename);
-    ceguiCtxs.insert(ctx->GetCEGUIContext());
     return ctx;
 }
 
@@ -319,6 +317,12 @@ namespace
         }
         */
     }
+}
+
+void GUI::TimeElapsed(float dT)
+{
+    for(auto ctx : ceguiCtxs)
+        ctx->injectTimePulse(dT);
 }
 
 void GUI::MousePosition(int x, int y)
@@ -439,6 +443,16 @@ CEGUI::Window *GUIContext::CreateWidget(const std::string &type, const std::stri
 void GUIContext::Render(void)
 {
     ctx_->draw();
+}
+
+void GUIContext::Enable(void)
+{
+    ceguiCtxs.insert(ctx_);
+}
+
+void GUIContext::Disable(void)
+{
+    ceguiCtxs.erase(ctx_);
 }
 
 GUIContext::GUIContext(void)

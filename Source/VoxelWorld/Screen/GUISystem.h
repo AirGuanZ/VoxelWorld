@@ -59,6 +59,8 @@ public:
     static GUIContext *CreateGUIContextFromLayoutFile(const std::string &layoutFilename);
     static void DestroyGUIContext(GUIContext *ctx);
 
+    static void TimeElapsed(float dT);
+
     //输入事件，一般由消息循环调用
 
     static void MousePosition(int x, int y);
@@ -96,6 +98,9 @@ public:
     CEGUI::GUIContext *GetCEGUIContext(void) { return ctx_; }
 
     void Render(void);
+
+    void Enable(void);
+    void Disable(void);
 
 private:
     friend class GUI;
