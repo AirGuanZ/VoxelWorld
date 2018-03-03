@@ -112,6 +112,9 @@
     <Filter Include="Source\VoxelModel">
       <UniqueIdentifier>{6b428c2b-f571-4c88-a343-0494f2d61c0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Shader\VoxelModel">
+      <UniqueIdentifier>{2856ad3c-0cb4-45bf-8bf2-f8efb49e9a6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -318,6 +321,9 @@
     <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.cpp">
       <Filter>Source\VoxelModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.cpp">
+      <Filter>Source\VoxelModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -503,10 +509,10 @@
     <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceNameManager.h">
       <Filter>Source\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModelEditor.h">
+    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.h">
       <Filter>Source\VoxelModel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.h">
+    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.h">
       <Filter>Source\VoxelModel</Filter>
     </ClInclude>
   </ItemGroup>
@@ -514,5 +520,13 @@
     <Font Include="Bin\Font\DroidSans.ttf">
       <Filter>Bin\Font</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Bin\Shader\VoxelModel\aniDisplayerVertexShader.hlsl">
+      <Filter>Bin\Shader\VoxelModel</Filter>
+    </FxCompile>
+    <FxCompile Include="Bin\Shader\VoxelModel\aniDisplayerPixelShader.hlsl">
+      <Filter>Bin\Shader\VoxelModel</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

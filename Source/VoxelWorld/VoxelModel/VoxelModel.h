@@ -30,10 +30,13 @@ public:
     void Destroy(void);
     bool IsAvailable(void) const;
 
+    UINT GetIndexCount(void) const;
+
     void Bind(ID3D11DeviceContext *DC);
     void Unbind(ID3D11DeviceContext *DC);
 
 private:
     VertexBuffer<false> vtxBuf_;
     IndexBuffer<false> idxBuf_;
+    size_t idxCount_ = 0;
 };

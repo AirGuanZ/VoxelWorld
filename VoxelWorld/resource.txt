@@ -64,3 +64,8 @@ Font[0] = IMFePIrm29P-18
 
 Font = IMFePIrm29P-18
 LayoutFile = MainMenu.layout
+
+[VoxelModelAnimationDisplayer]
+
+VertexShader = Bin/Shader/VoxelModel/aniDisplayerVertexShader.hlsl
+PixelShader  = Bin/Shader/VoxelModel/aniDiaplayerPixelShader.hlsl

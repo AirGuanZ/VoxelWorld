@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelAnimation.cpp
+Filename: VoxelModelAnimationDisplayer.cpp
 Date: 2018.3.3
 Created by AirGuanZ
 ================================================================*/
@@ -10,16 +10,16 @@ Created by AirGuanZ
 
 #include <Resource/ResourceNameManager.h>
 #include <Window/Window.h>
-#include "VoxelModelAnimationDisplay.h"
+#include "VoxelModelAnimationDisplayer.h"
 
-VoxelModelAnimationDisplay::VoxelModelAnimationDisplay(void)
+VoxelModelAnimationDisplayer::VoxelModelAnimationDisplayer(void)
 {
     curAni_  = nullptr;
     aniTime_ = 0.0f;
     aniLoop_ = false;
 }
 
-bool VoxelModelAnimationDisplay::Initialize(
+bool VoxelModelAnimationDisplayer::Initialize(
     const std::vector<VoxelModel*> &models,
     const Skeleton::Skeleton *skeleton,
     const std::vector<std::string> &modelBindings,
@@ -38,8 +38,8 @@ bool VoxelModelAnimationDisplay::Initialize(
     skeleton_ = skeleton;
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM("VoxelModelEditor", "VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM("VoxelModelEditor", "PixelShader"), psSrc))
+    if(!Helper::ReadFile(rM("VoxelModelAnimationDisplayer", "VertexShader"), vsSrc) ||
+       !Helper::ReadFile(rM("VoxelModelAnimationDisplayer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source for voxel model animation displaying";
         Clear();
@@ -85,7 +85,7 @@ bool VoxelModelAnimationDisplay::Initialize(
     }
 }
 
-void VoxelModelAnimationDisplay::Clear(void)
+void VoxelModelAnimationDisplayer::Clear(void)
 {
     models_.clear();
     modelToBone_.clear();
@@ -101,13 +101,13 @@ void VoxelModelAnimationDisplay::Clear(void)
     inputLayout_.Destroy();
 }
 
-void VoxelModelAnimationDisplay::SetModel(int idx, VoxelModel *model)
+void VoxelModelAnimationDisplayer::SetModel(int idx, VoxelModel *model)
 {
     assert(0 <= idx && idx < models_.size() && model != nullptr);
     models_[idx] = model;
 }
 
-bool VoxelModelAnimationDisplay::SetCurrentAnimation(const std::string &aniName, bool loop)
+bool VoxelModelAnimationDisplayer::SetCurrentAnimation(const std::string &aniName, bool loop)
 {
     if(!(curAni_ = skeleton_->GetAniClip(aniName)))
         return false;
@@ -117,12 +117,12 @@ bool VoxelModelAnimationDisplay::SetCurrentAnimation(const std::string &aniName,
     return true;
 }
 
-void VoxelModelAnimationDisplay::RestartAnimation(void)
+void VoxelModelAnimationDisplayer::RestartAnimation(void)
 {
     aniTime_ = 0.0f;
 }
 
-void VoxelModelAnimationDisplay::Update(float dT)
+void VoxelModelAnimationDisplayer::Update(float dT)
 {
     assert(curAni_ != nullptr);
     aniTime_ += dT;
@@ -133,7 +133,7 @@ void VoxelModelAnimationDisplay::Update(float dT)
     }
 }
 
-void VoxelModelAnimationDisplay::Render(const Matrix &WVP)
+void VoxelModelAnimationDisplayer::Render(const Matrix &WVP)
 {
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
@@ -145,8 +145,23 @@ void VoxelModelAnimationDisplay::Render(const Matrix &WVP)
     shader_.Bind(DC);
     DC->IASetInputLayout(inputLayout_);
 
-    //TODO
+    auto vscbTrans = uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans");
 
+    for(size_t i = 0; i < models_.size(); ++i)
+    {
+        VoxelModel *model = models_[i];
+        if(!model)
+            continue;
+        Matrix tWVP = boneMats[modelToBone_[i]] * WVP;
+        vscbTrans->SetBufferData(DC, { tWVP.Transpose() });
+        uniforms_->Bind(DC);
+
+        model->Bind(DC);
+        DC->DrawIndexed(model->GetIndexCount(), 0, 0);
+        model->Unbind(DC);
+    }
+
+    uniforms_->Unbind(DC);
     DC->IASetInputLayout(nullptr);
     shader_.Unbind(DC);
 }

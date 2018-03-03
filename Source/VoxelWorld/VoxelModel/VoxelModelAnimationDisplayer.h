@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelAnimationDisplay.h
+Filename: VoxelModelAnimationDisplayer.h
 Date: 2018.3.3
 Created by AirGuanZ
 ================================================================*/
@@ -16,13 +16,13 @@ Created by AirGuanZ
 #include <D3DObject/InputLayout.h>
 #include "VoxelModel.h"
 
-class VoxelModelAnimationDisplay
+class VoxelModelAnimationDisplayer
 {
 public:
     using Shader = OWE::Shader<SS_VS, SS_PS>;
     using Uniforms = OWE::ShaderUniforms<SS_VS, SS_PS>;
 
-    VoxelModelAnimationDisplay(void);
+    VoxelModelAnimationDisplayer(void);
 
     //VoxelModelEditor不具有数据所有权
     bool Initialize(const std::vector<VoxelModel*> &models,
@@ -38,6 +38,12 @@ public:
 
     void Update(float dT);
     void Render(const Matrix &WVP);
+
+private:
+    struct VSCBTrans
+    {
+        Matrix WVP;
+    };
 
 private:
     std::vector<VoxelModel*> models_;

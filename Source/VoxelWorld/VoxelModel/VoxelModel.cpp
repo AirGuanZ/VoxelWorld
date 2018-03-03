@@ -34,6 +34,7 @@ bool VoxelModel::Initialize(const std::vector<VoxelModelVertex> &vtx, const std:
         Destroy();
         return false;
     }
+    idxCount_ = idx.size();
     return true;
 }
 
@@ -41,12 +42,18 @@ void VoxelModel::Destroy(void)
 {
     vtxBuf_.Destroy();
     idxBuf_.Destroy();
+    idxCount_ = 0;
 }
 
 bool VoxelModel::IsAvailable(void) const
 {
     assert(vtxBuf_.IsAvailable() == idxBuf_.IsAvailable());
     return vtxBuf_.IsAvailable();
+}
+
+UINT VoxelModel::GetIndexCount(void) const
+{
+    return static_cast<UINT>(idxCount_);
 }
 
 void VoxelModel::Bind(ID3D11DeviceContext *DC)
