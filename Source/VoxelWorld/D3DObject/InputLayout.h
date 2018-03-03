@@ -49,12 +49,12 @@ public:
     }
 
     template<int N>
-    bool Initialize(D3D11_INPUT_ELEMENT_DESC (&desc)[N], const void *byteCode, UINT length)
+    bool Initialize(const D3D11_INPUT_ELEMENT_DESC (&desc)[N], const void *byteCode, UINT length)
     {
         return Initialize(desc, N, byteCode, length);
     }
 
-    bool Initialize(D3D11_INPUT_ELEMENT_DESC *desc, int N, const void *byteCode, UINT length)
+    bool Initialize(const D3D11_INPUT_ELEMENT_DESC *desc, int N, const void *byteCode, UINT length)
     {
         Helper::ReleaseCOMObjects(inputLayout_);
 

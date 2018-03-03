@@ -34,17 +34,8 @@
     <Filter Include="Bin\Shader\Actor">
       <UniqueIdentifier>{f53e06fc-c517-4c37-84df-35984682ec9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Actor">
-      <UniqueIdentifier>{8ecb3b1a-f261-4061-ae02-7d9ad8df9e79}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Application">
       <UniqueIdentifier>{ec62d184-9f4d-45ba-8e10-ecf8e8f9a82b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Block">
-      <UniqueIdentifier>{21ff525b-07cf-475a-a169-6a28e0c7534e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Collision">
-      <UniqueIdentifier>{2761e13a-c394-4976-bcc8-efaa3a2c9425}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\D3DObject">
       <UniqueIdentifier>{ea46b0e7-93a9-4f40-aa52-a69fd866b74a}</UniqueIdentifier>
@@ -73,30 +64,6 @@
     <Filter Include="Bin\Model\Actor">
       <UniqueIdentifier>{3a554125-5be0-4056-90d2-2a2384951c57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Actor\Camera">
-      <UniqueIdentifier>{976d8496-6e2e-4c8b-95bf-208fbb62de08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Chunk">
-      <UniqueIdentifier>{03d810a7-ff5a-47af-bd34-a2f6f637db34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Chunk\Renderer">
-      <UniqueIdentifier>{41d54c10-aad4-4b65-8d95-ab4a23056489}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Chunk\Model">
-      <UniqueIdentifier>{d667bc50-4c30-410f-b222-b0dc280ca736}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\LandGen">
-      <UniqueIdentifier>{84f9861c-afc1-4dfa-9aad-3cc5f6aaddd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\LandGen\V0">
-      <UniqueIdentifier>{547db637-2dd2-4577-ae79-adceb172e950}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\LandGen\V1">
-      <UniqueIdentifier>{d94c17c7-0259-4f5f-a4b2-6c96b0045d96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\LandGen\V2">
-      <UniqueIdentifier>{18e9eb5c-908b-4632-957c-f619b48bbb8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Application\MainMenu">
       <UniqueIdentifier>{bea0cfa6-fb03-4fba-88ec-82acf0d1ad71}</UniqueIdentifier>
     </Filter>
@@ -108,6 +75,42 @@
     </Filter>
     <Filter Include="Source\Application\Game">
       <UniqueIdentifier>{e9deea23-96f8-4bb9-adc3-0322d4508703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Actor">
+      <UniqueIdentifier>{8ecb3b1a-f261-4061-ae02-7d9ad8df9e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Actor\Camera">
+      <UniqueIdentifier>{976d8496-6e2e-4c8b-95bf-208fbb62de08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Block">
+      <UniqueIdentifier>{21ff525b-07cf-475a-a169-6a28e0c7534e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Chunk">
+      <UniqueIdentifier>{03d810a7-ff5a-47af-bd34-a2f6f637db34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Chunk\Renderer">
+      <UniqueIdentifier>{41d54c10-aad4-4b65-8d95-ab4a23056489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Chunk\Model">
+      <UniqueIdentifier>{d667bc50-4c30-410f-b222-b0dc280ca736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\Collision">
+      <UniqueIdentifier>{2761e13a-c394-4976-bcc8-efaa3a2c9425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\LandGen">
+      <UniqueIdentifier>{84f9861c-afc1-4dfa-9aad-3cc5f6aaddd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\LandGen\V0">
+      <UniqueIdentifier>{547db637-2dd2-4577-ae79-adceb172e950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\LandGen\V1">
+      <UniqueIdentifier>{d94c17c7-0259-4f5f-a4b2-6c96b0045d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\World\LandGen\V2">
+      <UniqueIdentifier>{18e9eb5c-908b-4632-957c-f619b48bbb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\VoxelModel">
+      <UniqueIdentifier>{6b428c2b-f571-4c88-a343-0494f2d61c0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -175,13 +178,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\Actor\ActorModel.cpp">
-      <Filter>Source\Actor</Filter>
+      <Filter>Source\World\Actor</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockModelBuilder.cpp">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\BlendState.cpp">
       <Filter>Source\D3DObject</Filter>
@@ -199,25 +202,25 @@
       <Filter>Source\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\OakGenerator_V0.cpp">
-      <Filter>Source\LandGen\V0</Filter>
+      <Filter>Source\World\LandGen\V0</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\LandGenerator_V0.cpp">
-      <Filter>Source\LandGen\V0</Filter>
+      <Filter>Source\World\LandGen\V0</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\V1\Biome.cpp">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\V1\LandGenerator.cpp">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\V1\PalmGenerator.cpp">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\V2\Area_V2.cpp">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Land\V2\LandGenerator_V2.cpp">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Screen\Crosshair.cpp">
       <Filter>Source\Screen</Filter>
@@ -241,43 +244,43 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Actor\Camera.cpp">
-      <Filter>Source\Actor\Camera</Filter>
+      <Filter>Source\World\Actor\Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Actor\Actor.cpp">
-      <Filter>Source\Actor</Filter>
+      <Filter>Source\World\Actor</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\BasicRenderer.cpp">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\CarveRenderer.cpp">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\LiquidRenderer.cpp">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\BasicModel.cpp">
-      <Filter>Source\Chunk\Model</Filter>
+      <Filter>Source\World\Chunk\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\Model.cpp">
-      <Filter>Source\Chunk\Model</Filter>
+      <Filter>Source\World\Chunk\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\Chunk.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkLoader.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkManager.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkModelBuilder.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.cpp">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Screen\GUISystem.cpp">
       <Filter>Source\Screen</Filter>
@@ -312,25 +315,28 @@
     <ClCompile Include="..\Source\VoxelWorld\Resource\ResourceNameManager.cpp">
       <Filter>Source\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.cpp">
+      <Filter>Source\VoxelModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
-      <Filter>Source\Actor</Filter>
+      <Filter>Source\World\Actor</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfoManager.h">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockModelBuilder.h">
-      <Filter>Source\Block</Filter>
+      <Filter>Source\World\Block</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Collision\AABB.h">
-      <Filter>Source\Collision</Filter>
+      <Filter>Source\World\Collision</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\BasicBuffer.h">
       <Filter>Source\D3DObject</Filter>
@@ -354,40 +360,40 @@
       <Filter>Source\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\OakGenerator_V0.h">
-      <Filter>Source\LandGen\V0</Filter>
+      <Filter>Source\World\LandGen\V0</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\LandGenerator_V0.h">
-      <Filter>Source\LandGen\V0</Filter>
+      <Filter>Source\World\LandGen\V0</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V1\Biome.h">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V1\Common.h">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V1\LandGenerator.h">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V1\PalmGenerator.h">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\PerlinNoise\PerlinNoise2D.h">
-      <Filter>Source\LandGen\V1</Filter>
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Area_V2.h">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Biome_V2.h">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Common_V2.h">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\LandGenerator_V2.h">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Land\V2\Noise_V2.h">
-      <Filter>Source\LandGen\V2</Filter>
+      <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Screen\Crosshair.h">
       <Filter>Source\Screen</Filter>
@@ -408,46 +414,46 @@
       <Filter>Source\World</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Actor\Actor.h">
-      <Filter>Source\Actor</Filter>
+      <Filter>Source\World\Actor</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Actor\Camera.h">
-      <Filter>Source\Actor\Camera</Filter>
+      <Filter>Source\World\Actor\Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\BasicRenderer.h">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\CarveRenderer.h">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\LiquidRenderer.h">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\RenderQueue.h">
-      <Filter>Source\Chunk\Renderer</Filter>
+      <Filter>Source\World\Chunk\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\BasicModel.h">
-      <Filter>Source\Chunk\Model</Filter>
+      <Filter>Source\World\Chunk\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\Model.h">
-      <Filter>Source\Chunk\Model</Filter>
+      <Filter>Source\World\Chunk\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\Chunk.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkDataPool.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkLoader.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkManager.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkModelBuilder.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Chunk\ChunkTraversal.h">
-      <Filter>Source\Chunk</Filter>
+      <Filter>Source\World\Chunk</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h">
       <Filter>Source\Application\MainMenu</Filter>
@@ -496,6 +502,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Resource\ResourceNameManager.h">
       <Filter>Source\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModelEditor.h">
+      <Filter>Source\VoxelModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.h">
+      <Filter>Source\VoxelModel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
