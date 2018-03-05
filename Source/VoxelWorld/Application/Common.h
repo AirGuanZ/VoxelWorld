@@ -31,6 +31,7 @@ struct AppConf
 enum class AppState
 {
     MainMenu,
+    VoxelModelEditor,
     Exit,
     Game
 };

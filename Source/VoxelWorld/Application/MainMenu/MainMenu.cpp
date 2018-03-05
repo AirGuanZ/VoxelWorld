@@ -41,6 +41,11 @@ AppState MainMenu::Run(void)
     exitButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
                                CEGUI::Event::Subscriber(&MainMenu::ExitClicked, this));
 
+    CEGUI::PushButton *editButton = static_cast<CEGUI::PushButton*>
+        (ctx->GetCEGUIContext()->getRootWindow()->getChild("VoxelModelEditor"));
+    editButton->subscribeEvent(CEGUI::PushButton::EventMouseClick,
+        CEGUI::Event::Subscriber(&MainMenu::EditClicked, this));
+
     Clock clock;
     clock.Restart();
 
@@ -67,6 +72,11 @@ AppState MainMenu::Run(void)
         else if(exitClicked_)
         {
             ret = AppState::Exit;
+            done = true;
+        }
+        else if(editClicked_)
+        {
+            ret = AppState::VoxelModelEditor;
             done = true;
         }
     }

@@ -13,6 +13,12 @@ Created by AirGuanZ
 
 namespace filesystem = std::experimental::filesystem::v1;
 
+namespace
+{
+    const std::string LIST_ITEM_NO_SKELETON = "No Skeleton";
+    const std::string LIST_ITEM_NO_COMPONENT = "No Component";
+}
+
 AppState VoxelModelEditor::Run(void)
 {
     Window &win         = Window::GetInstance();
@@ -38,10 +44,15 @@ AppState VoxelModelEditor::Run(void)
         win.ClearDepthStencil();
         win.ClearRenderTarget();
 
+        SelectionWindow();
+
         GUI::RenderImGui();
 
         win.Present();
         win.DoEvents();
+
+        if(exitClicked_)
+            mainLoopDone_ = true;
     }
 
     return AppState::MainMenu;
@@ -54,6 +65,9 @@ bool VoxelModelEditor::Initialize(std::string &errMsg)
     if(!InitComponentPaths(errMsg))
         return false;
     if(!InitBindingPaths(errMsg))
+        return false;
+
+    if(!InitGUI(errMsg))
         return false;
 
     return true;
@@ -99,9 +113,54 @@ bool VoxelModelEditor::InitSpecFileList(SpecFilePaths &output, std::string &errM
            ((path.has_extension() && path.extension().wstring() == ext) ||
            (!path.has_extension() && ext.empty())))
         {
-            output[path.stem().wstring()] = path.wstring();
+            output[path.stem().string()] = path.wstring();
         }
     }
 
     return true;
+}
+
+bool VoxelModelEditor::InitGUI(std::string &errMsg)
+{
+    for(auto &it : skeletonPaths_)
+        skeletonNames_.push_back(it.first.data());
+    if(skeletonNames_.empty())
+        skeletonNames_.push_back(LIST_ITEM_NO_SKELETON.data());
+    currentSkeletionIdx_ = 0;
+
+    for(auto &it : componentPaths_)
+        componentNames_.push_back(it.first.data());
+    if(componentNames_.empty())
+        componentNames_.push_back(LIST_ITEM_NO_COMPONENT.data());
+    currentComponentIdx_ = 0;
+
+    exitClicked_ = false;
+
+    return true;
+}
+
+void VoxelModelEditor::SelectionWindow(void)
+{
+    if(ImGui::Begin("Object Selection",
+       nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::PushID(0);
+        ImGui::Text("Skeleton List:");
+        ImGui::ListBox("", &currentSkeletionIdx_,
+                       skeletonNames_.data(), skeletonNames_.size(), 4);
+        ImGui::PopID();
+
+        ImGui::PushID(1);
+        ImGui::Text("Component List:");
+        ImGui::ListBox("", &currentComponentIdx_,
+                       componentNames_.data(), componentNames_.size(), 4);
+        ImGui::PopID();
+
+        if(ImGui::Button("Exit"))
+            exitClicked_ = true;
+        ImGui::SameLine();
+        if(ImGui::Button("Save"))
+            exitClicked_ = true;
+    }
+    ImGui::End();
 }

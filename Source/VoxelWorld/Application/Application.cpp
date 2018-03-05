@@ -11,6 +11,7 @@ Created by AirGuanZ
 #include "Application.h"
 #include "Game/Game.h"
 #include "MainMenu/MainMenu.h"
+#include "VoxelModelEditor/VoxelModelEditor.h"
 
 namespace
 {
@@ -72,6 +73,9 @@ void Application::Run(void)
             break;
         case AppState::Game:
             state = Game(appConf_).Run();
+            break;
+        case AppState::VoxelModelEditor:
+            state = VoxelModelEditor().Run();
             break;
         default:
             std::abort();

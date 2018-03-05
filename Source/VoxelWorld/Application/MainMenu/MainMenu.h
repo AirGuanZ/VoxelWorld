@@ -20,8 +20,10 @@ public:
 private:
     bool GameClicked(const CEGUI::EventArgs&) { return gameClicked_ = true; }
     bool ExitClicked(const CEGUI::EventArgs&) { return exitClicked_ = true; }
+    bool EditClicked(const CEGUI::EventArgs&) { return editClicked_ = true; }
 
 private:
     bool gameClicked_ = false;
     bool exitClicked_ = false;
+    bool editClicked_ = false;
 };

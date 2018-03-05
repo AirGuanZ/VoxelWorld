@@ -18,8 +18,14 @@
             <Property name="HorizontalAlignment" value="Centre" />
         </Window>
         <Window type="TaharezLook/Button" name="Exit" >
-            <Property name="Area" value="{{0,0},{0,60},{0,144},{0,98}}" />
+            <Property name="Area" value="{{0,0},{0,120},{0,144},{0,158}}" />
             <Property name="Text" value="Exit" />
+            <Property name="VerticalAlignment" value="Centre" />
+            <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <Window type="TaharezLook/Button" name="VoxelModelEditor" >
+            <Property name="Area" value="{{0,0},{0,60},{0,144},{0,98}}" />
+            <Property name="Text" value="Edit Model" />
             <Property name="VerticalAlignment" value="Centre" />
             <Property name="HorizontalAlignment" value="Centre" />
         </Window>

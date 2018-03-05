@@ -26,9 +26,13 @@ private:
     bool InitComponentPaths(std::string &errMsg);
     bool InitBindingPaths  (std::string &errMsg);
 
-    using SpecFilePaths = std::map<std::wstring, std::wstring>;
+    using SpecFilePaths = std::map<std::string, std::wstring>;
     bool InitSpecFileList(SpecFilePaths &output, std::string &errMsg,
                           const std::wstring &dirPath, const std::wstring &ext);
+
+    bool InitGUI(std::string &errMsg);
+
+    void SelectionWindow(void);
 
 private:
     //动画、模型相关数据
@@ -44,4 +48,15 @@ private:
     SpecFilePaths bindingPaths_;
 
     Skeleton::Skeleton skeleton_;
+
+private:
+    //用户交互
+
+    std::vector<const char*> skeletonNames_;
+    int currentSkeletionIdx_;
+
+    std::vector<const char*> componentNames_;
+    int currentComponentIdx_;
+
+    bool exitClicked_;
 };
