@@ -83,6 +83,8 @@ bool VoxelModelAnimationDisplayer::Initialize(
         }
         modelToBone_[i] = it->second;
     }
+
+    return true;
 }
 
 void VoxelModelAnimationDisplayer::Clear(void)
@@ -101,9 +103,9 @@ void VoxelModelAnimationDisplayer::Clear(void)
     inputLayout_.Destroy();
 }
 
-void VoxelModelAnimationDisplayer::SetModel(int idx, VoxelModel *model)
+void VoxelModelAnimationDisplayer::SetModel(size_t idx, VoxelModel *model)
 {
-    assert(0 <= idx && idx < models_.size() && model != nullptr);
+    assert(idx < models_.size() && model != nullptr);
     models_[idx] = model;
 }
 

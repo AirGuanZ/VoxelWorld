@@ -31,7 +31,7 @@ public:
                     const std::map<std::string, int> &boneMap,
                     std::string &errMsg);
     void Clear(void);
-    void SetModel(int idx, VoxelModel *model);
+    void SetModel(size_t idx, VoxelModel *model);
 
     bool SetCurrentAnimation(const std::string &aniName, bool loop);
     void RestartAnimation(void);

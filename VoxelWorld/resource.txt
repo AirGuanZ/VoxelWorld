@@ -69,3 +69,12 @@ LayoutFile = MainMenu.layout
 
 VertexShader = Bin/Shader/VoxelModel/aniDisplayerVertexShader.hlsl
 PixelShader  = Bin/Shader/VoxelModel/aniDiaplayerPixelShader.hlsl
+
+[VoxelModelEditor]
+
+Skeleton  = Bin/Model/Voxel/Skeleton/
+Component = Bin/Model/Voxel/Component/
+Binding   = Bin/Model/Voxel/Binding/
+
+SkeletonExtension  = .vwani
+ComponentExtension = .vwcpt

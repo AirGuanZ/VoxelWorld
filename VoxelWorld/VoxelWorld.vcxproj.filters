@@ -115,6 +115,9 @@
     <Filter Include="Bin\Shader\VoxelModel">
       <UniqueIdentifier>{2856ad3c-0cb4-45bf-8bf2-f8efb49e9a6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Application\VoxelModelEditor">
+      <UniqueIdentifier>{54042bbc-d1a4-473a-b74a-51bfa7ea51d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -161,6 +164,12 @@
       <Filter>Bin\Model\Actor</Filter>
     </None>
     <None Include="resource.txt" />
+    <None Include="Bin\Shader\VoxelModel\aniDisplayerVertexShader.hlsl">
+      <Filter>Bin\Shader\VoxelModel</Filter>
+    </None>
+    <None Include="Bin\Shader\VoxelModel\aniDisplayerPixelShader.hlsl">
+      <Filter>Bin\Shader\VoxelModel</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Bin\Texture\Basic\0.png">
@@ -323,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.cpp">
       <Filter>Source\VoxelModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -515,18 +527,13 @@
     <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.h">
       <Filter>Source\VoxelModel</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Bin\Font\DroidSans.ttf">
       <Filter>Bin\Font</Filter>
     </Font>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Bin\Shader\VoxelModel\aniDisplayerVertexShader.hlsl">
-      <Filter>Bin\Shader\VoxelModel</Filter>
-    </FxCompile>
-    <FxCompile Include="Bin\Shader\VoxelModel\aniDisplayerPixelShader.hlsl">
-      <Filter>Bin\Shader\VoxelModel</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>
