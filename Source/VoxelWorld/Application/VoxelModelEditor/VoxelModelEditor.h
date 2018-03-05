@@ -22,16 +22,17 @@ public:
 private:
     bool Initialize(std::string &errMsg);
 
-    bool InitSkeletonPaths(std::string &errMsg);
+    bool InitSkeletonPaths (std::string &errMsg);
     bool InitComponentPaths(std::string &errMsg);
-    bool InitBindingPaths(std::string &errMsg);
+    bool InitBindingPaths  (std::string &errMsg);
 
     using SpecFilePaths = std::map<std::wstring, std::wstring>;
-
     bool InitSpecFileList(SpecFilePaths &output, std::string &errMsg,
                           const std::wstring &dirPath, const std::wstring &ext);
 
 private:
+    //动画、模型相关数据
+
     //从骨骼名字到相对路径的映射
     SpecFilePaths skeletonPaths_;
 

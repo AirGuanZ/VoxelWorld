@@ -37,6 +37,8 @@ DefaultModelRightHand = Bin/Model/Actor/rightHand.obj
 DefaultModelLeftFoot  = Bin/Model/Actor/leftFoot.obj
 DefaultModelRightFoot = Bin/Model/Actor/rightFoot.obj
 
+DefaultSkeleton		  = Bin/Model/Actor/skeleton.vwani
+
 [Crosshair]
 
 Texture = Bin/Texture/Crosshair/cross.png

@@ -23,7 +23,8 @@ namespace
     {
         std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-            L"output.vwani", 0.35f, 1.0f, skeleton, boneMap, errMsg);
+            RscNameMgr::GetInstance()("ActorModel", "DefaultSkeleton"),
+            0.35f, 1.0f, skeleton, boneMap, errMsg);
     }
 
     bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)

@@ -5,18 +5,43 @@ Created by AirGuanZ
 ================================================================*/
 #include <filesystem>
 
+#include <Input/InputManager.h>
 #include <Resource/ResourceNameManager.h>
+#include <Screen/GUISystem.h>
+#include <Window/Window.h>
 #include "VoxelModelEditor.h"
 
 namespace filesystem = std::experimental::filesystem::v1;
 
 AppState VoxelModelEditor::Run(void)
 {
+    Window &win         = Window::GetInstance();
+    InputManager &input = InputManager::GetInstance();
+
+    ID3D11Device *dev       = win.GetD3DDevice();
+    ID3D11DeviceContext *DC = win.GetD3DDeviceContext();
+
     std::string errMsg;
     if(!Initialize(errMsg))
     {
         ShowErrMsgBox(errMsg);
         return AppState::MainMenu;
+    }
+
+    bool mainLoopDone_ = false;
+    win.SetBackgroundColor(0.0f, 1.0f, 1.0f, 0.0f);
+
+    while(!mainLoopDone_)
+    {
+        GUI::NewFrame();
+
+        win.ClearDepthStencil();
+        win.ClearRenderTarget();
+
+        GUI::RenderImGui();
+
+        win.Present();
+        win.DoEvents();
     }
 
     return AppState::MainMenu;
