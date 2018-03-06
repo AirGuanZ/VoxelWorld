@@ -58,5 +58,8 @@ private:
     std::vector<const char*> componentNames_;
     int currentComponentIdx_;
 
+    std::vector<const char*> bindingNames_;
+    int currentBindingIdx_;
+
     bool exitClicked_;
 };

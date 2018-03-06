@@ -47,9 +47,9 @@ public:
             return;
 
         ImGui::SetNextWindowSize(ImVec2(400.0f, 150.0f));
-        if(ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_NoResize |
-                                          ImGuiWindowFlags_NoMove |
-                                          ImGuiWindowFlags_NoCollapse))
+        if(ImGui::Begin("Debug##Game", nullptr, ImGuiWindowFlags_NoResize |
+                                                ImGuiWindowFlags_NoMove |
+                                                ImGuiWindowFlags_NoCollapse))
         {
             ImGui::Text(("FPS: " + std::to_string(info_.FPS)).c_str());
             ImGui::Text(("Actor on ground: " + std::string(info_.actorOnGround ? "true" : "false")).c_str());

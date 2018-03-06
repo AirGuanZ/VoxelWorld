@@ -1,7 +1,7 @@
 [Initialize]
 
-WindowWidth  = 800
-WindowHeight = 600
+WindowWidth  = 1440
+WindowHeight = 768
 
 MSAA = 1
 

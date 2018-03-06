@@ -17,6 +17,7 @@ namespace
 {
     const std::string LIST_ITEM_NO_SKELETON = "No Skeleton";
     const std::string LIST_ITEM_NO_COMPONENT = "No Component";
+    const std::string LIST_ITEM_NO_BINDING = "No Binding";
 }
 
 AppState VoxelModelEditor::Run(void)
@@ -134,6 +135,12 @@ bool VoxelModelEditor::InitGUI(std::string &errMsg)
         componentNames_.push_back(LIST_ITEM_NO_COMPONENT.data());
     currentComponentIdx_ = 0;
 
+    for(auto &it : bindingPaths_)
+        bindingNames_.push_back(it.first.data());
+    if(bindingNames_.empty())
+        bindingNames_.push_back(LIST_ITEM_NO_BINDING.data());
+    currentBindingIdx_ = 0;
+
     exitClicked_ = false;
 
     return true;
@@ -141,7 +148,7 @@ bool VoxelModelEditor::InitGUI(std::string &errMsg)
 
 void VoxelModelEditor::SelectionWindow(void)
 {
-    if(ImGui::Begin("Object Selection",
+    if(ImGui::Begin("Object Selection##VoxelModelEditor",
        nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::PushID(0);
@@ -151,9 +158,15 @@ void VoxelModelEditor::SelectionWindow(void)
         ImGui::PopID();
 
         ImGui::PushID(1);
+        ImGui::Text("Binding List:");
+        ImGui::ListBox("", &currentBindingIdx_,
+                       bindingNames_.data(), bindingNames_.size(), 4);
+        ImGui::PopID();
+
+        ImGui::PushID(2);
         ImGui::Text("Component List:");
         ImGui::ListBox("", &currentComponentIdx_,
-                       componentNames_.data(), componentNames_.size(), 4);
+            componentNames_.data(), componentNames_.size(), 4);
         ImGui::PopID();
 
         if(ImGui::Button("Exit"))

@@ -53,10 +53,15 @@ static bool InitImGui(const std::vector<ImFontSpec> &ttfFonts)
     ImGui::StyleColorsClassic();
 
     //ImGui×ÖÌåÉèÖÃ
+
     ImGuiIO &io = ImGui::GetIO();
     imGuiFonts.resize(ttfFonts.size() + 1);
-    imGuiFonts[0] = io.Fonts->AddFontDefault();
+
+    ImFontConfig defaultFontConfig;
+    defaultFontConfig.SizePixels = 15.0f;
+    imGuiFonts[0] = io.Fonts->AddFontDefault(&defaultFontConfig);
     imGuiFontMap["Default"] = 0;
+
     for(size_t i = 0; i < ttfFonts.size(); ++i)
     {
         imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
