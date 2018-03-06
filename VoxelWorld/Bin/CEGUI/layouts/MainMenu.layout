@@ -25,7 +25,7 @@
         </Window>
         <Window type="TaharezLook/Button" name="VoxelModelEditor" >
             <Property name="Area" value="{{0,0},{0,60},{0,144},{0,98}}" />
-            <Property name="Text" value="Edit Model" />
+            <Property name="Text" value="Edit" />
             <Property name="VerticalAlignment" value="Centre" />
             <Property name="HorizontalAlignment" value="Centre" />
         </Window>

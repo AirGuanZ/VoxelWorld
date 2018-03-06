@@ -13,6 +13,11 @@ class ConfigFileSection
 public:
     const std::string &operator[](const std::string &key) const;
 
+    const std::map<std::string, std::string> &GetData(void) const
+    {
+        return data_;
+    }
+
     ConfigFileSection(const ConfigFileSection&) = default;
 
 private:

@@ -56,7 +56,7 @@ bool VoxelModel::LoadFromFile(const std::wstring &filename, VoxelModel &model)
             vtxData.push_back(vtx);
         }
         else if(std::sscanf(line.data(), "idx %d %d %d",
-                            &idx0, &idx1, &idx2))
+                            &idx0, &idx1, &idx2) == 3)
         {
             idxData.push_back(static_cast<UINT16>(idx0));
             idxData.push_back(static_cast<UINT16>(idx1));

@@ -119,6 +119,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Texture\Texture2D.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Texture\TextureFile.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\VoxelModel\ModelSkeletonBinding.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Window\Window.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Screen\ImmediateScreen2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\Texture2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\Texture\TextureFile.h" />
+    <ClInclude Include="..\Source\VoxelWorld\VoxelModel\ModelSkeletonBinding.h" />
     <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModel.h" />
     <ClInclude Include="..\Source\VoxelWorld\VoxelModel\VoxelModelAnimationDisplayer.h" />
     <ClInclude Include="..\Source\VoxelWorld\Window\Window.h" />
