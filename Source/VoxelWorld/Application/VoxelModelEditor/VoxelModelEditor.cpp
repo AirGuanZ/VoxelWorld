@@ -4,10 +4,12 @@ Date: 2018.3.5
 Created by AirGuanZ
 ================================================================*/
 #include <filesystem>
+#include <fstream>
 
 #include <Input/InputManager.h>
 #include <Resource/ResourceNameManager.h>
 #include <Screen/GUISystem.h>
+#include <VoxelModel/ModelSkeletonBinding.h>
 #include <Window/Window.h>
 #include "VoxelModelEditor.h"
 
@@ -45,7 +47,15 @@ AppState VoxelModelEditor::Run(void)
         win.ClearDepthStencil();
         win.ClearRenderTarget();
 
-        SelectionWindow();
+        switch(state_)
+        {
+        case State::Normal:
+            SelectionWindow();
+            break;
+        case State::AddNewBinding:
+            AddNewBindingWindow();
+            break;
+        }
 
         GUI::RenderImGui();
 
@@ -67,6 +77,8 @@ bool VoxelModelEditor::Initialize(std::string &errMsg)
         return false;
     if(!InitBindingPaths(errMsg))
         return false;
+
+    state_ = State::Normal;
 
     if(!InitGUI(errMsg))
         return false;
@@ -123,23 +135,13 @@ bool VoxelModelEditor::InitSpecFileList(SpecFilePaths &output, std::string &errM
 
 bool VoxelModelEditor::InitGUI(std::string &errMsg)
 {
-    for(auto &it : skeletonPaths_)
-        skeletonNames_.push_back(it.first.data());
-    if(skeletonNames_.empty())
-        skeletonNames_.push_back(LIST_ITEM_NO_SKELETON.data());
-    currentSkeletionIdx_ = 0;
-
-    for(auto &it : componentPaths_)
-        componentNames_.push_back(it.first.data());
-    if(componentNames_.empty())
-        componentNames_.push_back(LIST_ITEM_NO_COMPONENT.data());
-    currentComponentIdx_ = 0;
-
     for(auto &it : bindingPaths_)
         bindingNames_.push_back(it.first.data());
     if(bindingNames_.empty())
         bindingNames_.push_back(LIST_ITEM_NO_BINDING.data());
     currentBindingIdx_ = 0;
+
+    ReloadBinding();
 
     exitClicked_ = false;
 
@@ -152,22 +154,23 @@ void VoxelModelEditor::SelectionWindow(void)
        nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::PushID(0);
-        ImGui::Text("Skeleton List:");
-        ImGui::ListBox("", &currentSkeletionIdx_,
-                       skeletonNames_.data(), skeletonNames_.size(), 4);
-        ImGui::PopID();
-
-        ImGui::PushID(1);
         ImGui::Text("Binding List:");
         ImGui::ListBox("", &currentBindingIdx_,
                        bindingNames_.data(), bindingNames_.size(), 4);
+        ImGui::SameLine();
+        if(ImGui::Button("+"))
+            state_ = State::AddNewBinding;
         ImGui::PopID();
 
-        ImGui::PushID(2);
-        ImGui::Text("Component List:");
-        ImGui::ListBox("", &currentComponentIdx_,
-            componentNames_.data(), componentNames_.size(), 4);
-        ImGui::PopID();
+        if(!NoBindingSelected())
+        {
+            ImGui::PushID(1);
+            ImGui::Text("Component List:");
+            ImGui::ListBox("", &currentComponentIdx_,
+                           componentsOfSelectedBinding_.data(),
+                           componentsOfSelectedBinding_.size(), 4);
+            ImGui::PopID();
+        }
 
         if(ImGui::Button("Exit"))
             exitClicked_ = true;
@@ -176,4 +179,67 @@ void VoxelModelEditor::SelectionWindow(void)
             exitClicked_ = true;
     }
     ImGui::End();
+}
+
+void VoxelModelEditor::AddNewBindingWindow(void)
+{
+    static std::vector<char> textBuf(40);
+    if(ImGui::Begin("Add New Binding##VoxelModelEditor", nullptr,
+                    ImGuiWindowFlags_NoCollapse))
+    {
+        if(ImGui::InputText("Name", textBuf.data(), textBuf.size(),
+                            ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            state_ = State::Normal;
+            CreateNewBinding(std::string(textBuf.data()));
+            ReloadBinding();
+        }
+    }
+    ImGui::End();
+}
+
+bool VoxelModelEditor::NoBindingSelected(void)
+{
+    return bindingNames_[currentBindingIdx_] == LIST_ITEM_NO_BINDING.data();
+}
+
+void VoxelModelEditor::CreateNewBinding(const std::string &name)
+{
+    if(name.empty())
+        return;
+    std::ofstream fout(
+        RscNameMgr::GetInstance().AsString("VoxelModelEditor", "Binding") + name +
+        RscNameMgr::GetInstance().AsString("VoxelModelEditor", "BindingExtension"),
+        std::ios_base::out | std::ios_base::trunc);
+}
+
+void VoxelModelEditor::ReloadBinding(void)
+{
+    if(!NoBindingSelected())
+    {
+        auto pathIt = bindingPaths_.find(bindingNames_[currentBindingIdx_]);
+        if(pathIt == bindingPaths_.end())
+            return;
+        ModelSkeletonBinding oldBinding = currentBinding_;
+        if(!currentBinding_.LoadFromFile(pathIt->second))
+        {
+            currentBinding_ = oldBinding;
+            return;
+        }
+
+        componentsOfSelectedBinding_.clear();
+        currentBinding_.ForAllComponents([&](const std::string &name)
+        {
+            componentsOfSelectedBinding_.push_back(name.data());
+        });
+        if(componentsOfSelectedBinding_.empty())
+            componentsOfSelectedBinding_.push_back(LIST_ITEM_NO_COMPONENT.data());
+        currentComponentIdx_ = 0;
+    }
+    else
+    {
+        componentsOfSelectedBinding_.clear();
+        componentsOfSelectedBinding_.push_back(LIST_ITEM_NO_COMPONENT.data());
+        currentComponentIdx_ = 0;
+    }
 }

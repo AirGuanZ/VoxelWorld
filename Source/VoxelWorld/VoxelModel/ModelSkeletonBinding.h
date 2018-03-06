@@ -19,6 +19,13 @@ public:
     bool GetBone(const std::string &component, std::string &bone) const;
     bool AddComponent(const std::string &component, const std::string &bone);
 
+    template<typename Func>
+    void ForAllComponents(Func &&func)
+    {
+        for(const auto &it : componentToBone_)
+            func(it.first);
+    }
+
 private:
     std::map<std::string, std::string> componentToBone_;
 };

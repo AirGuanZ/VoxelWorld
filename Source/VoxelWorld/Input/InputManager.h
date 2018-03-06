@@ -103,8 +103,8 @@ public:
 
     void ShowCursor(bool show)
     {
-        //这里“showCursor_ = show”不是==，就是为了赋值
-        ::ShowCursor((showCursor_ = show) ? TRUE : FALSE);
+        showCursor_ = show;
+        ::ShowCursor(show ? TRUE : FALSE);
     }
 
     bool ShowCursor(void) const

@@ -11,12 +11,19 @@ Created by AirGuanZ
 #include <SkeletonAnimation/SkeletonData.h>
 
 #include <Application/Common.h>
+#include <VoxelModel/ModelSkeletonBinding.h>
 #include <VoxelModel/VoxelModel.h>
 #include <VoxelModel/VoxelModelAnimationDisplayer.h>
 
 class VoxelModelEditor
 {
 public:
+    enum class State
+    {
+        Normal,
+        AddNewBinding,
+    };
+
     AppState Run(void);
 
 private:
@@ -33,6 +40,13 @@ private:
     bool InitGUI(std::string &errMsg);
 
     void SelectionWindow(void);
+    void AddNewBindingWindow(void);
+
+    bool NoBindingSelected(void);
+
+    void CreateNewBinding(const std::string &name);
+
+    void ReloadBinding(void);
 
 private:
     //动画、模型相关数据
@@ -52,14 +66,15 @@ private:
 private:
     //用户交互
 
-    std::vector<const char*> skeletonNames_;
-    int currentSkeletionIdx_;
-
-    std::vector<const char*> componentNames_;
-    int currentComponentIdx_;
-
     std::vector<const char*> bindingNames_;
     int currentBindingIdx_;
 
+    std::vector<const char*> componentsOfSelectedBinding_;
+    int currentComponentIdx_;
+
+    ModelSkeletonBinding currentBinding_;
+
     bool exitClicked_;
+
+    State state_;
 };

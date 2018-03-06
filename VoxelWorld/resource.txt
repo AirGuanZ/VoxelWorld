@@ -80,3 +80,4 @@ Binding   = Bin/Model/Voxel/Binding/
 
 SkeletonExtension  = .vwani
 ComponentExtension = .vwcpt
+BindingExtension   = .vwbinding
