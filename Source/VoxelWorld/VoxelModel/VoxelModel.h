@@ -5,6 +5,8 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
+#include <vector>
+
 #include <Utility/D3D11Header.h>
 #include <Utility/Math.h>
 #include <Utility/Singleton.h>
@@ -25,6 +27,11 @@ public:
     using Vertex = VoxelModelVertex;
 
     static InputLayout CreateInputLayout(const void *shaderByteCode, UINT length);
+
+    static bool LoadFromFile(const std::wstring &filename, VoxelModel &model);
+    static bool SaveToFile(const std::wstring &filename,
+                           const std::vector<VoxelModelVertex> &vtx,
+                           const std::vector<UINT16> &idx);
 
     bool Initialize(const std::vector<VoxelModelVertex> &vtx, const std::vector<UINT16> &idx);
     void Destroy(void);

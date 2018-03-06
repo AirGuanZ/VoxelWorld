@@ -3,7 +3,11 @@ Filename: VoxelModel.cpp
 Date: 2018.3.3
 Created by AirGuanZ
 ================================================================*/
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <cassert>
+#include <cstdio>
+#include <fstream>
 
 #include <Utility/HelperFunctions.h>
 
@@ -23,6 +27,78 @@ InputLayout VoxelModel::CreateInputLayout(const void *shaderByteCode, UINT lengt
     InputLayout rt;
     rt.Initialize(desc, shaderByteCode, length);
     return rt;
+}
+
+bool VoxelModel::LoadFromFile(const std::wstring &filename, VoxelModel &model)
+{
+    model.Destroy();
+
+    std::ifstream fin(filename, std::ios_base::in);
+    if(!fin)
+        return false;
+
+    std::string line;
+    std::vector<VoxelModelVertex> vtxData;
+    std::vector<UINT16> idxData;
+
+    VoxelModelVertex vtx;
+    int idx0, idx1, idx2;
+
+    while(std::getline(fin, line))
+    {
+        if(line.empty() || line[0] == '#')
+            continue;
+        if(std::sscanf(line.data(), "vtx %f %f %f %f %f %f %f %f %f",
+                       &vtx.pos.x, &vtx.pos.y, &vtx.pos.z,
+                       &vtx.color.x, &vtx.color.y, &vtx.color.z,
+                       &vtx.nor.x, &vtx.nor.y, &vtx.nor.z) == 9)
+        {
+            vtxData.push_back(vtx);
+        }
+        else if(std::sscanf(line.data(), "idx %d %d %d",
+                            &idx0, &idx1, &idx2))
+        {
+            idxData.push_back(static_cast<UINT16>(idx0));
+            idxData.push_back(static_cast<UINT16>(idx1));
+            idxData.push_back(static_cast<UINT16>(idx2));
+        }
+        else
+            return false;
+    }
+
+    if(!model.Initialize(vtxData, idxData))
+        return false;
+
+    return true;
+}
+
+bool VoxelModel::SaveToFile(const std::wstring &filename,
+                            const std::vector<VoxelModelVertex> &vtxData,
+                            const std::vector<UINT16> &idxData)
+{
+    std::ofstream fout(filename, std::ios_base::out | std::ios_base::trunc);
+    if(!fout)
+        return false;
+
+    fout.precision(8);
+    for(auto &vtx : vtxData)
+    {
+        fout << "vtx "
+             << vtx.pos.x << " "   << vtx.pos.y << " "   << vtx.pos.z << " "
+             << vtx.color.x << " " << vtx.color.y << " " << vtx.color.z << " "
+             << vtx.nor.x << " "   << vtx.nor.y << " "   << vtx.nor.z
+             << std::endl;
+    }
+
+    assert(idxData.size() % 3 == 0);
+    for(size_t i = 0; i < idxData.size(); i += 3)
+    {
+        fout << "idx "
+            << idxData[i] << " " << idxData[i + 1] << " " << idxData[i + 2]
+            << std::endl;
+    }
+
+    return true;
 }
 
 bool VoxelModel::Initialize(const std::vector<VoxelModelVertex> &vtx, const std::vector<UINT16> &idx)
