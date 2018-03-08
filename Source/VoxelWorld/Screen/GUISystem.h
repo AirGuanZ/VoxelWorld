@@ -47,10 +47,10 @@ public:
     static void BeginCERender(void);
     static void EndCERender(void);
 
+    static ImFontID GetFontByName(const std::string &name);
+
     static void PushFont(ImFontID id);
     static void PopFont(void);
-
-    static ImFontID GetFontByName(const std::string &name);
 
     static void LoadCEGUIScheme(const std::string &schemeName);
     static void LoadCEGUIFont(const std::string &fontName);

@@ -3,6 +3,7 @@ Filename: HelperFunctions.cpp
 Date: 2018.1.13
 Created by AirGuanZ
 ================================================================*/
+#include <filesystem>
 #include <fstream>
 #include <iterator>
 #include <string>
@@ -60,4 +61,35 @@ std::wstring Helper::ToWStr(const std::string &str)
     std::wstring wstr(wide);
     delete[] wide;
     return wstr;
+}
+
+void Helper::GetFilenames(const std::string &dirPath,
+                          const std::string &ext,
+                          std::map<std::string, std::wstring> &output)
+{
+    namespace fs = std::experimental::filesystem::v1;
+    output.clear();
+
+    if(ext.empty())
+    {
+        for(auto &entry : fs::directory_iterator(dirPath))
+        {
+            auto &path = entry.path();
+            if(fs::is_regular_file(path) && !path.has_extension())
+                output[path.stem().string()] = path.wstring();
+        }
+    }
+    else
+    {
+        for(auto &entry : fs::directory_iterator(dirPath))
+        {
+            auto &path = entry.path();
+            if(fs::is_regular_file(path) &&
+               path.has_extension() &&
+               path.extension().string() == ext)
+            {
+                output[path.stem().string()] = path.wstring();
+            }
+        }
+    }
 }

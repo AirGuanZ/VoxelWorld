@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <fstream>
 
 #include <Utility/ConfigFile.h>
+#include <Utility/HelperFunctions.h>
 
 #include "ModelSkeletonBinding.h"
 
@@ -20,6 +21,11 @@ bool ModelSkeletonBinding::LoadFromFile(const std::wstring &filename)
     auto &section = conf.GetSection("Global");
     for(auto &it : section.GetData())
         componentToBone_[it.first] = it.second;
+
+    skeletonName_ = conf("Skeleton", "SkeletonName");
+    skeletonPath_ = Helper::ToWStr(conf("Skeleton", "SkeletonPath"));
+    if(skeletonName_.empty() || skeletonPath_.empty())
+        return false;
 
     return true;
 }

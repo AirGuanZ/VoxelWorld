@@ -7,6 +7,7 @@ Created by AirGuanZ
 
 #include <codecvt>
 #include <locale>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -80,4 +81,7 @@ namespace Helper
     std::string ToStr(const std::wstring &wstr);
 
     std::wstring ToWStr(const std::string &str);
+
+    void GetFilenames(const std::string &dirPath, const std::string &ext,
+                      std::map<std::string, std::wstring> &output);
 }

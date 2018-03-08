@@ -26,6 +26,19 @@ public:
             func(it.first);
     }
 
+    const std::string &GetSkeletonName(void) const
+    {
+        return skeletonName_;
+    }
+
+    const std::wstring &GetSkeletonPath(void) const
+    {
+        return skeletonPath_;
+    }
+
 private:
     std::map<std::string, std::string> componentToBone_;
+
+    std::string skeletonName_;
+    std::wstring skeletonPath_;
 };
