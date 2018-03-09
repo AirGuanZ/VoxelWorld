@@ -4,6 +4,7 @@ Date: 2018.3.5
 Created by AirGuanZ
 ================================================================*/
 #include <cassert>
+#include <filesystem>
 #include <map>
 
 #include <Utility/HelperFunctions.h>
@@ -13,12 +14,14 @@ Created by AirGuanZ
 #include <Window/Window.h>
 #include "VoxelModelEditor.h"
 
+namespace filesystem = std::experimental::filesystem::v1;
+
 namespace
 {
     class VMECmd_ExitClicked : public VoxelModelEditorCommand
     {
     public:
-        void Execute(VoxelModelEditorCore &core)
+        void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue)
         {
             core.mainLoopDone_ = true;
         }
@@ -27,7 +30,7 @@ namespace
     class VMECmd_ReloadBindingNames : public VoxelModelEditorCommand
     {
     public:
-        void Execute(VoxelModelEditorCore &core)
+        void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue)
         {
             core.bindingNames_.clear();
             core.selectedBindingNameIndex_ = 0;
@@ -54,7 +57,7 @@ namespace
 
         }
 
-        void Execute(VoxelModelEditorCore &core)
+        void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue)
         {
             core.selectedBindingNameIndex_ = selected_;
             core.needRefreshDisplay_ = true;
@@ -62,6 +65,23 @@ namespace
 
     private:
         int selected_;
+    };
+
+    class VMWCmd_DeleteSelectedBinding : public VoxelModelEditorCommand
+    {
+    public:
+        void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue)
+        {
+            auto &rM = RscNameMgr::GetInstance();
+
+            //合成binding文件名
+            std::string filename = rM.AsString("VoxelModelEditor", "Binding") +
+                                   core.bindingNames_[core.selectedBindingNameIndex_] +
+                                   rM.AsString("VoxelModelEditor", "BindingExtension");
+            filesystem::remove(filename);
+
+            cmdQueue.push(new VMECmd_ReloadBindingNames());
+        }
     };
 }
 
@@ -99,6 +119,10 @@ void VoxelModelEditorDisplay::Display(std::queue<VoxelModelEditorCommand*> &cmdQ
 
         if(ImGui::Button("Exit"))
             cmdQueue.push(new VMECmd_ExitClicked());
+
+        ImGui::SameLine();
+        if(ImGui::Button("Delete"))
+            cmdQueue.push(new VMWCmd_DeleteSelectedBinding());
     }
     ImGui::End();
 
@@ -122,7 +146,7 @@ AppState VoxelModelEditor::Run(void)
         {
             auto *cmd = cmdQueue_.front();
             cmdQueue_.pop();
-            cmd->Execute(*this);
+            cmd->Execute(*this, cmdQueue_);
             Helper::SafeDeleteObjects(cmd);
         }
 

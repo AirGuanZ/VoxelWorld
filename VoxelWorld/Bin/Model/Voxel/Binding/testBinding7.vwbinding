@@ -1,0 +1,8 @@
+[Skeleton]
+
+SkeletonName = monster
+SkeletonPath = Bin/Model/Skeleton/actor.vwani
+
+[Global]
+
+Head = head.vwcpt

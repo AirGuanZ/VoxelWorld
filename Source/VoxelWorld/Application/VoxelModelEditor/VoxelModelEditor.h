@@ -23,10 +23,13 @@ public:
     bool needRefreshDisplay_;
 };
 
+class VoxelModelEditorCommand;
+using VMECmdQueue = std::queue<VoxelModelEditorCommand*>;
+
 class VoxelModelEditorCommand
 {
 public:
-    virtual void Execute(VoxelModelEditorCore &core) = 0;
+    virtual void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue) = 0;
 };
 
 class VoxelModelEditorDisplay
