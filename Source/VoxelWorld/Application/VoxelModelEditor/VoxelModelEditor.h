@@ -29,13 +29,16 @@ public:
     virtual void Execute(VoxelModelEditorCore &core) = 0;
 };
 
-class VoxelModelEditorView
+class VoxelModelEditorDisplay
 {
 public:
-    void Render(void);
+    void Display(std::queue<VoxelModelEditorCommand*> &cmdQueue);
 
 private:
+    friend class VoxelModelEditor;
+
     std::vector<const char*> bindingNames_;
+    int selectedBindingNameIndex_;
 };
 
 class VoxelModelEditor : private VoxelModelEditorCore
@@ -47,7 +50,7 @@ private:
     void RefreshDisplay(void);
 
 private:
-    VoxelModelEditorView view_;
+    VoxelModelEditorDisplay view_;
 
     std::queue<VoxelModelEditorCommand*> cmdQueue_;
 };

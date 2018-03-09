@@ -9,6 +9,8 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
+#include <Screen/GUISystem.h>
+#include <Window/Window.h>
 #include "VoxelModelEditor.h"
 
 namespace
@@ -42,6 +44,25 @@ namespace
             core.needRefreshDisplay_ = true;
         }
     };
+
+    class VMWCmd_SelectBindingName : public VoxelModelEditorCommand
+    {
+    public:
+        VMWCmd_SelectBindingName(int selected)
+            : selected_(selected)
+        {
+
+        }
+
+        void Execute(VoxelModelEditorCore &core)
+        {
+            core.selectedBindingNameIndex_ = selected_;
+            core.needRefreshDisplay_ = true;
+        }
+
+    private:
+        int selected_;
+    };
 }
 
 bool VoxelModelEditorCore::Initialize(void)
@@ -52,6 +73,41 @@ bool VoxelModelEditorCore::Initialize(void)
     return true;
 }
 
+void VoxelModelEditorDisplay::Display(std::queue<VoxelModelEditorCommand*> &cmdQueue)
+{
+    Window &win = Window::GetInstance();
+
+    GUI::NewFrame();
+    win.ClearDepthStencil();
+    win.ClearRenderTarget();
+    
+    if(ImGui::Begin("Object Select", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Select Binding Name:");
+        if(bindingNames_.size())
+        {
+            assert(0 <= selectedBindingNameIndex_ &&
+                   selectedBindingNameIndex_ < static_cast<int>(bindingNames_.size()));
+            int selected = selectedBindingNameIndex_;
+            ImGui::ListBox("", &selected,
+                           bindingNames_.data(), bindingNames_.size(), 4);
+            if(selected != selectedBindingNameIndex_)
+                cmdQueue.push(new VMWCmd_SelectBindingName(selected));
+        }
+        else
+            ImGui::Text("No Binding");
+
+        if(ImGui::Button("Exit"))
+            cmdQueue.push(new VMECmd_ExitClicked());
+    }
+    ImGui::End();
+
+    GUI::RenderImGui();
+
+    win.Present();
+    win.DoEvents();
+}
+
 AppState VoxelModelEditor::Run(void)
 {
     if(!VoxelModelEditorCore::Initialize())
@@ -60,7 +116,7 @@ AppState VoxelModelEditor::Run(void)
     cmdQueue_.push(new VMECmd_ReloadBindingNames());
     while(!mainLoopDone_)
     {
-        view_.Render();
+        view_.Display(cmdQueue_);
 
         while(cmdQueue_.size())
         {
@@ -75,4 +131,12 @@ AppState VoxelModelEditor::Run(void)
     }
 
     return AppState::MainMenu;
+}
+
+void VoxelModelEditor::RefreshDisplay(void)
+{
+    view_.bindingNames_.clear();
+    for(auto &it : bindingNames_)
+        view_.bindingNames_.push_back(it.data());
+    view_.selectedBindingNameIndex_ = selectedBindingNameIndex_;
 }
