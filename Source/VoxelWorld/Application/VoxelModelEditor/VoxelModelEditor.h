@@ -5,48 +5,20 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <queue>
+#include <deque>
+#include <map>
 #include <string>
 #include <vector>
 
 #include <Application/Common.h>
-
-class VoxelModelEditorCore
-{
-public:
-    bool Initialize(void);
-
-    int selectedBindingNameIndex_;
-    std::vector<std::string> bindingNames_;
-
-    bool mainLoopDone_;
-    bool needRefreshDisplay_;
-};
-
-class VoxelModelEditorCommand;
-using VMECmdQueue = std::queue<VoxelModelEditorCommand*>;
-
-class VoxelModelEditorCommand
-{
-public:
-    virtual void Execute(VoxelModelEditorCore &core, VMECmdQueue &cmdQueue) = 0;
-};
-
-class VoxelModelEditorDisplay
-{
-public:
-    void Display(std::queue<VoxelModelEditorCommand*> &cmdQueue);
-
-private:
-    friend class VoxelModelEditor;
-
-    std::vector<const char*> bindingNames_;
-    int selectedBindingNameIndex_;
-};
+#include "VoxelModelEditorCore.h"
+#include "VoxelModelEditorDisplay.h"
 
 class VoxelModelEditor : private VoxelModelEditorCore
 {
 public:
+    VoxelModelEditor(void);
+
     AppState Run(void);
 
 private:
@@ -55,5 +27,5 @@ private:
 private:
     VoxelModelEditorDisplay view_;
 
-    std::queue<VoxelModelEditorCommand*> cmdQueue_;
+    VMECmdQueue cmdQueue_;
 };
