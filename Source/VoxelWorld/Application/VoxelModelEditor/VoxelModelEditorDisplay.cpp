@@ -11,7 +11,8 @@ Created by AirGuanZ
 VoxelModelEditorDisplay::VoxelModelEditorDisplay(VMECmdQueue &cmdQueue)
     : cmdQueue_(cmdQueue)
 {
-
+    newBindingNameBuf_.resize(32);
+    newBindingNameBuf_[0] = '\0';
 }
 
 void VoxelModelEditorDisplay::Display(void)
@@ -52,12 +53,27 @@ void VoxelModelEditorDisplay::Frame(void)
             cmdQueue_.push_back(new VMECmd_ExitClicked());
 
         ImGui::SameLine();
-        if(ImGui::Button("Refresh"))
-            cmdQueue_.push_back(new VMECmd_ReloadBindingNames());
+        if(ImGui::Button("Load"))
+            cmdQueue_.push_back(new VMWCmd_LoadSelectedBinding());
+
+        ImGui::SameLine();
+        if(ImGui::Button("Unload"))
+            cmdQueue_.push_back(new VMWCmd_UnloadBinding());
 
         ImGui::SameLine();
         if(ImGui::Button("Delete"))
             cmdQueue_.push_back(new VMWCmd_DeleteSelectedBinding());
+
+        ImGui::InputText("", newBindingNameBuf_.data(), newBindingNameBuf_.size());
+
+        ImGui::SameLine();
+        if(ImGui::Button("+") && newBindingNameBuf_[0] != '\0')
+        {
+            cmdQueue_.push_back(new VMWCmd_CreateBinding(std::string(newBindingNameBuf_.data())));
+            newBindingNameBuf_[0] = '\0';
+        }
+
+        ImGui::Text("Loaded Binding: %s", loadedBindingName_.c_str());
     }
     ImGui::End();
 }

@@ -345,6 +345,9 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.cpp">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -549,6 +552,9 @@
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.h">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClInclude>
   </ItemGroup>

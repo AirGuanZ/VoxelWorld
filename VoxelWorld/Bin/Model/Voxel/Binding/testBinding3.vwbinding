@@ -1,8 +1,0 @@
-[Skeleton]
-
-SkeletonName = actor
-SkeletonPath = Bin/Model/Skeleton/actor.vwani
-
-[Global]
-
-Head = head.vwcpt

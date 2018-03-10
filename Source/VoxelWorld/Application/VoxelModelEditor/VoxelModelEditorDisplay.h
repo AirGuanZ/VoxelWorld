@@ -20,10 +20,15 @@ private:
     void Frame(void);
 
 private:
+    std::vector<char> newBindingNameBuf_;
+
+private:
     VMECmdQueue &cmdQueue_;
 
     friend class VoxelModelEditor;
 
     std::vector<const char*> bindingNames_;
     int selectedBindingNameIndex_;
+
+    std::string loadedBindingName_;
 };
