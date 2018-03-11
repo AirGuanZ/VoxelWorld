@@ -9,6 +9,19 @@ Created by AirGuanZ
 
 #include "VoxelModelEditorCommand.h"
 
+class VoxelModelBindingDisplay
+{
+public:
+    void Clear(void);
+
+    void Display(void);
+
+private:
+    friend class VoxelModelBinding;
+
+    std::string bindingName_;
+};
+
 class VoxelModelEditorDisplay
 {
 public:
@@ -30,5 +43,5 @@ private:
     std::vector<const char*> bindingNames_;
     int selectedBindingNameIndex_;
 
-    std::string loadedBindingName_;
+    VoxelModelBindingDisplay bindingDisplay_;
 };

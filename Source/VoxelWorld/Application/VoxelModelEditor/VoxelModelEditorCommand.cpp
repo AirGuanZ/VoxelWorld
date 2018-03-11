@@ -9,8 +9,9 @@ Created by AirGuanZ
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
-#include <VoxelModel/ModelSkeletonBinding.h>
+#include "VoxelModelBinding.h"
 #include "VoxelModelEditorCommand.h"
+#include "VoxelModelEditorCore.h"
 
 namespace filesystem = std::experimental::filesystem::v1;
 

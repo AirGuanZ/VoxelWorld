@@ -25,7 +25,7 @@ private:
     void RefreshDisplay(void);
 
 private:
-    VoxelModelEditorDisplay view_;
+    VoxelModelEditorDisplay display_;
 
     VMECmdQueue cmdQueue_;
 };

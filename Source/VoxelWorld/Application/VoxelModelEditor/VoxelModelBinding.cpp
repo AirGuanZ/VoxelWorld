@@ -30,3 +30,8 @@ bool VoxelModelBinding::SaveToFile(const std::wstring &filename) const
 {
     return false;
 }
+
+void VoxelModelBinding::RefreshDisplay(VoxelModelBindingDisplay &display)
+{
+    display.bindingName_ = name_;
+}

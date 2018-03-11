@@ -7,6 +7,8 @@ Created by AirGuanZ
 
 #include <string>
 
+#include "VoxelModelEditorDisplay.h"
+
 class VoxelModelBinding
 {
 public:
@@ -17,6 +19,8 @@ public:
     bool LoadFromFile(const std::wstring &filename);
 
     bool SaveToFile(const std::wstring &filename) const;
+
+    void RefreshDisplay(VoxelModelBindingDisplay &display);
 
 private:
     std::string name_;

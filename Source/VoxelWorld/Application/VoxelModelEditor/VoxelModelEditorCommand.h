@@ -7,7 +7,16 @@ Created by AirGuanZ
 
 #include <deque>
 
-#include "VoxelModelEditorCore.h"
+class VoxelModelEditorCore;
+class VoxelModelEditorCommand;
+
+using VMECmdQueue = std::deque<VoxelModelEditorCommand*>;
+
+class VoxelModelEditorCommand
+{
+public:
+    virtual void Execute(VoxelModelEditorCore &core) = 0;
+};
 
 class VMECmd_ExitClicked : public VoxelModelEditorCommand
 {

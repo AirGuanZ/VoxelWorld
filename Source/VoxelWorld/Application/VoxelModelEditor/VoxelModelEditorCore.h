@@ -12,6 +12,7 @@ Created by AirGuanZ
 #include <vector>
 
 #include <SkeletonAnimation/SkeletonData.h>
+
 #include "VoxelModelBinding.h"
 
 class VMEFatalError
@@ -41,6 +42,8 @@ public:
         needRefreshDisplay_ = false;
     }
 
+    ~VoxelModelEditorCore(void);
+
     int selectedBindingNameIndex_;
     std::vector<std::string> bindingNames_;
 
@@ -49,13 +52,4 @@ public:
 
     bool modelChanged_;
     std::unique_ptr<VoxelModelBinding> model_;
-};
-
-class VoxelModelEditorCommand;
-using VMECmdQueue = std::deque<VoxelModelEditorCommand*>;
-
-class VoxelModelEditorCommand
-{
-public:
-    virtual void Execute(VoxelModelEditorCore &core) = 0;
 };

@@ -6,7 +6,24 @@ Created by AirGuanZ
 #include <Screen/GUISystem.h>
 #include <Window/Window.h>
 
+#include "VoxelModelBinding.h"
 #include "VoxelModelEditorDisplay.h"
+
+void VoxelModelBindingDisplay::Clear(void)
+{
+    bindingName_ = "";
+}
+
+void VoxelModelBindingDisplay::Display(void)
+{
+    if(bindingName_.empty())
+        return;
+    if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Selected Binding: %s", bindingName_.c_str());
+    }
+    ImGui::End();
+}
 
 VoxelModelEditorDisplay::VoxelModelEditorDisplay(VMECmdQueue &cmdQueue)
     : cmdQueue_(cmdQueue)
@@ -42,7 +59,7 @@ void VoxelModelEditorDisplay::Frame(void)
                 selectedBindingNameIndex_ < static_cast<int>(bindingNames_.size()));
             int selected = selectedBindingNameIndex_;
             ImGui::ListBox("", &selected,
-                bindingNames_.data(), bindingNames_.size(), 4);
+                bindingNames_.data(), bindingNames_.size(), 5);
             if(selected != selectedBindingNameIndex_)
                 cmdQueue_.push_back(new VMWCmd_SelectBindingName(selected));
         }
@@ -72,8 +89,8 @@ void VoxelModelEditorDisplay::Frame(void)
             cmdQueue_.push_back(new VMWCmd_CreateBinding(std::string(newBindingNameBuf_.data())));
             newBindingNameBuf_[0] = '\0';
         }
-
-        ImGui::Text("Loaded Binding: %s", loadedBindingName_.c_str());
     }
     ImGui::End();
+
+    bindingDisplay_.Display();
 }
