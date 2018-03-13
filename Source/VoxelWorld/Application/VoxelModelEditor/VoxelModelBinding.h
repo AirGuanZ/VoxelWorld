@@ -10,7 +10,7 @@ Created by AirGuanZ
 
 #include <Utility/Math.h>
 
-#include "VoxelModelEditorDisplay.h"
+class VoxelModelBindingDisplay;
 
 class BindingContent
 {

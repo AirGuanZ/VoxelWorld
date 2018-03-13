@@ -8,6 +8,9 @@ Created by AirGuanZ
 #include <Screen/GUISystem.h>
 #include "VoxelModelEditorCommandWindow.h"
 
+const Color VMECmdMsg::ERROR_COLOR  = Color(1.0f, 0.4f, 0.4f, 1.0f);
+const Color VMECmdMsg::NORMAL_COLOR = Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 VoxelModelEditorCommandWindow::VoxelModelEditorCommandWindow(void)
 {
     maxTextCount_ = 20;
@@ -24,7 +27,7 @@ void VoxelModelEditorCommandWindow::SetMaxTextCount(size_t cnt)
 void VoxelModelEditorCommandWindow::Display(void)
 {
     ImGui::SetNextWindowPos(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(520, 300), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiCond_FirstUseEver);
     if(!ImGui::Begin("Command##VoxelModelEditor"))
     {
         ImGui::End();
@@ -39,22 +42,10 @@ void VoxelModelEditorCommandWindow::Display(void)
 
     for(auto &unit : texts_)
     {
-        static const ImVec4 normalColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-        static const ImVec4 errorColor  = { 1.0f, 0.3f, 0.3f, 1.0f };
+        ImGui::PushStyleColor(ImGuiCol_Text,
+            ImVec4(unit.color.R(), unit.color.G(), unit.color.B(), unit.color.A()));
 
-        switch(unit.type)
-        {
-        case TextType::Normal:
-            ImGui::PushStyleColor(ImGuiCol_Text, normalColor);
-            break;
-        case TextType::Error:
-            ImGui::PushStyleColor(ImGuiCol_Text, errorColor);
-            break;
-        default:
-            std::abort();
-        }
-
-        ImGui::TextWrapped("%s", unit.text.data());
+        ImGui::TextWrapped("%s", ("> " + unit.msg).data());
         ImGui::PopStyleColor();
     }
 
@@ -72,9 +63,9 @@ void VoxelModelEditorCommandWindow::Display(void)
     ImGui::End();
 }
 
-void VoxelModelEditorCommandWindow::AddText(TextType type, const std::string &text)
+void VoxelModelEditorCommandWindow::AddText(const std::string &text, const Color &color)
 {
-    texts_.push_back(TextUnit{ type, text });
+    texts_.push_back(VMECmdMsg{ color, text });
     DeleteRedundantText();
 }
 

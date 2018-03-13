@@ -37,12 +37,7 @@ private:
 class VoxelModelEditorCore
 {
 public:
-    VoxelModelEditorCore(void)
-    {
-        mainLoopDone_ = false;
-        needRefreshDisplay_ = false;
-    }
-
+    VoxelModelEditorCore(void);
     ~VoxelModelEditorCore(void);
 
     int selectedBindingNameIndex_;
@@ -50,8 +45,6 @@ public:
 
     bool mainLoopDone_;
     bool needRefreshDisplay_;
-
-    std::queue<std::string> cmdMsg_;
 
     bool modelChanged_;
     std::unique_ptr<VoxelModelBinding> model_;

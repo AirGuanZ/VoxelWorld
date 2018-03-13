@@ -11,6 +11,7 @@ Created by AirGuanZ
 #include <Resource/ResourceNameManager.h>
 #include "VoxelModelBinding.h"
 #include "VoxelModelEditorCommand.h"
+#include "VoxelModelEditorCommandWindow.h"
 #include "VoxelModelEditorCore.h"
 
 namespace filesystem = std::experimental::filesystem::v1;
@@ -36,14 +37,19 @@ namespace
     }
 }
 
-void VMECmd_ExitClicked::Execute(VoxelModelEditorCore &core)
+void VMECmd_ExitClicked::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     core.mainLoopDone_ = true;
 }
 
-void VMECmd_ReloadBindingNames::Execute(VoxelModelEditorCore &core)
+VMECmd_ReloadBindingNames::VMECmd_ReloadBindingNames(bool showMsg)
 {
-    VMWCmd_UnloadBinding().Execute(core);
+    showMsg_ = showMsg;
+}
+
+void VMECmd_ReloadBindingNames::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+{
+    VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
 
     core.bindingNames_.clear();
 
@@ -56,9 +62,11 @@ void VMECmd_ReloadBindingNames::Execute(VoxelModelEditorCore &core)
     for(auto &it : filenames)
         core.bindingNames_.push_back(it.first);
 
+    if(showMsg_)
+        cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Binding list reloaded" });
     core.needRefreshDisplay_ = true;
 
-    VMWCmd_SelectBindingName(0).Execute(core);
+    VMWCmd_SelectBindingName(0).Execute(core, cmdMsgs);
 }
 
 VMWCmd_SelectBindingName::VMWCmd_SelectBindingName(int selected)
@@ -67,13 +75,13 @@ VMWCmd_SelectBindingName::VMWCmd_SelectBindingName(int selected)
 
 }
 
-void VMWCmd_SelectBindingName::Execute(VoxelModelEditorCore &core)
+void VMWCmd_SelectBindingName::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     core.needRefreshDisplay_ = true;
     core.selectedBindingNameIndex_ = selected_;
 }
 
-void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core)
+void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.bindingNames_.empty())
         return;
@@ -83,38 +91,51 @@ void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core)
     if(core.model_ && core.bindingNames_[core.selectedBindingNameIndex_] ==
                       core.model_->GetName())
     {
-        VMWCmd_UnloadBinding().Execute(core);
+        VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
     }
 
     std::string filename = ConstructBindingPath(
         core.bindingNames_[core.selectedBindingNameIndex_]);
-    filesystem::remove(std::move(filename));
+    filesystem::remove(filename);
+    cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Binding file deleted: " + filename });
 
-    VMECmd_ReloadBindingNames().Execute(core);
+    VMECmd_ReloadBindingNames(false).Execute(core, cmdMsgs);
 }
 
-void VMWCmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core)
+void VMWCmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.model_)
-        VMWCmd_UnloadBinding().Execute(core);
+        VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
     if(core.bindingNames_.empty())
         return;
 
     core.model_ = std::make_unique<VoxelModelBinding>();
-    std::string filename = core.bindingNames_[core.selectedBindingNameIndex_];
-    if(!core.model_->LoadFromFile(Helper::ToWStr(ConstructBindingPath(filename))))
+    std::string filename = ConstructBindingPath(core.bindingNames_[core.selectedBindingNameIndex_]);
+    if(!core.model_->LoadFromFile(Helper::ToWStr(filename)))
     {
         core.model_.reset();
-        core.cmdMsg_.push("Failed to load selected binding file: " + filename);
+        cmdMsgs.push({ VMECmdMsg::ERROR_COLOR, "Failed to load selected binding file: " + filename });
     }
+    else
+        cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Binding file loaded: " + filename });
 
     core.needRefreshDisplay_ = true;
 }
 
-void VMWCmd_UnloadBinding::Execute(VoxelModelEditorCore &core)
+VMWCmd_UnloadBinding::VMWCmd_UnloadBinding(bool showMsg)
+{
+    showMsg_ = showMsg;
+}
+
+void VMWCmd_UnloadBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.model_)
     {
+        if(showMsg_)
+        {
+            cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR,
+                "Binding file unloaded: " + ConstructBindingPath(core.model_->GetName()) });
+        }
         core.model_.reset();
         core.needRefreshDisplay_ = true;
     }
@@ -126,13 +147,17 @@ VMWCmd_CreateBinding::VMWCmd_CreateBinding(const std::string &name)
 
 }
 
-void VMWCmd_CreateBinding::Execute(VoxelModelEditorCore &core)
+void VMWCmd_CreateBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     std::string filename = ConstructBindingPath(name_);
     if(!VoxelModelBinding::CreateEmptyBindingFile(Helper::ToWStr(filename)))
     {
-        core.cmdMsg_.push("Failed to create empty binding file: " + name_);
+        cmdMsgs.push({ VMECmdMsg::ERROR_COLOR, "Failed to create empty binding file: " + filename });
+    }
+    else
+    {
+        cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Empty binding file created: " + filename });
     }
 
-    VMECmd_ReloadBindingNames().Execute(core);
+    VMECmd_ReloadBindingNames(false).Execute(core, cmdMsgs);
 }

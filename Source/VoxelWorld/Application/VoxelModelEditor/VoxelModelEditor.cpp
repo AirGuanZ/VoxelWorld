@@ -12,6 +12,7 @@ Created by AirGuanZ
 #include "VoxelModelBinding.h"
 #include "VoxelModelEditor.h"
 #include "VoxelModelEditorCommand.h"
+#include "VoxelModelEditorCommandWindow.h"
 
 VoxelModelEditor::VoxelModelEditor(void)
     : VoxelModelEditorCore(), display_(cmdQueue_)
@@ -28,20 +29,20 @@ AppState VoxelModelEditor::Run(void)
         {
             display_.Display();
 
+            VMECmdMsgQueue cmdMsgQueue;
             while(cmdQueue_.size())
             {
                 auto *cmd = cmdQueue_.front();
                 cmdQueue_.pop_front();
-                cmd->Execute(*this);
+                cmd->Execute(*this, cmdMsgQueue);
                 Helper::SafeDeleteObjects(cmd);
             }
 
-            while(cmdMsg_.size())
+            while(cmdMsgQueue.size())
             {
-                std::string msg = cmdMsg_.front();
-                cmdMsg_.pop();
-                display_.cmdWinDisplay_.AddText(
-                    VoxelModelEditorCommandWindow::TextType::Normal, msg);
+                VMECmdMsg msg = cmdMsgQueue.front();
+                cmdMsgQueue.pop();
+                display_.cmdWinDisplay_.AddText(msg.msg, msg.color);
             }
 
             if(needRefreshDisplay_)

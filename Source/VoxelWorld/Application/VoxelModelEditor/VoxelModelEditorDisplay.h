@@ -7,21 +7,10 @@ Created by AirGuanZ
 
 #include <vector>
 
+#include "VoxelModelBindingDisplay.h"
 #include "VoxelModelEditorCommand.h"
 #include "VoxelModelEditorCommandWindow.h"
-
-class VoxelModelBindingDisplay
-{
-public:
-    void Clear(void);
-
-    void Display(void);
-
-private:
-    friend class VoxelModelBinding;
-
-    std::string bindingName_;
-};
+#include "VoxelModelEditorCore.h"
 
 class VoxelModelEditorDisplay
 {

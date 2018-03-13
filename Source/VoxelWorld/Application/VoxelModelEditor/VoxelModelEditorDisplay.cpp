@@ -9,23 +9,6 @@ Created by AirGuanZ
 #include "VoxelModelBinding.h"
 #include "VoxelModelEditorDisplay.h"
 
-void VoxelModelBindingDisplay::Clear(void)
-{
-    bindingName_ = "";
-}
-
-void VoxelModelBindingDisplay::Display(void)
-{
-    if(bindingName_.empty())
-        return;
-    ImGui::SetNextWindowPos(ImVec2(300, 300), ImGuiCond_FirstUseEver);
-    if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("Selected Binding: %s", bindingName_.c_str());
-    }
-    ImGui::End();
-}
-
 VoxelModelEditorDisplay::VoxelModelEditorDisplay(VMECmdQueue &cmdQueue)
     : cmdQueue_(cmdQueue)
 {
@@ -51,7 +34,7 @@ void VoxelModelEditorDisplay::Display(void)
 
 void VoxelModelEditorDisplay::Frame(void)
 {
-    if(ImGui::Begin("Object Select", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    if(ImGui::Begin("Select Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::Text("Select Binding Name:");
         if(bindingNames_.size())
@@ -67,19 +50,19 @@ void VoxelModelEditorDisplay::Frame(void)
         else
             ImGui::Text("No Binding");
 
-        if(ImGui::Button("Exit"))
+        if(ImGui::SmallButton("Exit"))
             cmdQueue_.push_back(new VMECmd_ExitClicked());
 
         ImGui::SameLine();
-        if(ImGui::Button("Load"))
+        if(ImGui::SmallButton("Load"))
             cmdQueue_.push_back(new VMWCmd_LoadSelectedBinding());
 
         ImGui::SameLine();
-        if(ImGui::Button("Unload"))
+        if(ImGui::SmallButton("Unload"))
             cmdQueue_.push_back(new VMWCmd_UnloadBinding());
 
         ImGui::SameLine();
-        if(ImGui::Button("Delete"))
+        if(ImGui::SmallButton("Delete"))
             cmdQueue_.push_back(new VMWCmd_DeleteSelectedBinding());
 
         ImGui::InputText("", newBindingNameBuf_.data(), newBindingNameBuf_.size());
@@ -90,10 +73,10 @@ void VoxelModelEditorDisplay::Frame(void)
             cmdQueue_.push_back(new VMWCmd_CreateBinding(std::string(newBindingNameBuf_.data())));
             newBindingNameBuf_[0] = '\0';
         }
+
+        bindingDisplay_.Display();
     }
     ImGui::End();
-
-    bindingDisplay_.Display();
 
     cmdWinDisplay_.Display();
 }

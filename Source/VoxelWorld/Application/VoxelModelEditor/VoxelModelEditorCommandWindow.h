@@ -9,28 +9,31 @@ Created by AirGuanZ
 #include <queue>
 #include <string>
 
+#include <Utility/Math.h>
+
+#include "VoxelModelEditorCore.h"
+
+struct VMECmdMsg
+{
+    Color color;
+    std::string msg;
+
+    static const Color ERROR_COLOR;
+    static const Color NORMAL_COLOR;
+};
+
+using VMECmdMsgQueue = std::queue<VMECmdMsg>;
+
 class VoxelModelEditorCommandWindow
 {
 public:
-    enum class TextType
-    {
-        Normal,
-        Error
-    };
-
-    struct TextUnit
-    {
-        TextType type;
-        std::string text;
-    };
-
     VoxelModelEditorCommandWindow(void);
 
     void SetMaxTextCount(size_t cnt);
 
     void Display(void);
 
-    void AddText(TextType type, const std::string &text);
+    void AddText(const std::string &text, const Color &color = VMECmdMsg::NORMAL_COLOR);
 
     void Clear(void);
 
@@ -40,7 +43,7 @@ private:
     void DeleteRedundantText(void);
 
 private:
-    std::list<TextUnit> texts_;
+    std::list<VMECmdMsg> texts_;
     size_t maxTextCount_;
 
     std::vector<char> inputBuf_;

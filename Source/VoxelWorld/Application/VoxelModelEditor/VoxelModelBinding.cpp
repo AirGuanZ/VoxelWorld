@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <istream>
 
 #include "VoxelModelBinding.h"
+#include "VoxelModelBindingDisplay.h"
 
 namespace filesystem = std::experimental::filesystem::v1;
 
