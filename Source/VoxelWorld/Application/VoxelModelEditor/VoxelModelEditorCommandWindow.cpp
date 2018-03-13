@@ -60,6 +60,11 @@ void VoxelModelEditorCommandWindow::Display(void)
         inputBuf_[0] = '\0';
     }
 
+    ImGui::SameLine();
+    
+    if(ImGui::SmallButton("Clear"))
+        texts_.clear();
+
     ImGui::End();
 }
 

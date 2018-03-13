@@ -49,7 +49,7 @@ VMECmd_ReloadBindingNames::VMECmd_ReloadBindingNames(bool showMsg)
 
 void VMECmd_ReloadBindingNames::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
-    VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
+    VMECmd_UnloadBinding(false).Execute(core, cmdMsgs);
 
     core.bindingNames_.clear();
 
@@ -66,22 +66,22 @@ void VMECmd_ReloadBindingNames::Execute(VoxelModelEditorCore &core, VMECmdMsgQue
         cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Binding list reloaded" });
     core.needRefreshDisplay_ = true;
 
-    VMWCmd_SelectBindingName(0).Execute(core, cmdMsgs);
+    VMECmd_SelectBindingName(0).Execute(core, cmdMsgs);
 }
 
-VMWCmd_SelectBindingName::VMWCmd_SelectBindingName(int selected)
+VMECmd_SelectBindingName::VMECmd_SelectBindingName(int selected)
     : selected_(selected)
 {
 
 }
 
-void VMWCmd_SelectBindingName::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+void VMECmd_SelectBindingName::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     core.needRefreshDisplay_ = true;
     core.selectedBindingNameIndex_ = selected_;
 }
 
-void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+void VMECmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.bindingNames_.empty())
         return;
@@ -91,7 +91,7 @@ void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsg
     if(core.model_ && core.bindingNames_[core.selectedBindingNameIndex_] ==
                       core.model_->GetName())
     {
-        VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
+        VMECmd_UnloadBinding(false).Execute(core, cmdMsgs);
     }
 
     std::string filename = ConstructBindingPath(
@@ -102,10 +102,10 @@ void VMWCmd_DeleteSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsg
     VMECmd_ReloadBindingNames(false).Execute(core, cmdMsgs);
 }
 
-void VMWCmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+void VMECmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.model_)
-        VMWCmd_UnloadBinding(false).Execute(core, cmdMsgs);
+        VMECmd_UnloadBinding(false).Execute(core, cmdMsgs);
     if(core.bindingNames_.empty())
         return;
 
@@ -122,12 +122,12 @@ void VMWCmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQu
     core.needRefreshDisplay_ = true;
 }
 
-VMWCmd_UnloadBinding::VMWCmd_UnloadBinding(bool showMsg)
+VMECmd_UnloadBinding::VMECmd_UnloadBinding(bool showMsg)
 {
     showMsg_ = showMsg;
 }
 
-void VMWCmd_UnloadBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+void VMECmd_UnloadBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     if(core.model_)
     {
@@ -141,13 +141,13 @@ void VMWCmd_UnloadBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &c
     }
 }
 
-VMWCmd_CreateBinding::VMWCmd_CreateBinding(const std::string &name)
+VMECmd_CreateBinding::VMECmd_CreateBinding(const std::string &name)
     : name_(name)
 {
 
 }
 
-void VMWCmd_CreateBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+void VMECmd_CreateBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
 {
     std::string filename = ConstructBindingPath(name_);
     if(!VoxelModelBinding::CreateEmptyBindingFile(Helper::ToWStr(filename)))
@@ -160,4 +160,24 @@ void VMWCmd_CreateBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &c
     }
 
     VMECmd_ReloadBindingNames(false).Execute(core, cmdMsgs);
+}
+
+void VMECmd_SaveLoadedBinding::Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs)
+{
+    if(core.model_)
+    {
+        std::string filename = ConstructBindingPath(core.model_->GetName());
+        if(core.model_->SaveToFile(Helper::ToWStr(filename)))
+        {
+            cmdMsgs.push({ VMECmdMsg::NORMAL_COLOR, "Binding file saved: " + filename });
+        }
+        else
+        {
+            cmdMsgs.push({ VMECmdMsg::ERROR_COLOR, "Failed to save binding to: " + filename });
+        }
+    }
+    else
+    {
+        cmdMsgs.push({ VMECmdMsg::ERROR_COLOR, "No binding file loaded" });
+    }
 }

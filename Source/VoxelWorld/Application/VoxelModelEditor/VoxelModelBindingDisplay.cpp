@@ -16,5 +16,5 @@ void VoxelModelBindingDisplay::Display(void)
     if(bindingName_.empty())
         return;
     ImGui::Separator();
-    ImGui::Text("Selected Binding: %s", bindingName_.c_str());
+    ImGui::Text("Loaded Binding: %s", bindingName_.c_str());
 }

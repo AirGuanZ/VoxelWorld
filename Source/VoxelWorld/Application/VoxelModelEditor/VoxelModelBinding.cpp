@@ -117,7 +117,7 @@ namespace
     template<typename T>
     inline bool WriteBinary(std::ostream &out, T &data)
     {
-        out.write(reinterpret_cast<char*>(&data), sizeof(T));
+        out.write(reinterpret_cast<const char*>(&data), sizeof(T));
         return !!out;
     }
 
@@ -127,7 +127,7 @@ namespace
         return !!out;
     }
 
-    bool WriteBinding(std::ostream &out, BindingContent &content)
+    bool WriteBinding(std::ostream &out, const BindingContent &content)
     {
         if(!WriteString(out, content.skeletonPath))
             return false;
@@ -218,7 +218,10 @@ bool VoxelModelBinding::LoadFromFile(const std::wstring &filename)
 
 bool VoxelModelBinding::SaveToFile(const std::wstring &filename) const
 {
-    return false;
+    std::ofstream fout(filename, std::ios_base::out |
+                                 std::ios_base::trunc |
+                                 std::ios_base::binary);
+    return WriteBinding(fout, content_);
 }
 
 void VoxelModelBinding::RefreshDisplay(VoxelModelBindingDisplay &display)

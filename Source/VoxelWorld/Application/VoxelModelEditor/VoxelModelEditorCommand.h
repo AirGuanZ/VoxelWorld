@@ -37,10 +37,10 @@ private:
     bool showMsg_;
 };
 
-class VMWCmd_SelectBindingName : public VoxelModelEditorCommand
+class VMECmd_SelectBindingName : public VoxelModelEditorCommand
 {
 public:
-    VMWCmd_SelectBindingName(int selected);
+    VMECmd_SelectBindingName(int selected);
 
     void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 
@@ -48,22 +48,22 @@ private:
     int selected_;
 };
 
-class VMWCmd_DeleteSelectedBinding : public VoxelModelEditorCommand
+class VMECmd_DeleteSelectedBinding : public VoxelModelEditorCommand
 {
 public:
     void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 };
 
-class VMWCmd_LoadSelectedBinding : public VoxelModelEditorCommand
+class VMECmd_LoadSelectedBinding : public VoxelModelEditorCommand
 {
 public:
     void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 };
 
-class VMWCmd_UnloadBinding : public VoxelModelEditorCommand
+class VMECmd_UnloadBinding : public VoxelModelEditorCommand
 {
 public:
-    VMWCmd_UnloadBinding(bool showMsg = true);
+    VMECmd_UnloadBinding(bool showMsg = true);
 
     void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 
@@ -71,13 +71,19 @@ private:
     bool showMsg_;
 };
 
-class VMWCmd_CreateBinding : public VoxelModelEditorCommand
+class VMECmd_CreateBinding : public VoxelModelEditorCommand
 {
 public:
-    VMWCmd_CreateBinding(const std::string &name);
+    VMECmd_CreateBinding(const std::string &name);
 
     void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 
 private:
     std::string name_;
+};
+
+class VMECmd_SaveLoadedBinding : public VoxelModelEditorCommand
+{
+public:
+    void Execute(VoxelModelEditorCore &core, VMECmdMsgQueue &cmdMsgs);
 };
