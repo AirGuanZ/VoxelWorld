@@ -85,6 +85,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.h" />
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.h" />

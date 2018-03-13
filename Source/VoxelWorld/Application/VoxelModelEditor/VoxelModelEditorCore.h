@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <deque>
 #include <map>
 #include <memory>
+#include <queue>
 #include <string>
 #include <vector>
 
@@ -49,6 +50,8 @@ public:
 
     bool mainLoopDone_;
     bool needRefreshDisplay_;
+
+    std::queue<std::string> cmdMsg_;
 
     bool modelChanged_;
     std::unique_ptr<VoxelModelBinding> model_;

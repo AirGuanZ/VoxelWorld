@@ -36,6 +36,14 @@ AppState VoxelModelEditor::Run(void)
                 Helper::SafeDeleteObjects(cmd);
             }
 
+            while(cmdMsg_.size())
+            {
+                std::string msg = cmdMsg_.front();
+                cmdMsg_.pop();
+                display_.cmdWinDisplay_.AddText(
+                    VoxelModelEditorCommandWindow::TextType::Normal, msg);
+            }
+
             if(needRefreshDisplay_)
                 RefreshDisplay();
         }

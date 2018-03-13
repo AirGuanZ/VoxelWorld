@@ -18,6 +18,7 @@ void VoxelModelBindingDisplay::Display(void)
 {
     if(bindingName_.empty())
         return;
+    ImGui::SetNextWindowPos(ImVec2(300, 300), ImGuiCond_FirstUseEver);
     if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::Text("Selected Binding: %s", bindingName_.c_str());
@@ -93,4 +94,6 @@ void VoxelModelEditorDisplay::Frame(void)
     ImGui::End();
 
     bindingDisplay_.Display();
+
+    cmdWinDisplay_.Display();
 }

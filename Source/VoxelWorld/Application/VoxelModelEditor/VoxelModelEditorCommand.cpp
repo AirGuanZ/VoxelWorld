@@ -101,8 +101,12 @@ void VMWCmd_LoadSelectedBinding::Execute(VoxelModelEditorCore &core)
         return;
 
     core.model_ = std::make_unique<VoxelModelBinding>();
-    core.model_->LoadFromFile(Helper::ToWStr(ConstructBindingPath(
-        core.bindingNames_[core.selectedBindingNameIndex_])));
+    std::string filename = core.bindingNames_[core.selectedBindingNameIndex_];
+    if(!core.model_->LoadFromFile(Helper::ToWStr(ConstructBindingPath(filename))))
+    {
+        core.model_.reset();
+        core.cmdMsg_.push("Failed to load selected binding file: " + filename);
+    }
 
     core.needRefreshDisplay_ = true;
 }
@@ -125,7 +129,10 @@ VMWCmd_CreateBinding::VMWCmd_CreateBinding(const std::string &name)
 void VMWCmd_CreateBinding::Execute(VoxelModelEditorCore &core)
 {
     std::string filename = ConstructBindingPath(name_);
-    VoxelModelBinding::CreateEmptyBindingFile(Helper::ToWStr(filename));
+    if(!VoxelModelBinding::CreateEmptyBindingFile(Helper::ToWStr(filename)))
+    {
+        core.cmdMsg_.push("Failed to create empty binding file: " + name_);
+    }
 
     VMECmd_ReloadBindingNames().Execute(core);
 }

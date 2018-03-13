@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <vector>
 
 #include "VoxelModelEditorCommand.h"
+#include "VoxelModelEditorCommandWindow.h"
 
 class VoxelModelBindingDisplay
 {
@@ -44,4 +45,6 @@ private:
     int selectedBindingNameIndex_;
 
     VoxelModelBindingDisplay bindingDisplay_;
+
+    VoxelModelEditorCommandWindow cmdWinDisplay_;
 };
