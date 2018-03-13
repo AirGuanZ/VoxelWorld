@@ -37,11 +37,11 @@ namespace
             conf.maxFogStart = std::stof(file("Fog", "Start"));
             conf.maxFogRange = std::stof(file("Fog", "Range"));
 
-            conf.fonts.resize(std::stoi(rM.AsString("Font", "Count")));
+            conf.fonts.resize(std::stoi(rM.AsString("ImFont", "Count")));
             for(size_t i = 0; i < conf.fonts.size(); ++i)
             {
-                conf.fonts[i].ttfFilename = rM.AsString("Font", "TTFName["   + std::to_string(i) + "]");
-                conf.fonts[i].pixelSize   = std::stof(rM.AsString("Font", "PixelSize[" + std::to_string(i) + "]"));
+                conf.fonts[i].ttfFilename = rM.AsString("ImFont", "TTFName["   + std::to_string(i) + "]");
+                conf.fonts[i].pixelSize   = std::stof(rM.AsString("ImFont", "PixelSize[" + std::to_string(i) + "]"));
             }
         }
         catch(const std::exception&)

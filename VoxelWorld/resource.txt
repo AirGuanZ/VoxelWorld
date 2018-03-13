@@ -48,7 +48,7 @@ Texture = Bin/Texture/Crosshair/cross.png
 VertexShader = Bin/Shader/ImmediateScreen2D/normalVertex.hlsl
 PixelShader  = Bin/Shader/ImmediateScreen2D/normalPixel.hlsl
 
-[Font]
+[ImFont]
 
 Count = 0
 
