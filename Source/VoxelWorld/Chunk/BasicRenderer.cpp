@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <vector>
 
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
@@ -47,8 +48,8 @@ bool BasicRenderer::Initialize(std::string &errMsg)
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM("BasicRenderer", "VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM("BasicRenderer", "PixelShader"), psSrc))
+    if(!FileSystem::ReadFile(rM("BasicRenderer", "VertexShader"), vsSrc) ||
+       !FileSystem::ReadFile(rM("BasicRenderer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source for basic renderer";
         return false;

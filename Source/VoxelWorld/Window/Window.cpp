@@ -9,6 +9,7 @@ Created by AirGuanZ
 #include <string>
 
 #include <Utility/D3D11Header.h>
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Windows.h>
@@ -30,6 +31,8 @@ namespace
     //Win32´°¿Ú
     namespace Win
     {
+        std::string modulePath;
+
         HWND hWnd = NULL;
         HINSTANCE hInstance = NULL;
 
@@ -83,6 +86,8 @@ bool Window::InitWindow(int clientWidth, int clientHeight, const wchar_t *window
     assert(!IsWindowAvailable());
     assert(clientWidth > 0 && clientHeight > 0 && windowTitle);
     errMsg = "";
+
+    Win::modulePath = FileSystem::CurrentRunningPath();
 
     if(!Win::hInstance)
         Win::hInstance = GetModuleHandle(NULL);
@@ -522,6 +527,11 @@ HWND Window::GetWindowHandle(void)
 HINSTANCE Window::GetProgramHandle(void)
 {
     return Win::hInstance;
+}
+
+const std::string &Window::GetProgramPath(void) const
+{
+    return Win::modulePath;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

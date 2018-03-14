@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
@@ -27,8 +28,8 @@ bool ImmediateScreen2D::Initialize(std::string &errMsg)
     errMsg = "";
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM("ImmediateScreen2D", "VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM("ImmediateScreen2D", "PixelShader"), psSrc))
+    if(!FileSystem::ReadFile(rM("ImmediateScreen2D", "VertexShader"), vsSrc) ||
+       !FileSystem::ReadFile(rM("ImmediateScreen2D", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load source file for ImmediateScreen2D";
         return false;

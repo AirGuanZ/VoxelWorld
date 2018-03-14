@@ -16,6 +16,7 @@ Created by AirGuanZ
 #include <assimp/postprocess.h>
 
 #include <Utility/ConfigFile.h>
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include "SkeletonDataLoader.h"
@@ -219,7 +220,7 @@ bool Skeleton::SkeletonDataLoader::LoadFromRawFile(const std::wstring &filename,
     std::set<std::string> directChildrenNames;
 
     std::vector<char> fileBuf;
-    if(!Helper::ReadFileBinary(filename, fileBuf))
+    if(!FileSystem::ReadFileBinary(filename, fileBuf))
     {
         errMsg = "Failed to open model file";
         goto FAILED;

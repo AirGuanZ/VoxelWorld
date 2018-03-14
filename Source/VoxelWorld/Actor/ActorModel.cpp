@@ -8,6 +8,7 @@ Created by AirGuanZ
 
 #include <SkeletonAnimation/SkeletonDataLoader.h>
 
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 #include <Utility/ObjFile.h>
 
@@ -122,8 +123,8 @@ bool ActorModel::Initialize(std::string &errMsg)
     assert(!shader_.IsAllStagesAvailable());
     
     std::string VSSrc, PSSrc;
-    if(!Helper::ReadFile(rscMgr("ActorModel", "VertexShader"), VSSrc) ||
-       !Helper::ReadFile(rscMgr("ActorModel", "PixelShader"), PSSrc))
+    if(!FileSystem::ReadFile(rscMgr("ActorModel", "VertexShader"), VSSrc) ||
+       !FileSystem::ReadFile(rscMgr("ActorModel", "PixelShader"), PSSrc))
     {
         errMsg = "Failed to load shader source for actor renderer";
         return false;

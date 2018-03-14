@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Components\Utility\Clock.cpp" />
     <ClCompile Include="..\..\Source\Components\Utility\ConfigFile.cpp" />
+    <ClCompile Include="..\..\Source\Components\Utility\FileSystem.cpp" />
     <ClCompile Include="..\..\Source\Components\Utility\HelperFunctions.cpp" />
     <ClCompile Include="..\..\Source\Components\Utility\ObjFile.cpp" />
   </ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="..\..\Source\Components\Utility\Clock.h" />
     <ClInclude Include="..\..\Source\Components\Utility\ConfigFile.h" />
     <ClInclude Include="..\..\Source\Components\Utility\D3D11Header.h" />
+    <ClInclude Include="..\..\Source\Components\Utility\FileSystem.h" />
     <ClInclude Include="..\..\Source\Components\Utility\FPSCounter.h" />
     <ClInclude Include="..\..\Source\Components\Utility\HelperFunctions.h" />
     <ClInclude Include="..\..\Source\Components\Utility\LinkedMap.h" />

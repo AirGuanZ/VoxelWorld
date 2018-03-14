@@ -6,6 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
@@ -38,8 +39,8 @@ bool VoxelModelAnimationDisplayer::Initialize(
     skeleton_ = skeleton;
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM("VoxelModelAnimationDisplayer", "VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM("VoxelModelAnimationDisplayer", "PixelShader"), psSrc))
+    if(!FileSystem::ReadFile(rM("VoxelModelAnimationDisplayer", "VertexShader"), vsSrc) ||
+       !FileSystem::ReadFile(rM("VoxelModelAnimationDisplayer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source for voxel model animation displaying";
         Clear();

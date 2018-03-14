@@ -75,13 +75,7 @@ namespace Helper
         return static_cast<UINT>(reinterpret_cast<size_t>(&(reinterpret_cast<ClassType*>(0)->*pMem)));
     }
 
-    bool ReadFile(const std::wstring &filename, std::string &output);
-    bool ReadFileBinary(const std::wstring &filename, std::vector<char> &buf);
-
     std::string ToStr(const std::wstring &wstr);
 
     std::wstring ToWStr(const std::string &str);
-
-    void GetFilenames(const std::string &dirPath, const std::string &ext,
-                      std::map<std::string, std::wstring> &output);
 }

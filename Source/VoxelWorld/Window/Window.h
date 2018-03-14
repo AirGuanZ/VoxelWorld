@@ -50,4 +50,5 @@ public:
 
     HWND GetWindowHandle(void);
     HINSTANCE GetProgramHandle(void);
+    const std::string &GetProgramPath(void) const;
 };

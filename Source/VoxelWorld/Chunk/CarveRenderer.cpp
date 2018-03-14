@@ -3,6 +3,7 @@ Filename: CarveRenderer.cpp
 Date: 2018.1.22
 Created by AirGuanZ
 ================================================================*/
+#include <Utility/FileSystem.h>
 #include <Utility/HelperFunctions.h>
 
 #include <Resource/ResourceNameManager.h>
@@ -25,8 +26,8 @@ bool CarveRenderer::Initialize(std::string &errMsg)
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     std::string vsSrc, psSrc;
-    if(!Helper::ReadFile(rM("CarveRenderer", "VertexShader"), vsSrc) ||
-       !Helper::ReadFile(rM("CarveRenderer", "PixelShader"), psSrc))
+    if(!FileSystem::ReadFile(rM("CarveRenderer", "VertexShader"), vsSrc) ||
+       !FileSystem::ReadFile(rM("CarveRenderer", "PixelShader"), psSrc))
     {
         errMsg = "Failed to load shader source";
         return false;
