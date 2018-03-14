@@ -519,6 +519,11 @@ HWND Window::GetWindowHandle(void)
     return Win::hWnd;
 }
 
+HINSTANCE Window::GetProgramHandle(void)
+{
+    return Win::hInstance;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;

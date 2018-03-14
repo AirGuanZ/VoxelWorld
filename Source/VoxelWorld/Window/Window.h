@@ -49,4 +49,5 @@ public:
     ID3D11DeviceContext *GetD3DDeviceContext(void);
 
     HWND GetWindowHandle(void);
+    HINSTANCE GetProgramHandle(void);
 };

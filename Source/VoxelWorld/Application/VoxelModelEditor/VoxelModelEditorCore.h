@@ -37,6 +37,12 @@ public:
 
     void Clear(void);
 
+    bool LoadFromFile(const std::string &filename);
+    bool SaveToFile(const std::string &filename);
+
+    bool IsAvailable(void) const;
+
+    std::string bindingName;
     std::string skeletonPath;
 
     //componentCount“‘uint32_t¥Ê¥¢‘⁄’‚
@@ -49,6 +55,7 @@ public:
     VMECore(void);
     ~VMECore(void);
 
-private:
-    VMEBindingContent *bindingContent_;
+    void Clear();
+
+    VMEBindingContent bindingContent;
 };

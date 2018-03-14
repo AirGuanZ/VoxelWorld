@@ -7,6 +7,8 @@ Created by AirGuanZ
 
 #include <string>
 
+class VMECore;
+
 struct VMEViewRefreshConfig
 {
     bool all = false;
@@ -16,7 +18,7 @@ class VMEView
 {
 public:
     void Clear(void);
-    void Refresh(void);
+    void Refresh(const VMEViewRefreshConfig &config, const VMECore &core);
 
 private:
     std::string loadedBindingName_;
