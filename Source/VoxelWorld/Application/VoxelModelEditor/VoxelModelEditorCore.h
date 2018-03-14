@@ -1,51 +1,54 @@
 /*================================================================
 Filename: VoxelModelEditorCore.h
-Date: 2018.3.10
+Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <deque>
-#include <map>
-#include <memory>
-#include <queue>
+#include <cstdint>
 #include <string>
 #include <vector>
 
-#include <SkeletonAnimation/SkeletonData.h>
-
-#include "VoxelModelBinding.h"
-
-class VMEFatalError
+class VMEBindingContent
 {
 public:
-    VMEFatalError(const std::string &msg)
-        : msg_(msg)
+    struct Component
     {
+        struct Voxel
+        {
+            std::int32_t x, y, z;
+            std::uint8_t r, g, b;
+        };
 
-    }
+        std::string boneName;
 
-    const char *What(void) const
-    {
-        return msg_.c_str();
-    }
+        float translateX, translateY, translateZ;
+        float rotateX, rotateY, rotateZ, rotateW;
+        float scaleX, scaleY, scaleZ;
 
-private:
-    std::string msg_;
+        float voxelSize;
+        std::int32_t boundPosX, boundNegX;
+        std::int32_t boundPosY, boundNegY;
+        std::int32_t boundPosZ, boundNegZ;
+
+        //voxelCount以uint32_t存储在这
+        std::vector<Voxel> voxels;
+    };
+
+    void Clear(void);
+
+    std::string skeletonPath;
+
+    //componentCount以uint32_t存储在这
+    std::vector<Component> components;
 };
 
-class VoxelModelEditorCore
+class VMECore
 {
 public:
-    VoxelModelEditorCore(void);
-    ~VoxelModelEditorCore(void);
+    VMECore(void);
+    ~VMECore(void);
 
-    int selectedBindingNameIndex_;
-    std::vector<std::string> bindingNames_;
-
-    bool mainLoopDone_;
-    bool needRefreshDisplay_;
-
-    bool modelChanged_;
-    std::unique_ptr<VoxelModelBinding> model_;
+private:
+    VMEBindingContent *bindingContent_;
 };

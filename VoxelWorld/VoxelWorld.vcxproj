@@ -82,13 +82,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\Game\ChunkRendererManager.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\Game\Game.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBindingDisplay.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockInfoManager.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Block\BlockModelBuilder.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Chunk\BasicModel.cpp" />
@@ -140,13 +134,7 @@
     <ClInclude Include="..\Source\VoxelWorld\Application\Game\DebugWindow.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\Game\Game.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\MainMenu\MainMenu.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBindingDisplay.h" />
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.h" />
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\Block.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfo.h" />
     <ClInclude Include="..\Source\VoxelWorld\Block\BlockInfoManager.h" />

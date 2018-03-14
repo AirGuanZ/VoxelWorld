@@ -1,14 +1,15 @@
 /*================================================================
-Filename: VoxelModelEditor.h
+Filename: VoxelModelEditorCommand.h
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Application/Common.h>
+class VMECore;
+struct VMEViewRefreshConfig;
 
-class VoxelModelEditor
+class VMECmd
 {
 public:
-    AppState Run(void);
+    virtual void Execute(VMECore &core, VMEViewRefreshConfig &refresh) = 0;
 };

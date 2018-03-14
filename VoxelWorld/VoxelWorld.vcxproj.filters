@@ -116,13 +116,7 @@
       <UniqueIdentifier>{2856ad3c-0cb4-45bf-8bf2-f8efb49e9a6c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Application\VoxelModelEditor">
-      <UniqueIdentifier>{54042bbc-d1a4-473a-b74a-51bfa7ea51d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Application\VoxelModelEditor\VoxelModelBinding">
-      <UniqueIdentifier>{288ffcdc-ac78-4402-83df-c20f7c3895aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Application\VoxelModelEditor\CommandWindow">
-      <UniqueIdentifier>{6809c7db-acdb-4041-a3c4-b257663d6cff}</UniqueIdentifier>
+      <UniqueIdentifier>{a084131a-ae8f-4952-8f13-ba13626f86c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -342,24 +336,6 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.cpp">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.cpp">
-      <Filter>Source\Application\VoxelModelEditor\VoxelModelBinding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBindingDisplay.cpp">
-      <Filter>Source\Application\VoxelModelEditor\VoxelModelBinding</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.cpp">
-      <Filter>Source\Application\VoxelModelEditor\CommandWindow</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -553,24 +529,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.h">
       <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorDisplay.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBinding.h">
-      <Filter>Source\Application\VoxelModelEditor\VoxelModelBinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelBindingDisplay.h">
-      <Filter>Source\Application\VoxelModelEditor\VoxelModelBinding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommandWindow.h">
-      <Filter>Source\Application\VoxelModelEditor\CommandWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
