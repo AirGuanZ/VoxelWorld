@@ -7,13 +7,13 @@ Created by AirGuanZ
 
 #include <string>
 
-#include <Input/InputManager.h>
-#include <Screen/Crosshair.h>
-#include <Screen/ImmediateScreen2D.h>
-#include <Window/Window.h>
-#include <World/World.h>
+#include <Input\InputManager.h>
+#include <Screen\Crosshair.h>
+#include <Screen\ImmediateScreen2D.h>
+#include <Window\Window.h>
+#include <World\World.h>
 
-#include <Application/Common.h>
+#include <Application\Common.h>
 #include "ChunkRendererManager.h"
 #include "DebugWindow.h"
 

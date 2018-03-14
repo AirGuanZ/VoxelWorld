@@ -6,9 +6,9 @@ Created by AirGuanZ
 #include <cassert>
 #include <utility>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Window/Window.h>
+#include <Window\Window.h>
 #include "Texture2D.h"
 #include "TextureFile.h"
 

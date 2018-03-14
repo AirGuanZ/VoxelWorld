@@ -5,10 +5,10 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Utility/D3D11Header.h>
-#include <Utility/Math.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\Math.h>
 
-#include <Collision/AABB.h>
+#include <Collision\AABB.h>
 
 class Camera
 {

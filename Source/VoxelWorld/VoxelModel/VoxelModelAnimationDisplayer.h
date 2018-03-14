@@ -10,10 +10,10 @@ Created by AirGuanZ
 
 #include <OWEShader.hpp>
 
-#include <SkeletonAnimation/SkeletonData.h>
-#include <SkeletonAnimation/SkeletonDataLoader.h>
+#include <SkeletonAnimation\SkeletonData.h>
+#include <SkeletonAnimation\SkeletonDataLoader.h>
 
-#include <D3DObject/InputLayout.h>
+#include <D3DObject\InputLayout.h>
 #include "VoxelModel.h"
 
 class VoxelModelAnimationDisplayer

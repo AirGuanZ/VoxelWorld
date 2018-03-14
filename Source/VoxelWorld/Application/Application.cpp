@@ -3,15 +3,15 @@ Filename: Application.cpp
 Date: 2018.2.27
 Created by AirGuanZ
 ================================================================*/
-#include <Utility/ConfigFile.h>
+#include <Utility\ConfigFile.h>
 
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 
 #include "Application.h"
-#include "Game/Game.h"
-#include "MainMenu/MainMenu.h"
-#include "VoxelModelEditor/VoxelModelEditor.h"
+#include "Game\Game.h"
+#include "MainMenu\MainMenu.h"
+#include "VoxelModelEditor\VoxelModelEditor.h"
 
 namespace
 {

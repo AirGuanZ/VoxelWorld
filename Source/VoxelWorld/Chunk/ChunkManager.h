@@ -12,11 +12,11 @@ Created by AirGuanZ
 #include <unordered_map>
 #include <unordered_set>
 
-#include <Utility/Math.h>
-#include <Utility/Uncopiable.h>
+#include <Utility\Math.h>
+#include <Utility\Uncopiable.h>
 
-#include <Actor/Camera.h>
-#include <Block/BlockInfoManager.h>
+#include <Actor\Camera.h>
+#include <Block\BlockInfoManager.h>
 #include "Chunk.h"
 #include "ChunkLoader.h"
 

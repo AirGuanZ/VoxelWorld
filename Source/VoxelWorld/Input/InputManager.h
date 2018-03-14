@@ -8,9 +8,9 @@ Created by AirGuanZ
 #include <memory>
 
 #include <Windows.h>
-#include <DirectXTK/Keyboard.h>
+#include <DirectXTK\Keyboard.h>
 
-#include <Utility/Singleton.h>
+#include <Utility\Singleton.h>
 
 enum class MouseButton
 {

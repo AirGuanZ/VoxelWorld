@@ -8,9 +8,9 @@ Created by AirGuanZ
 #include <codecvt>
 #include <string>
 
-#include <Utility/ConfigFile.h>
-#include <Utility/HelperFunctions.h>
-#include <Utility/Singleton.h>
+#include <Utility\ConfigFile.h>
+#include <Utility\HelperFunctions.h>
+#include <Utility\Singleton.h>
 
 class ResourceNameManager : public Singleton<ResourceNameManager>
 {

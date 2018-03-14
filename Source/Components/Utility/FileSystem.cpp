@@ -7,6 +7,8 @@ Created by AirGuanZ
 #include <fstream>
 #include <iterator>
 
+#include <Windows.h>
+
 #include "FileSystem.h"
 
 namespace fs = std::experimental::filesystem::v1;

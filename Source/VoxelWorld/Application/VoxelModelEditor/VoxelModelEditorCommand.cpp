@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #include <Windows.h>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Resource/ResourceNameManager.h>
+#include <Resource\ResourceNameManager.h>
 #include "VoxelModelEdtiorCommand.h"
 #include "VoxelModelEditorConsole.h"
 #include "VoxelModelEditorCore.h"

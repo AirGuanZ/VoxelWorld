@@ -7,9 +7,9 @@ Created by AirGuanZ
 
 #include <vector>
 
-#include <Utility/Uncopiable.h>
+#include <Utility\Uncopiable.h>
 
-#include <Chunk/BasicRenderer.h>
+#include <Chunk\BasicRenderer.h>
 #include "Model.h"
 
 class BasicModel : public Model, public Uncopiable

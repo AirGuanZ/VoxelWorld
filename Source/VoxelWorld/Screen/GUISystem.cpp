@@ -16,17 +16,17 @@ Created by AirGuanZ
 
 namespace filesystem = std::experimental::filesystem::v1;
 
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 #include "GUISystem.h"
 
-#include <CEGUI/CEGUI.h>
-#include <CEGUI/RendererModules/Direct3D11/Renderer.h>
+#include <CEGUI\CEGUI.h>
+#include <CEGUI\RendererModules\Direct3D11\Renderer.h>
+
+#include "imgui\imgui.h"
+#include "imgui\imgui_impl_dx11.h"
 
 SINGLETON_CLASS_DEFINITION(GUI);
-
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_dx11.h"
 
 namespace
 {

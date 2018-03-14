@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include <string>
 #include <vector>
 
-#include <Screen/GUISystem.h>
+#include <Screen\GUISystem.h>
 
 struct AppConf
 {

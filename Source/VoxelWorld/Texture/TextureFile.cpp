@@ -3,11 +3,11 @@ Filename: TextureFile.cpp
 Date: 2018.1.14
 Created by AirGuanZ
 ================================================================*/
-#include <DirectXTK/ScreenGrab.h>
-#include <DirectXTK/WICTextureLoader.h>
+#include <DirectXTK\ScreenGrab.h>
+#include <DirectXTK\WICTextureLoader.h>
 #include <wincodec.h>
 
-#include <Window/Window.h>
+#include <Window\Window.h>
 #include "TextureFile.h"
 
 SINGLETON_CLASS_DEFINITION(TextureFile);

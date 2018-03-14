@@ -6,10 +6,10 @@ Created by AirGuanZ
 #include <algorithm>
 #include <cassert>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Land/LandGenerator_V0.h>
-#include <Land/V1/LandGenerator.h>
+#include <Land\LandGenerator_V0.h>
+#include <Land\V1\LandGenerator.h>
 
 #include "ChunkLoader.h"
 #include "ChunkManager.h"

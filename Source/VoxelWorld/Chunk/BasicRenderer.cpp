@@ -5,11 +5,11 @@ Created by AirGuanZ
 ================================================================*/
 #include <vector>
 
-#include <Utility/FileSystem.h>
-#include <Utility/HelperFunctions.h>
+#include <Utility\FileSystem.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 #include "BasicRenderer.h"
 
 namespace

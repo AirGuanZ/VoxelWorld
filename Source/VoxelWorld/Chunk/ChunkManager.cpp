@@ -7,9 +7,9 @@ Created by AirGuanZ
 #include <limits>
 #include <mutex>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Block/BlockInfoManager.h>
+#include <Block\BlockInfoManager.h>
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
 #include "ChunkModelBuilder.h"

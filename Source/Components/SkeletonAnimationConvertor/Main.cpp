@@ -8,9 +8,9 @@ Created by AirGuanZ
 #include <locale>
 #include <string>
 
-#include <SkeletonAnimation/SkeletonDataLoader.h>
-#include <Utility/ConfigFile.h>
-#include <Utility/HelperFunctions.h>
+#include <SkeletonAnimation\SkeletonDataLoader.h>
+#include <Utility\ConfigFile.h>
+#include <Utility\HelperFunctions.h>
 
 #include "MergeSkeletonAnimations.h"
 

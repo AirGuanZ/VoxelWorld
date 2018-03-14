@@ -5,10 +5,10 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Utility/Math.h>
+#include <Utility\Math.h>
 
-#include <Input/InputManager.h>
-#include <Screen/GUISystem.h>
+#include <Input\InputManager.h>
+#include <Screen\GUISystem.h>
 
 class DebugWindow
 {

@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Window/Window.h>
+#include <Window\Window.h>
 #include "Common.h"
 
 class Sampler

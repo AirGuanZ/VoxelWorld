@@ -5,8 +5,8 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Utility/HelperFunctions.h>
-#include <Utility/D3D11Header.h>
+#include <Utility\HelperFunctions.h>
+#include <Utility\D3D11Header.h>
 #include "Common.h"
 
 class DepthStencilState

@@ -8,12 +8,12 @@ Created by AirGuanZ
 #include <string>
 #include <vector>
 
-#include <Utility/Math.h>
-#include <Utility/Singleton.h>
+#include <Utility\Math.h>
+#include <Utility\Singleton.h>
 
-#include <Input/InputManager.h>
+#include <Input\InputManager.h>
 
-#include "imgui/imgui.h"
+#include "imgui\imgui.h"
 
 class GUI;
 class GUIContext;

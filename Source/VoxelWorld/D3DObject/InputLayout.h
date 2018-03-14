@@ -5,10 +5,10 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include <Utility/D3D11Header.h>
-#include <Utility/HelperFunctions.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Window/Window.h>
+#include <Window\Window.h>
 
 class InputLayout
 {

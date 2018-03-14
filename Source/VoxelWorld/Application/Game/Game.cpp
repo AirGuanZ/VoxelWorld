@@ -10,12 +10,12 @@ Created by AirGuanZ
 
 #include <Windows.h>
 
-#include <Utility/Clock.h>
-#include <Utility/FPSCounter.h>
-#include <Utility/HelperFunctions.h>
+#include <Utility\Clock.h>
+#include <Utility\FPSCounter.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Input/InputManager.h>
-#include <Screen/GUISystem.h>
+#include <Input\InputManager.h>
+#include <Screen\GUISystem.h>
 #include "Game.h"
 
 Game::Game(const AppConf &conf)

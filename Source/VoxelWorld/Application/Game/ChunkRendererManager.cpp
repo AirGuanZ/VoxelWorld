@@ -3,8 +3,8 @@ Filename: ChunkRendererManager.cpp
 Date: 2018.2.25
 Created by AirGuanZ
 ================================================================*/
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 
 #include "ChunkRendererManager.h"
 

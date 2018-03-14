@@ -9,7 +9,7 @@ Created by AirGuanZ
 #include <cstdio>
 #include <fstream>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
 #include "VoxelModel.h"
 

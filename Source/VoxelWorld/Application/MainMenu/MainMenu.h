@@ -7,10 +7,10 @@ Created by AirGuanZ
 
 #include <cstdint>
 
-#include <CEGUI/CEGUI.h>
+#include <CEGUI\CEGUI.h>
 
-#include <Application/Common.h>
-#include <Texture/Texture2D.h>
+#include <Application\Common.h>
+#include <Texture\Texture2D.h>
 
 class MainMenu
 {

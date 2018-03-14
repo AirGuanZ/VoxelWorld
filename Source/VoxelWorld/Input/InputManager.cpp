@@ -3,8 +3,8 @@ Filename: InputManager.cpp
 Date: 2018.1.19
 Created by AirGuanZ
 ================================================================*/
-#include <Screen/GUISystem.h>
-#include <Window/Window.h>
+#include <Screen\GUISystem.h>
+#include <Window\Window.h>
 
 #include "InputManager.h"
 

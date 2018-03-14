@@ -8,14 +8,14 @@ Created by AirGuanZ
 #include <array>
 #include <memory>
 
-#include <Utility/Math.h>
+#include <Utility\Math.h>
 
-#include <Chunk/BasicRenderer.h>
-#include <Chunk/CarveRenderer.h>
-#include <Chunk/LiquidRenderer.h>
-#include <Chunk/ChunkManager.h>
-#include <D3DObject/Sampler.h>
-#include <Texture/Texture2D.h>
+#include <Chunk\BasicRenderer.h>
+#include <Chunk\CarveRenderer.h>
+#include <Chunk\LiquidRenderer.h>
+#include <Chunk\ChunkManager.h>
+#include <D3DObject\Sampler.h>
+#include <Texture\Texture2D.h>
 
 class ChunkRendererManager
 {

@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <cassert>
 
-#include <Screen/GUISystem.h>
+#include <Screen\GUISystem.h>
 #include "VoxelModelEditorConsole.h"
 
 VMEConsole::VMEConsole(int inputBufSize, int maxTextCount)

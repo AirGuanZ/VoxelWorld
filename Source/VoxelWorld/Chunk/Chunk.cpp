@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #include <cstring>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Block/BlockInfoManager.h>
+#include <Block\BlockInfoManager.h>
 #include "Chunk.h"
 #include "ChunkManager.h"
 

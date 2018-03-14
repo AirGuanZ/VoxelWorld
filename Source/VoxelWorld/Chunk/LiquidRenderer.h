@@ -10,13 +10,13 @@ Created by AirGuanZ
 
 #include <OWEShader.hpp>
 
-#include <Utility/D3D11Header.h>
-#include <Utility/Math.h>
-#include <Utility/Uncopiable.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\Math.h>
+#include <Utility\Uncopiable.h>
 
-#include <D3DObject/BlendState.h>
-#include <D3DObject/DepthStencilState.h>
-#include <D3DObject/RasterState.h>
+#include <D3DObject\BlendState.h>
+#include <D3DObject\DepthStencilState.h>
+#include <D3DObject\RasterState.h>
 #include "BasicRenderer.h"
 
 constexpr int LIQUID_RENDERER_TEXTURE_NUM = 1;

@@ -4,49 +4,49 @@ ConfigFile = config.txt
 
 [BasicRenderer]
 
-VertexShader = Bin/Shader/Basic/vertex.hlsl
-PixelShader  = Bin/Shader/Basic/pixel.hlsl
+VertexShader = Bin\Shader\Basic\vertex.hlsl
+PixelShader  = Bin\Shader\Basic\pixel.hlsl
 
-Texture[0] = Bin/Texture/Basic/0.png
+Texture[0] = Bin\Texture\Basic\0.png
 
 [CarveRenderer]
 
-VertexShader = Bin/Shader/Carve/vertex.hlsl
-PixelShader  = Bin/Shader/Carve/pixel.hlsl
+VertexShader = Bin\Shader\Carve\vertex.hlsl
+PixelShader  = Bin\Shader\Carve\pixel.hlsl
 
-Texture[0] = Bin/Texture/Carve/0.png
+Texture[0] = Bin\Texture\Carve\0.png
 
 [LiquidRenderer]
 
-VertexShader = Bin/Shader/Liquid/vertex.hlsl
-PixelShader  = Bin/Shader/Liquid/pixel.hlsl
+VertexShader = Bin\Shader\Liquid\vertex.hlsl
+PixelShader  = Bin\Shader\Liquid\pixel.hlsl
 
-Texture[0] = Bin/Texture/Liquid/0.png
+Texture[0] = Bin\Texture\Liquid\0.png
 
 [ActorModel]
 
-VertexShader = Bin/Shader/Actor/vertex.hlsl
-PixelShader  = Bin/Shader/Actor/pixel.hlsl
+VertexShader = Bin\Shader\Actor\vertex.hlsl
+PixelShader  = Bin\Shader\Actor\pixel.hlsl
 
-DefaultTexture = Bin/Texture/Actor/tex.png
+DefaultTexture = Bin\Texture\Actor\tex.png
 
-DefaultModelHead      = Bin/Model/Actor/head.obj
-DefaultModelBody      = Bin/Model/Actor/body.obj
-DefaultModelLeftHand  = Bin/Model/Actor/leftHand.obj
-DefaultModelRightHand = Bin/Model/Actor/rightHand.obj
-DefaultModelLeftFoot  = Bin/Model/Actor/leftFoot.obj
-DefaultModelRightFoot = Bin/Model/Actor/rightFoot.obj
+DefaultModelHead      = Bin\Model\Actor\head.obj
+DefaultModelBody      = Bin\Model\Actor\body.obj
+DefaultModelLeftHand  = Bin\Model\Actor\leftHand.obj
+DefaultModelRightHand = Bin\Model\Actor\rightHand.obj
+DefaultModelLeftFoot  = Bin\Model\Actor\leftFoot.obj
+DefaultModelRightFoot = Bin\Model\Actor\rightFoot.obj
 
-DefaultSkeleton		  = Bin/Model/Actor/skeleton.vwani
+DefaultSkeleton		  = Bin\Model\Actor\skeleton.vwani
 
 [Crosshair]
 
-Texture = Bin/Texture/Crosshair/cross.png
+Texture = Bin\Texture\Crosshair\cross.png
 
 [ImmediateScreen2D]
 
-VertexShader = Bin/Shader/ImmediateScreen2D/normalVertex.hlsl
-PixelShader  = Bin/Shader/ImmediateScreen2D/normalPixel.hlsl
+VertexShader = Bin\Shader\ImmediateScreen2D\normalVertex.hlsl
+PixelShader  = Bin\Shader\ImmediateScreen2D\normalPixel.hlsl
 
 [ImFont]
 
@@ -54,7 +54,7 @@ Count = 0
 
 [CEGUI]
 
-DefaultResourceDirectory = Bin/CEGUI
+DefaultResourceDirectory = Bin\CEGUI
 
 Scheme = TaharezLook
 
@@ -69,14 +69,14 @@ LayoutFile = MainMenu.layout
 
 [VoxelModelAnimationDisplayer]
 
-VertexShader = Bin/Shader/VoxelModel/aniDisplayerVertexShader.hlsl
-PixelShader  = Bin/Shader/VoxelModel/aniDiaplayerPixelShader.hlsl
+VertexShader = Bin\Shader\VoxelModel\aniDisplayerVertexShader.hlsl
+PixelShader  = Bin\Shader\VoxelModel\aniDiaplayerPixelShader.hlsl
 
 [VoxelModelEditor]
 
-Skeleton  = Bin/Model/Voxel/Skeleton/
-Component = Bin/Model/Voxel/Component/
-Binding   = Bin/Model/Voxel/Binding/
+Skeleton  = Bin\Model\Voxel\Skeleton\
+Component = Bin\Model\Voxel\Component\
+Binding   = Bin\Model\Voxel\Binding\
 
 SkeletonExtension  = .vwani
 ComponentExtension = .vwcpt

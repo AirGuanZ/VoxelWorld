@@ -6,11 +6,11 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
-#include <Utility/FileSystem.h>
-#include <Utility/HelperFunctions.h>
+#include <Utility\FileSystem.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 #include "ImmediateScreen2D.h"
 
 ImmediateScreen2D::ImmediateScreen2D(void)

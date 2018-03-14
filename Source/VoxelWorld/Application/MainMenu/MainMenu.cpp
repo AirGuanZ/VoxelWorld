@@ -5,13 +5,13 @@ Created by AirGuanZ
 ================================================================*/
 #include <memory>
 
-#include <CEGUI/CEGUI.h>
-#include <Utility/Clock.h>
+#include <CEGUI\CEGUI.h>
+#include <Utility\Clock.h>
 
-#include <Input/InputManager.h>
-#include <Resource/ResourceNameManager.h>
-#include <Screen/GUISystem.h>
-#include <Window/Window.h>
+#include <Input\InputManager.h>
+#include <Resource\ResourceNameManager.h>
+#include <Screen\GUISystem.h>
+#include <Window\Window.h>
 
 #include "MainMenu.h"
 

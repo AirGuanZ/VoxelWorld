@@ -6,7 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
 #include "Block.h"
 #include "BlockInfoManager.h"

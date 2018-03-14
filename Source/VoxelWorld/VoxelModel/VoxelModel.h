@@ -7,12 +7,12 @@ Created by AirGuanZ
 
 #include <vector>
 
-#include <Utility/D3D11Header.h>
-#include <Utility/Math.h>
-#include <Utility/Singleton.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\Math.h>
+#include <Utility\Singleton.h>
 
-#include <D3DObject/BasicBuffer.h>
-#include <D3DObject/InputLayout.h>
+#include <D3DObject\BasicBuffer.h>
+#include <D3DObject\InputLayout.h>
 
 struct VoxelModelVertex
 {

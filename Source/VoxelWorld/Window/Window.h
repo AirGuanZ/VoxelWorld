@@ -8,8 +8,8 @@ Created by AirGuanZ
 #include <string>
 #include <vector>
 
-#include <Utility/D3D11Header.h>
-#include <Utility/Singleton.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\Singleton.h>
 
 struct ImFontSpec;
 
@@ -50,5 +50,9 @@ public:
 
     HWND GetWindowHandle(void);
     HINSTANCE GetProgramHandle(void);
+
+    //取得运行目录
     const std::string &GetProgramPath(void) const;
+
+    bool OpenFileName(const std::string &initDir, std::string &output);
 };

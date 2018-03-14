@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #include <iostream>
 
-#include <Block/BlockInfoManager.h>
-#include <Input/InputManager.h>
-#include <Resource/ResourceNameManager.h>
+#include <Block\BlockInfoManager.h>
+#include <Input\InputManager.h>
+#include <Resource\ResourceNameManager.h>
 #include "World.h"
 
 World::World(int preloadDis, int renderDis, int unloadDis)

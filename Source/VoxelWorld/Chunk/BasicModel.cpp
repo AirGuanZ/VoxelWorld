@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #include <cassert>
 
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Window/Window.h>
+#include <Window\Window.h>
 #include "BasicModel.h"
 
 namespace

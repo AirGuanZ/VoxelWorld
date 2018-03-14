@@ -11,13 +11,13 @@ Created by AirGuanZ
 #include <set>
 #include <type_traits>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include <assimp\Importer.hpp>
+#include <assimp\scene.h>
+#include <assimp\postprocess.h>
 
-#include <Utility/ConfigFile.h>
-#include <Utility/FileSystem.h>
-#include <Utility/HelperFunctions.h>
+#include <Utility\ConfigFile.h>
+#include <Utility\FileSystem.h>
+#include <Utility\HelperFunctions.h>
 
 #include "SkeletonDataLoader.h"
 

@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include <string>
 #include <map>
 
-#include "../Utility/Singleton.h"
+#include "..\Utility\Singleton.h"
 #include "SkeletonData.h"
 
 namespace Skeleton

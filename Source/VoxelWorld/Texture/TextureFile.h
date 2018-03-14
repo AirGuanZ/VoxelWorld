@@ -7,8 +7,8 @@ Created by AirGuanZ
 
 #include <string>
 
-#include <Utility/D3D11Header.h>
-#include <Utility/Singleton.h>
+#include <Utility\D3D11Header.h>
+#include <Utility\Singleton.h>
 
 class TextureFile : public Singleton<TextureFile>
 {

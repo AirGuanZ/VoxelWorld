@@ -6,14 +6,14 @@ Created by AirGuanZ
 #include <cassert>
 #include <string>
 
-#include <SkeletonAnimation/SkeletonDataLoader.h>
+#include <SkeletonAnimation\SkeletonDataLoader.h>
 
-#include <Utility/FileSystem.h>
-#include <Utility/HelperFunctions.h>
-#include <Utility/ObjFile.h>
+#include <Utility\FileSystem.h>
+#include <Utility\HelperFunctions.h>
+#include <Utility\ObjFile.h>
 
-#include <Resource/ResourceNameManager.h>
-#include <Window/Window.h>
+#include <Resource\ResourceNameManager.h>
+#include <Window\Window.h>
 #include "ActorModel.h"
 
 constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.05625f;

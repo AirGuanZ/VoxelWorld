@@ -3,9 +3,9 @@ Filename: TransparentRenderer.cpp
 Date: 2018.1.27
 Created by AirGuanZ
 ================================================================*/
-#include <Utility/HelperFunctions.h>
+#include <Utility\HelperFunctions.h>
 
-#include <Resource/ResourceNameManager.h>
+#include <Resource\ResourceNameManager.h>
 #include "LiquidRenderer.h"
 
 LiquidRenderer::LiquidRenderer(void)

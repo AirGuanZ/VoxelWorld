@@ -7,9 +7,9 @@ Created by AirGuanZ
 
 #include <OWEShader.hpp>
 
-#include <Utility/D3D11Header.h>
+#include <Utility\D3D11Header.h>
 
-#include <Texture/Texture2D.h>
+#include <Texture\Texture2D.h>
 #include "ImmediateScreen2D.h"
 
 class Crosshair
