@@ -45,6 +45,10 @@ AppState VoxelModelEditor::Run(void)
                 display_.cmdWinDisplay_.AddText(msg.msg, msg.color);
             }
 
+            std::string inputCmd;
+            while(display_.cmdWinDisplay_.FetchInputText(inputCmd))
+                display_.cmdWinDisplay_.AddText(inputCmd, VMECmdMsg::NORMAL_COLOR);
+
             if(needRefreshDisplay_)
                 RefreshDisplay();
         }

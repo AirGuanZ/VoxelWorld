@@ -58,7 +58,7 @@ static bool InitImGui(const std::vector<ImFontSpec> &ttfFonts)
     imGuiFonts.resize(ttfFonts.size() + 1);
 
     ImFontConfig defaultFontConfig;
-    defaultFontConfig.SizePixels = 20.0f;
+    defaultFontConfig.SizePixels = 13.0f;
     imGuiFonts[0] = io.Fonts->AddFontDefault(&defaultFontConfig);
     imGuiFontMap["Default"] = 0;
 

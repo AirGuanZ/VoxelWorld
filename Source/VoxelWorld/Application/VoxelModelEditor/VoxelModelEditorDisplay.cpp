@@ -38,13 +38,13 @@ void VoxelModelEditorDisplay::Frame(void)
 {
     if(ImGui::BeginMainMenuBar())
     {
-        if(ImGui::BeginMenu("System"))
+        if(ImGui::BeginMenu("File"))
         {
-            if(ImGui::MenuItem("Exit"))
-                cmdQueue_.push_back(new VMECmd_ExitClicked());
-
             if(ImGui::MenuItem("Save"))
                 cmdQueue_.push_back(new VMECmd_SaveLoadedBinding());
+
+            if(ImGui::MenuItem("Exit"))
+                cmdQueue_.push_back(new VMECmd_ExitClicked());
 
             ImGui::EndMenu();
         }
@@ -68,19 +68,19 @@ void VoxelModelEditorDisplay::Frame(void)
         else
             ImGui::Text("No Binding");
 
-        if(ImGui::SmallButton("Load"))
+        if(ImGui::Button("Load"))
             cmdQueue_.push_back(new VMECmd_LoadSelectedBinding());
 
         ImGui::SameLine();
-        if(ImGui::SmallButton("Unload"))
+        if(ImGui::Button("Unload"))
             cmdQueue_.push_back(new VMECmd_UnloadBinding());
 
         ImGui::SameLine();
-        if(ImGui::SmallButton("Delete"))
+        if(ImGui::Button("Delete"))
             cmdQueue_.push_back(new VMECmd_DeleteSelectedBinding());
 
         ImGui::SameLine();
-        if(ImGui::SmallButton("New") && newBindingNameBuf_[0] != '\0')
+        if(ImGui::Button("New") && newBindingNameBuf_[0] != '\0')
         {
             cmdQueue_.push_back(new VMECmd_CreateBinding(std::string(newBindingNameBuf_.data())));
             newBindingNameBuf_[0] = '\0';

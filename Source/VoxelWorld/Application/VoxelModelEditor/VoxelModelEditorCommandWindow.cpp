@@ -62,7 +62,7 @@ void VoxelModelEditorCommandWindow::Display(void)
 
     ImGui::SameLine();
     
-    if(ImGui::SmallButton("Clear"))
+    if(ImGui::Button("Clear"))
         texts_.clear();
 
     ImGui::End();
