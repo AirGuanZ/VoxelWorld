@@ -24,10 +24,5 @@ public:
 class VMECmd_UnloadBinding : public VMECmd
 {
 public:
-    VMECmd_UnloadBinding(bool msg = true);
-
     void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
-
-private:
-    bool msg_;
 };

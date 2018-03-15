@@ -9,6 +9,8 @@ Created by AirGuanZ
 #include <string>
 #include <vector>
 
+#include <SkeletonAnimation\SkeletonData.h>
+
 class VMEBindingContent
 {
 public:
@@ -21,6 +23,7 @@ public:
         };
 
         std::string boneName;
+        int boneIndex;
 
         float translateX, translateY, translateZ;
         float rotateX, rotateY, rotateZ, rotateW;
@@ -42,8 +45,10 @@ public:
 
     bool IsAvailable(void) const;
 
-    std::string bindingName;
+    std::string bindingPath;
     std::string skeletonPath;
+
+    Skeleton::Skeleton skeleton;
 
     //componentCount“‘uint32_t¥Ê¥¢‘⁄’‚
     std::vector<Component> components;
@@ -52,10 +57,5 @@ public:
 class VMECore
 {
 public:
-    VMECore(void);
-    ~VMECore(void);
-
-    void Clear();
-
     VMEBindingContent bindingContent;
 };
