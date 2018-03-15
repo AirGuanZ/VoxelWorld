@@ -11,7 +11,7 @@ Created by AirGuanZ
 AppState VoxelModelEditor::Run(void)
 {
     std::string filename;
-    if(Window::GetInstance().OpenFileName("Bin\\Model\\Voxel\\Binding\\", filename))
+    if(Window::GetInstance().SaveFileName("Bin\\Model\\Voxel\\Binding\\", filename))
         std::cout << filename << std::endl;
 
     return AppState::MainMenu;

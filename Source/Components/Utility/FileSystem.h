@@ -19,4 +19,7 @@ namespace FileSystem
                      std::map<std::string, std::wstring> &output);
 
     std::string CurrentRunningPath(void);
+
+    std::string AbsolutePath(const std::string &relative);
+    std::string RelativePath(const std::string &absolute);
 }

@@ -570,6 +570,42 @@ bool Window::OpenFileName(const std::string &initDir, std::string &output)
     return rt;
 }
 
+bool Window::SaveFileName(const std::string &initDir, std::string &output)
+{
+    std::vector<char> filenameBuf(MAX_PATH + 1);
+    filenameBuf[0] = '\0';
+
+    std::string tInitDir = GetProgramPath() + "\\" + initDir;
+
+    OPENFILENAMEA ofn;
+    ZeroMemory(&ofn, sizeof(ofn));
+
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = Win::hWnd;
+    ofn.hInstance = Win::hInstance;
+    ofn.lpstrFile = NULL;
+    ofn.lpstrCustomFilter = NULL;
+    ofn.nMaxCustFilter = 0;
+    ofn.nFilterIndex = 0;
+    ofn.lpstrFile = filenameBuf.data();
+    ofn.nMaxFile = filenameBuf.size();
+    ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
+    ofn.lpstrInitialDir = tInitDir.data();
+    ofn.lpstrTitle = NULL;
+    ofn.Flags = 0;
+
+    bool rt = GetSaveFileNameA(&ofn);
+    SetCurrentDirectoryA(GetProgramPath().c_str());
+
+    if(rt)
+        output = ofn.lpstrFile;
+    else
+        output = "";
+
+    return rt;
+}
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     using DirectX::Keyboard;

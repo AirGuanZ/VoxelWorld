@@ -55,4 +55,5 @@ public:
     const std::string &GetProgramPath(void) const;
 
     bool OpenFileName(const std::string &initDir, std::string &output);
+    bool SaveFileName(const std::string &initDir, std::string &output);
 };

@@ -3,6 +3,7 @@ Filename: FileSystem.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
+#include <cassert>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -74,5 +75,17 @@ void FileSystem::GetFilenames(const std::string &dirPath,
 
 std::string FileSystem::CurrentRunningPath(void)
 {
-    return fs::absolute(fs::path()).string();
+    return fs::current_path().string();
+}
+
+std::string FileSystem::AbsolutePath(const std::string &relative)
+{
+    assert(fs::path(relative).is_relative());
+    return fs::absolute(fs::path(relative)).string();
+}
+
+std::string FileSystem::RelativePath(const std::string &absolute)
+{
+    assert(fs::path(absolute).is_absolute());
+    return fs::path(absolute).relative_path().string();
 }
