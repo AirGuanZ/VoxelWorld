@@ -26,6 +26,8 @@ struct VMEViewControl
 class VMEView
 {
 public:
+    VMEView(void);
+
     void Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
 
     void Clear(void);
@@ -37,9 +39,12 @@ public:
 
 private:
     void DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
+    void DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
 
 private:
+    bool showConsole_;
     VMEConsole console_;
 
+    bool showBindingAttributes_;
     std::string loadedBindingPath_;
 };

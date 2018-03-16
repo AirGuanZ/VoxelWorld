@@ -25,6 +25,7 @@ AppState VoxelModelEditor::Run(void)
             cmd->Execute(core_, refreshConfig, view_.GetConsole());
             Helper::SafeDeleteObjects(cmd);
         }
+        view_.Refresh(refreshConfig, core_);
 
         if(viewCtrl.exit)
             done = true;

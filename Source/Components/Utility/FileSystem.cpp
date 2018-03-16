@@ -89,3 +89,8 @@ std::string FileSystem::RelativePath(const std::string &absolute)
     assert(fs::path(absolute).is_absolute());
     return fs::path(absolute).relative_path().string();
 }
+
+std::string FileSystem::PathToFilename(const std::string &path)
+{
+    return fs::path(path).filename().string();
+}

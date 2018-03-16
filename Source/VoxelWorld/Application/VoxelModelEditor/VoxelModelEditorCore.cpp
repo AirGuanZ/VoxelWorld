@@ -17,6 +17,7 @@ void VMEBindingContent::Clear(void)
 
 bool VMEBindingContent::LoadFromFile(const std::string &filename)
 {
+    bindingPath = filename;
     return true;
 }
 
