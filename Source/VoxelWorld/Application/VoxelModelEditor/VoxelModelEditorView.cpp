@@ -64,7 +64,15 @@ void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds
 {
     if(ImGui::BeginMainMenuBar())
     {
-        if(ImGui::BeginMenu("File"))
+        if(ImGui::BeginMenu("Editor"))
+        {
+            if(ImGui::MenuItem("Exit"))
+                ctrl.exit = true;
+
+            ImGui::EndMenu();
+        }
+
+        if(ImGui::BeginMenu("Binding"))
         {
             if(ImGui::MenuItem("Load"))
                 cmds.push(new VMECmd_LoadBinding());
@@ -72,8 +80,11 @@ void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds
             if(ImGui::MenuItem("Unload"))
                 cmds.push(new VMECmd_UnloadBinding());
 
-            if(ImGui::MenuItem("Exit"))
-                ctrl.exit = true;
+            if(ImGui::MenuItem("Save"))
+                cmds.push(new VMECmd_SaveBinding());
+
+            if(ImGui::MenuItem("Save As"))
+                cmds.push(new VMECmd_SaveBindingAs());
 
             ImGui::EndMenu();
         }
@@ -92,8 +103,18 @@ void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds
 
 void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
 {
-    if(loadedBindingPath_.empty() || !showBindingAttributes_)
+    if(!showBindingAttributes_)
         return;
+
+    if(loadedBindingPath_.empty())
+    {
+        if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("%s", "No binding loaded");
+        }
+        ImGui::End();
+        return;
+    }
 
     if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {

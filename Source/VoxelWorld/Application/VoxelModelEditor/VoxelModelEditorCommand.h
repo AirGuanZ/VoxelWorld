@@ -26,3 +26,15 @@ class VMECmd_UnloadBinding : public VMECmd
 public:
     void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
 };
+
+class VMECmd_SaveBinding : public VMECmd
+{
+public:
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+};
+
+class VMECmd_SaveBindingAs : public VMECmd
+{
+public:
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+};
