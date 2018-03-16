@@ -58,15 +58,16 @@ static bool InitImGui(const std::vector<ImFontSpec> &ttfFonts)
     imGuiFonts.resize(ttfFonts.size() + 1);
 
     ImFontConfig defaultFontConfig;
-    defaultFontConfig.SizePixels = 13.0f;
+    defaultFontConfig.SizePixels = 15.0f;
     imGuiFonts[0] = io.Fonts->AddFontDefault(&defaultFontConfig);
     imGuiFontMap["Default"] = 0;
 
+    //FIXME：debug下imgui加载字体文件会蜜汁失败
     for(size_t i = 0; i < ttfFonts.size(); ++i)
     {
         imGuiFonts[i + 1] = io.Fonts->AddFontFromFileTTF(
             ttfFonts[i].ttfFilename.c_str(), ttfFonts[i].pixelSize);
-        imGuiFontMap[filesystem::path(ttfFonts[i].ttfFilename).stem().u8string()] = i + 1;
+        imGuiFontMap[filesystem::path(ttfFonts[i].ttfFilename).stem().string()] = i + 1;
     }
 
     return true;
