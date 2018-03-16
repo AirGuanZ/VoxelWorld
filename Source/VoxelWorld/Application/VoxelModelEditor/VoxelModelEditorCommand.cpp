@@ -30,3 +30,15 @@ void VMECmd_LoadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, V
     else
         console.AddText(VMEConsoleText::Error, "Failed to load binding file: " + filename);
 }
+
+void VMECmd_UnloadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
+{
+    if(core.bindingContent.IsAvailable())
+    {
+        core.bindingContent.Clear();
+        console.AddText(VMEConsoleText::Normal, "Binding cleared");
+        refresh.all = true;
+    }
+    else
+        console.AddText(VMEConsoleText::Error, "No available binding");
+}

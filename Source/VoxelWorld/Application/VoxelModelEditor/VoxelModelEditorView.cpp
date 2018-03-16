@@ -5,6 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <Screen\GUISystem.h>
 #include <Window\Window.h>
+#include "VoxelModelEditorCommand.h"
 #include "VoxelModelEditorCore.h"
 #include "VoxelModelEditorView.h"
 
@@ -16,6 +17,7 @@ void VMEView::Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
     win.ClearDepthStencil();
     win.ClearRenderTarget();
 
+    DisplayMainMenuBar(ctrl, cmds);
     console_.Display();
 
     GUI::RenderImGui();
@@ -45,4 +47,26 @@ bool VMEView::FetchConsoleInput(std::string &text)
 VMEConsole & VMEView::GetConsole(void)
 {
     return console_;
+}
+
+void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
+{
+    if(ImGui::BeginMainMenuBar())
+    {
+        if(ImGui::BeginMenu("File"))
+        {
+            if(ImGui::MenuItem("Load"))
+                cmds.push(new VMECmd_LoadBinding());
+
+            if(ImGui::MenuItem("Unload"))
+                cmds.push(new VMECmd_UnloadBinding());
+
+            if(ImGui::MenuItem("Exit"))
+                ctrl.exit = true;
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
 }

@@ -31,9 +31,9 @@ void VMEConsole::Display(void)
     }
 
     //留一个separator+一行text的空间给输入槽
-    const float footer_height_to_reserve = ImGui::GetStyle().ItemSpacing.y
-                                         + ImGui::GetFrameHeightWithSpacing();
-    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footer_height_to_reserve),
+    const float reservedFooterHeight = ImGui::GetStyle().ItemSpacing.y
+                                     + ImGui::GetFrameHeightWithSpacing();
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -reservedFooterHeight),
                       false, ImGuiWindowFlags_HorizontalScrollbar);
     
     for(auto &t : texts_)

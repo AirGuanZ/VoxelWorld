@@ -36,6 +36,9 @@ public:
     VMEConsole &GetConsole(void);
 
 private:
+    void DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
+
+private:
     VMEConsole console_;
 
     std::string loadedBindingPath_;
