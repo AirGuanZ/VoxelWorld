@@ -32,3 +32,25 @@ std::wstring Helper::ToWStr(const std::string &str)
     delete[] wide;
     return wstr;
 }
+
+bool Helper::ReadString(std::ifstream &fin, std::string &str)
+{
+    str = "";
+    char ch;
+    while(true)
+    {
+        if(!ReadBinary(fin, ch))
+            return false;
+        if(ch != '\0')
+            str += ch;
+        else
+            break;
+    }
+    return true;
+}
+
+bool Helper::WriteString(std::ofstream &fout, const std::string &str)
+{
+    fout.write(str.c_str(), str.size() + 1);
+    return static_cast<bool>(fout);
+}

@@ -90,3 +90,31 @@ void VMECmd_SaveBindingAs::Execute(VMECore &core, VMEViewRefreshConfig &refresh,
             "Failed to save binding: " + core.bindingContent.bindingPath);
     }
 }
+
+void VMECmd_NewEmptyBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
+{
+    auto &rM = RscNameMgr::GetInstance();
+
+    std::string filename;
+    if(!Window::GetInstance().SaveFileName(rM.AsString("VoxelModelEditor", "Binding"), filename))
+        return;
+
+    std::string skeletonName;
+    if(!Window::GetInstance().OpenFileName(rM.AsString("VoxelModelEditor", "Skeleton"), skeletonName))
+        return;
+
+    VMEBindingContent newBindingContent;
+    newBindingContent.bindingPath = filename;
+    newBindingContent.skeletonPath = skeletonName;
+
+    if(newBindingContent.SaveToFile(filename))
+    {
+        console.AddText(VMEConsoleText::Normal,
+            "New binding created: " + filename);
+    }
+    else
+    {
+        console.AddText(VMEConsoleText::Error,
+            "Failed to create new binding: " + filename);
+    }
+}

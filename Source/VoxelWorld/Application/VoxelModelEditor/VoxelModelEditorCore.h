@@ -48,6 +48,8 @@ public:
     std::string bindingPath;
     std::string skeletonPath;
 
+    //skeleton并不被保存到文件
+    //加载的时候也是根据skeletonPath来读取
     Skeleton::Skeleton skeleton;
 
     //componentCount以uint32_t存储在这

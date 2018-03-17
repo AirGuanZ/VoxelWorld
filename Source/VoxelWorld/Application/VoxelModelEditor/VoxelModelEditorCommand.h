@@ -38,3 +38,9 @@ class VMECmd_SaveBindingAs : public VMECmd
 public:
     void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
 };
+
+class VMECmd_NewEmptyBinding : public VMECmd
+{
+public:
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+};

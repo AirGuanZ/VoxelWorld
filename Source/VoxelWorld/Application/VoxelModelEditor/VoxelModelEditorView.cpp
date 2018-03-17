@@ -74,6 +74,9 @@ void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds
 
         if(ImGui::BeginMenu("Binding"))
         {
+            if(ImGui::MenuItem("New"))
+                cmds.push(new VMECmd_NewEmptyBinding());
+
             if(ImGui::MenuItem("Load"))
                 cmds.push(new VMECmd_LoadBinding());
 

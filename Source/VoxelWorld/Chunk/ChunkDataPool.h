@@ -25,9 +25,7 @@ public:
 
     void Destroy(void);
 
-    //IMPROVE：目前拷贝数据会阻塞其他试图来拷数据的线程
-    //改成由来要数据的线程自己拷贝的形式
-    //不过这恐怕需要较为复杂的同步机制，而且内存就那么一条线，我怀疑会不会负优化
+    //IMPROVE：拷贝数据会阻塞其他试图来拷数据的线程
     bool GetChunk(Chunk &ck);
 
     //如果add之后存储的数据数量超过maxDataCnt，

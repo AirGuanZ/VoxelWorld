@@ -6,6 +6,7 @@ Created by AirGuanZ
 #pragma once
 
 #include <codecvt>
+#include <fstream>
 #include <locale>
 #include <map>
 #include <string>
@@ -78,4 +79,35 @@ namespace Helper
     std::string ToStr(const std::wstring &wstr);
 
     std::wstring ToWStr(const std::string &str);
+
+    template<typename T>
+    bool ReadBinary(std::ifstream &fin, T &data)
+    {
+        fin.read(reinterpret_cast<char*>(&data), sizeof(data));
+        return static_cast<bool>(fin);
+    }
+
+    template<typename T, typename...Others>
+    bool ReadBinary(std::ifstream &fin, T &data, Others&...others)
+    {
+        return ReadBinary(fin, data) &&
+               ReadBinary(fin, others...);
+    }
+
+    template<typename T>
+    bool WriteBinary(std::ofstream &fout, const T &&data)
+    {
+        fout.write(static_cast<const char*>(&data), sizeof(data));
+        return static_cast<bool>(fout);
+    }
+
+    template<typename T, typename...Others>
+    bool WriteBinary(std::ofstream &fout, const T &&data, const Others&&...others)
+    {
+        return WriteBinary(fout, std::forward<T>(data)) &&
+               WriteBinary(fout, std::forward<Others>(others)...);
+    }
+
+    bool ReadString(std::ifstream &fin, std::string &str);
+    bool WriteString(std::ofstream &fout, const std::string &str);
 }
