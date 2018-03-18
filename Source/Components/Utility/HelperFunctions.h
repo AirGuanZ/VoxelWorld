@@ -95,14 +95,14 @@ namespace Helper
     }
 
     template<typename T>
-    bool WriteBinary(std::ofstream &fout, const T &&data)
+    bool WriteBinary(std::ofstream &fout, T &&data)
     {
-        fout.write(static_cast<const char*>(&data), sizeof(data));
+        fout.write(reinterpret_cast<const char*>(&data), sizeof(data));
         return static_cast<bool>(fout);
     }
 
     template<typename T, typename...Others>
-    bool WriteBinary(std::ofstream &fout, const T &&data, const Others&&...others)
+    bool WriteBinary(std::ofstream &fout, T &&data, Others&&...others)
     {
         return WriteBinary(fout, std::forward<T>(data)) &&
                WriteBinary(fout, std::forward<Others>(others)...);

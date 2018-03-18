@@ -16,11 +16,11 @@ Created by AirGuanZ
         uint8_t magicNumber0, magicNumber1
         float skeletonTimeFactor
         float skeletonSizeFactor
-        string: skeletonPath
-        uint32_t: componentCount
+        string skeletonPath
+        uint32_t componentCount
         componentCount * {
-            string: boneName
-            uint32_t: boneIndex
+            string boneName
+            uint32_t boneIndex
 
             float3 translate
             float4 rotate
@@ -63,10 +63,12 @@ public:
         std::vector<Voxel> voxels;
     };
 
+    VMEBindingContent(void) { Clear(); }
+
     void Clear(void);
 
     bool LoadFromFile(const std::string &filename);
-    bool SaveToFile(const std::string &filename);
+    bool SaveToFile(const std::string &filename) const;
 
     bool IsAvailable(void) const;
 

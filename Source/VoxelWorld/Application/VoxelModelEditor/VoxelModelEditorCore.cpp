@@ -24,6 +24,9 @@ void VMEBindingContent::Clear(void)
     bindingPath = "";
     skeletonPath = "";
 
+    skeletonTimeFactor = 1.0f;
+    skeletonSizeFactor = 1.0f;
+
     originSkeleton.Clear();
     scaledSkeleton.Clear();
 
@@ -123,8 +126,63 @@ FAILED:
     return false;
 }
 
-bool VMEBindingContent::SaveToFile(const std::string &filename)
+bool VMEBindingContent::SaveToFile(const std::string &filename) const
 {
+    std::ofstream fout(filename, std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
+    if(!fout)
+        return false;
+
+    using Helper::WriteBinary;
+    using Helper::WriteString;
+
+    //文件头部的magic number
+    if(!WriteBinary(fout, VMEBINDING_FILE_HEAD_MAGIC_0, VMEBINDING_FILE_HEAD_MAGIC_1))
+        return false;
+
+    if(!WriteBinary(fout, skeletonTimeFactor, skeletonSizeFactor))
+        return false;
+
+    if(!WriteString(fout, skeletonPath))
+        return false;
+
+    if(!WriteBinary(fout, static_cast<std::uint32_t>(components.size())))
+        return false;
+
+    for(const Component &cpt : components)
+    {
+        if(!WriteString(fout, cpt.boneName) || !WriteBinary(fout, cpt.boneIndex))
+            return false;
+
+        if(!WriteBinary(fout, cpt.translateX, cpt.translateY, cpt.translateZ))
+            return false;
+
+        if(!WriteBinary(fout, cpt.rotateX, cpt.rotateY, cpt.rotateZ, cpt.rotateW))
+            return false;
+
+        if(!WriteBinary(fout, cpt.scaleX, cpt.scaleY, cpt.scaleZ))
+            return false;
+
+        if(!WriteBinary(fout, cpt.voxelSize))
+            return false;
+
+        if(!WriteBinary(fout, cpt.boundPosX, cpt.boundNegX,
+                              cpt.boundPosY, cpt.boundNegY,
+                              cpt.boundPosZ, cpt.boundNegZ))
+            return false;
+
+        if(!WriteBinary(fout, static_cast<std::uint32_t>(cpt.voxels.size())))
+            return false;
+
+        for(const Component::Voxel &v : cpt.voxels)
+        {
+            if(!WriteBinary(fout, v.x, v.y, v.z))
+                return false;
+
+            if(!WriteBinary(fout, v.r, v.g, v.b))
+                return false;
+        }
+    }
+
     return true;
 }
 

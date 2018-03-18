@@ -22,7 +22,6 @@ void VMECmd_LoadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, V
     std::string filename;
     if(!Window::GetInstance().OpenFileName(rM.AsString("VoxelModelEditor", "Binding"), filename))
         return;
-    filename = FileSystem::RelativePath(filename);
 
     refresh.all = true;
     if(core.bindingContent.LoadFromFile(filename))
@@ -102,6 +101,8 @@ void VMECmd_NewEmptyBinding::Execute(VMECore &core, VMEViewRefreshConfig &refres
     std::string skeletonName;
     if(!Window::GetInstance().OpenFileName(rM.AsString("VoxelModelEditor", "Skeleton"), skeletonName))
         return;
+    skeletonName = rM.AsString("VoxelModelEditor", "Skeleton")
+                 + FileSystem::PathToFilename(skeletonName);
 
     VMEBindingContent newBindingContent;
     newBindingContent.bindingPath = filename;

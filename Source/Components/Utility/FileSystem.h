@@ -20,7 +20,5 @@ namespace FileSystem
 
     std::string CurrentRunningPath(void);
 
-    std::string AbsolutePath(const std::string &relative);
-    std::string RelativePath(const std::string &absolute);
     std::string PathToFilename(const std::string &path);
 }
