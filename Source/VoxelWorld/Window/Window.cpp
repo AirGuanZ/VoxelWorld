@@ -277,20 +277,6 @@ static bool CreateDepthStencilBuffer(int sampleCount, int sampleQuality)
     return true;
 }
 
-static void SetDefaultViewport(void)
-{
-    assert(D3D::deviceContext != nullptr);
-
-    D3D11_VIEWPORT vp;
-    vp.TopLeftX = 0;
-    vp.TopLeftY = 0;
-    vp.Width    = static_cast<FLOAT>(Win::clientWidth);
-    vp.Height   = static_cast<FLOAT>(Win::clientHeight);
-    vp.MaxDepth = 1.0f;
-    vp.MinDepth = 0.0f;
-    D3D::deviceContext->RSSetViewports(1, &vp);
-}
-
 static void DestroyGUISystem(void)
 {
     GUI::Destroy();
@@ -452,6 +438,26 @@ float Window::GetClientAspectRatio(void)
 void Window::SetVsync(bool vsync)
 {
     D3D::vsync = vsync;
+}
+
+void Window::SetDefaultViewport(void)
+{
+    assert(D3D::deviceContext != nullptr);
+
+    D3D11_VIEWPORT vp;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+    vp.Width = static_cast<FLOAT>(Win::clientWidth);
+    vp.Height = static_cast<FLOAT>(Win::clientHeight);
+    vp.MaxDepth = 1.0f;
+    vp.MinDepth = 0.0f;
+    D3D::deviceContext->RSSetViewports(1, &vp);
+}
+
+void Window::SetDefaultRTVAndDSV(void)
+{
+    assert(D3D::deviceContext != nullptr);
+    D3D::deviceContext->OMSetRenderTargets(1, &D3D::renderTargetView, D3D::depthStencilView);
 }
 
 void Window::SetBackgroundColor(float r, float g, float b, float a)
