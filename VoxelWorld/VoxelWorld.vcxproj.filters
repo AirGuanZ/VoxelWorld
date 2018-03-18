@@ -339,6 +339,9 @@
     <ClCompile Include="..\Source\VoxelWorld\VoxelModel\ModelSkeletonBinding.cpp">
       <Filter>Source\VoxelModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.cpp">
+      <Filter>Source\D3DObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -535,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\VoxelModel\ModelSkeletonBinding.h">
       <Filter>Source\VoxelModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.h">
+      <Filter>Source\D3DObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

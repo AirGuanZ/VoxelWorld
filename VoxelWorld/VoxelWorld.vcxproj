@@ -98,6 +98,7 @@
     <ClCompile Include="..\Source\VoxelWorld\Chunk\Model.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\BlendState.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\DepthStencilState.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\RasterState.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\Sampler.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\Input\InputManager.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\BlendState.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\Common.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\DepthStencilState.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\InputLayout.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\RasterState.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\Sampler.h" />

@@ -31,6 +31,9 @@ public:
 
     void SetVsync(bool vsync);
 
+    void SetDefaultViewport(void);
+    void SetDefaultRTVAndDSV(void);
+
     void SetBackgroundColor(float r, float g, float b, float a);
     void ClearRenderTarget(void);
     void ClearDepthStencil(void);
