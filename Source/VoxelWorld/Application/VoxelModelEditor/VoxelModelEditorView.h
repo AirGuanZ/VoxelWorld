@@ -43,8 +43,10 @@ private:
 
 private:
     bool showConsole_;
+    bool showBindingAttributes_;
+
     VMEConsole console_;
 
-    bool showBindingAttributes_;
     std::string loadedBindingPath_;
+    std::string skeletonPath_;
 };

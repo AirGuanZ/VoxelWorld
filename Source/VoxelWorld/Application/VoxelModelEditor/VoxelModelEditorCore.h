@@ -52,8 +52,8 @@ public:
         std::uint32_t boneIndex;
 
         float translateX, translateY, translateZ;
-        float rotateX, rotateY, rotateZ, rotateW;
-        float scaleX, scaleY, scaleZ;
+        float rotateX,    rotateY,    rotateZ,    rotateW;
+        float scaleX,     scaleY,     scaleZ;
 
         float voxelSize;
         std::int32_t boundPosX, boundNegX;
@@ -83,7 +83,7 @@ public:
     //time factor和size factor都设为1的骨骼
     Skeleton::Skeleton originSkeleton;
 
-    //originSkeleton根据time和size因子导出的骨骼
+    //从originSkeleton根据time和size因子导出的骨骼
     //是模型真正使用的骨骼
     Skeleton::Skeleton scaledSkeleton;
 

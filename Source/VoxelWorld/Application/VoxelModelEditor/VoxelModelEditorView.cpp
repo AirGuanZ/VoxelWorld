@@ -47,6 +47,7 @@ void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
     if(config.all)
     {
         loadedBindingPath_ = FileSystem::PathToFilename(core.bindingContent.bindingPath);
+        skeletonPath_ = FileSystem::PathToFilename(core.bindingContent.skeletonPath);
     }
 }
 
@@ -121,7 +122,8 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
 
     if(ImGui::Begin("Binding##VoxelModelEditor", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
     {
-        ImGui::Text("Binding name: %s", loadedBindingPath_.c_str());
+        ImGui::Text("Binding: %s", loadedBindingPath_.c_str());
+        ImGui::Text("Skeletin: %s", skeletonPath_.c_str());
     }
     ImGui::End();
 }
