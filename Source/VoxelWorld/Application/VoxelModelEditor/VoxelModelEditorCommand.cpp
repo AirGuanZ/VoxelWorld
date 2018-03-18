@@ -3,7 +3,7 @@ Filename: VoxelModelEditorCommand.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
-#include <Windows.h>
+#include <cassert>
 
 #include <Utility\FileSystem.h>
 #include <Utility\HelperFunctions.h>
@@ -117,4 +117,38 @@ void VMECmd_NewEmptyBinding::Execute(VMECore &core, VMEViewRefreshConfig &refres
         console.AddText(VMEConsoleText::Error,
             "Failed to create new binding: " + filename);
     }
+}
+
+VMECmd_BindingSkeletonTimeFactor::VMECmd_BindingSkeletonTimeFactor(float timeFactor)
+{
+    assert(timeFactor > 0.0f);
+    timeFactor_ = timeFactor;
+}
+
+void VMECmd_BindingSkeletonTimeFactor::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
+{
+    core.bindingContent.skeletonTimeFactor = timeFactor_;
+    core.bindingContent.RefreshScaledSkeleton();
+
+    refresh.all = true;
+
+    console.AddText(VMEConsoleText::Normal,
+        "Skeleton time factor refreshed: " + std::to_string(timeFactor_));
+}
+
+VMECmd_BindingSkeletonSizeFactor::VMECmd_BindingSkeletonSizeFactor(float sizeFactor)
+{
+    assert(sizeFactor > 0.0f);
+    sizeFactor_ = sizeFactor;
+}
+
+void VMECmd_BindingSkeletonSizeFactor::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
+{
+    core.bindingContent.skeletonSizeFactor = sizeFactor_;
+    core.bindingContent.RefreshScaledSkeleton();
+
+    refresh.all = true;
+
+    console.AddText(VMEConsoleText::Normal,
+        "Skeleton size factor refreshed: " + std::to_string(sizeFactor_));
 }

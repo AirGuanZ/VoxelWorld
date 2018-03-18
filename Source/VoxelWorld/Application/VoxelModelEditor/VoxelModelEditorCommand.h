@@ -44,3 +44,25 @@ class VMECmd_NewEmptyBinding : public VMECmd
 public:
     void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
 };
+
+class VMECmd_BindingSkeletonTimeFactor : public VMECmd
+{
+public:
+    VMECmd_BindingSkeletonTimeFactor(float timeFactor);
+
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+
+private:
+    float timeFactor_;
+};
+
+class VMECmd_BindingSkeletonSizeFactor : public VMECmd
+{
+public:
+    VMECmd_BindingSkeletonSizeFactor(float sizeFactor);
+
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+
+private:
+    float sizeFactor_;
+};

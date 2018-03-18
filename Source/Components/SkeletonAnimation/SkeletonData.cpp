@@ -4,6 +4,7 @@ Date: 2018.2.9
 Created by AirGuanZ
 ================================================================*/
 #include <algorithm>
+#include <cassert>
 #include <numeric>
 
 #include <iostream>
@@ -132,4 +133,30 @@ float Skeleton::Skeleton::GetEndTime(const std::string &aniName) const
     if(it == aniClips_.end())
         return 0.0f;
     return it->second.End();
+}
+
+void Skeleton::Skeleton::Scale(float time, float size, Skeleton &output)
+{
+    assert(time > 0.0f && size > 0.0f);
+    assert(parents_.size());
+
+    output.Clear();
+
+    output.parents_ = parents_;
+    for(const auto &clipIt : aniClips_)
+    {
+        AniClip newClip = clipIt.second;
+        for(auto &boneAni : newClip.boneAnis)
+        {
+            for(auto &kf : boneAni.keyframes)
+            {
+                kf.time *= time;
+                kf.translate *= size;
+                kf.scale *= size;
+            }
+        }
+        newClip.UpdateStartEndTime();
+
+        output.AddClip(clipIt.first, std::move(newClip));
+    }
 }

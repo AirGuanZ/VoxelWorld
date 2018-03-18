@@ -94,6 +94,8 @@ namespace Skeleton
 
         float GetEndTime(const std::string &aniName) const;
 
+        void Scale(float time, float size, Skeleton &output);
+
     private:
         friend class SkeletonDataLoader;
 

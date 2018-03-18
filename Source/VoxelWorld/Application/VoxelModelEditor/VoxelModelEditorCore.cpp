@@ -4,6 +4,7 @@ Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
 #include <cassert>
+#include <cstdint>
 #include <fstream>
 
 #include <Utility\HelperFunctions.h>
@@ -12,12 +13,19 @@ Created by AirGuanZ
 
 #include "VoxelModelEditorCore.h"
 
+namespace
+{
+    constexpr std::uint8_t VMEBINDING_FILE_HEAD_MAGIC_0 = 0x5b;
+    constexpr std::uint8_t VMEBINDING_FILE_HEAD_MAGIC_1 = 0xcf;
+}
+
 void VMEBindingContent::Clear(void)
 {
     bindingPath = "";
     skeletonPath = "";
 
-    skeleton.Clear();
+    originSkeleton.Clear();
+    scaledSkeleton.Clear();
 
     components.clear();
 }
@@ -35,18 +43,34 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
 
     bindingPath = filename;
 
+    //magic number检查
+    std::uint8_t mg0, mg1;
+    if(!Helper::ReadBinary(fin, mg0, mg1) ||
+       mg0 != VMEBINDING_FILE_HEAD_MAGIC_0 ||
+       mg1 != VMEBINDING_FILE_HEAD_MAGIC_1)
+        goto FAILED;
+
+    //骨骼动画参数
+    if(!Helper::ReadBinary(fin, skeletonTimeFactor, skeletonSizeFactor))
+        goto FAILED;
+
     //读取骨骼动画文件路径
     if(!Helper::ReadString(fin, skeletonPath))
         goto FAILED;
 
     //骨骼动画
     if(!Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
-        Helper::ToWStr(skeletonPath), 1.0f, 1.0f, skeleton, boneMap, errMsg))
+                            Helper::ToWStr(skeletonPath),
+                            skeletonTimeFactor, skeletonSizeFactor,
+                            originSkeleton, boneMap, errMsg))
         goto FAILED;
+
+    originSkeleton.Scale(skeletonTimeFactor, skeletonSizeFactor, scaledSkeleton);
 
     std::uint32_t componentCount;
     if(!Helper::ReadBinary(fin, componentCount))
         goto FAILED;
+
     components.resize(componentCount);
     for(std::uint32_t i = 0; i < componentCount; ++i)
     {
@@ -107,4 +131,12 @@ bool VMEBindingContent::SaveToFile(const std::string &filename)
 bool VMEBindingContent::IsAvailable(void) const
 {
     return bindingPath.size() != 0;
+}
+
+void VMEBindingContent::RefreshScaledSkeleton(void)
+{
+    if(scaledSkeleton.GetParents().size())
+        scaledSkeleton.Clear();
+    if(originSkeleton.GetParents().size())
+        originSkeleton.Scale(skeletonTimeFactor, skeletonSizeFactor, scaledSkeleton);
 }

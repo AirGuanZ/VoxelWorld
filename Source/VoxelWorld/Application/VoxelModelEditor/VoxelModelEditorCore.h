@@ -11,6 +11,32 @@ Created by AirGuanZ
 
 #include <SkeletonAnimation\SkeletonData.h>
 
+/*
+    VMEBindingContent文件格式：
+        uint8_t magicNumber0, magicNumber1
+        float skeletonTimeFactor
+        float skeletonSizeFactor
+        string: skeletonPath
+        uint32_t: componentCount
+        componentCount * {
+            string: boneName
+            uint32_t: boneIndex
+
+            float3 translate
+            float4 rotate
+            float3 scale
+
+            float voxelSize
+            int32_t bound[Pos|Neg][X|Y|Z]
+
+            uint32_t voxelCount
+            voxelCount * {
+                int32_t x, y, z
+                uint8_t r, g, b
+            }
+        }
+*/
+
 class VMEBindingContent
 {
 public:
@@ -23,7 +49,7 @@ public:
         };
 
         std::string boneName;
-        int boneIndex;
+        std::uint32_t boneIndex;
 
         float translateX, translateY, translateZ;
         float rotateX, rotateY, rotateZ, rotateW;
@@ -34,7 +60,6 @@ public:
         std::int32_t boundPosY, boundNegY;
         std::int32_t boundPosZ, boundNegZ;
 
-        //voxelCount以uint32_t存储在这
         std::vector<Voxel> voxels;
     };
 
@@ -45,14 +70,21 @@ public:
 
     bool IsAvailable(void) const;
 
+    //根据time和size因子，重新从originSkeleton构造scaledSkeleton
+    void RefreshScaledSkeleton(void);
+
     std::string bindingPath;
+
+    float skeletonTimeFactor, skeletonSizeFactor;
     std::string skeletonPath;
 
-    //skeleton并不被保存到文件
-    //加载的时候也是根据skeletonPath来读取
-    Skeleton::Skeleton skeleton;
+    //time factor和size factor都设为1的骨骼
+    Skeleton::Skeleton originSkeleton;
 
-    //componentCount以uint32_t存储在这
+    //originSkeleton根据time和size因子导出的骨骼
+    //是模型真正使用的骨骼
+    Skeleton::Skeleton scaledSkeleton;
+
     std::vector<Component> components;
 };
 
