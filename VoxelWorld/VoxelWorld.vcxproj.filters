@@ -542,6 +542,9 @@
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.h">
       <Filter>Source\D3DObject</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\SingleBufferModel.h">
+      <Filter>Source\D3DObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Bin\Font\DroidSans.ttf">
