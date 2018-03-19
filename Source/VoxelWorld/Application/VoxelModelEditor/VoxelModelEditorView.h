@@ -7,7 +7,9 @@ Created by AirGuanZ
 
 #include <queue>
 #include <string>
+#include <vector>
 
+#include <D3DObject\BasicBuffer.h>
 #include "VoxelModelEditorCommand.h"
 #include "VoxelModelEditorConsole.h"
 
@@ -21,6 +23,8 @@ struct VMEViewRefreshConfig
 struct VMEViewControl
 {
     bool exit = false;
+    bool selectedComponentModel = false;
+    bool allComponentsModel = false;
 };
 
 class VMEView

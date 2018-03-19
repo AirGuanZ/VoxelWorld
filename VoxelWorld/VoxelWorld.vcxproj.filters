@@ -351,6 +351,9 @@
     <ClCompile Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.cpp">
       <Filter>Source\D3DObject</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorComponentView.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\Actor\ActorModel.h">
@@ -559,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\FrameBuffer.h">
       <Filter>Source\D3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorComponentView.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
