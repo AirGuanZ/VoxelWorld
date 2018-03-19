@@ -171,6 +171,7 @@
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\InputLayout.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\RasterState.h" />
     <ClInclude Include="..\Source\VoxelWorld\D3DObject\Sampler.h" />
+    <ClInclude Include="..\Source\VoxelWorld\D3DObject\SingleBufferModel.h" />
     <ClInclude Include="..\Source\VoxelWorld\Input\InputManager.h" />
     <ClInclude Include="..\Source\VoxelWorld\Land\LandGenerator_V0.h" />
     <ClInclude Include="..\Source\VoxelWorld\Land\OakGenerator_V0.h" />
