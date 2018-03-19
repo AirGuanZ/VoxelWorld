@@ -1,5 +1,5 @@
 /*================================================================
-Filename: SingleBufferModel.h
+Filename: SingleBufferMesh.h
 Date: 2018.3.19
 Created by AirGuanZ
 ================================================================*/
@@ -14,13 +14,13 @@ Created by AirGuanZ
 #include "BasicBuffer.h"
 
 template<typename _vertexType>
-class SingleBufferModel
+class SingleBufferMesh : public Uncopiable
 {
 public:
     using Vertex = _vertexType;
     using Index = UINT16;
 
-    SingleBufferModel(void)
+    SingleBufferMesh(void)
     {
         idxCnt_ = 0;
     }
