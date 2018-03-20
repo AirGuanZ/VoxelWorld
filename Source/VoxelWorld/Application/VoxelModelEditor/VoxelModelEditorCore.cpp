@@ -79,6 +79,8 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
     {
         Component &cpt = components[i];
 
+        if(!Helper::ReadString(fin, cpt.componentName))
+            goto FAILED;
         if(!Helper::ReadString(fin, cpt.boneName))
             goto FAILED;
         if(!Helper::ReadBinary(fin, cpt.boneIndex))
@@ -150,6 +152,9 @@ bool VMEBindingContent::SaveToFile(const std::string &filename) const
 
     for(const Component &cpt : components)
     {
+        if(!WriteString(fout, cpt.componentName))
+            return false;
+
         if(!WriteString(fout, cpt.boneName) || !WriteBinary(fout, cpt.boneIndex))
             return false;
 

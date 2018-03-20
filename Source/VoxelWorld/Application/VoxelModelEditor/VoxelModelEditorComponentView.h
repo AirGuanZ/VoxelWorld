@@ -23,3 +23,11 @@ struct VMEComponentVertex
 };
 
 using VMEComponentMesh = SingleBufferMesh<VMEComponentVertex>;
+
+class VMEComponentView
+{
+public:
+
+private:
+
+};

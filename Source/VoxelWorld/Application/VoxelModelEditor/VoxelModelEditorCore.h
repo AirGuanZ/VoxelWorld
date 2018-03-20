@@ -48,6 +48,7 @@ public:
             std::uint8_t r, g, b;
         };
 
+        std::string componentName;
         std::string boneName;
         std::uint32_t boneIndex;
 
