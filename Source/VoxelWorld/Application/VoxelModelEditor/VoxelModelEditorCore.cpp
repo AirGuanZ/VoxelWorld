@@ -119,6 +119,8 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
                !Helper::ReadBinary(fin, v.r, v.g, v.b))
                 goto FAILED;
         }
+
+        cpt.meshNeedUpdating = true;
     }
 
     return true;

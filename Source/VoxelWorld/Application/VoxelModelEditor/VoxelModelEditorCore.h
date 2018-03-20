@@ -7,6 +7,7 @@ Created by AirGuanZ
 
 #include <cstdint>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <SkeletonAnimation\SkeletonData.h>
@@ -62,6 +63,9 @@ public:
         std::int32_t boundPosZ, boundNegZ;
 
         std::vector<Voxel> voxels;
+
+        //用于指明其网格模型是否需要更新
+        bool meshNeedUpdating;
     };
 
     VMEBindingContent(void) { Clear(); }
