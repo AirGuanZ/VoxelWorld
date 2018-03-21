@@ -28,7 +28,7 @@ bool BasicFrameBuffer::Initialize(int width, int height)
     assert(width > 0 && height > 0);
     Destroy();
     HRESULT hr;
-    ID3D11Texture2D *tex, *depth;
+    ID3D11Texture2D *tex = nullptr, *depth = nullptr;
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
 
     width_ = width;
@@ -54,11 +54,11 @@ bool BasicFrameBuffer::Initialize(int width, int height)
         goto FAILED;
 
     hr = dev->CreateShaderResourceView(tex, nullptr, &texSRV_);
-    if(!FAILED(hr))
+    if(FAILED(hr))
         goto FAILED;
 
     hr = dev->CreateRenderTargetView(tex, nullptr, &texRTV_);
-    if(!FAILED(hr))
+    if(FAILED(hr))
         goto FAILED;
 
     Helper::ReleaseCOMObjects(tex);
