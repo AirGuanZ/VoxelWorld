@@ -132,7 +132,7 @@ void VoxelModelAnimationDisplayer::Update(float dT)
     if(aniTime_ >= curAni_->End() && aniLoop_)
     {
         while(aniTime_ >= curAni_->End())
-            aniTime_ -= (curAni_->Start() - curAni_->End());
+            aniTime_ -= (curAni_->End() - curAni_->Start());
     }
 }
 

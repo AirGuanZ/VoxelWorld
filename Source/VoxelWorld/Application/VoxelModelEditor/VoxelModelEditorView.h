@@ -11,20 +11,19 @@ Created by AirGuanZ
 
 #include <D3DObject\BasicBuffer.h>
 #include "VoxelModelEditorCommand.h"
+#include "VoxelModelEditorComponentView.h"
 #include "VoxelModelEditorConsole.h"
 
 class VMECore;
 
 struct VMEViewRefreshConfig
 {
-    bool all = false;
+    bool bindingFile = false;
 };
 
 struct VMEViewControl
 {
     bool exit = false;
-    bool selectedComponentModel = false;
-    bool allComponentsModel = false;
 };
 
 class VMEView
@@ -44,13 +43,17 @@ public:
 private:
     void DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
     void DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
+    void DisplayComponentView(std::queue<VMECmd*> &cmds);
 
 private:
     bool showConsole_;
     bool showBindingAttributes_;
+    bool showComponentView_;
 
     VMEConsole console_;
 
     std::string loadedBindingPath_;
     std::string skeletonPath_;
+
+    VMEComponentView componentView_;
 };

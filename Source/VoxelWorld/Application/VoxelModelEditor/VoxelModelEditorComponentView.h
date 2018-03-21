@@ -10,12 +10,13 @@ Created by AirGuanZ
 
 #include <Utility\Math.h>
 
+#include <D3DObject\FrameBuffer.h>
 #include <D3DObject\InputLayout.h>
 #include <D3DObject\SingleBufferMesh.h>
 #include "VoxelModelEditorCommand.h"
 #include "VoxelModelEditorCore.h"
 
-class VMEViewRefreshConfig;
+struct VMEViewRefreshConfig;
 
 struct VMEComponentVertex
 {
@@ -52,7 +53,19 @@ private:
         int boneIndex;
     };
 
+    static ComponentMeshRec *BuildMeshFromComponent(const VMEBindingContent::Component &cpt);
+
+private:
     //component name -> component mesh
-    std::map<std::string, ComponentMeshRec> meshes_;
+    std::map<std::string, std::unique_ptr<ComponentMeshRec>> meshes_;
     Skeleton::Skeleton *skeleton_;
+
+    //动画相关
+    std::string curAniName_;
+    bool aniLoop_;
+    float aniTime_;
+    bool aniDisplaying_;
+
+    //用于渲染绑定后的骨骼动画的frame buffer
+    BasicFrameBuffer aniFrameBuf_;
 };

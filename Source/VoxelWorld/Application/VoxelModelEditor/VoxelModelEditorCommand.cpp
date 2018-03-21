@@ -23,7 +23,7 @@ void VMECmd_LoadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, V
     if(!Window::GetInstance().OpenFileName(rM.AsString("VoxelModelEditor", "Binding"), filename))
         return;
 
-    refresh.all = true;
+    refresh.bindingFile = true;
     if(core.bindingContent.LoadFromFile(filename))
         console.AddText(VMEConsoleText::Normal, "Binding file loaded: " + filename);
     else
@@ -36,7 +36,7 @@ void VMECmd_UnloadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh,
     {
         core.bindingContent.Clear();
         console.AddText(VMEConsoleText::Normal, "Binding unloaded");
-        refresh.all = true;
+        refresh.bindingFile = true;
     }
     else
         console.AddText(VMEConsoleText::Error, "No available binding");
@@ -79,7 +79,7 @@ void VMECmd_SaveBindingAs::Execute(VMECore &core, VMEViewRefreshConfig &refresh,
     if(core.bindingContent.SaveToFile(filename))
     {
         core.bindingContent.bindingPath = filename;
-        refresh.all = true;
+        refresh.bindingFile = true;
         console.AddText(VMEConsoleText::Normal,
             "Binding saved: " + core.bindingContent.bindingPath);
     }
@@ -131,7 +131,7 @@ void VMECmd_BindingSkeletonTimeFactor::Execute(VMECore &core, VMEViewRefreshConf
     core.bindingContent.skeletonTimeFactor = timeFactor_;
     core.bindingContent.RefreshScaledSkeleton();
 
-    refresh.all = true;
+    refresh.bindingFile = true;
 
     console.AddText(VMEConsoleText::Normal,
         "Skeleton time factor refreshed: " + std::to_string(timeFactor_));
@@ -148,7 +148,7 @@ void VMECmd_BindingSkeletonSizeFactor::Execute(VMECore &core, VMEViewRefreshConf
     core.bindingContent.skeletonSizeFactor = sizeFactor_;
     core.bindingContent.RefreshScaledSkeleton();
 
-    refresh.all = true;
+    refresh.bindingFile = true;
 
     console.AddText(VMEConsoleText::Normal,
         "Skeleton size factor refreshed: " + std::to_string(sizeFactor_));

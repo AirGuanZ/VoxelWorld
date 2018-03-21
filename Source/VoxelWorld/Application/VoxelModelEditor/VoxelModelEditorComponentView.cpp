@@ -7,6 +7,7 @@ Created by AirGuanZ
 
 #include <Utility\HelperFunctions.h>
 
+#include <Screen\GUISystem.h>
 #include "VoxelModelEditorComponentView.h"
 
 InputLayout VMEComponentVertex::CreateInputLayout(const void *shaderByteCode, int length)
@@ -26,4 +27,103 @@ InputLayout VMEComponentVertex::CreateInputLayout(const void *shaderByteCode, in
     if(!rt.Initialize(desc, shaderByteCode, static_cast<UINT>(length)))
         return InputLayout();
     return rt;
+}
+
+VMEComponentView::VMEComponentView(void)
+{
+    skeleton_ = nullptr;
+
+    aniLoop_ = false;
+    aniTime_ = 0.0f;
+    aniDisplaying_ = false;
+}
+
+void VMEComponentView::SetAnimation(const std::string &ani, bool loop)
+{
+    if(!skeleton_ || !skeleton_->GetAniClip(ani))
+    {
+        curAniName_ = "";
+        return;
+    }
+
+    curAniName_ = ani;
+    aniLoop_ = loop;
+    aniTime_ = 0.0f;
+    aniDisplaying_ = false;
+}
+
+void VMEComponentView::Start(void)
+{
+    aniDisplaying_ = true;
+}
+
+void VMEComponentView::Pause(void)
+{
+    aniDisplaying_ = false;
+}
+
+void VMEComponentView::Stop(void)
+{
+    aniDisplaying_ = false;
+    aniTime_ = 0.0f;
+}
+
+void VMEComponentView::RebuildMeshFrom(const VMEBindingContent::Component &cpt)
+{
+    //如果本来就由模型，且cpt待更新标志不为真，就说明模型无需更新
+    auto it = meshes_.find(cpt.componentName);
+    if(it != meshes_.end() && !cpt.meshNeedUpdating)
+        return;
+
+    it->second.reset(BuildMeshFromComponent(cpt));
+}
+
+void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
+{
+    //骨骼动画时间更新
+    if(curAniName_.size() && aniDisplaying_)
+    {
+        const Skeleton::AniClip *clip = skeleton_->GetAniClip(curAniName_);
+        if(curAniName_.size() && aniDisplaying_)
+        {
+            aniTime_ += dT;
+            if(aniTime_ >= clip->End() && aniLoop_)
+            {
+                while(aniTime_ >= clip->End())
+                    aniTime_ -= (clip->End() - clip->Start());
+            }
+        }
+    }
+
+    //检查frame buffer是否需要初始化
+    if(!aniFrameBuf_.IsAvailable())
+    {
+        if(!aniFrameBuf_.Initialize(200, 300))
+            return;
+    }
+
+    if(!ImGui::Begin("Preview##VoxelModelEditor", nullptr,
+                     ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::End();
+        return;
+    }
+
+    aniFrameBuf_.ClearRenderTargetView(1.0f, 0.0f, 0.0f, 1.0f);
+    ImGui::Image((ImTextureID)aniFrameBuf_.GetSRV(), { 200, 300 });
+
+    ImGui::Text("time: %f", aniTime_);
+
+    ImGui::End();
+}
+
+void VMEComponentView::Refresh(const VMEViewRefreshConfig &refresh, const VMECore &core)
+{
+    //TODO
+}
+
+VMEComponentView::ComponentMeshRec *VMEComponentView::BuildMeshFromComponent(const VMEBindingContent::Component &cpt)
+{
+    //TODO
+    return nullptr;
 }

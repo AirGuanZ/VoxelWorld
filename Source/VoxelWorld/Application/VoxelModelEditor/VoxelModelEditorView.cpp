@@ -15,6 +15,7 @@ VMEView::VMEView(void)
 {
     showConsole_ = true;
     showBindingAttributes_ = true;
+    showComponentView_ = true;
 }
 
 void VMEView::Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
@@ -27,6 +28,7 @@ void VMEView::Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
 
     DisplayMainMenuBar(ctrl, cmds);
     DisplayBindingAttributes(ctrl, cmds);
+    DisplayComponentView(cmds);
 
     if(showConsole_)
         console_.Display();
@@ -44,7 +46,7 @@ void VMEView::Clear(void)
 
 void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
 {
-    if(config.all)
+    if(config.bindingFile)
     {
         loadedBindingPath_ = FileSystem::PathToFilename(core.bindingContent.bindingPath);
         skeletonPath_ = FileSystem::PathToFilename(core.bindingContent.skeletonPath);
@@ -97,6 +99,7 @@ void VMEView::DisplayMainMenuBar(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds
         {
             ImGui::MenuItem("Binding", nullptr, &showBindingAttributes_);
             ImGui::MenuItem("Console", nullptr, &showConsole_);
+            ImGui::MenuItem("Preview", nullptr, &showComponentView_);
 
             ImGui::EndMenu();
         }
@@ -126,4 +129,10 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
         ImGui::Text("Skeletin: %s", skeletonPath_.c_str());
     }
     ImGui::End();
+}
+
+void VMEView::DisplayComponentView(std::queue<VMECmd*> &cmds)
+{
+    if(showComponentView_)
+        componentView_.Display(cmds, 16.66667f);
 }
