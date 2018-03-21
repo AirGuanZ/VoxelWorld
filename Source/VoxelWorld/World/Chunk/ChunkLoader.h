@@ -14,9 +14,9 @@ Created by AirGuanZ
 
 #include <Utility\LinkedMap.h>
 
-#include <Land\LandGenerator_V0.h>
-#include <Land\V1\LandGenerator.h>
-#include <Land\V2\LandGenerator_V2.h>
+#include <World\Land\LandGenerator_V0.h>
+#include <World\Land\V1\LandGenerator.h>
+#include <World\Land\V2\LandGenerator_V2.h>
 #include "Chunk.h"
 #include "ChunkDataPool.h"
 

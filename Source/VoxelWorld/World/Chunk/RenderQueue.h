@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include <iostream>
 #include <vector>
 
-#include <Chunk\Model.h>
+#include <World\Chunk\Model.h>
 
 class RenderQueue
 {

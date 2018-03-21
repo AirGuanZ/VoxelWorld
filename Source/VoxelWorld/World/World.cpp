@@ -5,7 +5,7 @@ Created by AirGuanZ
 ================================================================*/
 #include <iostream>
 
-#include <Block\BlockInfoManager.h>
+#include <World\Block\BlockInfoManager.h>
 #include <Input\InputManager.h>
 #include <Resource\ResourceNameManager.h>
 #include "World.h"

@@ -8,7 +8,7 @@ Created by AirGuanZ
 #include <Utility\D3D11Header.h>
 #include <Utility\Math.h>
 
-#include <Collision\AABB.h>
+#include <World\Collision\AABB.h>
 
 class Camera
 {

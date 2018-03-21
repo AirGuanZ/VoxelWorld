@@ -6,7 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <numeric>
 
-#include <Chunk\Chunk.h>
+#include <World\Chunk\Chunk.h>
 #include "Area_V2.h"
 #include "Biome_V2.h"
 #include "LandGenerator_V2.h"

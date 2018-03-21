@@ -9,8 +9,8 @@ Created by AirGuanZ
 
 #include <Utility\D3D11Header.h>
 
+#include <Screen\ImmediateScreen2D.h>
 #include <Texture\Texture2D.h>
-#include "ImmediateScreen2D.h"
 
 class Crosshair
 {

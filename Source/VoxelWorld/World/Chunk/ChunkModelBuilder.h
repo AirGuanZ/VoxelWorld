@@ -7,7 +7,7 @@ Created by AirGuanZ
 
 #include <Utility\Uncopiable.h>
 
-#include <Block\BlockModelBuilder.h>
+#include <World\Block\BlockModelBuilder.h>
 
 class ChunkManager;
 

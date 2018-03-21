@@ -7,7 +7,7 @@ Created by AirGuanZ
 
 #include <string>
 
-#include <Chunk\ChunkManager.h>
+#include <World\Chunk\ChunkManager.h>
 #include "ActorModel.h"
 #include "Camera.h"
 

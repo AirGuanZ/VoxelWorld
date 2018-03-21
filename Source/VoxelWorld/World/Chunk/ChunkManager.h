@@ -15,8 +15,8 @@ Created by AirGuanZ
 #include <Utility\Math.h>
 #include <Utility\Uncopiable.h>
 
-#include <Actor\Camera.h>
-#include <Block\BlockInfoManager.h>
+#include <World\Actor\Camera.h>
+#include <World\Block\BlockInfoManager.h>
 #include "Chunk.h"
 #include "ChunkLoader.h"
 

@@ -10,10 +10,10 @@ Created by AirGuanZ
 
 #include <Utility\Math.h>
 
-#include <Chunk\BasicRenderer.h>
-#include <Chunk\CarveRenderer.h>
-#include <Chunk\LiquidRenderer.h>
-#include <Chunk\ChunkManager.h>
+#include <World\Chunk\BasicRenderer.h>
+#include <World\Chunk\CarveRenderer.h>
+#include <World\Chunk\LiquidRenderer.h>
+#include <World\Chunk\ChunkManager.h>
 #include <D3DObject\Sampler.h>
 #include <Texture\Texture2D.h>
 

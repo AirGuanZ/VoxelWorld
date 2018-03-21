@@ -9,7 +9,7 @@ Created by AirGuanZ
 
 #include <Utility\HelperFunctions.h>
 
-#include <Block\BlockInfoManager.h>
+#include <World\Block\BlockInfoManager.h>
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
 #include "ChunkModelBuilder.h"
