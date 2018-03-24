@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorComponentView.cpp
+Filename: VMEComponentView.cpp
 Date: 2018.3.19
 Created by AirGuanZ
 ================================================================*/
@@ -8,7 +8,8 @@ Created by AirGuanZ
 #include <Utility\HelperFunctions.h>
 
 #include <Screen\GUISystem.h>
-#include "VoxelModelEditorComponentView.h"
+#include "VMEComponentView.h"
+#include "VMEView.h"
 
 InputLayout VMEComponentVertex::CreateInputLayout(const void *shaderByteCode, int length)
 {
@@ -70,7 +71,7 @@ void VMEComponentView::Stop(void)
 
 void VMEComponentView::RebuildMeshFrom(const VMEBindingContent::Component &cpt)
 {
-    //如果本来就由模型，且cpt待更新标志不为真，就说明模型无需更新
+    //如果本来就有模型，且cpt待更新标志不为真，就说明模型无需更新
     auto it = meshes_.find(cpt.componentName);
     if(it != meshes_.end() && !cpt.meshNeedUpdating)
         return;
@@ -109,17 +110,42 @@ void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
         return;
     }
 
-    aniFrameBuf_.ClearRenderTargetView(1.0f, 0.0f, 0.0f, 1.0f);
+    aniFrameBuf_.ClearRenderTargetView(0.35f, 0.35f, 0.35f, 0.4f);
     ImGui::Image((ImTextureID)aniFrameBuf_.GetSRV(), { 200, 300 });
 
-    ImGui::Text("time: %f", aniTime_);
+    ImGui::Text("Time: %f", aniTime_);
 
     ImGui::End();
 }
 
 void VMEComponentView::Refresh(const VMEViewRefreshConfig &refresh, const VMECore &core)
 {
-    //TODO
+    if(!refresh.componentModel)
+        return;
+
+    std::map<std::string, std::unique_ptr<ComponentMeshRec>> newMeshes_;
+    for(auto &cpt : core.bindingContent.components)
+    {
+        auto it = meshes_.find(cpt.componentName);
+        if(it != meshes_.end())
+        {
+            if(cpt.meshNeedUpdating)
+            {
+                newMeshes_[it->first].reset(BuildMeshFromComponent(cpt));
+                cpt.meshNeedUpdating = false;
+            }
+            else
+            {
+                newMeshes_[it->first] = std::move(it->second);
+            }
+        }
+        else
+        {
+            newMeshes_[cpt.componentName].reset(BuildMeshFromComponent(cpt));
+            cpt.meshNeedUpdating = false;
+        }
+    }
+    meshes_ = std::move(newMeshes_);
 }
 
 VMEComponentView::ComponentMeshRec *VMEComponentView::BuildMeshFromComponent(const VMEBindingContent::Component &cpt)

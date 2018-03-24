@@ -18,6 +18,7 @@ AppState VoxelModelEditor::Run(void)
         VMEViewRefreshConfig refreshConfig;
 
         view_.Display(viewCtrl, cmds);
+
         while(cmds.size())
         {
             VMECmd *cmd = cmds.front();
@@ -25,6 +26,8 @@ AppState VoxelModelEditor::Run(void)
             cmd->Execute(core_, refreshConfig, view_.GetConsole());
             Helper::SafeDeleteObjects(cmd);
         }
+
+        refreshConfig.Closure();
         view_.Refresh(refreshConfig, core_);
 
         if(viewCtrl.exit)

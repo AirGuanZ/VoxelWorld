@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorView.cpp
+Filename: VMEView.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
@@ -7,9 +7,14 @@ Created by AirGuanZ
 
 #include <Screen\GUISystem.h>
 #include <Window\Window.h>
-#include "VoxelModelEditorCommand.h"
-#include "VoxelModelEditorCore.h"
-#include "VoxelModelEditorView.h"
+#include "VMECommand.h"
+#include "VMECore.h"
+#include "VMEView.h"
+
+void VMEViewRefreshConfig::Closure(void)
+{
+    componentModel |= bindingFile;
+}
 
 VMEView::VMEView(void)
 {
@@ -51,6 +56,8 @@ void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
         loadedBindingPath_ = FileSystem::PathToFilename(core.bindingContent.bindingPath);
         skeletonPath_ = FileSystem::PathToFilename(core.bindingContent.skeletonPath);
     }
+
+    componentView_.Refresh(config, core);
 }
 
 bool VMEView::FetchConsoleInput(std::string &text)

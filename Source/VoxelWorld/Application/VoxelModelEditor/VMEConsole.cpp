@@ -1,12 +1,12 @@
 /*================================================================
-Filename: VoxelModelEditorConsole.cpp
+Filename: VMEConsole.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
 #include <cassert>
 
 #include <Screen\GUISystem.h>
-#include "VoxelModelEditorConsole.h"
+#include "VMEConsole.h"
 
 VMEConsole::VMEConsole(int inputBufSize, int maxTextCount)
 {

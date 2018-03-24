@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorCore.h
+Filename: VMECore.h
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
@@ -65,7 +65,7 @@ public:
         std::vector<Voxel> voxels;
 
         //用于指明其网格模型是否需要更新
-        bool meshNeedUpdating;
+        mutable bool meshNeedUpdating;
     };
 
     VMEBindingContent(void) { Clear(); }

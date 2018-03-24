@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorView.h
+Filename: VMEView.h
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
@@ -10,15 +10,18 @@ Created by AirGuanZ
 #include <vector>
 
 #include <D3DObject\BasicBuffer.h>
-#include "VoxelModelEditorCommand.h"
-#include "VoxelModelEditorComponentView.h"
-#include "VoxelModelEditorConsole.h"
+#include "VMECommand.h"
+#include "VMEComponentView.h"
+#include "VMEConsole.h"
 
 class VMECore;
 
 struct VMEViewRefreshConfig
 {
+    void Closure(void);
+
     bool bindingFile = false;
+    bool componentModel = false;
 };
 
 struct VMEViewControl

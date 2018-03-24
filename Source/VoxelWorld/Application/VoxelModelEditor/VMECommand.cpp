@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorCommand.cpp
+Filename: VMECommand.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
@@ -10,10 +10,10 @@ Created by AirGuanZ
 
 #include <Resource\ResourceNameManager.h>
 #include <Window\Window.h>
-#include "VoxelModelEditorCommand.h"
-#include "VoxelModelEditorConsole.h"
-#include "VoxelModelEditorCore.h"
-#include "VoxelModelEditorView.h"
+#include "VMECommand.h"
+#include "VMEConsole.h"
+#include "VMECore.h"
+#include "VMEView.h"
 
 void VMECmd_LoadBinding::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
 {

@@ -6,10 +6,10 @@ Created by AirGuanZ
 #pragma once
 
 #include <Application\Common.h>
-#include "VoxelModelEditorCommand.h"
-#include "VoxelModelEditorConsole.h"
-#include "VoxelModelEditorCore.h"
-#include "VoxelModelEditorView.h"
+#include "VMECommand.h"
+#include "VMEConsole.h"
+#include "VMECore.h"
+#include "VMEView.h"
 
 class VoxelModelEditor
 {

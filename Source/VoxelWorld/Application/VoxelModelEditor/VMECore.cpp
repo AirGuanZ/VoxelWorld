@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorCore.cpp
+Filename: VMECore.cpp
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
@@ -11,7 +11,7 @@ Created by AirGuanZ
 
 #include <SkeletonAnimation\SkeletonDataLoader.h>
 
-#include "VoxelModelEditorCore.h"
+#include "VMECore.h"
 
 namespace
 {

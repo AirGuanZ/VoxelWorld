@@ -192,21 +192,6 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.cpp">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorConsole.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorView.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorComponentView.cpp">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\Application\Game\Crosshair.cpp">
       <Filter>Source\Application\Game</Filter>
     </ClCompile>
@@ -279,6 +264,21 @@
     <ClCompile Include="..\Source\VoxelWorld\World\Land\OakGenerator_V0.cpp">
       <Filter>Source\World\LandGen\V0</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMECommand.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEComponentView.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEConsole.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMECore.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEView.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\World\World.h">
@@ -309,21 +309,6 @@
       <Filter>Source\VoxelModel</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditor.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCore.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorView.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorConsole.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorCommand.h">
-      <Filter>Source\Application\VoxelModelEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VoxelModelEditorComponentView.h">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\Application\Game\Crosshair.h">
@@ -421,6 +406,24 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\World\Land\OakGenerator_V0.h">
       <Filter>Source\World\LandGen\V0</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEComponentMeshBuilder.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMECommand.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEComponentView.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEConsole.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMECore.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEView.h">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,8 +13,8 @@ Created by AirGuanZ
 #include <D3DObject\FrameBuffer.h>
 #include <D3DObject\InputLayout.h>
 #include <D3DObject\SingleBufferMesh.h>
-#include "VoxelModelEditorCommand.h"
-#include "VoxelModelEditorCore.h"
+#include "VMECommand.h"
+#include "VMECore.h"
 
 struct VMEViewRefreshConfig;
 

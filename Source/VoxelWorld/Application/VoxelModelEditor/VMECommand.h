@@ -1,5 +1,5 @@
 /*================================================================
-Filename: VoxelModelEditorCommand.h
+Filename: VMECommand.h
 Date: 2018.3.14
 Created by AirGuanZ
 ================================================================*/
