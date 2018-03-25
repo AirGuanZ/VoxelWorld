@@ -43,7 +43,7 @@ class VMEBindingContent
 public:
     struct Component
     {
-        struct Voxel
+        struct VoxelData
         {
             std::int32_t x, y, z;
             std::uint8_t r, g, b;
@@ -62,7 +62,7 @@ public:
         std::int32_t boundPosY, boundNegY;
         std::int32_t boundPosZ, boundNegZ;
 
-        std::vector<Voxel> voxels;
+        std::unordered_map<IntVector3, IntVector3, IntVector3Hasher> voxels;
 
         //用于指明其网格模型是否需要更新
         mutable bool meshNeedUpdating;

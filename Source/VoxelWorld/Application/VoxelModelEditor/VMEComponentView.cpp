@@ -8,6 +8,7 @@ Created by AirGuanZ
 #include <Utility\HelperFunctions.h>
 
 #include <Screen\GUISystem.h>
+#include "VMEComponentMeshBuilder.h"
 #include "VMEComponentView.h"
 #include "VMEView.h"
 
@@ -129,7 +130,7 @@ void VMEComponentView::Refresh(const VMEViewRefreshConfig &refresh, const VMECor
         auto it = meshes_.find(cpt.componentName);
         if(it != meshes_.end())
         {
-            if(cpt.meshNeedUpdating)
+            if(cpt.meshNeedUpdating || it->second.get() == nullptr)
             {
                 newMeshes_[it->first].reset(BuildMeshFromComponent(cpt));
                 cpt.meshNeedUpdating = false;
@@ -150,6 +151,12 @@ void VMEComponentView::Refresh(const VMEViewRefreshConfig &refresh, const VMECor
 
 VMEComponentView::ComponentMeshRec *VMEComponentView::BuildMeshFromComponent(const VMEBindingContent::Component &cpt)
 {
-    //TODO
-    return nullptr;
+    ComponentMeshRec *rec = new ComponentMeshRec;
+    if(!VMEComponentMeshBuilder().BuildMeshFromComponent(cpt, rec->mesh))
+    {
+        delete rec;
+        return nullptr;
+    }
+    rec->boneIndex = cpt.boneIndex;
+    return rec;
 }

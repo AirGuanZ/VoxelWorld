@@ -279,6 +279,9 @@
     <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEView.cpp">
       <Filter>Source\Application\VoxelModelEditor</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\Application\VoxelModelEditor\VMEComponentMeshBuilder.cpp">
+      <Filter>Source\Application\VoxelModelEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\VoxelWorld\World\World.h">

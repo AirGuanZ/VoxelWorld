@@ -110,14 +110,13 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
         if(!Helper::ReadBinary(fin, voxelCount))
             goto FAILED;
 
-        cpt.voxels.resize(voxelCount);
         for(std::uint32_t j = 0; j < voxelCount; ++j)
         {
-            Component::Voxel &v = cpt.voxels[j];
-
+            Component::VoxelData v;
             if(!Helper::ReadBinary(fin, v.x, v.y, v.z) ||
                !Helper::ReadBinary(fin, v.r, v.g, v.b))
                 goto FAILED;
+            cpt.voxels[{ v.x, v.y, v.z }] = IntVector3{ v.r, v.g, v.b };
         }
 
         cpt.meshNeedUpdating = true;
@@ -180,12 +179,12 @@ bool VMEBindingContent::SaveToFile(const std::string &filename) const
         if(!WriteBinary(fout, static_cast<std::uint32_t>(cpt.voxels.size())))
             return false;
 
-        for(const Component::Voxel &v : cpt.voxels)
+        for(const auto &v : cpt.voxels)
         {
-            if(!WriteBinary(fout, v.x, v.y, v.z))
+            if(!WriteBinary(fout, v.first.x, v.first.y, v.first.z))
                 return false;
 
-            if(!WriteBinary(fout, v.r, v.g, v.b))
+            if(!WriteBinary(fout, v.second.x, v.second.y, v.second.z))
                 return false;
         }
     }
