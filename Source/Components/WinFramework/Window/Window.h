@@ -55,8 +55,9 @@ public:
     HINSTANCE GetProgramHandle(void);
 
     //取得运行目录
-    const std::string &GetProgramPath(void) const;
+    const std::string &GetProgramPath(void);
 
     bool OpenFileName(const std::string &initDir, std::string &output);
     bool SaveFileName(const std::string &initDir, std::string &output);
+    void ErrMsgBox(const std::string &errMsg);
 };
