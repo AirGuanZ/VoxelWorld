@@ -63,7 +63,7 @@ AppState Game::Run(void)
     std::string errMsg;
     if(!Initialize(errMsg))
     {
-        ShowErrMsgBox(errMsg);
+        ShowErrMsg(errMsg);
         return AppState::MainMenu;
     }
 

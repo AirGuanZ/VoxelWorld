@@ -7,7 +7,7 @@ Created by AirGuanZ
 
 #include "Common.h"
 
-void ShowErrMsgBox(const std::string &errMsg)
+void ShowErrMsg(const std::string &errMsg)
 {
     Window::GetInstance().ErrMsgBox(errMsg);
 }

@@ -15,7 +15,7 @@ AppState VoxelModelEditor::Run(void)
     std::string errMsg;
     if(!view_.Initialize(errMsg))
     {
-        ShowErrMsgBox(errMsg);
+        ShowErrMsg(errMsg);
         return AppState::MainMenu;
     }
 

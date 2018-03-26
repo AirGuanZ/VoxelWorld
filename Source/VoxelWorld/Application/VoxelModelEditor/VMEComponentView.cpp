@@ -72,7 +72,7 @@ bool VMEComponentView::Initialize(std::string &errMsg)
     }
 
     if(!shader_.InitStage<SS_VS>(dev, VSSrc, &errMsg) ||
-       !shader_.InitStage<SS_VS>(dev, VSSrc, &errMsg))
+       !shader_.InitStage<SS_PS>(dev, PSSrc, &errMsg))
     {
         errMsg = "Failed to initialize shader stage for voxel model editor previewer: "
                  + errMsg;
@@ -176,6 +176,17 @@ void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
 
 void VMEComponentView::Refresh(const VMEViewRefreshConfig &refresh, const VMECore &core)
 {
+    if(refresh.bindingFile)
+    {
+        if(core.bindingContent.IsAvailable())
+        {
+            skeleton_ = &core.bindingContent.scaledSkeleton;
+            curAniName_ = "";
+            aniLoop_ = false;
+            aniTime_ = 0.0f;
+        }
+    }
+
     if(!refresh.componentModel)
         return;
 

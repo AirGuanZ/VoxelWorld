@@ -94,6 +94,9 @@
     <Filter Include="Source\Application\VoxelModelEditor">
       <UniqueIdentifier>{a084131a-ae8f-4952-8f13-ba13626f86c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bin\Shader\VoxelModelEditor">
+      <UniqueIdentifier>{c51f8935-34e4-42c2-9242-738ea1070ae3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -433,5 +436,13 @@
     <Font Include="Bin\Font\DroidSans.ttf">
       <Filter>Bin\Font</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Bin\Shader\VoxelModelEditor\previewVertexShader.hlsl">
+      <Filter>Bin\Shader\VoxelModelEditor</Filter>
+    </FxCompile>
+    <FxCompile Include="Bin\Shader\VoxelModelEditor\previewPixelShader.hlsl">
+      <Filter>Bin\Shader\VoxelModelEditor</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

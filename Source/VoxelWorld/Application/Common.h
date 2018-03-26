@@ -36,4 +36,4 @@ enum class AppState
     Game
 };
 
-void ShowErrMsgBox(const std::string &errMsg);
+void ShowErrMsg(const std::string &errMsg);

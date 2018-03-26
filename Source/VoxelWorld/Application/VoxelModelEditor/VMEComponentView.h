@@ -69,7 +69,7 @@ private:
 private:
     //component name -> component mesh
     std::map<std::string, std::unique_ptr<ComponentMeshRec>> meshes_;
-    Skeleton::Skeleton *skeleton_;
+    const Skeleton::Skeleton *skeleton_;
 
     //∂Øª≠œ‡πÿ
     std::string curAniName_;

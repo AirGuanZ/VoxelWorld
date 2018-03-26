@@ -58,7 +58,7 @@ void Application::Run(void)
     std::string errMsg;
     if(!Initialize(errMsg))
     {
-        ShowErrMsgBox(errMsg);
+        ShowErrMsg(errMsg);
         return;
     }
 
