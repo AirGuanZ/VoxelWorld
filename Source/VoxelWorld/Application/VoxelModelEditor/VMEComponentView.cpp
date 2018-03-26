@@ -6,8 +6,11 @@ Created by AirGuanZ
 #include <cassert>
 
 #include <Utility\HelperFunctions.h>
+#include <Utility\FileSystem.h>
 
+#include <Resource\ResourceNameManager.h>
 #include <Screen\GUISystem.h>
+#include <Window\Window.h>
 #include "VMEComponentMeshBuilder.h"
 #include "VMEComponentView.h"
 #include "VMEView.h"
@@ -38,6 +41,62 @@ VMEComponentView::VMEComponentView(void)
     aniLoop_ = false;
     aniTime_ = 0.0f;
     aniDisplaying_ = false;
+}
+
+bool VMEComponentView::Initialize(std::string &errMsg)
+{
+    auto &rM = RscNameMgr::GetInstance();
+    ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
+
+    meshes_.clear();
+    skeleton_ = nullptr;
+
+    curAniName_ = "";
+    aniLoop_ = false;
+    aniTime_ = 0.0f;
+    aniDisplaying_ = false;
+
+    if(!aniFrameBuf_.Initialize(200, 300))
+    {
+        errMsg = "Failed to initialize frame buffer object for"
+                 " voxel model editor previewer";
+        return false;
+    }
+    
+    std::string VSSrc, PSSrc;
+    if(!FileSystem::ReadFile(rM("VoxelModelEditor", "PreviewVertexShader"), VSSrc) ||
+       !FileSystem::ReadFile(rM("VoxelModelEditor", "PreviewPixelShader"), PSSrc))
+    {
+        errMsg = "Failed to load shader source for voxel model editor previewer";
+        return false;
+    }
+
+    if(!shader_.InitStage<SS_VS>(dev, VSSrc, &errMsg) ||
+       !shader_.InitStage<SS_VS>(dev, VSSrc, &errMsg))
+    {
+        errMsg = "Failed to initialize shader stage for voxel model editor previewer: "
+                 + errMsg;
+        return false;
+    }
+
+    inputLayout_ = VMEComponentVertex::CreateInputLayout(
+        shader_.GetShaderByteCodeWithInputSignature(),
+        shader_.GetShaderByteCodeSizeWithInputSignature());
+    if(!inputLayout_)
+    {
+        errMsg = "Failed to create input layout for voxel model editor previewer";
+        return false;
+    }
+
+    uniforms_.reset(shader_.CreateUniformManager());
+    if(!uniforms_)
+    {
+        errMsg = "Failed to create shader uniform manager for "
+                 "voxel model editor previewer";
+        return false;
+    }
+
+    return true;
 }
 
 void VMEComponentView::SetAnimation(const std::string &ani, bool loop)
@@ -97,12 +156,7 @@ void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
         }
     }
 
-    //检查frame buffer是否需要初始化
-    if(!aniFrameBuf_.IsAvailable())
-    {
-        if(!aniFrameBuf_.Initialize(200, 300))
-            return;
-    }
+    assert(aniFrameBuf_.IsAvailable());
 
     if(!ImGui::Begin("Preview##VoxelModelEditor", nullptr,
                      ImGuiWindowFlags_AlwaysAutoResize))
@@ -111,7 +165,8 @@ void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
         return;
     }
 
-    aniFrameBuf_.ClearRenderTargetView(0.35f, 0.35f, 0.35f, 0.4f);
+    RenderComponentPreview();
+
     ImGui::Image((ImTextureID)aniFrameBuf_.GetSRV(), { 200, 300 });
 
     ImGui::Text("Time: %f", aniTime_);
@@ -159,4 +214,45 @@ VMEComponentView::ComponentMeshRec *VMEComponentView::BuildMeshFromComponent(con
     }
     rec->boneIndex = cpt.boneIndex;
     return rec;
+}
+
+void VMEComponentView::RenderComponentPreview(void)
+{
+    ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
+    ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
+
+    aniFrameBuf_.ClearRenderTargetView(0.35f, 0.35f, 0.35f, 0.4f);
+
+    if(curAniName_.empty())
+        return;
+
+    std::vector<Matrix> boneTrans;
+    if(!skeleton_->GetTransMatrix(curAniName_, aniTime_, boneTrans))
+        return;
+
+    aniFrameBuf_.Begin();
+
+    shader_.Bind(DC);
+    DC->IASetInputLayout(inputLayout_);
+
+    auto vscbTrans = uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans");
+    Matrix VP = Matrix::CreateLookAt({ 0.0f, 0.0f, 4.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }) *
+                Matrix::CreateOrthographic(200.0f, 300.0f, 0.1f, 100.0f);
+
+    for(auto &mesh : meshes_)
+    {
+        Matrix WVP = boneTrans[mesh.second->boneIndex] * VP;
+        vscbTrans->SetBufferData(DC, { WVP.Transpose() });
+        uniforms_->Bind(DC);
+
+        mesh.second->mesh.Bind(DC);
+        mesh.second->mesh.Draw(DC);
+        mesh.second->mesh.Unbind(DC);
+    }
+
+    uniforms_->Unbind(DC);
+    DC->IASetInputLayout(nullptr);
+    shader_.Unbind(DC);
+
+    aniFrameBuf_.End();
 }

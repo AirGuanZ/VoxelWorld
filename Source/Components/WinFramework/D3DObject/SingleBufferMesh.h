@@ -71,7 +71,7 @@ public:
     {
         assert(IsAvailable() && DC != nullptr);
         static const UINT stride = 0, offset = 0;
-        static const ID3D11Buffer *vtxBuf = nullptr;
+        static ID3D11Buffer *vtxBuf = nullptr;
         DC->IASetVertexBuffers(0, 1, &vtxBuf, &stride, &offset);
         DC->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
     }

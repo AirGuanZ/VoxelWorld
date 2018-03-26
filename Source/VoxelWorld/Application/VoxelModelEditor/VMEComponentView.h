@@ -6,8 +6,10 @@ Created by AirGuanZ
 #pragma once
 
 #include <map>
+#include <memory>
 #include <queue>
 
+#include <OWEShader.hpp>
 #include <Utility\Math.h>
 
 #include <D3DObject\FrameBuffer.h>
@@ -34,6 +36,8 @@ class VMEComponentView
 public:
     VMEComponentView(void);
 
+    bool Initialize(std::string &errMsg);
+
     void SetAnimation(const std::string &ani, bool loop);
 
     void Start(void);
@@ -53,7 +57,14 @@ private:
         int boneIndex;
     };
 
+    struct VSCBTrans
+    {
+        Matrix WVP;
+    };
+
     static ComponentMeshRec *BuildMeshFromComponent(const VMEBindingContent::Component &cpt);
+
+    void RenderComponentPreview(void);
 
 private:
     //component name -> component mesh
@@ -68,4 +79,9 @@ private:
 
     //用于渲染绑定后的骨骼动画的frame buffer
     BasicFrameBuffer aniFrameBuf_;
+
+    //着色器相关
+    OWE::Shader<SS_VS, SS_PS> shader_;
+    std::unique_ptr<OWE::ShaderUniforms<SS_VS, SS_PS>> uniforms_;
+    InputLayout inputLayout_;
 };

@@ -23,6 +23,13 @@ VMEView::VMEView(void)
     showComponentView_ = true;
 }
 
+bool VMEView::Initialize(std::string &errMsg)
+{
+    if(!componentView_.Initialize(errMsg))
+        return false;
+    return true;
+}
+
 void VMEView::Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
 {
     Window &win = Window::GetInstance();

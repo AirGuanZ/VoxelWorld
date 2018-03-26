@@ -81,3 +81,6 @@ Binding   = Bin\Model\Voxel\Binding\
 SkeletonExtension  = .vwani
 ComponentExtension = .vwcpt
 BindingExtension   = .vwbinding
+
+PreviewVertexShader = Bin\Shader\VoxelModelEditor\previewVertexShader.hlsl
+PreviewPixelShader  = Bin\Shader\VoxelModelEditor\previewPixelShader.hlsl

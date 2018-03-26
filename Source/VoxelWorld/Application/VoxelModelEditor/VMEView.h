@@ -34,6 +34,8 @@ class VMEView
 public:
     VMEView(void);
 
+    bool Initialize(std::string &errMsg);
+
     void Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds);
 
     void Clear(void);

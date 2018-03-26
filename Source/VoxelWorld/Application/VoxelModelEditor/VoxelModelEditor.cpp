@@ -12,6 +12,13 @@ AppState VoxelModelEditor::Run(void)
     bool done = false;
     std::queue<VMECmd*> cmds;
 
+    std::string errMsg;
+    if(!view_.Initialize(errMsg))
+    {
+        ShowErrMsgBox(errMsg);
+        return AppState::MainMenu;
+    }
+
     while(!done)
     {
         VMEViewControl viewCtrl;
