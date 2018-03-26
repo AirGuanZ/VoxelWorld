@@ -20,15 +20,15 @@ constexpr float ACTOR_MODEL_SCALE_FACTOR = 0.05625f;
 
 namespace
 {
-    bool InitActorSkeleton(Skeleton::Skeleton &skeleton, std::map<std::string, int> &boneMap)
+    bool InitActorSkeleton(Skeleton::Skeleton &skeleton)
     {
         std::string errMsg;
         return Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
             RscNameMgr::GetInstance()("ActorModel", "DefaultSkeleton"),
-            0.35f, 1.0f, skeleton, boneMap, errMsg);
+            0.35f, 1.0f, skeleton, errMsg);
     }
 
-    bool InitActorMesh(const std::map<std::string, int> &boneMap, std::vector<ActorModelComponent> &meshes)
+    bool InitActorMesh(const Skeleton::Skeleton &skeleton, std::vector<ActorModelComponent> &meshes)
     {
         meshes.clear();
 
@@ -83,14 +83,13 @@ namespace
                 return false;
             }
             
-            auto it = boneMap.find(boneNames[i]);
-            if(it == boneMap.end())
+            meshes[i].boneIndex = skeleton.GetBoneIndex(boneNames[i]);
+            if(meshes[i].boneIndex < 0)
             {
                 meshes.clear();
                 return false;
             }
-            
-            meshes[i].boneIndex = it->second;
+
             meshes[i].idxCount  = static_cast<int>(obj.indices.size());
         }
         
@@ -173,15 +172,14 @@ bool ActorModel::Initialize(std::string &errMsg)
 
     worldTrans_ = Matrix::Identity;
 
-    std::map<std::string, int> boneMap;
-    if(!InitActorSkeleton(skeleton_, boneMap))
+    if(!InitActorSkeleton(skeleton_))
     {
         errMsg = "Failed to initialize actor skeleton";
         Destroy();
         return false;
     }
 
-    if(!InitActorMesh(boneMap, meshes_))
+    if(!InitActorMesh(skeleton_, meshes_))
     {
         errMsg = "Failed to initialize actor meshes";
         Destroy();

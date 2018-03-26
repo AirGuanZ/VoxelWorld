@@ -56,6 +56,7 @@ bool SortBones(const std::map<std::string, int> &std,
 bool MergeSkeletonData(std::vector<Skeleton::Skeleton> &skts,
                        Skeleton::Skeleton &output)
 {
+    auto boneMap = skts[0]._getBoneMap();
     output.Clear();
     if(skts.empty())
         return true;
@@ -70,6 +71,8 @@ bool MergeSkeletonData(std::vector<Skeleton::Skeleton> &skts,
                 return false;
         }
     }
+
+    output._setBoneMap(boneMap);
 
     return true;
 }

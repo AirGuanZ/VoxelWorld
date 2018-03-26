@@ -71,7 +71,7 @@ bool Load(std::vector<InputUnit> &input,
     for(size_t i = 0; i < input.size(); ++i)
     {
         if(!Skeleton::SkeletonDataLoader::GetInstance().LoadFromRawFile(
-            input[i].filename, timeFactor, skts[i], boneMaps[i], input[i].newAniName, errMsg))
+            input[i].filename, timeFactor, skts[i], input[i].newAniName, errMsg))
         {
             skts.clear();
             boneMaps.clear();
@@ -132,7 +132,7 @@ int main(void)
         }
 
         if(!Skeleton::SkeletonDataLoader::GetInstance().SaveToVWFile(
-            L"output.vwani", finalSkt, boneMaps[0]))
+            L"output.vwani", finalSkt))
         {
             std::cout << "Failed to save" << std::endl;
             return -1;

@@ -78,6 +78,7 @@ void Skeleton::Skeleton::Clear(void)
 {
     parents_.clear();
     aniClips_.clear();
+    boneMap_.clear();
 }
 
 bool Skeleton::Skeleton::AddClip(const std::string &name, AniClip &&clipData)
@@ -142,6 +143,7 @@ void Skeleton::Skeleton::Scale(float time, float size, Skeleton &output)
 
     output.Clear();
 
+    output.boneMap_ = boneMap_;
     output.parents_ = parents_;
     for(const auto &clipIt : aniClips_)
     {
@@ -159,4 +161,10 @@ void Skeleton::Skeleton::Scale(float time, float size, Skeleton &output)
 
         output.AddClip(clipIt.first, std::move(newClip));
     }
+}
+
+int Skeleton::Skeleton::GetBoneIndex(const std::string &boneName) const
+{
+    auto it = boneMap_.find(boneName);
+    return it == boneMap_.end() ? -1 : it->second;
 }

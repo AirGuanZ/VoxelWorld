@@ -206,12 +206,10 @@ namespace
 bool Skeleton::SkeletonDataLoader::LoadFromRawFile(const std::wstring &filename,
                                                    float timeFactor,
                                                    Skeleton &skeleton,
-                                                   std::map<std::string, int> &boneIdx,
                                                    const std::string &defaultClipName,
                                                    std::string &errMsg)
 {
     skeleton.Clear();
-    boneIdx.clear();
     errMsg = "";
 
     Assimp::Importer importer;
@@ -241,13 +239,13 @@ bool Skeleton::SkeletonDataLoader::LoadFromRawFile(const std::wstring &filename,
         goto FAILED;
     }
     
-    if(!InitStaticSkeletonFromAIScene(scene, skeleton, boneIdx, directChildrenNames, errMsg))
+    if(!InitStaticSkeletonFromAIScene(scene, skeleton, skeleton.boneMap_, directChildrenNames, errMsg))
     {
         errMsg = "Failed to load static skeleton: " + errMsg;
         goto FAILED;
     }
 
-    if(!InitSkeletonAnimationFromAIScene(scene, directChildrenNames, timeFactor, skeleton, boneIdx, defaultClipName, errMsg))
+    if(!InitSkeletonAnimationFromAIScene(scene, directChildrenNames, timeFactor, skeleton, skeleton.boneMap_, defaultClipName, errMsg))
     {
         errMsg = "Failed to load animation for skeleton: " + errMsg;
         goto FAILED;
@@ -257,7 +255,6 @@ bool Skeleton::SkeletonDataLoader::LoadFromRawFile(const std::wstring &filename,
 
 FAILED:
     skeleton.Clear();
-    boneIdx.clear();
     return false;
 }
 
@@ -305,11 +302,10 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                                                   float timeFactor,
                                                   float sizeFactor,
                                                   Skeleton &skeleton,
-                                                  std::map<std::string, int> &boneMap,
                                                   std::string &errMsg)
 {
     skeleton.Clear();
-    boneMap.clear();
+    skeleton.boneMap_.clear();
     errMsg = "";
 
     ConfigFile file(filename);
@@ -351,7 +347,7 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
                 goto FAILED;
             }
 
-            boneMap[name] = boneIdx;
+            skeleton.boneMap_[name] = boneIdx;
             parents[boneIdx] = parentIdx;
         }
 
@@ -404,15 +400,15 @@ bool Skeleton::SkeletonDataLoader::LoadFromVWFile(const std::wstring &filename,
 
 FAILED:
     skeleton.Clear();
-    boneMap.clear();
+    skeleton.boneMap_.clear();
     return false;
 }
 
 bool Skeleton::SkeletonDataLoader::SaveToVWFile(const std::wstring &filename,
-                                                const Skeleton &skeleton,
-                                                const std::map<std::string, int> &boneMap)
+                                                const Skeleton &skeleton)
 {
     using std::endl;
+    const auto &boneMap = skeleton.boneMap_;
 
     std::ofstream out(filename, std::ofstream::out | std::ofstream::trunc);
     if(!out)

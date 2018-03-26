@@ -20,17 +20,14 @@ namespace Skeleton
         bool LoadFromRawFile(const std::wstring &filename,
                              float timeFactor,
                              Skeleton &skeleton,
-                             std::map<std::string, int> &boneIdx,
                              const std::string &defaultClipName,
                              std::string &errMsg);
         bool LoadFromVWFile(const std::wstring &filename,
                             float timeFactor,
                             float sizeFactor,
                             Skeleton &skeleton,
-                            std::map<std::string, int> &boneMap,
                             std::string &errMsg);
         bool SaveToVWFile(const std::wstring &filename,
-                          const Skeleton &skeleton,
-                          const std::map<std::string, int> &boneMap);
+                          const Skeleton &skeleton);
     };
 }

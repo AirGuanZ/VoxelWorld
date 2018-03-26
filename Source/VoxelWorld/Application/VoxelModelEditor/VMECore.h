@@ -51,7 +51,9 @@ public:
 
         std::string componentName;
         std::string boneName;
-        std::uint32_t boneIndex;
+
+        //这个不存储，每次都从skeleton中获取
+        std::int32_t boneIndex;
 
         float translateX, translateY, translateZ;
         float rotateX,    rotateY,    rotateZ,    rotateW;

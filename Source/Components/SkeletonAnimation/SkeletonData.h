@@ -96,10 +96,24 @@ namespace Skeleton
 
         void Scale(float time, float size, Skeleton &output);
 
+        int GetBoneIndex(const std::string &boneName) const;
+
+        void _setBoneMap(const std::map<std::string, int> &m)
+        {
+            boneMap_ = m;
+        }
+
+        const std::map<std::string, int> &_getBoneMap(void) const
+        {
+            return boneMap_;
+        }
+
     private:
         friend class SkeletonDataLoader;
 
         std::vector<int> parents_;
         std::map<std::string, AniClip> aniClips_;
+
+        std::map<std::string, int> boneMap_;
     };
 }

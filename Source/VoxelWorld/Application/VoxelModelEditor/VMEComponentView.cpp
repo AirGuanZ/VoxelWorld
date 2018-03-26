@@ -248,7 +248,7 @@ void VMEComponentView::RenderComponentPreview(void)
 
     auto vscbTrans = uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans");
     Matrix VP = Matrix::CreateLookAt({ 0.0f, 0.0f, 4.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }) *
-                Matrix::CreateOrthographic(200.0f, 300.0f, 0.1f, 100.0f);
+                Matrix::CreateOrthographic(2.0f, 3.0f, 0.1f, 100.0f);
 
     for(auto &mesh : meshes_)
     {

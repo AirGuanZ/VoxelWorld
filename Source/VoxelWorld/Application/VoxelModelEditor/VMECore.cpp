@@ -65,7 +65,7 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
     if(!Skeleton::SkeletonDataLoader::GetInstance().LoadFromVWFile(
                             Helper::ToWStr(skeletonPath),
                             skeletonTimeFactor, skeletonSizeFactor,
-                            originSkeleton, boneMap, errMsg))
+                            originSkeleton, errMsg))
         goto FAILED;
 
     originSkeleton.Scale(skeletonTimeFactor, skeletonSizeFactor, scaledSkeleton);
@@ -83,7 +83,9 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
             goto FAILED;
         if(!Helper::ReadString(fin, cpt.boneName))
             goto FAILED;
-        if(!Helper::ReadBinary(fin, cpt.boneIndex))
+
+        cpt.boneIndex = originSkeleton.GetBoneIndex(cpt.boneName);
+        if(cpt.boneIndex < 0)
             goto FAILED;
         
         //校验一下binding文件中的骨骼编号个skeleton文件中的boneMap信息是否吻合
@@ -156,7 +158,7 @@ bool VMEBindingContent::SaveToFile(const std::string &filename) const
         if(!WriteString(fout, cpt.componentName))
             return false;
 
-        if(!WriteString(fout, cpt.boneName) || !WriteBinary(fout, cpt.boneIndex))
+        if(!WriteString(fout, cpt.boneName))
             return false;
 
         if(!WriteBinary(fout, cpt.translateX, cpt.translateY, cpt.translateZ))
