@@ -535,7 +535,7 @@ HINSTANCE Window::GetProgramHandle(void)
     return Win::hInstance;
 }
 
-const std::string &Window::GetProgramPath(void) const
+const std::string &Window::GetProgramPath(void)
 {
     return Win::modulePath;
 }
@@ -610,6 +610,11 @@ bool Window::SaveFileName(const std::string &initDir, std::string &output)
         output = "";
 
     return rt;
+}
+
+void Window::ErrMsgBox(const std::string &errMsg)
+{
+    MessageBoxA(Win::hWnd, errMsg.c_str(), "Error", MB_ICONERROR | MB_OK);
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
