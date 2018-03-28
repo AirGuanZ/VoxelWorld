@@ -21,6 +21,8 @@ VMEView::VMEView(void)
     showConsole_ = true;
     showBindingAttributes_ = true;
     showComponentView_ = true;
+
+    selectedBoneNameIndex_ = 0;
 }
 
 bool VMEView::Initialize(std::string &errMsg)
