@@ -27,6 +27,10 @@ bool VMEView::Initialize(std::string &errMsg)
 {
     if(!componentView_.Initialize(errMsg))
         return false;
+
+    inputNewComponentName_.resize(256);
+    inputNewComponentName_[0] = '\0';
+
     return true;
 }
 
@@ -53,7 +57,21 @@ void VMEView::Display(VMEViewControl &ctrl, std::queue<VMECmd*> &cmds)
 
 void VMEView::Clear(void)
 {
+    showConsole_ = true;
+    showBindingAttributes_ = true;
+    showComponentView_ = true;
+
+    console_.ClearInputBox();
+    console_.ClearInputQueue();
+    console_.ClearTexts();
+
     loadedBindingPath_ = "";
+    skeletonPath_ = "";
+
+    selectedBoneNameIndex_ = 0;
+    skeletonBoneNames_.clear();
+
+    inputNewComponentName_[0] = '\0';
 }
 
 void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
@@ -62,6 +80,11 @@ void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
     {
         loadedBindingPath_ = FileSystem::PathToFilename(core.bindingContent.bindingPath);
         skeletonPath_ = FileSystem::PathToFilename(core.bindingContent.skeletonPath);
+
+        selectedBoneNameIndex_ = 0;
+        skeletonBoneNames_.clear();
+        for(auto &it : core.bindingContent.originSkeleton._getBoneMap())
+            skeletonBoneNames_.push_back(it.first.c_str());
     }
 
     componentView_.Refresh(config, core);
@@ -141,6 +164,15 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
     {
         ImGui::Text("Binding: %s", loadedBindingPath_.c_str());
         ImGui::Text("Skeletin: %s", skeletonPath_.c_str());
+
+        /*if(ImGui::InputText("New Component", inputNewComponentName_.data(), inputNewComponentName_.size(),
+                            ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            cmds.push(nullptr);
+        }*/
+        ImGui::Text("Select Bone Name:");
+        ImGui::ListBox("", &selectedBoneNameIndex_,
+                       skeletonBoneNames_.data(), skeletonBoneNames_.size(), 4);
     }
     ImGui::End();
 }

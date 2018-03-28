@@ -66,3 +66,15 @@ public:
 private:
     float sizeFactor_;
 };
+
+class VMECmd_NewComponent : public VMECmd
+{
+public:
+    VMECmd_NewComponent(const std::string &componentName, const std::string &boneName);
+
+    void Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console);
+
+private:
+    std::string componentName_;
+    std::string boneName_;
+};

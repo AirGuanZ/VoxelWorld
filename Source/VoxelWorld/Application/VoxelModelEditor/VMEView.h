@@ -60,5 +60,10 @@ private:
     std::string loadedBindingPath_;
     std::string skeletonPath_;
 
+    int selectedBoneNameIndex_;
+    std::vector<const char *> skeletonBoneNames_;
+
+    std::vector<char> inputNewComponentName_;
+
     VMEComponentView componentView_;
 };
