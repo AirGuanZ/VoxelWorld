@@ -145,6 +145,9 @@ void VMEComponentView::Display(std::queue<VMECmd*> &cmds, float dT)
     if(curAniName_.size() && aniDisplaying_)
     {
         const Skeleton::AniClip *clip = skeleton_->GetAniClip(curAniName_);
+        if(!clip)
+            return;
+
         if(curAniName_.size() && aniDisplaying_)
         {
             aniTime_ += dT;
@@ -234,7 +237,7 @@ void VMEComponentView::RenderComponentPreview(void)
 
     aniFrameBuf_.ClearRenderTargetView(0.35f, 0.35f, 0.35f, 0.4f);
 
-    if(curAniName_.empty())
+    if(curAniName_.empty() || !skeleton_)
         return;
 
     std::vector<Matrix> boneTrans;

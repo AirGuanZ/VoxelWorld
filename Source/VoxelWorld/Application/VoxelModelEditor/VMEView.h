@@ -20,8 +20,9 @@ struct VMEViewRefreshConfig
 {
     void Closure(void);
 
-    bool bindingFile = false;
-    bool componentModel = false;
+    bool bindingFile = false;    //加载/卸载binding的时候
+    bool componentList = false;  //添加/删除component的时候
+    bool componentModel = false; //修改component模型的时候
 };
 
 struct VMEViewControl

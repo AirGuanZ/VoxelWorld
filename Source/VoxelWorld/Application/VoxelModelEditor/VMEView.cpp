@@ -13,7 +13,8 @@ Created by AirGuanZ
 
 void VMEViewRefreshConfig::Closure(void)
 {
-    componentModel |= bindingFile;
+    componentList |= bindingFile;
+    componentModel |= componentList;
 }
 
 VMEView::VMEView(void)
@@ -167,14 +168,19 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
         ImGui::Text("Binding: %s", loadedBindingPath_.c_str());
         ImGui::Text("Skeletin: %s", skeletonPath_.c_str());
 
-        /*if(ImGui::InputText("New Component", inputNewComponentName_.data(), inputNewComponentName_.size(),
-                            ImGuiInputTextFlags_EnterReturnsTrue))
-        {
-            cmds.push(nullptr);
-        }*/
         ImGui::Text("Select Bone Name:");
         ImGui::ListBox("", &selectedBoneNameIndex_,
                        skeletonBoneNames_.data(), skeletonBoneNames_.size(), 4);
+
+        if(ImGui::InputText("New Component", inputNewComponentName_.data(), inputNewComponentName_.size(),
+                            ImGuiInputTextFlags_EnterReturnsTrue) &&
+           inputNewComponentName_[0] != '\0' &&
+           0 <= selectedBoneNameIndex_ && selectedBoneNameIndex_ < static_cast<int>(skeletonBoneNames_.size()))
+        {
+            cmds.push(new VMECmd_NewComponent(inputNewComponentName_.data(),
+                                              skeletonBoneNames_[selectedBoneNameIndex_]));
+            inputNewComponentName_[0] = '\0';
+        }
     }
     ImGui::End();
 }

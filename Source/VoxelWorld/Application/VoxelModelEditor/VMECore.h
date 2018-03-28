@@ -55,19 +55,19 @@ public:
         //这个不存储，每次都从skeleton中获取
         std::int32_t boneIndex;
 
-        float translateX, translateY, translateZ;
-        float rotateX,    rotateY,    rotateZ,    rotateW;
-        float scaleX,     scaleY,     scaleZ;
+        float translateX = 0.0f, translateY = 0.0f, translateZ = 0.0f;
+        float rotateX = 0.0f,    rotateY = 0.0f,    rotateZ = 0.0f,    rotateW = 0.0f;
+        float scaleX = 0.0f,     scaleY = 0.0f,     scaleZ = 0.0f;
 
-        float voxelSize;
-        std::int32_t boundPosX, boundNegX;
-        std::int32_t boundPosY, boundNegY;
-        std::int32_t boundPosZ, boundNegZ;
+        float voxelSize = 1.0f;
+        std::int32_t boundPosX = 0, boundNegX = 0;
+        std::int32_t boundPosY = 0, boundNegY = 0;
+        std::int32_t boundPosZ = 0, boundNegZ = 0;
 
         std::unordered_map<IntVector3, IntVector3, IntVector3Hasher> voxels;
 
         //用于指明其网格模型是否需要更新
-        mutable bool meshNeedUpdating;
+        mutable bool meshNeedUpdating = true;
     };
 
     VMEBindingContent(void) { Clear(); }

@@ -153,3 +153,49 @@ void VMECmd_BindingSkeletonSizeFactor::Execute(VMECore &core, VMEViewRefreshConf
     console.AddText(VMEConsoleText::Normal,
         "Skeleton size factor refreshed: " + std::to_string(sizeFactor_));
 }
+
+VMECmd_NewComponent::VMECmd_NewComponent(const std::string &componentName, const std::string &boneName)
+    : componentName_(componentName), boneName_(boneName)
+{
+
+}
+
+void VMECmd_NewComponent::Execute(VMECore &core, VMEViewRefreshConfig &refresh, VMEConsole &console)
+{
+    if(componentName_.empty())
+    {
+        console.AddText(VMEConsoleText::Error, "Empty component name");
+        return;
+    }
+
+    if(boneName_.empty())
+    {
+        console.AddText(VMEConsoleText::Error, "Invalid bone name");
+        return;
+    }
+
+    //ÓÐÃû×ÖÖØ¸´Âð£¿
+    for(auto &cpt : core.bindingContent.components)
+    {
+        if(cpt.componentName == componentName_)
+        {
+            console.AddText(VMEConsoleText::Error, "Component name repeated");
+            return;
+        }
+    }
+
+    int boneIdx = core.bindingContent.originSkeleton.GetBoneIndex(boneName_);
+    if(boneIdx < 0)
+    {
+        console.AddText(VMEConsoleText::Error, "Invalid bone name");
+        return;
+    }
+
+    auto &cpt = core.bindingContent.components.emplace_back();
+    cpt.componentName = componentName_;
+    cpt.boneName = boneName_;
+    cpt.boneIndex = boneIdx;
+    
+    console.AddText(VMEConsoleText::Normal, "New component created: " + componentName_);
+    refresh.componentList = true;
+}
