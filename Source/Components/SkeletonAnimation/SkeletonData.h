@@ -92,6 +92,11 @@ namespace Skeleton
             return aniClips_;
         }
 
+        const std::map<std::string, AniClip> &GetAniClips(void) const
+        {
+            return aniClips_;
+        }
+
         float GetEndTime(const std::string &aniName) const;
 
         void Scale(float time, float size, Skeleton &output);

@@ -37,7 +37,6 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
 {
     Clear();
 
-    std::map<std::string, int> boneMap;
     std::string errMsg;
 
     std::ifstream fin(filename, std::ios_base::in | std::ios_base::binary);
@@ -86,11 +85,6 @@ bool VMEBindingContent::LoadFromFile(const std::string &filename)
 
         cpt.boneIndex = originSkeleton.GetBoneIndex(cpt.boneName);
         if(cpt.boneIndex < 0)
-            goto FAILED;
-        
-        //校验一下binding文件中的骨骼编号个skeleton文件中的boneMap信息是否吻合
-        auto it = boneMap.find(cpt.boneName);
-        if(it == boneMap.end() || it->second != cpt.boneIndex)
             goto FAILED;
 
         if(!Helper::ReadBinary(fin, cpt.translateX, cpt.translateY, cpt.translateZ))

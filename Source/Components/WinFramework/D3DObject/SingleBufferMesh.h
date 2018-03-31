@@ -35,7 +35,7 @@ public:
         assert(vtxData != nullptr && vtxCnt > 0 && idxData != nullptr && idxCnt > 0);
         Destroy();
 
-        if(!vtxBuf_.Initialize(vtxData, vtxCnt) || idxBuf_.Initialize(idxData, idxCnt))
+        if(!vtxBuf_.Initialize(vtxData, vtxCnt) || !idxBuf_.Initialize(idxData, idxCnt))
         {
             Destroy();
             return false;

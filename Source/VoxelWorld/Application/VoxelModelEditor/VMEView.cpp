@@ -24,6 +24,7 @@ VMEView::VMEView(void)
     showComponentView_ = true;
 
     selectedBoneNameIndex_ = 0;
+    selectedAniNameIndex_ = -1;
 }
 
 bool VMEView::Initialize(std::string &errMsg)
@@ -74,6 +75,9 @@ void VMEView::Clear(void)
     selectedBoneNameIndex_ = 0;
     skeletonBoneNames_.clear();
 
+    selectedAniNameIndex_ = -1;
+    skeletonAniNames_.clear();
+
     inputNewComponentName_[0] = '\0';
 }
 
@@ -88,6 +92,11 @@ void VMEView::Refresh(const VMEViewRefreshConfig &config, const VMECore &core)
         skeletonBoneNames_.clear();
         for(auto &it : core.bindingContent.originSkeleton._getBoneMap())
             skeletonBoneNames_.push_back(it.first.c_str());
+
+        selectedAniNameIndex_ = -1;
+        skeletonAniNames_.clear();
+        for(auto &it : core.bindingContent.originSkeleton.GetAniClips())
+            skeletonAniNames_.push_back(it.first.c_str());
     }
 
     componentView_.Refresh(config, core);
@@ -169,8 +178,10 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
         ImGui::Text("Skeletin: %s", skeletonPath_.c_str());
 
         ImGui::Text("Select Bone Name:");
+        ImGui::PushID(0);
         ImGui::ListBox("", &selectedBoneNameIndex_,
                        skeletonBoneNames_.data(), skeletonBoneNames_.size(), 4);
+        ImGui::PopID();
 
         if(ImGui::InputText("New Component", inputNewComponentName_.data(), inputNewComponentName_.size(),
                             ImGuiInputTextFlags_EnterReturnsTrue) &&
@@ -180,6 +191,20 @@ void VMEView::DisplayBindingAttributes(VMEViewControl &ctrl, std::queue<VMECmd*>
             cmds.push(new VMECmd_NewComponent(inputNewComponentName_.data(),
                                               skeletonBoneNames_[selectedBoneNameIndex_]));
             inputNewComponentName_[0] = '\0';
+        }
+
+        int oldSelectedAniNameIndex = selectedAniNameIndex_;
+        if(selectedAniNameIndex_ < 0)
+            selectedAniNameIndex_ = 0;
+
+        ImGui::Text("Select Animation Name:");
+        ImGui::PushID(1);
+        ImGui::ListBox("", &selectedAniNameIndex_, skeletonAniNames_.data(), skeletonAniNames_.size(), 4);
+        ImGui::PopID();
+        if(selectedAniNameIndex_ != oldSelectedAniNameIndex)
+        {
+            componentView_.SetAnimation(skeletonAniNames_[selectedAniNameIndex_], true);
+            componentView_.Start();
         }
     }
     ImGui::End();

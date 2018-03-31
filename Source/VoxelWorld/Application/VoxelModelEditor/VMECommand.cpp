@@ -195,6 +195,13 @@ void VMECmd_NewComponent::Execute(VMECore &core, VMEViewRefreshConfig &refresh, 
     cpt.componentName = componentName_;
     cpt.boneName = boneName_;
     cpt.boneIndex = boneIdx;
+
+    //cpt.boundPosX = 1;
+    //cpt.boundPosY = 1;
+    //cpt.boundPosZ = 1;
+    cpt.voxelSize = 1.0f;
+    cpt.voxels[{ 0, 0, 0 }] = { 255, 0, 0 };
+    cpt.meshNeedUpdating = true;
     
     console.AddText(VMEConsoleText::Normal, "New component created: " + componentName_);
     refresh.componentList = true;

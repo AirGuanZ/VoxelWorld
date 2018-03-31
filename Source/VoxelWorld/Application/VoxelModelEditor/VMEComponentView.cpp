@@ -235,7 +235,8 @@ void VMEComponentView::RenderComponentPreview(void)
     ID3D11Device *dev = Window::GetInstance().GetD3DDevice();
     ID3D11DeviceContext *DC = Window::GetInstance().GetD3DDeviceContext();
 
-    aniFrameBuf_.ClearRenderTargetView(0.35f, 0.35f, 0.35f, 0.4f);
+    aniFrameBuf_.ClearRenderTargetView(0.15f, 0.15f, 0.15f, 0.4f);
+    aniFrameBuf_.ClearDepthStencilView();
 
     if(curAniName_.empty() || !skeleton_)
         return;
@@ -250,12 +251,13 @@ void VMEComponentView::RenderComponentPreview(void)
     DC->IASetInputLayout(inputLayout_);
 
     auto vscbTrans = uniforms_->GetConstantBuffer<SS_VS, VSCBTrans, true>(dev, "Trans");
-    Matrix VP = Matrix::CreateLookAt({ 0.0f, 0.0f, 4.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }) *
-                Matrix::CreateOrthographic(2.0f, 3.0f, 0.1f, 100.0f);
+    Matrix VP = Matrix::CreateLookAt({ 0.0f, 0.0f, -4.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }) *
+                Matrix::CreateOrthographic(4.0f, 6.0f, 0.1f, 100.0f);
+    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     for(auto &mesh : meshes_)
     {
-        Matrix WVP = boneTrans[mesh.second->boneIndex] * VP;
+        Matrix WVP = /*boneTrans[mesh.second->boneIndex] **/ VP;
         vscbTrans->SetBufferData(DC, { WVP.Transpose() });
         uniforms_->Bind(DC);
 

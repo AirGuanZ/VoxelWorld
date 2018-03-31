@@ -64,6 +64,9 @@ private:
     int selectedBoneNameIndex_;
     std::vector<const char *> skeletonBoneNames_;
 
+    int selectedAniNameIndex_;
+    std::vector<const char *> skeletonAniNames_;
+
     std::vector<char> inputNewComponentName_;
 
     VMEComponentView componentView_;
