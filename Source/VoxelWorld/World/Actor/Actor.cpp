@@ -70,7 +70,8 @@ bool Actor::Initialize(std::string &errMsg)
 
 void Actor::Render(void)
 {
-    model_.Render(camera_);
+    if(!params_.firstPerson)
+        model_.Render(camera_);
 }
 
 const Matrix &Actor::GetViewProjMatrix(void) const
@@ -226,11 +227,7 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
                 break;
             finalY = newY;
         }
-#ifdef _DEBUG
-        assert(TryMoveTo({ pos_.x, finalY, pos_.z }) == true);
-#else
         pos_.y = finalY;
-#endif
     }
 
     //x和z方向的处理就没辣么精致啦(╯‵□′)╯︵┻━┻
@@ -264,7 +261,7 @@ void Actor::UpdateActorPosition(float dT, ChunkManager *ckMgr)
 void Actor::UpdateCameraPosition(float deltaT, ChunkManager *ckMgr)
 {
     camera_.SetPosition(Vector3(pos_.x, pos_.y + params_.camDstYOffset, pos_.z) -
-                        params_.camDistance * camera_.GetDirection());
+                        (params_.firstPerson ? Vector3(0.0f) : (params_.camDistance * camera_.GetDirection())));
     camera_.UpdateViewProjMatrix();
 }
 

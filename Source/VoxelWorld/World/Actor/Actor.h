@@ -59,6 +59,8 @@ namespace ActorAux
         //摄像机旋转垂直灵敏度
         float camMovYSpeed = 0.00075f;
 
+        bool firstPerson = true;
+
         //摄像机到角色视点距离
         float camDistance = 7.5f;
         //角色视点距角色位置的高度偏移
