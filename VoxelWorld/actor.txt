@@ -1,0 +1,25 @@
+RunningAccl = 0.0008
+WalkingAccl = 0.0007
+JumpingAccl = 0.0007
+
+RunningMaxSpeed = 0.0085
+WalkingMaxSpeed = 0.0045
+JumpingMaxSpeed	= 0.0075
+FlyingMaxSpeed  = 0.0
+
+StandingFricAccl = 0.001
+RunningFricAccl  = 0.001
+WalkingFricAccl  = 0.001
+JumpingFricAccl  = 0.001
+
+TurningSpeed = 0.012
+
+CamMovXSen = 0.00075
+CamMovYSen = 0.00075
+
+CamDownReOffset = 0.02
+CamUpReOffset	= 0.02
+
+JumpInitVel		= 0.01
+GravityAccl		= 0.000035
+GravityMaxSpeed = 0.03

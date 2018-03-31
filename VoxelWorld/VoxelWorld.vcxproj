@@ -52,6 +52,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="actor.txt" />
     <Text Include="config.txt" />
   </ItemGroup>
   <ItemGroup>

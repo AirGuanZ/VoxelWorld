@@ -8,7 +8,10 @@ Created by AirGuanZ
 #include <exception>
 #include <Windows.h>
 
+#include <Utility\ConfigFile.h>
+
 #include <Input\InputManager.h>
+#include <Resource\ResourceNameManager.h>
 #include "Actor.h"
 
 namespace
@@ -64,6 +67,46 @@ bool Actor::Initialize(std::string &errMsg)
 
     if(!model_.Initialize(errMsg))
         return false;
+
+    ConfigFile actorCfg;
+    if(!actorCfg.LoadFromFile(RscNameMgr::GetInstance()("Actor", "Params")))
+        return false;
+
+    try
+    {
+        using std::stof;
+        auto &sec = actorCfg.GetSection("Global");
+
+        params_.runningAcl = stof(sec["RunningAccl"]);
+        params_.walkingAcl = stof(sec["WalkingAccl"]);
+        params_.jumpingAcl = stof(sec["JumpingAccl"]);
+
+        params_.runningSpeed = stof(sec["RunningMaxSpeed"]);
+        params_.walkingSpeed = stof(sec["WalkingMaxSpeed"]);
+        params_.jumpingSpeed = stof(sec["JumpingMaxSpeed"]);
+        params_.flyingSpeed  = stof(sec["FlyingMaxSpeed"]);
+
+        params_.standingFricAcl = stof(sec["StandingFricAccl"]);
+        params_.runningFricAcl  = stof(sec["RunningFricAccl"]);
+        params_.walkingFricAcl  = stof(sec["WalkingFricAccl"]);
+        params_.jumpingFricAcl  = stof(sec["JumpingFricAccl"]);
+
+        params_.turningSpeed = stof(sec["TurningSpeed"]);
+
+        params_.camMovXSpeed = stof(sec["CamMovXSen"]);
+        params_.camMovYSpeed = stof(sec["CamMovYSen"]);
+
+        params_.camDownReOffset = stof(sec["CamDownReOffset"]);
+        params_.camUpReOffset   = stof(sec["CamUpReOffset"]);
+
+        params_.jumpInitVel = stof(sec["JumpInitVel"]);
+        params_.gravityAcl  = stof(sec["GravityAccl"]);
+        params_.gravityMaxSpeed = stof(sec["GravityMaxSpeed"]);
+    }
+    catch(...)
+    {
+        return false;
+    }
 
     return true;
 }

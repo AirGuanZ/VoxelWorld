@@ -23,6 +23,10 @@ PixelShader  = Bin\Shader\Liquid\pixel.hlsl
 
 Texture[0] = Bin\Texture\Liquid\0.png
 
+[Actor]
+
+Params = actor.txt
+
 [ActorModel]
 
 VertexShader = Bin\Shader\Actor\vertex.hlsl

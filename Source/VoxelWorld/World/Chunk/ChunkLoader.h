@@ -120,5 +120,5 @@ private:
     std::mutex taskQueueMutex_;
     std::mutex msgQueueMutex_;
 
-    LandGenerator_V0 landGen_;
+    LandGenerator_V2::LandGenerator landGen_;
 };

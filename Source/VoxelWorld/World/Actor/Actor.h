@@ -79,14 +79,14 @@ namespace ActorAux
         float modelYOffset = 0.4f;
 
         //跳跃初速度
-        float jumpInitVel = 0.035f;
+        float jumpInitVel = 0.01f;
 
         //重力加速度大小
-        float gravityAcl = 0.0002f;
+        float gravityAcl = 0.000038f;
         //重力加速度方向
         Vector3 gravityDir = Vector3(0.0f, -1.0f, 0.0f);
         //重力带来的最大速度
-        float gravityMaxSpeed = 0.014f;
+        float gravityMaxSpeed = 0.03f;
     };
 
     struct UserInput

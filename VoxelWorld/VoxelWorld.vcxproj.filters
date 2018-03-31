@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.txt" />
+    <Text Include="actor.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\VoxelWorld\World\World.cpp">
