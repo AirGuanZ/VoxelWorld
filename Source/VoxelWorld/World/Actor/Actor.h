@@ -74,7 +74,7 @@ namespace ActorAux
         //角色碰撞半径
         float collisionRadius = 0.2f;
         //角色碰撞高度
-        float collisionHeight = 1.6f;
+        float collisionHeight = 1.8f;
         //模型位置和角色位置的垂直偏移
         float modelYOffset = 0.4f;
 

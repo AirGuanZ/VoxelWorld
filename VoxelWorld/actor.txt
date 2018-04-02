@@ -1,6 +1,6 @@
-RunningAccl = 0.0008
-WalkingAccl = 0.0007
-JumpingAccl = 0.0007
+RunningAccl = 0.0005
+WalkingAccl = 0.0004
+JumpingAccl = 0.0004
 
 RunningMaxSpeed = 0.0085
 WalkingMaxSpeed = 0.0045
