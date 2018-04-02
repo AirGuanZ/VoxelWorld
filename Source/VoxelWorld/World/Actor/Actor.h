@@ -64,7 +64,7 @@ namespace ActorAux
         //摄像机到角色视点距离
         float camDistance = 7.5f;
         //角色视点距角色位置的高度偏移
-        float camDstYOffset = 1.5f;
+        float camDstYOffset = 1.75f;
 
         //摄像机看向脚下时的最小垂直夹角
         float camDownReOffset = 0.02f;
