@@ -105,8 +105,8 @@
     <ClCompile Include="..\Source\VoxelWorld\World\Chunk\ChunkTraversal.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Chunk\LiquidRenderer.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Chunk\Model.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\LandGenerator_V0.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\OakGenerator_V0.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\OakGenerator_V0.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\Biome.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator.cpp" />
@@ -149,9 +149,10 @@
     <ClInclude Include="..\Source\VoxelWorld\World\Chunk\LiquidRenderer.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Chunk\Model.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Chunk\RenderQueue.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\LandGenerator_V0.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\OakGenerator_V0.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\LandGenerator.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\PerlinNoise\PerlinNoise2D.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V0\OakGenerator_V0.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Biome.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Common.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.h" />

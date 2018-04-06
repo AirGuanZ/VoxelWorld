@@ -7,6 +7,7 @@ Created by AirGuanZ
 
 #include <atomic>
 #include <deque>
+#include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -14,9 +15,7 @@ Created by AirGuanZ
 
 #include <Utility\LinkedMap.h>
 
-#include <World\Land\LandGenerator_V0.h>
-#include <World\Land\V1\LandGenerator.h>
-#include <World\Land\V2\LandGenerator_V2.h>
+#include <World\Land\LandGenerator.h>
 #include "Chunk.h"
 #include "ChunkDataPool.h"
 
@@ -120,5 +119,5 @@ private:
     std::mutex taskQueueMutex_;
     std::mutex msgQueueMutex_;
 
-    LandGenerator_V2::LandGenerator landGen_;
+    std::unique_ptr<LandGenerator> landGen_;
 };

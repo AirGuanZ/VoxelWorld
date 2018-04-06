@@ -8,15 +8,16 @@ Created by AirGuanZ
 
 #include <Utility\HelperFunctions.h>
 
-#include <World\Land\LandGenerator_V0.h>
+#include <World\Land\V0\LandGenerator_V0.h>
 #include <World\Land\V1\LandGenerator.h>
+#include <World\Land\V2\LandGenerator_V2.h>
 
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
 #include "ChunkModelBuilder.h"
 
 ChunkLoader::ChunkLoader(size_t ckPoolSize)
-    : ckPool_(ckPoolSize), landGen_(4792539)
+    : ckPool_(ckPoolSize), landGen_(std::make_unique<LandGenerator_V2::LandGenerator>(4792539))
 {
 
 }
@@ -260,7 +261,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
         Chunk &dst = neis[i];
         if(!ckPool_.GetChunk(dst))
         {
-            landGen_.GenerateLand(&dst);
+            landGen_->GenerateLand(&dst);
 
             Chunk *addedCk = new Chunk(dst.GetChunkManager(), dst.GetPosition());
             CopyChunkData(*addedCk, dst);
@@ -270,7 +271,7 @@ void ChunkLoader::LoadChunkData(Chunk *ck)
 
     if(!ckPool_.GetChunk(*ck))
     {
-        landGen_.GenerateLand(ck);
+        landGen_->GenerateLand(ck);
 
         Chunk *addedCk = new Chunk(ck->GetChunkManager(), ck->GetPosition());
         CopyChunkData(*addedCk, *ck);
