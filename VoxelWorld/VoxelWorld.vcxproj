@@ -162,6 +162,7 @@
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Common_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\LandGenerator_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Noise_V2.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\World.h" />
   </ItemGroup>
   <ItemGroup>
@@ -273,7 +274,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(ProjectDir)..\Source\VoxelWorld\;$(ProjectDir)..\Library\CEGUI\Include\;$(SolutionDir)Source\Components\WinFramework\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(ProjectDir)..\Source\VoxelWorld\;$(ProjectDir)..\Library\CEGUI\Include\;$(SolutionDir)Source\Components\WinFramework\;$(SolutionDir)Source\FastNoiseSIMD\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -281,7 +282,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(ProjectDir)..\Source\VoxelWorld\;$(ProjectDir)..\Library\CEGUI\Include\;$(SolutionDir)Source\Components\WinFramework\;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Library\OWE\Inc\;$(ProjectDir)..\Source\Components\;$(ProjectDir)..\Source\VoxelWorld\;$(ProjectDir)..\Library\CEGUI\Include\;$(SolutionDir)Source\Components\WinFramework\;$(SolutionDir)Source\FastNoiseSIMD\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -302,7 +303,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;WinFramework.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;CEGUIBase-0_d.lib;CEGUIDirect3D11Renderer-0_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIExpatParser_d.lib;CEGUISILLYImageCodec_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;WinFramework.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;CEGUIBase-0_d.lib;CEGUIDirect3D11Renderer-0_d.lib;CEGUICoreWindowRendererSet_d.lib;CEGUIExpatParser_d.lib;CEGUISILLYImageCodec_d.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Debug\;$(SolutionDir)Library\CEGUI\Libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -343,7 +344,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;WinFramework.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;CEGUIBase-0.lib;CEGUIDirect3D11Renderer-0.lib;CEGUICoreWindowRendererSet.lib;CEGUIExpatParser.lib;CEGUISILLYImageCodec.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SkeletonAnimation.lib;Utility.lib;WinFramework.lib;d3d11.lib;d3dcompiler.lib;dxguid.lib;CEGUIBase-0.lib;CEGUIDirect3D11Renderer-0.lib;CEGUICoreWindowRendererSet.lib;CEGUIExpatParser.lib;CEGUISILLYImageCodec.lib;FastNoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Release\;$(SolutionDir)Library\CEGUI\Libs\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

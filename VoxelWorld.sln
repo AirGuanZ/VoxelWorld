@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VoxelWorld", "VoxelWorld\VoxelWorld.vcxproj", "{61CF260A-6019-46AB-8601-56B8732D4D35}"
 	ProjectSection(ProjectDependencies) = postProject
 		{22AF3B01-98D0-43F4-8C64-83FE030A6444} = {22AF3B01-98D0-43F4-8C64-83FE030A6444}
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9} = {05DA100D-1056-42F1-A54B-65E95DFE87E9}
 		{A5F83321-D324-4047-A14D-EBDD8538D7E8} = {A5F83321-D324-4047-A14D-EBDD8538D7E8}
 		{D08F2764-6A17-49E9-8DB3-B6626C930EAC} = {D08F2764-6A17-49E9-8DB3-B6626C930EAC}
 	EndProjectSection
@@ -24,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SkeletonAnimationConvertor"
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinFramework", "Components\WinFramework\WinFramework.vcxproj", "{D08F2764-6A17-49E9-8DB3-B6626C930EAC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FastNoise", "Components\FastNoise\FastNoise.vcxproj", "{05DA100D-1056-42F1-A54B-65E95DFE87E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +76,14 @@ Global
 		{D08F2764-6A17-49E9-8DB3-B6626C930EAC}.Release|x64.Build.0 = Release|x64
 		{D08F2764-6A17-49E9-8DB3-B6626C930EAC}.Release|x86.ActiveCfg = Release|Win32
 		{D08F2764-6A17-49E9-8DB3-B6626C930EAC}.Release|x86.Build.0 = Release|Win32
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Debug|x64.ActiveCfg = Debug|x64
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Debug|x64.Build.0 = Debug|x64
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Debug|x86.ActiveCfg = Debug|Win32
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Debug|x86.Build.0 = Debug|Win32
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Release|x64.ActiveCfg = Release|x64
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Release|x64.Build.0 = Release|x64
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Release|x86.ActiveCfg = Release|Win32
+		{05DA100D-1056-42F1-A54B-65E95DFE87E9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

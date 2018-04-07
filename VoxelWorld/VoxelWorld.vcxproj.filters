@@ -94,6 +94,9 @@
     <Filter Include="Source\Application\VoxelModelEditor">
       <UniqueIdentifier>{a084131a-ae8f-4952-8f13-ba13626f86c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\World\LandGen\V3">
+      <UniqueIdentifier>{b9a0524f-14f4-47c2-8ba2-fd32f317d637}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bin\Shader\Basic\pixel.hlsl">
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\World\Land\LandGenerator.h">
       <Filter>Source\World\LandGen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator.h">
+      <Filter>Source\World\LandGen\V3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

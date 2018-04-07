@@ -20,6 +20,6 @@ CamMovYSen = 0.00075
 CamDownReOffset = 0.02
 CamUpReOffset	= 0.02
 
-JumpInitVel		= 0.01
-GravityAccl		= 0.000035
+JumpInitVel		= 0.012
+GravityAccl		= 0.00005
 GravityMaxSpeed = 0.03
