@@ -3,7 +3,7 @@ Filename: V1/Palm.cpp
 Date: 2018.2.2
 Created by AirGuanZ
 ================================================================*/
-#include "PalmGenerator.h"
+#include "PalmGenerator_V1.h"
 
 using namespace LandGenerator_V1;
 

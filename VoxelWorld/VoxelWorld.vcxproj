@@ -107,11 +107,12 @@
     <ClCompile Include="..\Source\VoxelWorld\World\Chunk\Model.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\OakGenerator_V0.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\Biome.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.cpp" />
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\Biome_V1.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator_V1.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator_V1.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V2\Area_V2.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V2\LandGenerator_V2.cpp" />
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator_V3.cpp" />
     <ClCompile Include="..\Source\VoxelWorld\World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,16 +154,16 @@
     <ClInclude Include="..\Source\VoxelWorld\World\Land\PerlinNoise\PerlinNoise2D.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V0\OakGenerator_V0.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Biome.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Common.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Biome_V1.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Common_V1.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator_V1.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator_V1.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Area_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Biome_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Common_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\LandGenerator_V2.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Noise_V2.h" />
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator.h" />
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator_V3.h" />
     <ClInclude Include="..\Source\VoxelWorld\World\World.h" />
   </ItemGroup>
   <ItemGroup>

@@ -9,15 +9,16 @@ Created by AirGuanZ
 #include <Utility\HelperFunctions.h>
 
 #include <World\Land\V0\LandGenerator_V0.h>
-#include <World\Land\V1\LandGenerator.h>
+#include <World\Land\V1\LandGenerator_V1.h>
 #include <World\Land\V2\LandGenerator_V2.h>
+#include <World\Land\V3\LandGenerator_V3.h>
 
 #include "ChunkLoader.h"
 #include "ChunkManager.h"
 #include "ChunkModelBuilder.h"
 
 ChunkLoader::ChunkLoader(size_t ckPoolSize)
-    : ckPool_(ckPoolSize), landGen_(std::make_unique<LandGenerator_V2::LandGenerator>(4792539))
+    : ckPool_(ckPoolSize), landGen_(std::make_unique<LandGenerator_V3::LandGenerator>(4792539))
 {
 
 }

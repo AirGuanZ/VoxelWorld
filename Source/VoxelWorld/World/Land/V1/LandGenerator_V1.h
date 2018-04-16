@@ -6,8 +6,8 @@ Created by AirGuanZ
 #pragma once
 
 #include <World\Land\LandGenerator.h>
-#include "Biome.h"
-#include "Common.h"
+#include "Biome_V1.h"
+#include "Common_V1.h"
 
 namespace LandGenerator_V1
 {

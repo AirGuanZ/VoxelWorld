@@ -6,7 +6,7 @@ Created by AirGuanZ
 #pragma once
 
 #include "../../Chunk/Chunk.h"
-#include "Common.h"
+#include "Common_V1.h"
 
 namespace LandGenerator_V1
 {

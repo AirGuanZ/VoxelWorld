@@ -5,9 +5,9 @@ Created by AirGuanZ
 ================================================================*/
 #pragma once
 
-#include "Biome.h"
-#include "Common.h"
-#include "LandGenerator.h"
+#include "Biome_V1.h"
+#include "Common_V1.h"
+#include "LandGenerator_V1.h"
 
 namespace LandGenerator_V1
 {

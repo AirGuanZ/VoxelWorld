@@ -1,5 +1,5 @@
 /*================================================================
-Filename: V3/LandGenerator.h
+Filename: V3/LandGenerator_V3.h
 Date: 2018.4.7
 Created by AirGuanZ
 ================================================================*/
@@ -11,21 +11,14 @@ Created by AirGuanZ
 
 namespace LandGenerator_V3
 {
-    using RandomEngine = std::default_random_engine;
+    using RandomEngine = std::mt19937_64;
     using Seed = RandomEngine::result_type;
 
     class LandGenerator : public ::LandGenerator
     {
     public:
-        LandGenerator(Seed seed)
-            : seed_(seed)
-        {
-
-        }
+        LandGenerator(Seed seed) { }
 
         void GenerateLand(Chunk *ck);
-
-    private:
-        Seed seed_;
     };
 }

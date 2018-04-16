@@ -268,20 +268,23 @@
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V2\LandGenerator_V2.cpp">
       <Filter>Source\World\LandGen\V2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\Biome.cpp">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.cpp">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator.cpp">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.cpp">
       <Filter>Source\World\LandGen\V0</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\VoxelWorld\World\Land\V0\OakGenerator_V0.cpp">
       <Filter>Source\World\LandGen\V0</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator_V3.cpp">
+      <Filter>Source\World\LandGen\V3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\Biome_V1.cpp">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator_V1.cpp">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator_V1.cpp">
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -405,21 +408,6 @@
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V2\Noise_V2.h">
       <Filter>Source\World\LandGen\V2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\PerlinNoise\PerlinNoise2D.h">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Biome.h">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Common.h">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator.h">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator.h">
-      <Filter>Source\World\LandGen\V1</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\VoxelWorld\World\Land\V0\LandGenerator_V0.h">
       <Filter>Source\World\LandGen\V0</Filter>
     </ClInclude>
@@ -429,8 +417,23 @@
     <ClInclude Include="..\Source\VoxelWorld\World\Land\LandGenerator.h">
       <Filter>Source\World\LandGen</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator.h">
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V3\LandGenerator_V3.h">
       <Filter>Source\World\LandGen\V3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Biome_V1.h">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\Common_V1.h">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\LandGenerator_V1.h">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\V1\PalmGenerator_V1.h">
+      <Filter>Source\World\LandGen\V1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\VoxelWorld\World\Land\PerlinNoise\PerlinNoise2D.h">
+      <Filter>Source\World\LandGen\V1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

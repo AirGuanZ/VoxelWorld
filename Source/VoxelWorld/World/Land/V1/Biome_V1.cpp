@@ -6,7 +6,7 @@ Created by AirGuanZ
 #include <cassert>
 #include <limits>
 
-#include "Biome.h"
+#include "Biome_V1.h"
 
 using namespace LandGenerator_V1;
 
