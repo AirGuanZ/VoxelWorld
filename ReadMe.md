@@ -2,31 +2,25 @@
 
 ---
 
-基于DirectX 11实现。使用DirectXTK加载纹理；使用AssImp加载骨骼动画；使用ImGui进行GUI显示和交互。
+A minecraft-like voxel world renderer implemented with C++ and DirectX 11. Following features were implemented:
+
+- [x] Sunlight & colorful light sources
+- [x] Dynamicly create/destroy chunks according to the position of camera
+- [x] Voxel Ambient occlusion
+- [x] Collision detection
+- [x] Fog
+- [x] Random land generation based on Vorinoi diagram and perlin noise
+- [x] Place/break blocks
+- [x] Third person perspective
+- [ ] Voxel character editor (under development)
+
+Use `WASD` to move the camera; press `Space` to jump. Click `LB` to break a block and `RB` to place a red glow stone. Press `T` to shorten the length of one day. Things like inventory haven't been implemented, so there is no method to change the type of block in hand, except modifying codes.
+
+Modify `VoxelWorld/config.txt` to change some runtime properties like resolution, rendering distance and fog distance.
 
 ---
 
-以minecraft世界为原型，未来将添加更多内容。
-
-- [x] 太阳光和彩色光源
-- [x] 根据摄像机的位置动态加/卸载区块
-- [x] 环境光遮蔽
-- [x] 日夜变换
-- [x] 碰撞检测
-- [x] 雾效果
-- [x] 基于维诺图 + 柏林噪声的世界生成
-- [x] 方块破坏与放置
-- [x] 第三人称角色的移动和跳跃
-- [ ] 自定义角色形象（施工中）
-- [ ] 洞穴等地形结构
-
-以鼠标移动来转动镜头，`WASD`移动，`Space`跳跃。鼠标左键破坏方块，右键放置萤石。日夜变换周期较长，按住`T`可以加速这一过程。
-
-修改项目目录下的`config.txt`可以调整运行时参数，包括窗口分辨率、可视距离、雾距离等。
-
----
-
-截图：
+Screenshots:
 
 ![Screenshot](Screenshots/0.png)
 

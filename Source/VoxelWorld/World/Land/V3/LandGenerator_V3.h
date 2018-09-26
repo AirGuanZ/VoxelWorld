@@ -12,7 +12,7 @@ Created by AirGuanZ
 namespace LandGenerator_V3
 {
     using RandomEngine = std::mt19937_64;
-    using Seed = RandomEngine::result_type;
+    using Seed         = RandomEngine::result_type;
 
     class LandGenerator : public ::LandGenerator
     {
