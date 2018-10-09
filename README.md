@@ -2,7 +2,7 @@
 
 ---
 
-A minecraft-like voxel world renderer implemented with C++ and DirectX 11. Following features were implemented:
+A minecraft-like voxel world renderer written in C++ with DirectX 11. [OWE](https://github.com/AirGuanZ/OWE) is used for shader management. Following features were implemented:
 
 - [x] Sunlight & colorful light sources
 - [x] Dynamicly create/destroy chunks according to the position of camera
