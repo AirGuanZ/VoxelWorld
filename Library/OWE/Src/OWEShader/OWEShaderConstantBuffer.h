@@ -93,7 +93,7 @@ namespace OWEShaderAux
 
         }
 
-        bool Initialize(ID3D11DeviceContext *devCon, UINT slot, const BufferType_ *data)
+        bool Initialize(ID3D11Device *dev, UINT slot, const BufferType_ *data)
         {
             assert(devCon && data);
             slot_ = slot;
@@ -116,7 +116,7 @@ namespace OWEShaderAux
           public Uncopiable
     {
     public:
-        void SetBufferData(ID3D11DeviceContext *devCon, const BufferType &data)
+        void SetBufferData(ID3D11DeviceContext *devCon, const BufferType_ &data)
         {
             assert(devCon != nullptr && buf_ != nullptr);
             D3D11_MAPPED_SUBRESOURCE mappedRsc;
